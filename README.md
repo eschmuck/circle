@@ -1,4 +1,4 @@
 circle
 ======
 
-This is my repository
+This is my repository.  If you don't like it, make your own damn repository.
