@@ -25,13 +25,13 @@ var room = require("../room");
 // 	// Something would go here as the callback
 // }
 
-exports.save_saves_room = function(test) {
-	var myDatabase = new database();
-	var myRoom = new room();
-	myRoom.id = 80;
-	myRoom.title = "Insanity Closet";
-	myRoom.description = "Bad stuff happens here.";
+// exports.save_saves_room = function(test) {
+// 	var myDatabase = new database();
+// 	var myRoom = new room();
+// 	myRoom.id = 80;
+// 	myRoom.title = "Insanity Closet";
+// 	myRoom.description = "Bad stuff happens here.";
 	
-	myDatabase.insert(myRoom);
-	test.done();
-};
+// 	myDatabase.insert(myRoom);
+// 	test.done();
+// };

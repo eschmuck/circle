@@ -1,8 +1,7 @@
 var Player = require("../player");
 
-exports.blah = function(test) {
-	var thisPlayer = new Player();
-	thisPlayer.name = "Warrax";
+exports.player_name_works = function(test) {
+	var thisPlayer = new Player("Warrax");
 	test.equal("Warrax", thisPlayer.name);
 	test.done();
 }
