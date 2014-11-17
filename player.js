@@ -37,5 +37,7 @@ Player.prototype.hunger;
 Player.prototype.thirst;
 Player.prototype.drunk;
 
+Player.prototype.title;
+
 // Exports
 module.exports = Player;

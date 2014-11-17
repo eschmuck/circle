@@ -22,8 +22,6 @@ Character.prototype.level;
 
 Character.prototype.position;
 
-Character.prototype.title;
-
 // Constants
 exports.GENDER_NEUTRAL = 0;
 exports.GENDER_MALE    = 1;
