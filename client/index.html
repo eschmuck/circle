@@ -3,8 +3,38 @@
   <head>
     <title>Circle 4.0</title>
 
+    <link href="/css/jquery.terminal.css" rel="stylesheet" />
   </head>
   <body>
-    hi    
+    
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/jquery-1.7.1.min.js"></script>
+    <script src="/js/jquery.mousewheel-min.js"></script>
+    <script src="/js/jquery.terminal-min.js"></script>
+    
+    <script>
+    
+        var socket = io.connect();
+
+        // socket.on('connect', function () {
+        //     alert('connected!');
+        // });        
+
+        socket.on('message', function(data) {
+          $('body').terminal(this).echo(data);
+        });
+
+        jQuery(document).ready(function ($) {
+            $('body').terminal(function (command, terminal) {
+                socket.emit('message', { input: command });
+            }, {
+                greetings: false,
+                prompt: '> '
+            });
+        });
+        
+
+    
+    </script>
   </body>
 </html>
