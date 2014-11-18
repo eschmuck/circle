@@ -27,29 +27,25 @@ var startMessage = 'Welcome.  This is your new CircleMUD character!  You can now
 io.sockets.on('connection', function(socket) {
   console.log('A new user connected!');
 
-  io.on('connection', function(socket) {
+  socket.player = null;
+  socket.connectionState = connections.CON_GET_NAME;
+  socket.emit('message', welcomeMessage);
 
-    socket.player = null;
-    socket.connectionState = connections.CON_GET_NAME;
-    socket.emit('message', welcomeMessage);
+  sockets.push(socket);
 
-    sockets.push(socket);
-
-    socket.on('disconnect', function() {
-      sockets.splice(sockets.indexOf(socket), 1);
-    });
-
-    socket.on('message', function(msg) {
-      switch(socket.connectionState) {
-        case connections.CON_GET_NAME:
-          console.log(msg);
-          break;
-      }
-    });
-
-
+  socket.on('disconnect', function() {
+    sockets.splice(sockets.indexOf(socket), 1);
   });
 
-
-
+  socket.on('message', function(msg) {
+    switch(socket.connectionState) {
+      case connections.CON_GET_NAME:
+        console.log(msg);
+        break;
+    }
+  });
 });
+
+
+
+
