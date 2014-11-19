@@ -5,6 +5,7 @@ var socketio = require('socket.io');
 
 var connections = require('./connections');
 var database = require('./database');
+var player = require('./player');
 
 var app = express();
 var server = app.listen(3000);
@@ -42,7 +43,8 @@ io.sockets.on('connection', function(socket) {
     switch (socket.connectionState) {
       case connections.CON_GET_NAME:
         var playerName = msg['input'].substring(0, 1).toUpperCase() + msg['input'].substring(1).toLowerCase();
-        // TODO: Look up player in DB
+        socket.player = new player(playerName);
+        database.loadOne(socket.player, afterPlayerLoaded);
         break;
       case connections.CON_NAME_CNFRM:
         if (msg['input'].substring(0, 1).toUpperCase() == 'Y') {
@@ -85,4 +87,13 @@ io.sockets.on('connection', function(socket) {
         break;
     }
   });
+  
+  function afterPlayerLoaded(playerDocument) {
+    if(playerDocument === null) {
+      socket.emit('message', 'Did I get that right, ' + socket.player.name + ' (Y/N)?' );
+    }
+  }
 });
+
+
+
