@@ -7,6 +7,7 @@ var character = require('./character');
 var connections = require('./connections');
 var database = require('./database');
 var player = require('./player');
+var text = require('./text');
 
 var app = express();
 var server = app.listen(3000);
@@ -23,18 +24,12 @@ http.createServer(app).listen(app.get('port'), function() {
 
 var sockets = [];
 
-var welcomeMessage = 'Welcome to CircleMUD 4.0\n\rBy what name do you wish to be known?';
-var menu = 'Welcome to CircleMUD!\n\r0) Exit from CircleMUD.\n\r1) Enter the game.\n\r\n\r  Make a choice: ';
-var startMessage = 'Welcome.  This is your new CircleMUD character!  You can now earn gold, gain experience, find weapons and equipment, and much more -- while meeting people from around the world!';
-var motd = 'This is the message of the day.';
-var classMenu = '\r\nSelect a class:\r\n  [C]leric\r\n  [T]hief\r\n  [W]arrior\r\n  [M]agic-user\r\n';
-
 io.sockets.on('connection', function(socket) {
   console.log('A new user connected!');
 
   socket.player = null;
   socket.connectionState = connections.CON_GET_NAME;
-  socket.emit('message', welcomeMessage);
+  socket.emit('message', text.WelcomeMessage);
 
   sockets.push(socket);
 
@@ -70,7 +65,7 @@ io.sockets.on('connection', function(socket) {
         }
         else {
           socket.connectionState = connections.CON_RMOTD;
-          socket.emit('message', motd + '\n\r*** PRESS RETURN: ');
+          socket.emit('message', text.Motd + '\n\r*** PRESS RETURN: ');
         }
         break;
       case connections.CON_NEWPASSWD:
@@ -99,12 +94,12 @@ io.sockets.on('connection', function(socket) {
         if(sexInput === 'M') {
           socket.player.gender = character.GENDER_MALE;
           socket.connectionState = connections.CON_QCLASS;
-          socket.emit('message', classMenu);
+          socket.emit('message', text.ClassMenu);
         }
         else if(sexInput === 'F') {
           socket.player.gender = character.GENDER_MALE;
           socket.connectionState = connections.CON_QCLASS;
-          socket.emit('message', classMenu);
+          socket.emit('message', text.ClassMenu);
         }
         else {
           socket.emit('message', 'That is not a sex... What IS your sex (M/F)?');
@@ -128,12 +123,12 @@ io.sockets.on('connection', function(socket) {
           socket.emit('message', '\r\nThat\'s not a class.\r\nClass: ');
           return;
         }
-        socket.emit('message', motd + '\n\r*** PRESS RETURN: ');
+        socket.emit('message', text.Motd + '\n\r*** PRESS RETURN: ');
         socket.connectionState = connections.CON_RMOTD;
         break;
       case connections.CON_RMOTD:
         socket.connectionState = connections.CON_MENU;
-        socket.emit('message', menu);
+        socket.emit('message', text.Menu);
         break;
       case connections.CON_MENU:
         switch (msg['input']) {
@@ -141,11 +136,11 @@ io.sockets.on('connection', function(socket) {
             socket.disconnect();
             break;
           case '1':
-            socket.emit('message', welcomeMessage);
+            socket.emit('message', text.WelcomeMessage);
             socket.connectionState = connections.CON_PLAYING;
             break;
           default:
-            socket.emit('message', 'That\'s not a menu choice!\r\n' + menu);
+            socket.emit('message', 'That\'s not a menu choice!\r\n' + text.Menu);
         }
         break;
     }
