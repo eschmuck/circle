@@ -9,6 +9,7 @@ var player = require('./player');
 
 var app = express();
 var server = app.listen(3000);
+var gameDb = new database();
 
 app.use(express.static(path.resolve(__dirname, 'client')));
 
@@ -44,7 +45,7 @@ io.sockets.on('connection', function(socket) {
       case connections.CON_GET_NAME:
         var playerName = msg['input'].substring(0, 1).toUpperCase() + msg['input'].substring(1).toLowerCase();
         socket.player = new player(playerName);
-        database.loadOne(socket.player, afterPlayerLoaded);
+        gameDb.loadOne(socket.player, afterPlayerLoaded);
         break;
       case connections.CON_NAME_CNFRM:
         if (msg['input'].substring(0, 1).toUpperCase() == 'Y') {
