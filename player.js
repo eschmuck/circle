@@ -38,6 +38,14 @@ Player.prototype.thirst;
 Player.prototype.drunk;
 
 Player.prototype.title;
+Player.prototype.class;
+
+// Constants
+exports.CLASS_UNDEFINED	  = -1;
+exports.CLASS_MAGIC_USER  = 0;
+exports.CLASS_CLERIC      = 1;
+exports.CLASS_THIEF       = 2;
+exports.CLASS_WARRIOR     = 3;
 
 // Exports
 module.exports = Player;

@@ -5,7 +5,7 @@ exports.CON_PASSWORD   = 4; // Password:
 exports.CON_NEWPASSWD  = 5;	// Give me a password for x
 exports.CON_CNFPASSWD  = 6;	// Please retype password:
 exports.CON_QSEX       = 7; // Sex?
-exports.CON_CON_QCLASS = 8; // Class?
+exports.CON_QCLASS     = 8; // Class?
 exports.CON_RMOTD      = 9;
 exports.CON_MENU       = 10;
 

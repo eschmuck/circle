@@ -74,7 +74,7 @@ Weather.prototype.cloudlessSkyChange = function(random) {
 	}
 	
 	return 0;
-}
+};
 
 Weather.prototype.cloudySkyChange = function(random) {
 	if(this.pressure < 970) {
@@ -92,7 +92,7 @@ Weather.prototype.cloudySkyChange = function(random) {
 	}
 	
 	return 0;
-}
+};
 
 Weather.prototype.rainingSkyChange = function(random) {
 	if(this.pressure < 970) {

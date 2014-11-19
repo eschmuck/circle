@@ -44,6 +44,8 @@ io.sockets.on('connection', function(socket) {
 
   socket.on('message', function(msg) {
     switch (socket.connectionState) {
+      case connections.CON_PLAYING:
+        break;
       case connections.CON_GET_NAME:
         var playerName = msg['input'].substring(0, 1).toUpperCase() + msg['input'].substring(1).toLowerCase();
         socket.player = new player(playerName);
