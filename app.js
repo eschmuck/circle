@@ -29,7 +29,7 @@ io.sockets.on('connection', function(socket) {
 
   socket.player = null;
   socket.connectionState = connections.CON_GET_NAME;
-  socket.emit('message', text.WelcomeMessage);
+  socket.emit('message', text.IntroMessage);
 
   sockets.push(socket);
 
@@ -37,14 +37,13 @@ io.sockets.on('connection', function(socket) {
     sockets.splice(sockets.indexOf(socket), 1);
   });
 
+
   socket.on('message', function(msg) {
     switch (socket.connectionState) {
       case connections.CON_PLAYING:
         break;
       case connections.CON_GET_NAME:
-        var playerName = msg['input'].substring(0, 1).toUpperCase() + msg['input'].substring(1).toLowerCase();
-        socket.player = new player(playerName);
-        gameDb.loadOne(socket.player, afterPlayerLoaded);
+        getName(msg);
         break;
       case connections.CON_NAME_CNFRM:
         if (msg['input'].substring(0, 1).toUpperCase() == 'Y') {
@@ -146,12 +145,19 @@ io.sockets.on('connection', function(socket) {
     }
   });
   
+  function getName(msg) {
+        var playerName = msg['input'].substring(0, 1).toUpperCase() + msg['input'].substring(1).toLowerCase();
+        socket.player = new player(playerName);
+        gameDb.loadOne(socket.player, afterPlayerLoaded);    
+  }
+  
   function afterPlayerLoaded(playerDocument) {
     if(playerDocument === null) {
       socket.emit('message', 'Did I get that right, ' + socket.player.name + ' (Y/N)?' );
       socket.connectionState = connections.CON_NAME_CNFRM;
     }
   }
+  
 });
 
 
