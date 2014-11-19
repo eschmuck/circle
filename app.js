@@ -89,6 +89,7 @@ io.sockets.on('connection', function(socket) {
   });
   
   function afterPlayerLoaded(playerDocument) {
+    console.log('Got here!');
     if(playerDocument === null) {
       socket.emit('message', 'Did I get that right, ' + socket.player.name + ' (Y/N)?' );
     }
