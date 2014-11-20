@@ -13,6 +13,10 @@ var app = express();
 var server = app.listen(3000);
 var gameDb = new database();
 
+var sockets = [];
+var rooms = [];
+var zones = [];
+
 app.use(express.static(path.resolve(__dirname, 'client')));
 
 // this tells socket.io to use our express server
@@ -22,7 +26,12 @@ http.createServer(app).listen(app.get('port'), function() {
   console.log("Express server listening on port 3000");
 });
 
-var sockets = [];
+gameDb.loadAll('room', function(documents) {
+  rooms = documents;
+  gameDb.loadAll('zone', function(documents) {
+    zones = documents;
+  });
+}); 
 
 io.sockets.on('connection', function(socket) {
   console.log('A new user connected!');
