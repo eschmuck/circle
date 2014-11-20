@@ -68,7 +68,7 @@ io.sockets.on('connection', function(socket) {
         }
         break;
       case connections.CON_NEWPASSWD:
-        if(msg['input'].length < 3 || msg['input'].length > 10) {
+        if (msg['input'].length < 3 || msg['input'].length > 10) {
           socket.emit('message', 'Illegal password.\n\rPassword: ');
         }
         else {
@@ -78,7 +78,7 @@ io.sockets.on('connection', function(socket) {
         }
         break;
       case connections.CON_CNFPASSWD:
-        if(msg['input'] !== socket.player.password) {
+        if (msg['input'] !== socket.player.password) {
           socket.emit('message', 'Passwords don\'t match... start over.\n\rPassword:');
           socket.connectionState = connections.CON_PASSWORD;
         }
@@ -88,42 +88,10 @@ io.sockets.on('connection', function(socket) {
         }
         break;
       case connections.CON_QSEX:
-        var sexInput = msg['input'].substring(0, 1).toUpperCase();
-        
-        if(sexInput === 'M') {
-          socket.player.gender = character.GENDER_MALE;
-          socket.connectionState = connections.CON_QCLASS;
-          socket.emit('message', text.ClassMenu);
-        }
-        else if(sexInput === 'F') {
-          socket.player.gender = character.GENDER_MALE;
-          socket.connectionState = connections.CON_QCLASS;
-          socket.emit('message', text.ClassMenu);
-        }
-        else {
-          socket.emit('message', 'That is not a sex... What IS your sex (M/F)?');
-        }
+        getPlayerSex(msg);
         break;
       case connections.CON_QCLASS:
-        var classInput = msg['input'].substring(0, 1).toUpperCase();
-        if(classInput === 'C') {
-          socket.player.class = player.CLASS_CLERIC;
-        }
-        else if(classInput === 'M') {
-          socket.player.class = player.CLASS_MAGIC_USER;
-        }
-        else if(classInput === 'W') {
-          socket.player.class = player.CLASS_WARRIOR;
-        }
-        else if(classInput === 'T') {
-          socket.player.class = player.CLASS_THIEF;
-        }
-        else {
-          socket.emit('message', '\r\nThat\'s not a class.\r\nClass: ');
-          return;
-        }
-        socket.emit('message', text.Motd + '\n\r*** PRESS RETURN: ');
-        socket.connectionState = connections.CON_RMOTD;
+        getPlayerClass(msg);
         break;
       case connections.CON_RMOTD:
         socket.connectionState = connections.CON_MENU;
@@ -144,21 +112,58 @@ io.sockets.on('connection', function(socket) {
         break;
     }
   });
-  
-  function getName(msg) {
-        var playerName = msg['input'].substring(0, 1).toUpperCase() + msg['input'].substring(1).toLowerCase();
-        socket.player = new player(playerName);
-        gameDb.loadOne(socket.player, afterPlayerLoaded);    
+
+  function getPlayerSex(msg) {
+    var sexInput = msg['input'].substring(0, 1).toUpperCase();
+
+    if (sexInput === 'M') {
+      socket.player.gender = character.GENDER_MALE;
+      socket.connectionState = connections.CON_QCLASS;
+      socket.emit('message', text.ClassMenu);
+    }
+    else if (sexInput === 'F') {
+      socket.player.gender = character.GENDER_MALE;
+      socket.connectionState = connections.CON_QCLASS;
+      socket.emit('message', text.ClassMenu);
+    }
+    else {
+      socket.emit('message', 'That is not a sex... What IS your sex (M/F)?');
+    }
   }
-  
+
+  function getPlayerClass(msg) {
+    var classInput = msg['input'].substring(0, 1).toUpperCase();
+    if (classInput === 'C') {
+      socket.player.class = player.CLASS_CLERIC;
+    }
+    else if (classInput === 'M') {
+      socket.player.class = player.CLASS_MAGIC_USER;
+    }
+    else if (classInput === 'W') {
+      socket.player.class = player.CLASS_WARRIOR;
+    }
+    else if (classInput === 'T') {
+      socket.player.class = player.CLASS_THIEF;
+    }
+    else {
+      socket.emit('message', '\r\nThat\'s not a class.\r\nClass: ');
+      return;
+    }
+    socket.emit('message', text.Motd + '\n\r*** PRESS RETURN: ');
+    socket.connectionState = connections.CON_RMOTD;
+  }
+
+  function getName(msg) {
+    var playerName = msg['input'].substring(0, 1).toUpperCase() + msg['input'].substring(1).toLowerCase();
+    socket.player = new player(playerName);
+    gameDb.loadOne(socket.player, afterPlayerLoaded);
+  }
+
   function afterPlayerLoaded(playerDocument) {
-    if(playerDocument === null) {
-      socket.emit('message', 'Did I get that right, ' + socket.player.name + ' (Y/N)?' );
+    if (playerDocument === null) {
+      socket.emit('message', 'Did I get that right, ' + socket.player.name + ' (Y/N)?');
       socket.connectionState = connections.CON_NAME_CNFRM;
     }
   }
-  
+
 });
-
-
-
