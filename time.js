@@ -61,7 +61,7 @@ Time.prototype.getAge = function() {
 };
 
 Time.prototype.getType = function() {
-	return "Time";
+	return "time";
 };
 
 // Functions

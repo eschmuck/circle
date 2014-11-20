@@ -10,7 +10,7 @@ Room.prototype.description;
 Room.prototype.people;
 
 Room.prototype.getType = function() {
-	return "Room";
+	return "room";
 };
 
 Room.prototype.addCharacter = function(character) {

@@ -10,7 +10,7 @@ function Player(name) {
 util.inherits(Player, Character);
 
 Player.prototype.getType = function() {
-	return "Player";
+	return "player";
 };
 
 Player.prototype.start = function() {
