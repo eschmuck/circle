@@ -111,6 +111,7 @@ io.sockets.on('connection', function(socket) {
             socket.disconnect();
             break;
           case '1':
+            enterGame();
             break;
           default:
             socket.emit('message', 'That\'s not a menu choice!\r\n' + text.Menu);
