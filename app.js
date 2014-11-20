@@ -28,8 +28,14 @@ http.createServer(app).listen(app.get('port'), function() {
 
 gameDb.loadAll('room', function(documents) {
   gameWorld.rooms = documents;
+  
+  console.log(gameWorld.rooms.length);
+  
   gameDb.loadAll('zone', function(documents) {
     gameWorld.zones = documents;
+    
+    console.log(gameWorld.rooms.length);
+
   });
 }); 
 
