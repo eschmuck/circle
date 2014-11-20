@@ -174,6 +174,8 @@ io.sockets.on('connection', function(socket) {
   }
   
   function enterGame() {
+    console.log(gameWorld.rooms.length);
+    
     socket.emit('message', text.WelcomeMessage);
     socket.connectionState = connections.CON_PLAYING;
     
