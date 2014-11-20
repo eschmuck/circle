@@ -8,14 +8,14 @@ var connections = require('./connections');
 var database = require('./database');
 var player = require('./player');
 var text = require('./text');
+var world = require('./world');
 
 var app = express();
 var server = app.listen(3000);
 var gameDb = new database();
+var gameWorld = new world();
 
 var sockets = [];
-var rooms = [];
-var zones = [];
 
 app.use(express.static(path.resolve(__dirname, 'client')));
 
@@ -27,9 +27,9 @@ http.createServer(app).listen(app.get('port'), function() {
 });
 
 gameDb.loadAll('room', function(documents) {
-  rooms = documents;
+  gameWorld.rooms = documents;
   gameDb.loadAll('zone', function(documents) {
-    zones = documents;
+    gameWorld.zones = documents;
   });
 }); 
 
@@ -45,7 +45,6 @@ io.sockets.on('connection', function(socket) {
   socket.on('disconnect', function() {
     sockets.splice(sockets.indexOf(socket), 1);
   });
-
 
   socket.on('message', function(msg) {
     switch (socket.connectionState) {
@@ -112,8 +111,6 @@ io.sockets.on('connection', function(socket) {
             socket.disconnect();
             break;
           case '1':
-            socket.emit('message', text.WelcomeMessage);
-            socket.connectionState = connections.CON_PLAYING;
             break;
           default:
             socket.emit('message', 'That\'s not a menu choice!\r\n' + text.Menu);
@@ -173,6 +170,18 @@ io.sockets.on('connection', function(socket) {
       socket.emit('message', 'Did I get that right, ' + socket.player.name + ' (Y/N)?');
       socket.connectionState = connections.CON_NAME_CNFRM;
     }
+  }
+  
+  function enterGame() {
+    socket.emit('message', text.WelcomeMessage);
+    socket.connectionState = connections.CON_PLAYING;
+    
+    var startRoom = gameWorld.getRoom(3001);
+    startRoom.addCharacter(socket.player);
+    
+    // TODO: Change this to 'show room to player' function
+    socket.emit('message', startRoom.title);
+    socket.emit('message', startRoom.description);
   }
 
 });
