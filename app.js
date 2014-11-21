@@ -8,6 +8,7 @@ var connections = require('./connections');
 var database = require('./database');
 var player = require('./player');
 var text = require('./text');
+var room = require('./room');
 var world = require('./world');
 
 var app = express();
@@ -27,15 +28,14 @@ http.createServer(app).listen(app.get('port'), function() {
 });
 
 gameDb.loadAll('room', function(documents) {
-  gameWorld.rooms = documents;
+  //gameWorld.rooms = documents;
   
-  console.log(gameWorld.rooms.length);
+  for(var i = 0; i < documents.length; i++) {
+    gameWorld.push(Object.create(room, documents[i]));
+  }
   
   gameDb.loadAll('zone', function(documents) {
     gameWorld.zones = documents;
-    
-    console.log(gameWorld.rooms.length);
-
   });
 }); 
 
