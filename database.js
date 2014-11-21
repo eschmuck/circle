@@ -1,7 +1,7 @@
 var MongoClient = require("mongodb").MongoClient;
 var MongoServer = require("mongodb").Server;
 var mongoClient = new MongoClient(new MongoServer('localhost', 27017));
-var database = "CircleDB";
+var database = "circledb";
 
 // Object constructor
 function Database() {
