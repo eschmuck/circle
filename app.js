@@ -31,7 +31,7 @@ gameDb.loadAll('room', function(documents) {
   //gameWorld.rooms = documents;
   
   for(var i = 0; i < documents.length; i++) {
-    gameWorld.rooms.push(Object.create(documents[i], room));
+    gameWorld.rooms.push(Object.create(room, documents[i]));
   }
   
   gameDb.loadAll('zone', function(documents) {
