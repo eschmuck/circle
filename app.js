@@ -28,8 +28,6 @@ http.createServer(app).listen(app.get('port'), function() {
 });
 
 gameDb.loadAll('room', function(documents) {
-  //gameWorld.rooms = documents;
-  
   for(var i = 0; i < documents.length; i++) {
     gameWorld.rooms.push(Object.create(room, documents[i]));
   }
