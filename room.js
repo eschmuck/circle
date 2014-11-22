@@ -38,17 +38,22 @@ var roomSchema = new schema({
 
 var Room = mongoose.model('room', roomSchema);
 
-function saveRooms() {
+//function saveRooms() {
 	var room1 = new Room({ id: '3001', title: 'Temple of Midgaard', description: 'You are here.'});
+	room1.save();
+	
 	var room2 = new Room({ id: '3000', title: 'Reading Room', description: 'You are here.'});
+	room2.save();
+	
 	var room3 = new Room({ id: '3015', title: 'Temple Square', description: 'You are here.'});
-}
+	room3.save();
+//}
 
 
-function getRooms(callback) {
-	Room.find({}, function(err, docs) {
-		callback(docs);
-	});
-}
+//function getRooms(callback) {
+	// Room.find({}, function(err, docs) {
+	// 	callback(docs);
+	// });
+//}
 
 
