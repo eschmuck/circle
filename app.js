@@ -27,15 +27,22 @@ http.createServer(app).listen(app.get('port'), function() {
   console.log("Express server listening on port 3000");
 });
 
-gameDb.loadAll('room', function(documents) {
-  for(var i = 0; i < documents.length; i++) {
-    gameWorld.rooms.push(Object.create(room, documents[i]));
-  }
+// gameDb.loadAll('room', function(documents) {
+//   for(var i = 0; i < documents.length; i++) {
+//     gameWorld.rooms.push(Object.create(room, documents[i]));
+//   }
   
-  gameDb.loadAll('zone', function(documents) {
-    gameWorld.zones = documents;
-  });
-}); 
+//   gameDb.loadAll('zone', function(documents) {
+//     gameWorld.zones = documents;
+//   });
+// }); 
+
+room.saveRooms();
+room.getRooms(roomsLoaded);
+
+function roomsLoaded(docs) {
+  console.log(docs);
+}
 
 io.sockets.on('connection', function(socket) {
   console.log('A new user connected!');

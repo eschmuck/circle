@@ -1,26 +1,54 @@
 // Object constructor
-function Room() {
-	this.people = [];
-}
+// function Room() {
+// 	this.people = [];
+// }
 
 // Public Properties
-Room.prototype.id;
-Room.prototype.title;
-Room.prototype.description;
-Room.prototype.people;
+// Room.prototype.id;
+// Room.prototype.title;
+// Room.prototype.description;
+// Room.prototype.people;
 
-Room.prototype.getType = function() {
-	return "room";
-};
+// Room.prototype.getType = function() {
+// 	return "room";
+// };
 
-Room.prototype.addCharacter = function(character) {
-	this.people.push(character);
-};
+// Room.prototype.addCharacter = function(character) {
+// 	this.people.push(character);
+// };
 
-Room.prototype.removeCharacter = function(character) {
-	this.people.splice(this.people.indexOf(character), 1);
-	character.room = null;
-};
+// Room.prototype.removeCharacter = function(character) {
+// 	this.people.splice(this.people.indexOf(character), 1);
+// 	character.room = null;
+// };
 
-// Exports
-module.exports = Room;
+// // Exports
+// module.exports = Room;
+
+var mongoose = require('mongoose');
+var schema = mongoose.Schema;
+
+mongoose.connect('mongodb://localhost/circledb');
+
+var roomSchema = new schema({
+    id: Number,
+    title: String,
+    description: String
+});
+
+var Room = mongoose.model('room', roomSchema);
+
+function saveRooms() {
+	var room1 = new Room({ id: '3001', title: 'Temple of Midgaard', description: 'You are here.'});
+	var room2 = new Room({ id: '3000', title: 'Reading Room', description: 'You are here.'});
+	var room3 = new Room({ id: '3015', title: 'Temple Square', description: 'You are here.'});
+}
+
+
+function getRooms(callback) {
+	Room.find({}, function(err, docs) {
+		callback(docs);
+	});
+}
+
+
