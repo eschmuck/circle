@@ -38,11 +38,11 @@ http.createServer(app).listen(app.get('port'), function() {
 // }); 
 
 room.saveRooms();
-room.getRooms(roomsLoaded);
+//room.getRooms(roomsLoaded);
 
-function roomsLoaded(docs) {
-  console.log(docs);
-}
+//function roomsLoaded(docs) {
+//  console.log(docs);
+//}
 
 io.sockets.on('connection', function(socket) {
   console.log('A new user connected!');
