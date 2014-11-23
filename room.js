@@ -44,7 +44,8 @@ exports.saveRooms = function saveRooms() {
 
  	var room1 = new Room({ id: '3001', title: 'Temple of Midgaard', description: 'You are here.'});
  	room1.save(function(err, xRoom1) {
- 		if(err) console.log(err);
+ 		if(err) { console.log(err); }
+ 		else { console.log(xRoom1); }
  	});
 	
 // 	var room2 = new Room({ id: '3000', title: 'Reading Room', description: 'You are here.'});
