@@ -28,7 +28,6 @@
 var mongoose = require('mongoose');
 var schema = mongoose.Schema;
 
-mongoose.connect('mongodb://localhost/circledb');
 
 var roomSchema = new schema({
     id: Number,
@@ -39,6 +38,8 @@ var roomSchema = new schema({
  var Room = mongoose.model('room', roomSchema);
 
 exports.saveRooms = function saveRooms() {
+	mongoose.connect('mongodb://localhost/circledb');
+
  	var room1 = new Room({ id: '3001', title: 'Temple of Midgaard', description: 'You are here.'});
  	room1.save();
 	
