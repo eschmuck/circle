@@ -40,6 +40,8 @@ var roomSchema = new schema({
 exports.saveRooms = function saveRooms() {
 	mongoose.connect('mongodb://localhost/circledb');
 
+	console.log('here1');
+
  	var room1 = new Room({ id: '3001', title: 'Temple of Midgaard', description: 'You are here.'});
  	room1.save();
 	
