@@ -38,7 +38,7 @@ var roomSchema = new schema({
 
  var Room = mongoose.model('room', roomSchema);
 
-function saveRooms() {
+exports.saveRooms = function saveRooms() {
  	var room1 = new Room({ id: '3001', title: 'Temple of Midgaard', description: 'You are here.'});
  	room1.save();
 	
@@ -47,7 +47,7 @@ function saveRooms() {
 	
 // 	var room3 = new Room({ id: '3015', title: 'Temple Square', description: 'You are here.'});
 // 	room3.save();
-}
+};
 
 
 //function getRooms(callback) {
@@ -57,4 +57,3 @@ function saveRooms() {
 //}
 
 
-module.exports = Room;
