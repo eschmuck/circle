@@ -32,34 +32,50 @@ var schema = mongoose.Schema;
 var roomSchema = new schema({
     id: Number,
     title: String,
-    description: String
+    description: String,
+    characters: [],
+    contents: []
 });
 
- var Room = mongoose.model('room', roomSchema);
-
-exports.saveRooms = function saveRooms() {
-	mongoose.connect('mongodb://localhost/circledb');
-
-	console.log('here1');
-
- 	var room1 = new Room({ id: '3001', title: 'Temple of Midgaard', description: 'You are here.'});
- 	room1.save(function(err, xRoom1) {
- 		if(err) { console.log(err); }
- 		else { console.log(xRoom1); }
- 	});
+roomSchema.methods.contains = function(item) {
+	for(var i = 0; i < this.contents.length; i++) {
+		if(this.contents[i] === item) {
+			return true;
+		}
+	}
 	
-// 	var room2 = new Room({ id: '3000', title: 'Reading Room', description: 'You are here.'});
-// 	room2.save();
-	
-// 	var room3 = new Room({ id: '3015', title: 'Temple Square', description: 'You are here.'});
-// 	room3.save();
+	return false;
 };
 
+var roomModel = mongoose.model('room', roomSchema);
 
-//function getRooms(callback) {
-	// Room.find({}, function(err, docs) {
-	// 	callback(docs);
-	// });
-//}
+// exports.saveRooms = function saveRooms() {
+// 	mongoose.connect('mongodb://localhost/circledb');
+
+// 	console.log('here1');
+
+//  	var room1 = new roomModel({ id: '3001', title: 'Temple of Midgaard', description: 'You are here.'});
+//  	room1.save(function(err, xRoom1) {
+//  		if(err) { console.log(err); }
+//  		else { console.log(xRoom1); }
+//  	});
+	
+// // 	var room2 = new Room({ id: '3000', title: 'Reading Room', description: 'You are here.'});
+// // 	room2.save();
+	
+// // 	var room3 = new Room({ id: '3015', title: 'Temple Square', description: 'You are here.'});
+// // 	room3.save();
+
+// 	mongoose.connection.close();
+// };
+
+
+function getRooms(callback) {
+	roomModel.find({}, function(err, docs) {
+		callback(docs);
+	});
+}
+
+
 
 

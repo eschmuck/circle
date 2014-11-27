@@ -37,12 +37,10 @@ http.createServer(app).listen(app.get('port'), function() {
 //   });
 // }); 
 
-room.saveRooms();
-//room.getRooms(roomsLoaded);
+//room.saveRooms();
+room.getRooms(roomsLoaded);
 
-//function roomsLoaded(docs) {
-//  console.log(docs);
-//}
+g
 
 
 
