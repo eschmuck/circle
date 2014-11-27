@@ -38,9 +38,10 @@ http.createServer(app).listen(app.get('port'), function() {
 // }); 
 
 //room.saveRooms();
-room.getRooms(roomsLoaded);
+room.getRooms(function(docs){
+  console.log(docs);
+});
 
-g
 
 
 
