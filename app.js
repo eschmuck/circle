@@ -38,8 +38,11 @@ http.createServer(app).listen(app.get('port'), function() {
 // }); 
 
 //room.saveRooms();
+
+
 room.getRooms(function(docs){
-  console.log(docs);
+//  console.log(docs);
+  gameWorld.rooms = docs;
 });
 
 

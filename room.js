@@ -33,7 +33,7 @@ var roomSchema = new schema({
     id: Number,
     title: String,
     description: String,
-    characters: [],
+    people: [],
     contents: []
 });
 
@@ -45,6 +45,16 @@ roomSchema.methods.contains = function(item) {
 	}
 	
 	return false;
+};
+
+roomSchema.methods.addCharacter = function(character) {
+	this.people.push(character);
+	character.room = this;
+};
+
+roomSchema.methods.removeCharacter = function(character) {
+	this.people.splice(this.people.indexO(character), 1);
+	character.room = null;
 };
 
 var roomModel = mongoose.model('room', roomSchema);
