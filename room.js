@@ -70,12 +70,12 @@ var roomModel = mongoose.model('room', roomSchema);
 // };
 
 
-function getRooms(callback) {
+exports.getRooms = function getRooms(callback) {
 	roomModel.find({}, function(err, docs) {
 		console.log(docs.length);
 		callback(docs);
 	});
-}
+};
 
 
 
