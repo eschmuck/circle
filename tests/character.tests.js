@@ -1,9 +1,9 @@
-var Character = require("../character");
+var Character = require("../character").character;
 
 exports.name_works = function(test) {
 	var myCharacter = new Character();
-	myCharacter.name = "Apok";
-	test.equal("Apok", myCharacter.name);
+	myCharacter.name = "Tiamat";
+	test.equal("Tiamat", myCharacter.name);
 	test.done();
 };
 
@@ -70,3 +70,8 @@ exports.experience_works = function(test) {
 	test.done();
 };
 
+exports.blah_works = function(test) {
+	var myCharacter = new Character();
+	test.equal('blah', myCharacter.blah());
+	test.done();
+};
