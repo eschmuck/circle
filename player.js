@@ -29,35 +29,45 @@
 // };
 
 
-// Player.prototype.password;
-
-// Player.prototype.practiceSessions;
-
-// Player.prototype.hunger;
-// Player.prototype.thirst;
-// Player.prototype.drunk;
-
-// Player.prototype.title;
-// Player.prototype.class;
 
 
-// var mongoose = require('mongoose');
-// var schema = mongoose.Schema;
-// var extend = require('mongoose-schema-extend');
-// var character = require("./character");
+var mongoose = require('mongoose');
+var schema = mongoose.Schema;
+var extend = require('mongoose-schema-extend');
+var character = require("./character").character;
+var characterSchema = require("./character").schema;
 
 
-// var playerSchema = character.characterSchema.extend({
-// 	password: String,
-// 	practiceSessions: Number,
-// 	hunger: Number,
-// 	thirst: Number,
-// 	drunk: Number,
-// 	title: String,
-// 	class: Number
-// });
+var playerSchema = characterSchema.extend({
+	password: String,
+	practiceSessions: Number,
+	hunger: Number,
+	thirst: Number,
+	drunk: Number,
+	title: String,
+	class: Number
+});
 
-// module.exports = playerSchema;
+playerSchema.methods.meh = function() {
+	return 'meh';
+};
+
+playerSchema.methods.start = function() {
+	this.level = 1;
+	this.experience = 1;
+	
+	this.maximumHitpoints = 10;
+	this.maximumManapoints = 100;
+	this.maximumMovepoints = 82;
+	
+	this.practiceSessions = 0;
+	
+	this.hunger = 24;
+	this.thirst = 24;
+	this.drunk = 0;
+};
+
+var playerModel = mongoose.model('player', playerSchema);
 
 // Constants
 exports.CLASS_UNDEFINED	  = -1;
@@ -68,3 +78,11 @@ exports.CLASS_WARRIOR     = 3;
 
 // // Exports
 // module.exports = Player;
+
+
+
+module.exports = {
+	schema: playerSchema,
+	player: playerModel
+	//player: playerModel
+};

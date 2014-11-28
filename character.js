@@ -50,24 +50,24 @@ characterSchema.methods.blah = function() {
 	return 'blah';
 };
 
-var playerSchema = characterSchema.extend({
-	password: String,
-	practiceSessions: Number,
-	hunger: Number,
-	thirst: Number,
-	drunk: Number,
-	title: String,
-	class: Number
-});
+// var playerSchema = characterSchema.extend({
+// 	password: String,
+// 	practiceSessions: Number,
+// 	hunger: Number,
+// 	thirst: Number,
+// 	drunk: Number,
+// 	title: String,
+// 	class: Number
+// });
 
-playerSchema.methods.meh = function() {
-	return 'meh';
-};
+// playerSchema.methods.meh = function() {
+// 	return 'meh';
+// };
 
 var characterModel = mongoose.model('character', characterSchema);
 
 
-var playerModel = mongoose.model('player', playerSchema);
+//var playerModel = mongoose.model('player', playerSchema);
 
 
 // Constants
@@ -96,8 +96,9 @@ exports.POS_STANDING   = 8;
 //module.exports = playerModel;
 
 module.exports = {
-	character: characterModel,
-	player: playerModel
+	schema: characterSchema,
+	character: characterModel
+	//player: playerModel
 };
 
 
