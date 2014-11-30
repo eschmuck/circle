@@ -189,7 +189,14 @@ io.sockets.on('connection', function(socket) {
   }
   
   function enterGame() {
-    console.log(gameWorld.rooms.length);
+    if(socket.player.level === 0) {
+      socket.player.start();
+      socket.player.save(function(err, player) {
+        // TODO: Log error
+        if(err) console.log(err);
+        else socket.player = player;
+      });
+    }
     
     socket.emit('message', text.WelcomeMessage);
     socket.connectionState = connections.CON_PLAYING;
