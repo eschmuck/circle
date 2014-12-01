@@ -179,7 +179,7 @@ io.sockets.on('connection', function(socket) {
     socket.player = new Player();
     socket.player.name = playerName;
     //gameDb.loadOne(socket.player, afterPlayerLoaded);
-    Player.meh();
+    socket.player.meh();
     //player.load(afterPlayerLoaded);
   }
 
