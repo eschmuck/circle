@@ -83,7 +83,6 @@ var roomModel = mongoose.model('room', roomSchema);
 exports.getRooms = function getRooms(callback) {
 	mongoose.connect('mongodb://localhost/circledb');
 	roomModel.find({}, function(err, docs) {
-		console.log(docs.length);
 		callback(docs);
 		mongoose.connection.close();
 	});

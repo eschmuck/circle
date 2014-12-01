@@ -41,7 +41,6 @@ http.createServer(app).listen(app.get('port'), function() {
 
 
 room.getRooms(function(docs){
-//  console.log(docs);
   gameWorld.rooms = docs;
 });
 
@@ -179,7 +178,8 @@ io.sockets.on('connection', function(socket) {
     var playerName = msg['input'].substring(0, 1).toUpperCase() + msg['input'].substring(1).toLowerCase();
     socket.player = new player();
     socket.player.name = playerName;
-    gameDb.loadOne(socket.player, afterPlayerLoaded);
+    //gameDb.loadOne(socket.player, afterPlayerLoaded);
+    player.getPlayer(playerName, afterPlayerLoaded());
   }
 
   function afterPlayerLoaded(playerDocument) {

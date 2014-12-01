@@ -86,3 +86,12 @@ module.exports = {
 	player: playerModel
 	//player: playerModel
 };
+
+exports.getPlayer = function getPlayer(playerName, callback) {
+	mongoose.connect('mongodb://localhost/circledb');
+	playerModel.find({ name: playerName}, function(err, docs) {
+		console.log(docs.length);
+		callback(docs);
+		mongoose.connection.close();
+	});
+};
