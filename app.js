@@ -179,7 +179,8 @@ io.sockets.on('connection', function(socket) {
     socket.player = new player();
     socket.player.name = playerName;
     //gameDb.loadOne(socket.player, afterPlayerLoaded);
-    player.load(afterPlayerLoaded());
+    player.meh();
+    player.load(afterPlayerLoaded);
   }
 
   function afterPlayerLoaded(playerDocument) {
@@ -188,7 +189,7 @@ io.sockets.on('connection', function(socket) {
       socket.connectionState = connections.CON_NAME_CNFRM;
     }
     else {
-      console.log('what?');
+      console.log('playerDocument is not null');
     }
   }
   
