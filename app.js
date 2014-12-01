@@ -177,7 +177,8 @@ io.sockets.on('connection', function(socket) {
 
   function getName(msg) {
     var playerName = msg['input'].substring(0, 1).toUpperCase() + msg['input'].substring(1).toLowerCase();
-    socket.player = new player(playerName);
+    socket.player = new player();
+    socket.player.name = playerName;
     gameDb.loadOne(socket.player, afterPlayerLoaded);
   }
 
