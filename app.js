@@ -192,7 +192,7 @@ io.sockets.on('connection', function(socket) {
     //   console.log(playerDocument);
     // }
     
-    if(playerDocument === []) {
+    if(playerDocument === '') {
       console.log('yup');
     } else {
       console.log('nope');
