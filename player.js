@@ -52,7 +52,7 @@ playerSchema.methods.meh = function() {
 	return 'meh';
 };
 
-playerSchema.methods.load = function(callback) {
+playerSchema.methods.load = function(name, callback) {
 	mongoose.connect('mongodb://localhost/circledb');
 	playerModel.find({ name: name}, function(err, docs) {
 		console.log(docs.length);
