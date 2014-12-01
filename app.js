@@ -179,13 +179,16 @@ io.sockets.on('connection', function(socket) {
     socket.player = new player();
     socket.player.name = playerName;
     //gameDb.loadOne(socket.player, afterPlayerLoaded);
-    player.getPlayer(playerName, afterPlayerLoaded());
+    player.load(afterPlayerLoaded());
   }
 
   function afterPlayerLoaded(playerDocument) {
     if (playerDocument === null) {
       socket.emit('message', 'Did I get that right, ' + socket.player.name + ' (Y/N)?');
       socket.connectionState = connections.CON_NAME_CNFRM;
+    }
+    else {
+      console.log('what?');
     }
   }
   
