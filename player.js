@@ -52,6 +52,15 @@ playerSchema.methods.meh = function() {
 	return 'meh';
 };
 
+playerSchema.methods.load = function(callback) {
+	mongoose.connect('mongodb://localhost/circledb');
+	playerModel.find({ name: name}, function(err, docs) {
+		console.log(docs.length);
+		callback(docs);
+		mongoose.connection.close();
+	});
+};
+
 playerSchema.methods.start = function() {
 	this.level = 1;
 	this.experience = 1;
@@ -87,11 +96,11 @@ module.exports = {
 	//player: playerModel
 };
 
-exports.getPlayer = function getPlayer(playerName, callback) {
-	mongoose.connect('mongodb://localhost/circledb');
-	playerModel.find({ name: playerName}, function(err, docs) {
-		console.log(docs.length);
-		callback(docs);
-		mongoose.connection.close();
-	});
-};
+// exports.getPlayer = function getPlayer(playerName, callback) {
+// 	mongoose.connect('mongodb://localhost/circledb');
+// 	playerModel.find({ name: playerName}, function(err, docs) {
+// 		console.log(docs.length);
+// 		callback(docs);
+// 		mongoose.connection.close();
+// 	});
+// };
