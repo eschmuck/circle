@@ -184,12 +184,18 @@ io.sockets.on('connection', function(socket) {
   }
 
   function afterPlayerLoaded(playerDocument) {
-    if (playerDocument === null) {
-      socket.emit('message', 'Did I get that right, ' + socket.player.name + ' (Y/N)?');
-      socket.connectionState = connections.CON_NAME_CNFRM;
-    }
-    else {
-      console.log(playerDocument);
+    // if (playerDocument === null) {
+    //   socket.emit('message', 'Did I get that right, ' + socket.player.name + ' (Y/N)?');
+    //   socket.connectionState = connections.CON_NAME_CNFRM;
+    // }
+    // else {
+    //   console.log(playerDocument);
+    // }
+    
+    if(playerDocument === []) {
+      console.log('yup');
+    } else {
+      console.log('nope');
     }
   }
   
