@@ -1,12 +1,12 @@
 //var Player = require("../player");
 var Player = require("../player").player;
 
-// exports.player_name_works = function(test) {
-// 	var thisPlayer = new Player("Warrax");
-// 	test.equal("Warrax", thisPlayer.name);
-// 	test.done();
-// };
-
+exports.player_name_works = function(test) {
+	var thisPlayer = new Player();
+	thisPlayer.name = "Warrax";
+	test.equal("Warrax", thisPlayer.name);
+	test.done();
+};
 
 exports.meh_works = function(test) {
 	var thisPlayer = new Player();
