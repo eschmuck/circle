@@ -189,7 +189,7 @@ io.sockets.on('connection', function(socket) {
       socket.connectionState = connections.CON_NAME_CNFRM;
     }
     else {
-      console.log('playerDocument is not null');
+      console.log(playerDocument);
     }
   }
   
