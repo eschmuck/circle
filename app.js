@@ -54,43 +54,48 @@ io.sockets.on('connection', function(socket) {
         break;
       case connections.CON_NAME_CNFRM:
         if (msg['input'].substring(0, 1).toUpperCase() == 'Y') {
-          socket.emit('message', 'New character.\n\rGive me a password for ' + socket.player.name + ': ');
+          //socket.emit('message', 'New character.\n\rGive me a password for ' + socket.player.name + ': ');
+          emitMessage(socket, 'New character.\n\rGive me a password for ' + socket.player.name + ': ');
           socket.connectionState = connections.CON_NEWPASSWD;
         }
         else if (msg['input'].substring(0, 1).toUpperCase() == 'N') {
-          socket.emit('message', 'Okay, what IS it, then?');
+          //socket.emit('message', 'Okay, what IS it, then?');
+          emitMessage(socket, 'New character.\n\rGive me a password for ' + socket.player.name + ': ');
           socket.connectionState = connections.CON_GET_NAME;
         }
         else {
-          socket.emit('message', 'Please type Yes or No: ');
+          //socket.emit('message', 'Please type Yes or No: ');
+          emitMessage(socket, 'Please type Yes or No: ');
         }
         break;
       case connections.CON_PASSWORD:
         if (msg['input'] != socket.player.password) {
-          socket.emit('Wrong password.\n\rPassword: ');
+          //socket.emit('Wrong password.\n\rPassword: ');
+          emitMessage(socket, 'Wrong password.\n\rPassword: ');
         }
         else {
           socket.connectionState = connections.CON_RMOTD;
-          socket.emit('message', text.Motd + '\n\r*** PRESS RETURN: ');
+          emitMessage(socket, text.Motd + '\n\r*** PRESS RETURN: ');
         }
         break;
       case connections.CON_NEWPASSWD:
         if (msg['input'].length < 3 || msg['input'].length > 10) {
-          socket.emit('message', 'Illegal password.\n\rPassword: ');
+          emitMessage(socket, 'Illegal password.\n\rPassword: ');
         }
         else {
           socket.player.password = msg['input'];
-          socket.emit('message', 'Please retype password: ');
+          //socket.emit('message', 'Please retype password: ');
+          emitMessage(socket, 'Please retype password: ');
           socket.connectionState = connections.CON_CNFPASSWD;
         }
         break;
       case connections.CON_CNFPASSWD:
         if (msg['input'] !== socket.player.password) {
-          socket.emit('message', 'Passwords don\'t match... start over.\n\rPassword:');
+          emitMessage(socket, 'Passwords don\'t match... start over.\n\rPassword:');
           socket.connectionState = connections.CON_PASSWORD;
         }
         else {
-          socket.emit('message', 'What is your sex (M/F)?');
+          emitMessage(socket, 'What is your sex (M/F)?');
           socket.connectionState = connections.CON_QSEX;
         }
         break;
@@ -102,7 +107,8 @@ io.sockets.on('connection', function(socket) {
         break;
       case connections.CON_RMOTD:
         socket.connectionState = connections.CON_MENU;
-        socket.emit('message', text.Menu);
+        //socket.emit('message', text.Menu);
+        emitMessage(socket, text.Menu);
         break;
       case connections.CON_MENU:
         switch (msg['input']) {
@@ -113,7 +119,8 @@ io.sockets.on('connection', function(socket) {
             enterGame();
             break;
           default:
-            socket.emit('message', 'That\'s not a menu choice!\r\n' + text.Menu);
+            //socket.emit('message', 'That\'s not a menu choice!\r\n' + text.Menu);
+            emitMessage(socket, 'That\'s not a menu choice!\r\n' + text.Menu);
         }
         break;
     }
@@ -125,15 +132,18 @@ io.sockets.on('connection', function(socket) {
     if (sexInput === 'M') {
       socket.player.gender = character.GENDER_MALE;
       socket.connectionState = connections.CON_QCLASS;
-      socket.emit('message', text.ClassMenu);
+      //socket.emit('message', text.ClassMenu);
+      emitMessage(socket, text.ClassMenu);
     }
     else if (sexInput === 'F') {
       socket.player.gender = character.GENDER_MALE;
       socket.connectionState = connections.CON_QCLASS;
-      socket.emit('message', text.ClassMenu);
+      //socket.emit('message', text.ClassMenu);
+      emitMessage(socket, text.ClassMenu);      
     }
     else {
-      socket.emit('message', 'That is not a sex... What IS your sex (M/F)?');
+      //socket.emit('message', 'That is not a sex... What IS your sex (M/F)?');
+      emitMessage(socket, 'That is not a sex... What IS your sex (M/F)?');
     }
   }
 
@@ -152,10 +162,12 @@ io.sockets.on('connection', function(socket) {
       socket.player.class = player.CLASS_THIEF;
     }
     else {
-      socket.emit('message', '\r\nThat\'s not a class.\r\nClass: ');
+      //socket.emit('message', '\r\nThat\'s not a class.\r\nClass: ');
+      emitMessage(socket, '\r\nThat\'s not a class.\r\nClass: ');
       return;
     }
-    socket.emit('message', text.Motd + '\n\r*** PRESS RETURN: ');
+    //socket.emit('message', text.Motd + '\n\r*** PRESS RETURN: ');
+    emitMessage(socket, text.Motd + '\n\r*** PRESS RETURN: ');
     socket.connectionState = connections.CON_RMOTD;
   }
 
@@ -168,7 +180,8 @@ io.sockets.on('connection', function(socket) {
 
   function afterPlayerLoaded(playerDocument) {
     if (playerDocument.name === undefined) {
-       socket.emit('message', 'Did I get that right, ' + socket.player.name + ' (Y/N)?');
+       //socket.emit('message', 'Did I get that right, ' + socket.player.name + ' (Y/N)?');
+       emitMessage(socket, 'Did I get that right, ' + socket.player.name + ' (Y/N)?');       
        socket.connectionState = connections.CON_NAME_CNFRM;
     }
     else {
@@ -181,21 +194,23 @@ io.sockets.on('connection', function(socket) {
   function enterGame() {
     if(socket.player.level === undefined) {
       socket.player.start();
-      console.log('ready!');
       socket.player.save(function(err) {
         // TODO: Log error, I guess?
       });
     }
     
-    socket.emit('message', text.WelcomeMessage);
+    //socket.emit('message', text.WelcomeMessage);
+    emitMessage(socket, text.WelcomeMessage);   
     socket.connectionState = connections.CON_PLAYING;
     
     var startRoom = gameWorld.getRoom(3001);
     startRoom.addCharacter(socket.player);
     
     // TODO: Change this to 'show room to player' function
-    socket.emit('message', startRoom.title);
-    socket.emit('message', startRoom.description);
+    // socket.emit('message', startRoom.title);
+    // socket.emit('message', startRoom.description);
+    emitMessage(socket, startRoom.title, 'Cyan');
+    emitMessage(socket, startRoom.description);
   }
 });
 
