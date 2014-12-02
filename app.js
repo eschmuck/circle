@@ -67,7 +67,7 @@ io.sockets.on('connection', function(socket) {
         break;
       case connections.CON_PASSWORD:
         if (msg['input'] != socket.player.password) {
-          emitMessage(socket, 'Wrong password.\n\rPassword: ');
+          emitMessage(socket, 'Wrong password.\n\rPassword: ', 'Gray', 'true');
         }
         else {
           socket.connectionState = connections.CON_RMOTD;
@@ -76,17 +76,17 @@ io.sockets.on('connection', function(socket) {
         break;
       case connections.CON_NEWPASSWD:
         if (msg['input'].length < 3 || msg['input'].length > 10) {
-          emitMessage(socket, 'Illegal password.\n\rPassword: ');
+          emitMessage(socket, 'Illegal password.\n\rPassword: ', 'Gray', 'true');
         }
         else {
           socket.player.password = msg['input'];
-          emitMessage(socket, 'Please retype password: ');
+          emitMessage(socket, 'Please retype password: ', 'Gray', 'true');
           socket.connectionState = connections.CON_CNFPASSWD;
         }
         break;
       case connections.CON_CNFPASSWD:
         if (msg['input'] !== socket.player.password) {
-          emitMessage(socket, 'Passwords don\'t match... start over.\n\rPassword:');
+          emitMessage(socket, 'Passwords don\'t match... start over.\n\rPassword: ', 'Gray', 'true');
           socket.connectionState = connections.CON_PASSWORD;
         }
         else {
