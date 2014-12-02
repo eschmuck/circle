@@ -199,11 +199,11 @@ io.sockets.on('connection', function(socket) {
     if(socket.player.level === undefined) {
       socket.player.start();
       console.log('ready!');
-      socket.player.save(function(player) {
-        socket.player = player;
-        console.log('done!');
-        console.log(player);
-      });
+      // socket.player.save(function(player) {
+      //   socket.player = player;
+      //   console.log('done!');
+      //   console.log(player);
+      //});
     }
     
     socket.emit('message', text.WelcomeMessage);

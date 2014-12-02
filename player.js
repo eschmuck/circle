@@ -36,7 +36,7 @@ var schema = mongoose.Schema;
 var extend = require('mongoose-schema-extend');
 var character = require("./character").character;
 var characterSchema = require("./character").schema;
-
+var connection = mongoose.connect('mongodb://127.0.0.1/circledb');
 
 var playerSchema = characterSchema.extend({
 	password: String,
@@ -53,21 +53,21 @@ playerSchema.methods.meh = function() {
 };
 
 playerSchema.methods.load = function(name, callback) {
-	mongoose.connect('mongodb://localhost/circledb');
+	//mongoose.connect('mongodb://localhost/circledb');
 	playerModel.find({ name: name }, function(err, docs) {
 		console.log(docs.length);
 		callback(docs);
-		mongoose.connection.close();
+		//mongoose.connection.close();
 	});
 };
 
-playerSchema.methods.save = function(callback) {
-	mongoose.connect('mongodb://localhost/circledb');
-	playerModel.save(function(err, doc) {
-		callback(doc);
-		mongoose.connection.close();
-	});
-};
+// playerSchema.methods.save = function(callback) {
+// 	mongoose.connect('mongodb://localhost/circledb');
+// 	playerModel.save(function(err, doc) {
+// 		callback(doc);
+// 		mongoose.connection.close();
+// 	});
+// };
 
 playerSchema.methods.start = function() {
 	this.level = 1;
