@@ -199,6 +199,7 @@ io.sockets.on('connection', function(socket) {
     if(socket.player.level === undefined) {
       socket.player.start();
       console.log('ready!');
+      console.log(socket.player.meh());
       socket.player.save(function(err, player) {
         // TODO: Log error
         if(err) console.log(err);
