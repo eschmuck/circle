@@ -196,6 +196,9 @@ io.sockets.on('connection', function(socket) {
   }
   
   function enterGame() {
+    
+    console.log('level = ' + socket.player.level);
+    
     if(socket.player.level === 0) {
       socket.player.start();
       console.log('ready!');
