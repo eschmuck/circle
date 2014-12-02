@@ -171,15 +171,14 @@ io.sockets.on('connection', function(socket) {
   }
 
   function afterPlayerLoaded(playerDocument) {
+    console.log(playerDocument);
     if (playerDocument.name === undefined) {
-       //socket.emit('message', 'Did I get that right, ' + socket.player.name + ' (Y/N)?');
        emitMessage(socket, 'Did I get that right, ' + socket.player.name + ' (Y/N)?');       
        socket.connectionState = connections.CON_NAME_CNFRM;
     }
     else {
-       socket.emit('message', 'Password: ');
+       emitMessage(socket, 'Password: ', 'Gray', 'true');
        socket.connectionState = connections.CON_PASSWORD;
-       // TODO: password mask
     }
   }
   
