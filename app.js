@@ -198,10 +198,14 @@ io.sockets.on('connection', function(socket) {
   function enterGame() {
     if(socket.player.level === 0) {
       socket.player.start();
+      console.log('ready!');
       socket.player.save(function(err, player) {
         // TODO: Log error
         if(err) console.log(err);
-        else socket.player = player;
+        else {
+          socket.player = player;
+          console.log('done!');
+        }
       });
     }
     
