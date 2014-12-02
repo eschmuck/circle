@@ -16,12 +16,21 @@
     
         var socket = io.connect();
 
-        // socket.on('connect', function () {
-        //     alert('connected!');
-        // });        
-
         socket.on('message', function(data) {
-          $('body').terminal(this).echo(data);
+          if(data['prompt'] !== undefined) {
+            $('body').terminal(this).set_prompt(data['prompt']);
+          }
+          
+          if(data['color'] !== undefined) {
+            $('body').terminal(this).echo(data['message'], { 
+              finalize: function (div) {
+                div.css('color', data['color']);
+              }
+            });
+          }
+          else {
+            $('body').terminal(this).echo(data);
+          }
         });
 
         jQuery(document).ready(function ($) {
@@ -33,8 +42,6 @@
             });
         });
         
-
-    
     </script>
   </body>
 </html>

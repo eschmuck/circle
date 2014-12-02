@@ -27,32 +27,17 @@ http.createServer(app).listen(app.get('port'), function() {
   console.log("Express server listening on port 3000");
 });
 
-// gameDb.loadAll('room', function(documents) {
-//   for(var i = 0; i < documents.length; i++) {
-//     gameWorld.rooms.push(Object.create(room, documents[i]));
-//   }
-  
-//   gameDb.loadAll('zone', function(documents) {
-//     gameWorld.zones = documents;
-//   });
-// }); 
-
-//room.saveRooms();
-
-
 room.getRooms(function(docs){
   gameWorld.rooms = docs;
 });
-
-
-
 
 io.sockets.on('connection', function(socket) {
   console.log('A new user connected!');
 
   socket.player = null;
   socket.connectionState = connections.CON_GET_NAME;
-  socket.emit('message', text.IntroMessage);
+  //socket.emit('message', text.IntroMessage);
+  emitMessage(socket, text.IntroMessage);
 
   sockets.push(socket);
 
@@ -178,8 +163,6 @@ io.sockets.on('connection', function(socket) {
     var playerName = msg['input'].substring(0, 1).toUpperCase() + msg['input'].substring(1).toLowerCase();
     socket.player = new player();
     socket.player.name = playerName;
-    //gameDb.loadOne(socket.player, afterPlayerLoaded);
-    //socket.player.meh();
     socket.player.load(playerName, afterPlayerLoaded);
   }
 
@@ -199,10 +182,8 @@ io.sockets.on('connection', function(socket) {
     if(socket.player.level === undefined) {
       socket.player.start();
       console.log('ready!');
-      socket.player.save(function(player) {
-         socket.player = player;
-         console.log('done!');
-         console.log(player);
+      socket.player.save(function(err) {
+        // TODO: Log error, I guess?
       });
     }
     
@@ -216,5 +197,8 @@ io.sockets.on('connection', function(socket) {
     socket.emit('message', startRoom.title);
     socket.emit('message', startRoom.description);
   }
-
 });
+
+function emitMessage(socket, text, color, prompt) {
+  socket.emit('message', { message: text, color: color, prompt : prompt });
+}
