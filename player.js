@@ -36,7 +36,8 @@ var schema = mongoose.Schema;
 var extend = require('mongoose-schema-extend');
 var character = require("./character").character;
 var characterSchema = require("./character").schema;
-var connection = mongoose.connect('mongodb://127.0.0.1/circledb');
+
+var connection = mongoose.connect('mongodb://localhost/circledb');
 
 var playerSchema = characterSchema.extend({
 	password: String,
@@ -55,7 +56,7 @@ playerSchema.methods.meh = function() {
 playerSchema.methods.load = function(name, callback) {
 	//mongoose.connect('mongodb://localhost/circledb');
 	playerModel.find({ name: name }, function(err, docs) {
-		console.log(docs.length);
+		//console.log(docs.length);
 		callback(docs);
 		//mongoose.connection.close();
 	});
