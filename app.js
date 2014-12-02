@@ -170,16 +170,15 @@ io.sockets.on('connection', function(socket) {
     socket.player.load(playerName, afterPlayerLoaded);
   }
 
-  function afterPlayerLoaded(playerDocument) {
-    console.log(playerDocument.name);
-    console.log(playerDocument.length);
-    if (playerDocument.name === undefined) {
+  function afterPlayerLoaded(playerDocuments) {
+   if (playerDocuments.length === 0) {
        emitMessage(socket, 'Did I get that right, ' + socket.player.name + ' (Y/N)?');       
        socket.connectionState = connections.CON_NAME_CNFRM;
     }
     else {
        emitMessage(socket, 'Password: ', 'Gray', 'true');
        socket.connectionState = connections.CON_PASSWORD;
+       socket.player = playerDocuments[0];
     }
   }
   
