@@ -172,6 +172,7 @@ io.sockets.on('connection', function(socket) {
 
   function afterPlayerLoaded(playerDocument) {
     console.log(playerDocument.name);
+    console.log(playerDocument.length);
     if (playerDocument.name === undefined) {
        emitMessage(socket, 'Did I get that right, ' + socket.player.name + ' (Y/N)?');       
        socket.connectionState = connections.CON_NAME_CNFRM;
