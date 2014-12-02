@@ -6,7 +6,7 @@ var socketio = require('socket.io');
 var character = require('./character');
 var connections = require('./connections');
 var database = require('./database');
-var Player = require('./player').player;
+var player = require('./player').player;
 var text = require('./text');
 var room = require('./room');
 var world = require('./world');
@@ -153,30 +153,30 @@ io.sockets.on('connection', function(socket) {
   }
 
   function getPlayerClass(msg) {
-    // var classInput = msg['input'].substring(0, 1).toUpperCase();
-    // if (classInput === 'C') {
-    //   socket.player.class = player.CLASS_CLERIC;
-    // }
-    // else if (classInput === 'M') {
-    //   socket.player.class = player.CLASS_MAGIC_USER;
-    // }
-    // else if (classInput === 'W') {
-    //   socket.player.class = player.CLASS_WARRIOR;
-    // }
-    // else if (classInput === 'T') {
-    //   socket.player.class = player.CLASS_THIEF;
-    // }
-    // else {
-    //   socket.emit('message', '\r\nThat\'s not a class.\r\nClass: ');
-    //   return;
-    // }
+    var classInput = msg['input'].substring(0, 1).toUpperCase();
+    if (classInput === 'C') {
+      socket.player.class = player.CLASS_CLERIC;
+    }
+    else if (classInput === 'M') {
+      socket.player.class = player.CLASS_MAGIC_USER;
+    }
+    else if (classInput === 'W') {
+      socket.player.class = player.CLASS_WARRIOR;
+    }
+    else if (classInput === 'T') {
+      socket.player.class = player.CLASS_THIEF;
+    }
+    else {
+      socket.emit('message', '\r\nThat\'s not a class.\r\nClass: ');
+      return;
+    }
     socket.emit('message', text.Motd + '\n\r*** PRESS RETURN: ');
     socket.connectionState = connections.CON_RMOTD;
   }
 
   function getName(msg) {
     var playerName = msg['input'].substring(0, 1).toUpperCase() + msg['input'].substring(1).toLowerCase();
-    socket.player = new Player();
+    socket.player = new player();
     socket.player.name = playerName;
     //gameDb.loadOne(socket.player, afterPlayerLoaded);
     //socket.player.meh();
@@ -189,7 +189,9 @@ io.sockets.on('connection', function(socket) {
        socket.connectionState = connections.CON_NAME_CNFRM;
     }
     else {
-       // TODO: Ask for password
+       socket.emit('message', 'Password: ');
+       socket.connectionState = connections.CON_PASSWORD;
+       // TODO: password mask
     }
   }
   
