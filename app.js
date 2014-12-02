@@ -54,23 +54,19 @@ io.sockets.on('connection', function(socket) {
         break;
       case connections.CON_NAME_CNFRM:
         if (msg['input'].substring(0, 1).toUpperCase() == 'Y') {
-          //socket.emit('message', 'New character.\n\rGive me a password for ' + socket.player.name + ': ');
-          emitMessage(socket, 'New character.\n\rGive me a password for ' + socket.player.name + ': ');
+          emitMessage(socket, 'New character.\n\rGive me a password for ' + socket.player.name + ': ', 'Gray', 'password_mask');
           socket.connectionState = connections.CON_NEWPASSWD;
         }
         else if (msg['input'].substring(0, 1).toUpperCase() == 'N') {
-          //socket.emit('message', 'Okay, what IS it, then?');
-          emitMessage(socket, 'New character.\n\rGive me a password for ' + socket.player.name + ': ');
+          emitMessage(socket, 'Okay, what IS it, then? ');
           socket.connectionState = connections.CON_GET_NAME;
         }
         else {
-          //socket.emit('message', 'Please type Yes or No: ');
           emitMessage(socket, 'Please type Yes or No: ');
         }
         break;
       case connections.CON_PASSWORD:
         if (msg['input'] != socket.player.password) {
-          //socket.emit('Wrong password.\n\rPassword: ');
           emitMessage(socket, 'Wrong password.\n\rPassword: ');
         }
         else {
@@ -84,7 +80,6 @@ io.sockets.on('connection', function(socket) {
         }
         else {
           socket.player.password = msg['input'];
-          //socket.emit('message', 'Please retype password: ');
           emitMessage(socket, 'Please retype password: ');
           socket.connectionState = connections.CON_CNFPASSWD;
         }
@@ -107,7 +102,6 @@ io.sockets.on('connection', function(socket) {
         break;
       case connections.CON_RMOTD:
         socket.connectionState = connections.CON_MENU;
-        //socket.emit('message', text.Menu);
         emitMessage(socket, text.Menu);
         break;
       case connections.CON_MENU:
@@ -119,7 +113,6 @@ io.sockets.on('connection', function(socket) {
             enterGame();
             break;
           default:
-            //socket.emit('message', 'That\'s not a menu choice!\r\n' + text.Menu);
             emitMessage(socket, 'That\'s not a menu choice!\r\n' + text.Menu);
         }
         break;
@@ -132,7 +125,6 @@ io.sockets.on('connection', function(socket) {
     if (sexInput === 'M') {
       socket.player.gender = character.GENDER_MALE;
       socket.connectionState = connections.CON_QCLASS;
-      //socket.emit('message', text.ClassMenu);
       emitMessage(socket, text.ClassMenu);
     }
     else if (sexInput === 'F') {
