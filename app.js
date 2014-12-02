@@ -54,7 +54,7 @@ io.sockets.on('connection', function(socket) {
         break;
       case connections.CON_NAME_CNFRM:
         if (msg['input'].substring(0, 1).toUpperCase() == 'Y') {
-          emitMessage(socket, 'New character.\n\rGive me a password for ' + socket.player.name + ': ', 'Gray', 'password_mask');
+          emitMessage(socket, 'New character.\n\rGive me a password for ' + socket.player.name + ': ', 'Gray', 'true');
           socket.connectionState = connections.CON_NEWPASSWD;
         }
         else if (msg['input'].substring(0, 1).toUpperCase() == 'N') {
@@ -206,6 +206,6 @@ io.sockets.on('connection', function(socket) {
   }
 });
 
-function emitMessage(socket, text, color, prompt) {
-  socket.emit('message', { message: text, color: color, prompt : prompt });
+function emitMessage(socket, text, color, mask) {
+  socket.emit('message', { message: text, color: color, mask : mask });
 }
