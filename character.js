@@ -27,7 +27,12 @@ characterSchema.methods.blah = function() {
 characterSchema.methods.say = function(message) {
 	if(message.length < 1) {
 		if(this.socket !== undefined) {
-			this.socket.emit('message', { message: message });
+			this.socket.emit('message', { message: "Yes, but WHAT do you want to say?" });
+		}
+	}
+	else {
+		if(this.socket !== undefined) {
+			this.socket.emit('message', { message: "You say, '" + message + "'" });
 		}
 	}
 };

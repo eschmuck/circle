@@ -26,8 +26,8 @@ var COMMAND_LIST = [
           { command: "up"       , minimumPosition: Character.POS_STANDING, functionPointer: do_move                    , minimumLevel: 0, subCommand: exports.SCMD_UP },
           { command: "down"     , minimumPosition: Character.POS_STANDING, functionPointer: do_move                    , minimumLevel: 0, subCommand: exports.SCMD_DOWN },
           
-          { command: "say"      , minimumPosition: Character.POS_RESTING , functionPointer: CharacterSchema.say        , minimumLevel: 0, subCommand: 0 },
-          { command: "'"        , minimumPosition: Character.POS_RESTING , functionPointer: CharacterSchema.say        , minimumLevel: 0, subCommand: 0 },
+          { command: "say"      , minimumPosition: Character.POS_RESTING , functionPointer: handle_say        , minimumLevel: 0, subCommand: 0 },
+          { command: "'"        , minimumPosition: Character.POS_RESTING , functionPointer: handle_say        , minimumLevel: 0, subCommand: 0 },
           
     ];
 
@@ -84,6 +84,36 @@ Interpreter.prototype.getCommand = function(input) {
     
     return command;
 };
+
+Interpreter.prototype.handleInput = function(character, input) {
+    var command = this.getCommand(input);
+    
+    if(command !== null) {
+        command.functionPointer(character, input);
+    }
+};
+
+function handle_say(character, input) {
+    character.say(input);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Exports
 module.exports = Interpreter;
