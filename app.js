@@ -49,7 +49,7 @@ io.sockets.on('connection', function(socket) {
   socket.on('message', function(msg) {
     switch (socket.connectionState) {
       case connections.CON_PLAYING:
-        var command = inputInterpreter.getCommand(msg);
+        var command = inputInterpreter.getCommand(msg['input']);
         
         command.functionPointer();
         
