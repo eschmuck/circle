@@ -24,6 +24,14 @@ characterSchema.methods.blah = function() {
 	return 'blah';
 };
 
+characterSchema.methods.say = function(message) {
+	if(message.length < 1) {
+		if(this.socket !== undefined) {
+			this.socket.emit('message', { message: message });
+		}
+	}
+};
+
 var characterModel = mongoose.model('character', characterSchema);
 
 // Constants

@@ -10,6 +10,7 @@ var player = require('./player').player;
 var text = require('./text');
 var room = require('./room');
 var world = require('./world');
+var interpreter = require('./interpreter');
 
 var app = express();
 var server = app.listen(3000);
@@ -36,7 +37,6 @@ io.sockets.on('connection', function(socket) {
 
   socket.player = null;
   socket.connectionState = connections.CON_GET_NAME;
-  //socket.emit('message', text.IntroMessage);
   emitMessage(socket, text.IntroMessage);
 
   sockets.push(socket);
@@ -48,6 +48,10 @@ io.sockets.on('connection', function(socket) {
   socket.on('message', function(msg) {
     switch (socket.connectionState) {
       case connections.CON_PLAYING:
+        var command = interpreter.getCommand(msg);
+        
+        command.functionPointer();
+        
         break;
       case connections.CON_GET_NAME:
         getName(msg);
@@ -130,11 +134,9 @@ io.sockets.on('connection', function(socket) {
     else if (sexInput === 'F') {
       socket.player.gender = character.GENDER_MALE;
       socket.connectionState = connections.CON_QCLASS;
-      //socket.emit('message', text.ClassMenu);
       emitMessage(socket, text.ClassMenu);      
     }
     else {
-      //socket.emit('message', 'That is not a sex... What IS your sex (M/F)?');
       emitMessage(socket, 'That is not a sex... What IS your sex (M/F)?');
     }
   }
@@ -154,11 +156,10 @@ io.sockets.on('connection', function(socket) {
       socket.player.class = player.CLASS_THIEF;
     }
     else {
-      //socket.emit('message', '\r\nThat\'s not a class.\r\nClass: ');
       emitMessage(socket, '\r\nThat\'s not a class.\r\nClass: ');
       return;
     }
-    //socket.emit('message', text.Motd + '\n\r*** PRESS RETURN: ');
+
     emitMessage(socket, text.Motd + '\n\r*** PRESS RETURN: ');
     socket.connectionState = connections.CON_RMOTD;
   }
@@ -190,7 +191,6 @@ io.sockets.on('connection', function(socket) {
       });
     }
     
-    //socket.emit('message', text.WelcomeMessage);
     emitMessage(socket, text.WelcomeMessage);   
     socket.connectionState = connections.CON_PLAYING;
     
@@ -198,8 +198,6 @@ io.sockets.on('connection', function(socket) {
     startRoom.addCharacter(socket.player);
     
     // TODO: Change this to 'show room to player' function
-    // socket.emit('message', startRoom.title);
-    // socket.emit('message', startRoom.description);
     emitMessage(socket, startRoom.title, 'Cyan');
     emitMessage(socket, startRoom.description);
   }

@@ -1,5 +1,5 @@
 var Character = require("./character");
-
+var CharacterSchema = require("../character").character
 
 // Object constructor
 function Interpreter() {
@@ -19,12 +19,16 @@ var do_move = 1;
 
 var COMMAND_LIST = [
     
-          { command: "north"    , minimumPosition: Character.POS_STANDING, functionPointer: do_move       , minimumLevel: 0, subCommand: exports.SCMD_NORTH },
-          { command: "east"     , minimumPosition: Character.POS_STANDING, functionPointer: do_move       , minimumLevel: 0, subCommand: exports.SCMD_EAST },
-          { command: "south"    , minimumPosition: Character.POS_STANDING, functionPointer: do_move       , minimumLevel: 0, subCommand: exports.SCMD_SOUTH },
-          { command: "west"     , minimumPosition: Character.POS_STANDING, functionPointer: do_move       , minimumLevel: 0, subCommand: exports.SCMD_WEST },
-          { command: "up"       , minimumPosition: Character.POS_STANDING, functionPointer: do_move       , minimumLevel: 0, subCommand: exports.SCMD_UP },
-          { command: "down"     , minimumPosition: Character.POS_STANDING, functionPointer: do_move       , minimumLevel: 0, subCommand: exports.SCMD_DOWN },
+          { command: "north"    , minimumPosition: Character.POS_STANDING, functionPointer: do_move                    , minimumLevel: 0, subCommand: exports.SCMD_NORTH },
+          { command: "east"     , minimumPosition: Character.POS_STANDING, functionPointer: do_move                    , minimumLevel: 0, subCommand: exports.SCMD_EAST },
+          { command: "south"    , minimumPosition: Character.POS_STANDING, functionPointer: do_move                    , minimumLevel: 0, subCommand: exports.SCMD_SOUTH },
+          { command: "west"     , minimumPosition: Character.POS_STANDING, functionPointer: do_move                    , minimumLevel: 0, subCommand: exports.SCMD_WEST },
+          { command: "up"       , minimumPosition: Character.POS_STANDING, functionPointer: do_move                    , minimumLevel: 0, subCommand: exports.SCMD_UP },
+          { command: "down"     , minimumPosition: Character.POS_STANDING, functionPointer: do_move                    , minimumLevel: 0, subCommand: exports.SCMD_DOWN },
+          
+          { command: "say"      , minimumPosition: Character.POS_RESTING , functionPointer: CharacterSchema.say        , minimumLevel: 0, subCommand: 0 },
+          { command: "'"        , minimumPosition: Character.POS_RESTING , functionPointer: CharacterSchema.say        , minimumLevel: 0, subCommand: 0 },
+          
     ];
 
 
