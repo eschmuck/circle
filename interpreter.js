@@ -96,6 +96,7 @@ Interpreter.prototype.handleInput = function(character, input) {
 };
 
 function handle_say(character, input) {
+    console.log(input);
     character.say(input);
 }
 
