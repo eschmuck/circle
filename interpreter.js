@@ -1,5 +1,5 @@
 var Character = require("./character");
-var CharacterSchema = require("./character").character
+var CharacterSchema = require("./character").character;
 
 // Object constructor
 function Interpreter() {
@@ -96,7 +96,7 @@ Interpreter.prototype.handleInput = function(character, input) {
 };
 
 function handle_say(character, command) {
-    character.say(command.subInput);
+    character.say(command.subInput.trim());
 }
 
 

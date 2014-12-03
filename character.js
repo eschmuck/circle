@@ -25,7 +25,6 @@ characterSchema.methods.blah = function() {
 };
 
 characterSchema.methods.say = function(message) {
-	console.log(message);
 	if(message.length < 1) {
 		if(this.socket !== undefined) {
 			this.socket.emit('message', { message: "Yes, but WHAT do you want to say?" });
