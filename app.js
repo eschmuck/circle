@@ -195,10 +195,7 @@ io.sockets.on('connection', function(socket) {
     
     var startRoom = gameWorld.getRoom(3001);
     startRoom.addCharacter(socket.player);
-    
-    // TODO: Change this to 'show room to player' function
-    emitMessage(socket, startRoom.title, 'Cyan');
-    emitMessage(socket, startRoom.description);
+    startRoom.showRoomToCharacter(socket.player);
   }
 });
 

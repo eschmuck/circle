@@ -30,6 +30,21 @@ roomSchema.methods.removeCharacter = function(character) {
 	character.room = null;
 };
 
+roomSchema.methods.getRoomTitle = function() {
+	return { message: this.title, color: 'Cyan' };
+};
+
+roomSchema.methods.getRoomDescription = function() {
+	return { message: this.description, color: 'Gray' };
+};
+
+roomSchema.methods.showRoomToCharacter = function(character) {
+	if(character.socket !== undefined) {
+		character.socket.emit('message', this.getRoomTitle());
+		character.socket.emit('message', this.getRoomDescription());
+	}
+};
+
 var roomModel = mongoose.model('room', roomSchema);
 
 exports.getRooms = function getRooms(callback) {
