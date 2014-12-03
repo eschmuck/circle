@@ -32,10 +32,14 @@ characterSchema.methods.say = function(message) {
 		}
 	}
 	else {
-		console.log(this.socket);
-		
 		if(this.socket !== undefined) {
 			this.socket.emit('message', { message: "You say, '" + message + "'" });
+		}
+		
+		for(var i = 0; i < this.room.people.length; i++) {
+			if(this.room.people[i].socket !== undefined) {
+				this.room.people[i].socket.emit('message', { message: this.name + " says, '" + message + "'" });
+			}
 		}
 	}
 };

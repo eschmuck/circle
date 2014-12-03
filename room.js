@@ -26,7 +26,7 @@ roomSchema.methods.addCharacter = function(character) {
 };
 
 roomSchema.methods.removeCharacter = function(character) {
-	this.people.splice(this.people.indexO(character), 1);
+	this.people.splice(this.people.indexOf(character), 1);
 	character.room = null;
 };
 

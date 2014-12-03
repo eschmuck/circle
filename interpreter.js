@@ -77,7 +77,10 @@ Interpreter.prototype.getCommand = function(input) {
     
     for(var i = 0; i < COMMAND_LIST.length; i++) {
         if(COMMAND_LIST[i].command.substr(0, commandToken.length) === commandToken) {
+            console.log(command);
+            
             command = COMMAND_LIST[i];
+            command.subInput = input.replace(commandToken, '');
             break;
         }
     }
@@ -87,17 +90,14 @@ Interpreter.prototype.getCommand = function(input) {
 
 Interpreter.prototype.handleInput = function(character, input) {
     var command = this.getCommand(input);
-    
-    console.log(command);
-    
+
     if(command !== null) {
-        command.functionPointer(character, input);
+        command.functionPointer(character, command);
     }
 };
 
-function handle_say(character, input) {
-    console.log(input);
-    character.say(input);
+function handle_say(character, command) {
+    character.say(command.subInput);
 }
 
 
