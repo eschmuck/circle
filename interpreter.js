@@ -88,6 +88,8 @@ Interpreter.prototype.getCommand = function(input) {
 Interpreter.prototype.handleInput = function(character, input) {
     var command = this.getCommand(input);
     
+    console.log(command);
+    
     if(command !== null) {
         command.functionPointer(character, input);
     }
