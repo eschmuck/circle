@@ -37,8 +37,10 @@ characterSchema.methods.say = function(message) {
 		}
 		
 		for(var i = 0; i < this.room.people.length; i++) {
-			if(this.room.people[i].socket !== undefined) {
-				this.room.people[i].socket.emit('message', { message: this.name + " says, '" + message + "'" });
+			if(this.room.people[i] != this) {
+				if(this.room.people[i].socket !== undefined) {
+					this.room.people[i].socket.emit('message', { message: this.name + " says, '" + message + "'" });
+				}
 			}
 		}
 	}

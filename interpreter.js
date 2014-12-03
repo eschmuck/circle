@@ -77,14 +77,13 @@ Interpreter.prototype.getCommand = function(input) {
     
     for(var i = 0; i < COMMAND_LIST.length; i++) {
         if(COMMAND_LIST[i].command.substr(0, commandToken.length) === commandToken) {
-            console.log(command);
-            
             command = COMMAND_LIST[i];
             command.subInput = input.replace(commandToken, '');
             break;
         }
     }
-    
+
+    console.log(command);
     return command;
 };
 
