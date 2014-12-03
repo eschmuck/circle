@@ -1,5 +1,5 @@
 var Character = require("./character");
-var CharacterSchema = require("../character").character
+var CharacterSchema = require("./character").character
 
 // Object constructor
 function Interpreter() {
