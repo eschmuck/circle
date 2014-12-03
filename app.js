@@ -16,6 +16,7 @@ var app = express();
 var server = app.listen(3000);
 var gameDb = new database();
 var gameWorld = new world();
+var inputInterpreter = new interpreter();
 
 var sockets = [];
 
@@ -48,7 +49,7 @@ io.sockets.on('connection', function(socket) {
   socket.on('message', function(msg) {
     switch (socket.connectionState) {
       case connections.CON_PLAYING:
-        var command = interpreter.getCommand(msg);
+        var command = inputInterpreter.getCommand(msg);
         
         command.functionPointer();
         
