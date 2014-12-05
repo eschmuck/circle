@@ -92,9 +92,9 @@ var GENDER_NEUTRAL = 0;
 var GENDER_MALE    = 1;
 var GENDER_FEMALE  = 2;
 
-exports.GENDER_NEUTRAL = GENDER_NEUTRAL;
-exports.GENDER_MALE    = GENDER_MALE;
-exports.GENDER_FEMALE  = GENDER_FEMALE;
+// exports.GENDER_NEUTRAL = GENDER_NEUTRAL;
+// exports.GENDER_MALE    = GENDER_MALE;
+// exports.GENDER_FEMALE  = GENDER_FEMALE;
 
 exports.POS_DEAD       = 0;
 exports.POS_MORTALLYW  = 1;
@@ -108,7 +108,12 @@ exports.POS_STANDING   = 8;
 
 module.exports = {
 	schema: characterSchema,
-	character: characterModel
+	character: characterModel,
+	
+	GENDER_NEUTRAL: GENDER_NEUTRAL,
+	GENDER_MALE:    GENDER_MALE,
+	GENDER_FEMALE:  GENDER_FEMALE
+	
 };
 
 
