@@ -81,14 +81,9 @@ characterSchema.methods.say = function(message) {
 };
 
 characterSchema.methods.social = function(action, parameter) {
-	console.log(parameter);
-	console.log(this);
-	console.log(action);
-	
 	var thisSocial = new Social(action, parameter, this);
 	thisSocial.emitMessages();
 };
-
 
 var characterModel = mongoose.model('character', characterSchema);
 
