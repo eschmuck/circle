@@ -207,6 +207,7 @@ var COMMAND_LIST = [
           { command: "sigh"     , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_SIGH },
           { command: "shrug"    , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_SHRUG },
           { command: "sing"     , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_SING },
+          { command: "sit"      , minimumPosition: Character.POS_RESTING , functionPointer: do_sit        , minimumLevel: 0, subCommand: 0 },
           { command: "slap"     , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_SLAP },
           { command: "smile"    , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_SMILE },
           { command: "smirk"    , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_SMIRK },
@@ -220,6 +221,7 @@ var COMMAND_LIST = [
           { command: "snuggle"  , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_SNUGGLE },
           { command: "spank"    , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_SPANK },
           { command: "spit"     , minimumPosition: Character.POS_SITTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_SPIT },
+          { command: "stand"    , minimumPosition: Character.POS_RESTING , functionPointer: do_stand      , minimumLevel: 0, subCommand: 0 },
           { command: "stare"    , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_STARE },
           { command: "steam"    , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_STEAM },
           { command: "stroke"   , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_STROKE },
@@ -418,12 +420,28 @@ Interpreter.prototype.handleInput = function(character, input) {
         if(character.position < command.minimumPosition) {
             switch(character.position) {
                 case Character.POS_DEAD:
-                    if(character.socket !== undefined) {
-                        character.socket.emit('message', { message: "Lie still; you are DEAD!!! :-(" });
-                    }
+                    character.emitMessage("Lie still; you are DEAD!!! :-(" );
                     break;
+                case Character.POS_INCAP:
+                case Character.POS_MORTALLYW:
+                    character.emitMessage("You are in a pretty bad shape, unable to do anything!");
+                    break;
+                case Character.POS_STUNNED:
+                    character.emitMessage("All you can do right now is think about the stars!");
+                    break;
+                case Character.POS_SLEEPING:
+                    character.emitMessage("In your dreams, or what?");
+                    break;
+                case Character.POS_RESTING:
+                    character.emitMessage("Nah... You feel too relaxed to do that...");
+                    break;
+                case Character.POS_SITTING:
+                    character.emitMessage("Maybe you should get on your feet first?");
+                    break;
+                case Character.POS_FIGHTING:
+                    character.emitMessage("No way!  You're fighting for your life!");
+                    break;                    
             }
-            
         }
         else {
             command.functionPointer(character, command);
@@ -444,7 +462,13 @@ function do_action(character, command) {
     character.social(action, command.subInput.trim());
 }
 
+function do_stand(character) {
+    character.stand();
+}
 
+function do_sit(character) {
+    character.sit();
+}
 
 
 

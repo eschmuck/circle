@@ -70,20 +70,21 @@ characterSchema.methods.emitMessage = function(message, color) {
 	}
 };
 
+characterSchema.methods.emitRoomMessage = function(message, color) {
+	for(var i = 0; i < this.room.people.length; i++) {
+		if(this.room.people[i] != this) {
+			this.room.people[i].emitMessage(message);
+		}
+	}
+};
+
 characterSchema.methods.say = function(message) {
 	if(message.length < 1) {
 		this.emitMessage("Yes, but WHAT do you want to say?");
 	}
 	else {
 		this.emitMessage("You say, '" + message + "'");
-
-		var whatSaid = this.name + " says, '" + message + "'";
-
-		for(var i = 0; i < this.room.people.length; i++) {
-			if(this.room.people[i] != this) {
-				this.room.people[i].emitMessage(whatSaid);
-			}
-		}
+		this.emitRoomMessage(this.name + " says, '" + message + "'");
 	}
 };
 
@@ -91,6 +92,37 @@ characterSchema.methods.social = function(action, parameter) {
 	var thisSocial = new Social(action, parameter, this);
 	thisSocial.emitMessages();
 };
+
+characterSchema.methods.stand = function() {
+	switch(this.position) {
+		case POS_STANDING:
+			this.emitMessage("You are already standing.");
+			break;
+		case POS_SITTING:
+			this.emitMessage("You stand up.");
+			this.emitRoomMessage(this.name + " clambers to " + this.getPossessivePronoun() + " feet.");
+			this.position = POS_STANDING;
+			break;
+		// TODO: Finish
+	}
+};
+
+characterSchema.methods.sit = function() {
+	switch(this.position) {
+		case POS_STANDING:
+			this.emitMessage("You sit down.");
+			this.emitRoomMessage(this.name + " sits down.");
+			this.position = POS_SITTING;
+			break;
+		case POS_SITTING:
+			this.emitMessage("You're sitting already.");
+			break;
+	}
+
+	// TODO: Finish
+
+};
+
 
 var characterModel = mongoose.model('character', characterSchema);
 

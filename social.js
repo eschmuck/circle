@@ -69,16 +69,12 @@ Social.prototype.emitSocialToActorVictimRoom = function() {
 };
 
 Social.prototype.emitSocialMessageToActor = function(message) {
-    if (this.actor.socket !== undefined) {
-        this.actor.socket.emit('message', { message: message });
-    }
+    this.actor.emitMessage(message );
 };
 
 Social.prototype.emitSocialMessageToVictim = function(message) {
     if(this.victim !== undefined) {
-        if (this.victim.socket !== undefined) {
-            this.victim.socket.emit('message', { message: message });
-        }
+        this.victim.emitMessage(message );
     }
 };
 
@@ -87,9 +83,7 @@ Social.prototype.emitSocialMessageToRoom = function(message) {
         var messageTarget = this.actor.room.people[i];
 
         if (messageTarget !== this.actor) {
-            if (messageTarget.socket !== undefined) {
-                messageTarget.socket.emit('message', { message: message });
-            }
+            messageTarget.emitMessage(message);
         }
     }
 };
@@ -99,9 +93,7 @@ Social.prototype.emitSocialMessageToRoomExceptVictim = function(message) {
         var messageTarget = this.actor.room.people[i];
 
         if (messageTarget !== this.actor && messageTarget != this.victim) {
-            if (messageTarget.socket !== undefined) {
-                messageTarget.socket.emit('message', { message: message });
-            }
+            messageTarget.emitMessage(message);
         }
     }
 };

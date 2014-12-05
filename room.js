@@ -30,14 +30,6 @@ roomSchema.methods.removeCharacter = function(character) {
 	character.room = null;
 };
 
-roomSchema.methods.getRoomTitle = function() {
-	return { message: this.title, color: 'Cyan' };
-};
-
-roomSchema.methods.getRoomDescription = function() {
-	return { message: this.description, color: 'Gray' };
-};
-
 roomSchema.methods.getCharacter = function(key) {
 	// TODO: Handle NPCs
 	// TODO: Handle stuff like 2.guard
@@ -54,10 +46,8 @@ roomSchema.methods.getCharacter = function(key) {
 };
 
 roomSchema.methods.showRoomToCharacter = function(character) {
-	if(character.socket !== undefined) {
-		character.socket.emit('message', this.getRoomTitle());
-		character.socket.emit('message', this.getRoomDescription());
-	}
+	character.emitMessage(this.title, 'Cyan');
+	character.emitMessage(this.description, 'Gray');
 };
 
 var roomModel = mongoose.model('room', roomSchema);
