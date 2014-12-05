@@ -44,6 +44,8 @@ playerSchema.methods.start = function() {
 	this.hunger = 24;
 	this.thirst = 24;
 	this.drunk = 0;
+	
+	this.position = character.POS_STANDING;
 };
 
 var playerModel = mongoose.model('player', playerSchema);
