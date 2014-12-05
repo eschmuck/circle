@@ -59,22 +59,29 @@ characterSchema.methods.blah = function() {
 	return 'blah';
 };
 
-characterSchema.methods.say = function(message) {
-	if(message.length < 1) {
-		if(this.socket !== undefined) {
-			this.socket.emit('message', { message: "Yes, but WHAT do you want to say?" });
+characterSchema.methods.emitMessage = function(message, color) {
+	if(this.socket !== undefined) {
+		if(color !== undefined) {
+			this.socket.emit('message', { message: message, color: color });
+		}
+		else {
+			this.socket.emit('message', { message: message });
 		}
 	}
+};
+
+characterSchema.methods.say = function(message) {
+	if(message.length < 1) {
+		this.emitMessage("Yes, but WHAT do you want to say?");
+	}
 	else {
-		if(this.socket !== undefined) {
-			this.socket.emit('message', { message: "You say, '" + message + "'" });
-		}
-		
+		this.emitMessage("You say, '" + message + "'");
+
+		var whatSaid = this.name + " says, '" + message + "'";
+
 		for(var i = 0; i < this.room.people.length; i++) {
 			if(this.room.people[i] != this) {
-				if(this.room.people[i].socket !== undefined) {
-					this.room.people[i].socket.emit('message', { message: this.name + " says, '" + message + "'" });
-				}
+				this.room.people[i].emitMessage(whatSaid);
 			}
 		}
 	}

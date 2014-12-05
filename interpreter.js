@@ -403,19 +403,30 @@ Interpreter.prototype.getCommand = function(input) {
         }
     }
 
-    console.log(command);
     return command;
 };
 
 Interpreter.prototype.handleInput = function(character, input) {
     var command = this.getCommand(input);
 
-    if(command !== null) {
-        command.functionPointer(character, command);
-    }
-    else {
+    if(command === null) {
         if(this.character.socket !== undefined) {
             this.character.socket.emit('message', { message: "Huh?!?"});
+        }
+    }
+    else {
+        if(this.character.position < command.minimumPosition) {
+            switch(character.position) {
+                case Character.POS_DEAD:
+                    if(this.character.socket !== undefined) {
+                        this.character.socket.emit('message', { message: "Lie still; you are DEAD!!! :-(" });
+                    }
+                    break;
+            }
+            
+        }
+        else {
+            command.functionPointer(character, command);
         }
     }
 };
@@ -430,7 +441,6 @@ function do_move(character, command) {
 
 function do_action(character, command) {
     var action = SOCIALS[command.subCommand];
-    console.log(action);
     character.social(action, command.subInput.trim());
 }
 
