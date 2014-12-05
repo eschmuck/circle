@@ -29,7 +29,7 @@ http.createServer(app).listen(app.get('port'), function() {
   console.log("Express server listening on port 3000");
 });
 
-room.getRooms(function(docs){
+room.getRooms(function(docs) {
   gameWorld.rooms = docs;
 });
 
@@ -132,7 +132,7 @@ io.sockets.on('connection', function(socket) {
     else if (sexInput === 'F') {
       socket.player.gender = character.GENDER_MALE;
       socket.connectionState = connections.CON_QCLASS;
-      emitMessage(socket, text.ClassMenu);      
+      emitMessage(socket, text.ClassMenu);
     }
     else {
       emitMessage(socket, 'That is not a sex... What IS your sex (M/F)?');
@@ -140,6 +140,8 @@ io.sockets.on('connection', function(socket) {
   }
 
   function getPlayerClass(msg) {
+    console.log(socket.player.gender);
+
     var classInput = msg['input'].substring(0, 1).toUpperCase();
     if (classInput === 'C') {
       socket.player.class = player.CLASS_CLERIC;
@@ -170,29 +172,29 @@ io.sockets.on('connection', function(socket) {
   }
 
   function afterPlayerLoaded(playerDocuments) {
-   if (playerDocuments.length === 0) {
-       emitMessage(socket, 'Did I get that right, ' + socket.player.name + ' (Y/N)?');       
-       socket.connectionState = connections.CON_NAME_CNFRM;
+    if (playerDocuments.length === 0) {
+      emitMessage(socket, 'Did I get that right, ' + socket.player.name + ' (Y/N)?');
+      socket.connectionState = connections.CON_NAME_CNFRM;
     }
     else {
-       emitMessage(socket, 'Password: ', 'Gray', 'true');
-       socket.connectionState = connections.CON_PASSWORD;
-       socket.player = playerDocuments[0];
+      emitMessage(socket, 'Password: ', 'Gray', 'true');
+      socket.connectionState = connections.CON_PASSWORD;
+      socket.player = playerDocuments[0];
     }
   }
-  
+
   function enterGame() {
-    if(socket.player.level === undefined) {
+    if (socket.player.level === undefined) {
       socket.player.start();
       socket.player.save(function(err) {
         // TODO: Log error, I guess?
       });
     }
-    
-    emitMessage(socket, text.WelcomeMessage);   
+
+    emitMessage(socket, text.WelcomeMessage);
     socket.connectionState = connections.CON_PLAYING;
     socket.player.socket = socket;
-    
+
     var startRoom = gameWorld.getRoom(3001);
     startRoom.addCharacter(socket.player);
     startRoom.showRoomToCharacter(socket.player);
@@ -200,5 +202,9 @@ io.sockets.on('connection', function(socket) {
 });
 
 function emitMessage(socket, text, color, mask) {
-  socket.emit('message', { message: text, color: color, mask : mask });
+  socket.emit('message', {
+    message: text,
+    color: color,
+    mask: mask
+  });
 }

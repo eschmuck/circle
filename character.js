@@ -33,10 +33,6 @@ characterSchema.methods.getPersonalPronoun = function() {
 };
 
 characterSchema.methods.getObjectPronoun = function() {
-	
-	console.log(this.gender);
-	console.log(GENDER_MALE);
-	
 	switch(this.gender) {
 		case GENDER_NEUTRAL:
 			return "it";
