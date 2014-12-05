@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var schema = mongoose.Schema;
 var extend = require('mongoose-schema-extend');
-var social =  require("./social");
+var Social =  require("./social");
 
 var characterSchema = new schema({
 	name: String,
@@ -85,8 +85,8 @@ characterSchema.methods.social = function(action, parameter) {
 	console.log(this);
 	console.log(action);
 	
-	var social = new social(action, parameter, this);
-	social.emitMessages();
+	var thisSocial = new Social(action, parameter, this);
+	thisSocial.emitMessages();
 };
 
 
