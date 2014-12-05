@@ -38,6 +38,16 @@ roomSchema.methods.getRoomDescription = function() {
 	return { message: this.description, color: 'Gray' };
 };
 
+roomSchema.methods.getCharacterByName = function(name) {
+	for(var i = 0; i < this.people.length; i++) {
+		if(this.people[i].name === name) {
+			return this.people[i];
+		}
+	}
+	
+	return null;
+};
+
 roomSchema.methods.showRoomToCharacter = function(character) {
 	if(character.socket !== undefined) {
 		character.socket.emit('message', this.getRoomTitle());

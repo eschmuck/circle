@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var schema = mongoose.Schema;
 var extend = require('mongoose-schema-extend');
+var social =  require("./social");
 
 var characterSchema = new schema({
 	name: String,
@@ -19,6 +20,40 @@ var characterSchema = new schema({
 	
 	position: Number
 });
+
+characterSchema.methods.getPersonalPronoun = function() {
+	switch(this.gender) {
+		case GENDER_NEUTRAL:
+			return "it";
+		case GENDER_MALE:
+			return "he";
+		case GENDER_FEMALE:
+			return "she";
+	}
+};
+
+characterSchema.methods.getObjectPronoun = function() {
+	switch(this.gender) {
+		case GENDER_NEUTRAL:
+			return "it";
+		case GENDER_MALE:
+			return "him";
+		case GENDER_FEMALE:
+			return "her";
+	}
+};
+
+characterSchema.methods.getPossessivePronoun = function() {
+	switch(this.gender) {
+		case GENDER_NEUTRAL:
+			return "its";
+		case GENDER_MALE:
+			return "his";
+		case GENDER_FEMALE:
+			return "her";
+	}
+};
+
 
 characterSchema.methods.blah = function() {
 	return 'blah';
@@ -46,16 +81,23 @@ characterSchema.methods.say = function(message) {
 };
 
 characterSchema.methods.social = function(action, parameter) {
-	console.log('here');
+	console.log(parameter);
+	
+	var social = new social(action, parameter, this);
+	social.emitMessages();
 };
 
 
 var characterModel = mongoose.model('character', characterSchema);
 
 // Constants
-exports.GENDER_NEUTRAL = 0;
-exports.GENDER_MALE    = 1;
-exports.GENDER_FEMALE  = 2;
+var GENDER_NEUTRAL = 0;
+var GENDER_MALE    = 1;
+var GENDER_FEMALE  = 2;
+
+exports.GENDER_NEUTRAL = GENDER_NEUTRAL;
+exports.GENDER_MALE    = GENDER_MALE;
+exports.GENDER_FEMALE  = GENDER_FEMALE;
 
 exports.POS_DEAD       = 0;
 exports.POS_MORTALLYW  = 1;
