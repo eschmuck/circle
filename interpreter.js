@@ -309,6 +309,7 @@ function do_move(character, command) {
 
 function do_action(character, command) {
     var action = SOCIALS[command.subCommand];
+    console.log(action);
     character.social(action, command.subInput.trim());
 }
 
