@@ -126,8 +126,6 @@ io.sockets.on('connection', function(socket) {
 
     if (sexInput === 'M') {
       socket.player.gender = character.GENDER_MALE;
-      console.log(character.GENDER_MALE);
-      console.log(socket.player.gender);
       socket.connectionState = connections.CON_QCLASS;
       emitMessage(socket, text.ClassMenu);
     }
@@ -142,8 +140,6 @@ io.sockets.on('connection', function(socket) {
   }
 
   function getPlayerClass(msg) {
-    console.log(socket.player.gender);
-
     var classInput = msg['input'].substring(0, 1).toUpperCase();
     if (classInput === 'C') {
       socket.player.class = player.CLASS_CLERIC;

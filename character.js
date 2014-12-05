@@ -92,19 +92,15 @@ var GENDER_NEUTRAL = 0;
 var GENDER_MALE    = 1;
 var GENDER_FEMALE  = 2;
 
-// exports.GENDER_NEUTRAL = GENDER_NEUTRAL;
-// exports.GENDER_MALE    = GENDER_MALE;
-// exports.GENDER_FEMALE  = GENDER_FEMALE;
-
-exports.POS_DEAD       = 0;
-exports.POS_MORTALLYW  = 1;
-exports.POS_INCAP      = 2;
-exports.POS_STUNNED    = 3;
-exports.POS_SLEEPING   = 4;
-exports.POS_RESTING    = 5;
-exports.POS_SITTING    = 6;
-exports.POS_FIGHTING   = 7;
-exports.POS_STANDING   = 8;
+var POS_DEAD       = 0;
+var POS_MORTALLYW  = 1;
+var POS_INCAP      = 2;
+var POS_STUNNED    = 3;
+var POS_SLEEPING   = 4;
+var POS_RESTING    = 5;
+var POS_SITTING    = 6;
+var POS_FIGHTING   = 7;
+var POS_STANDING   = 8;
 
 module.exports = {
 	schema: characterSchema,
@@ -112,8 +108,17 @@ module.exports = {
 	
 	GENDER_NEUTRAL: GENDER_NEUTRAL,
 	GENDER_MALE:    GENDER_MALE,
-	GENDER_FEMALE:  GENDER_FEMALE
+	GENDER_FEMALE:  GENDER_FEMALE,
 	
+	POS_DEAD:      POS_DEAD,
+	POS_MORTALLYW: POS_MORTALLYW,
+	POS_INCAP:     POS_INCAP,
+	POS_STUNNED:   POS_STUNNED,
+	POS_SLEEPING:  POS_SLEEPING,
+	POS_RESTING:   POS_RESTING,
+	POS_SITTING:   POS_SITTING,
+	POS_FIGHTING:  POS_FIGHTING,
+	POS_STANDING:  POS_STANDING
 };
 
 
