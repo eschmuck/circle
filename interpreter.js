@@ -410,16 +410,16 @@ Interpreter.prototype.handleInput = function(character, input) {
     var command = this.getCommand(input);
 
     if(command === null) {
-        if(this.character.socket !== undefined) {
-            this.character.socket.emit('message', { message: "Huh?!?"});
+        if(character.socket !== undefined) {
+            character.socket.emit('message', { message: "Huh?!?"});
         }
     }
     else {
-        if(this.character.position < command.minimumPosition) {
+        if(character.position < command.minimumPosition) {
             switch(character.position) {
                 case Character.POS_DEAD:
-                    if(this.character.socket !== undefined) {
-                        this.character.socket.emit('message', { message: "Lie still; you are DEAD!!! :-(" });
+                    if(character.socket !== undefined) {
+                        character.socket.emit('message', { message: "Lie still; you are DEAD!!! :-(" });
                     }
                     break;
             }
