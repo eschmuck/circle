@@ -413,6 +413,11 @@ Interpreter.prototype.handleInput = function(character, input) {
     if(command !== null) {
         command.functionPointer(character, command);
     }
+    else {
+        if(this.character.socket !== undefined) {
+            this.character.socket.emit('message', { message: "Huh?!?"});
+        }
+    }
 };
 
 function do_say(character, command) {
