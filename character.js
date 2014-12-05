@@ -45,6 +45,11 @@ characterSchema.methods.say = function(message) {
 	}
 };
 
+characterSchema.methods.social = function(action, parameter) {
+	console.log('here');
+};
+
+
 var characterModel = mongoose.model('character', characterSchema);
 
 // Constants
