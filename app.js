@@ -126,6 +126,7 @@ io.sockets.on('connection', function(socket) {
 
     if (sexInput === 'M') {
       socket.player.gender = character.GENDER_MALE;
+      console.log(socket.player.gender);
       socket.connectionState = connections.CON_QCLASS;
       emitMessage(socket, text.ClassMenu);
     }
