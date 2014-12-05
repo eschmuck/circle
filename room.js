@@ -38,9 +38,14 @@ roomSchema.methods.getRoomDescription = function() {
 	return { message: this.description, color: 'Gray' };
 };
 
-roomSchema.methods.getCharacterByName = function(name) {
+roomSchema.methods.getCharacter = function(key) {
+	// TODO: Handle NPCs
+	// TODO: Handle stuff like 2.guard
+
+	var lowercaseKey = key.toLowerCase();
+	
 	for(var i = 0; i < this.people.length; i++) {
-		if(this.people[i].name === name) {
+		if(this.people[i].name.toLowerCase().substr(0, key.length) === lowercaseKey) {
 			return this.people[i];
 		}
 	}
