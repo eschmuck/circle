@@ -82,6 +82,8 @@ characterSchema.methods.say = function(message) {
 
 characterSchema.methods.social = function(action, parameter) {
 	console.log(parameter);
+	console.log(this);
+	console.log(action);
 	
 	var social = new social(action, parameter, this);
 	social.emitMessages();
