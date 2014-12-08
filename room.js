@@ -18,29 +18,7 @@ var roomSchema = new schema({
     title: String,
     description: String,
     people: [],
-    contents: [],
-    northernExit: {
-		description: String,
-		doorKeyId: Number,
-		doorKeywords: [],
-		isClosable: Boolean,
-		isClosed: Boolean,
-		isLockable: Boolean,
-		isLocked: Boolean,
-		isPickproof: Boolean,
-		toRoomId: Number
-	},
-	southernExit: {
-		description: String,
-		doorKeyId: Number,
-		doorKeywords: [],
-		isClosable: Boolean,
-		isClosed: Boolean,
-		isLockable: Boolean,
-		isLocked: Boolean,
-		isPickproof: Boolean,
-		toRoomId: Number
-	}
+    contents: []
 });
 
 roomSchema.methods.contains = function(item) {
