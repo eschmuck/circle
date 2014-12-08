@@ -17,7 +17,7 @@ var roomSchema = new schema({
     id: Number,
     title: String,
     description: String,
-    northernExit: exitSchema,
+    northernExit: [exitSchema,
     people: [],
     contents: []
 });
