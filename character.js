@@ -204,7 +204,35 @@ characterSchema.methods.sleep = function() {
 };
 
 characterSchema.methods.move = function(direction) {
-	console.log(direction);
+	var exit = null;
+	
+	switch(direction) {
+		case 0:
+			exit = this.room.northernExit;
+			break;
+		case 1:
+			exit = this.room.easternExit;
+			break;
+		case 2:
+			exit = this.room.southernExit;
+			break;
+		case 3:
+			exit = this.room.westernExit;
+			break;
+		case 4:
+			exit = this.room.upwardExit;
+			break;
+		case 5:
+			exit = this.room.downwardExit;
+			break;
+	}
+	
+	if(exit === null) {
+		this.emitMessage("Alas, you cannot go that way...");
+		return;
+	}
+	
+	
 };
 
 
