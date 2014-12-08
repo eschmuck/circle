@@ -1,11 +1,13 @@
 // Object constructor
 function World() {
 	this.rooms = [];
+	this.people = [];
 	this.zones = [];
 }
 
 // Public Properties
 World.prototype.rooms;
+World.prototype.people;
 World.prototype.zones;
 
 World.prototype.getRoom = function(id) {
@@ -17,6 +19,17 @@ World.prototype.getRoom = function(id) {
 	
 	return null;
 };
+
+World.prototype.addCharacter = function(character) {
+	this.people.push(character);
+	character.world = this;
+};
+
+World.prototype.removeCharacter = function(character) {
+	this.people.splice(this.people.indexOf(character), 1);
+	character.world = null;
+};
+
 
 // Exports
 module.exports = World;

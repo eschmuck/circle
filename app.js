@@ -194,6 +194,8 @@ io.sockets.on('connection', function(socket) {
     socket.player.socket = socket;
     socket.player.enterGame();
 
+    gameWorld.addCharacter(socket.player);
+
     var startRoom = gameWorld.getRoom(3001);
     startRoom.addCharacter(socket.player);
     startRoom.showRoomToCharacter(socket.player);

@@ -3,6 +3,8 @@ var schema = mongoose.Schema;
 var extend = require('mongoose-schema-extend');
 var Social =  require("./social");
 
+var directions = [ 'north', 'east', 'south', 'west', 'up', 'down' ];
+
 var characterSchema = new schema({
 	name: String,
 	gender: Number,
@@ -229,10 +231,20 @@ characterSchema.methods.move = function(direction) {
 	
 	if(exit === null) {
 		this.emitMessage("Alas, you cannot go that way...");
-		return;
 	}
-	
-	
+	else if(exit.isClosed) {
+		this.emitMessage("The " + exit.doorKeywords[0] + " seems to be closed.");
+	}
+	else {
+		this.emitRoomMessage(this.name + " leaves " + directions[direction] + ".");
+		this.room.removeCharacter(this);
+		
+		var newRoom = this.world.getRoom(this.exit.toRoomId);
+		newRoom.addCharacter(this);
+		this.emitRoomMessage(this.name + " has arrived.");
+		
+		newRoom.showRoomToCharacter(this);
+	}
 };
 
 
