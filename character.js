@@ -207,11 +207,7 @@ characterSchema.methods.sleep = function() {
 
 characterSchema.methods.move = function(direction) {
 	var exit = null;
-	
-	//console.log(this.room);
-	console.log(direction);
-	console.log(this.room.easternExit);
-	
+
 	switch(direction) {
 		case 0:
 			exit = this.room.northernExit;

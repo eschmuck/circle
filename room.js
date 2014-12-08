@@ -21,7 +21,27 @@ var roomSchema = new schema({
     	description: String,
 		isClosed: Boolean,
 	},
-    people: [],
+    southernExit: {
+    	description: String,
+		isClosed: Boolean,
+	},
+    easternExit: {
+    	description: String,
+		isClosed: Boolean,
+	},	
+    westernExit: {
+    	description: String,
+		isClosed: Boolean,
+	},
+    upwardExit: {
+    	description: String,
+		isClosed: Boolean,
+	},	
+    downwardExit: {
+    	description: String,
+		isClosed: Boolean,
+	},	
+	people: [],
     contents: []
 });
 
