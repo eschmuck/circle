@@ -20,7 +20,7 @@ var roomSchema = new schema({
     northernExit: {
 		description: String,
 		doorKeyId: Number,
-		doorKeywords: [],
+		//doorKeywords: [],
 		isClosable: Boolean,
 		isClosed: Boolean,
 		isLockable: Boolean,
@@ -31,7 +31,7 @@ var roomSchema = new schema({
     southernExit: {
 		description: String,
 		doorKeyId: Number,
-		doorKeywords: [],
+		//doorKeywords: [],
 		isClosable: Boolean,
 		isClosed: Boolean,
 		isLockable: Boolean,
@@ -42,7 +42,7 @@ var roomSchema = new schema({
     easternExit: {
 		description: String,
 		doorKeyId: Number,
-		doorKeywords: [],
+		//doorKeywords: [],
 		isClosable: Boolean,
 		isClosed: Boolean,
 		isLockable: Boolean,
@@ -53,7 +53,7 @@ var roomSchema = new schema({
     westernExit: {
 		description: String,
 		doorKeyId: Number,
-		doorKeywords: [],
+		//doorKeywords: [],
 		isClosable: Boolean,
 		isClosed: Boolean,
 		isLockable: Boolean,
@@ -64,7 +64,7 @@ var roomSchema = new schema({
     upwardExit: {
 		description: String,
 		doorKeyId: Number,
-		doorKeywords: [],
+		//doorKeywords: [],
 		isClosable: Boolean,
 		isClosed: Boolean,
 		isLockable: Boolean,
@@ -75,7 +75,7 @@ var roomSchema = new schema({
     downwardExit: {
 		description: String,
 		doorKeyId: Number,
-		doorKeywords: [],
+		//doorKeywords: [],
 		isClosable: Boolean,
 		isClosed: Boolean,
 		isLockable: Boolean,
