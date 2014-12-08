@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var schema = mongoose.Schema;
 var extend = require('mongoose-schema-extend');
-var character = require("./character").character;
+var character = require("./character");
 var characterSchema = require("./character").schema;
 
 var connection = mongoose.connect('mongodb://localhost/circledb');
