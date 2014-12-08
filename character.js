@@ -229,6 +229,8 @@ characterSchema.methods.move = function(direction) {
 			break;
 	}
 
+	console.log(exit);
+
 	if(exit === null) {
 		this.emitMessage("Alas, you cannot go that way...");
 	}
