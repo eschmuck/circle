@@ -60,9 +60,6 @@ characterSchema.methods.blah = function() {
 };
 
 characterSchema.methods.emitMessage = function(message, color) {
-
-	console.log('here 3');	
-	
 	if(this.socket !== undefined) {
 		if(color !== undefined) {
 			this.socket.emit('message', { message: message, color: color });
@@ -111,13 +108,8 @@ characterSchema.methods.stand = function() {
 };
 
 characterSchema.methods.sit = function() {
-	console.log('here 1');
-	
 	switch(this.position) {
 		case POS_STANDING:
-			
-			console.log('here 2');
-			
 			this.emitMessage("You sit down.");
 			this.emitRoomMessage(this.name + " sits down.");
 			this.position = POS_SITTING;

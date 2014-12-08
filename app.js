@@ -192,6 +192,7 @@ io.sockets.on('connection', function(socket) {
     emitMessage(socket, text.WelcomeMessage);
     socket.connectionState = connections.CON_PLAYING;
     socket.player.socket = socket;
+    socket.player.enterGame();
 
     var startRoom = gameWorld.getRoom(3001);
     startRoom.addCharacter(socket.player);

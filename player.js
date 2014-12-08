@@ -48,6 +48,10 @@ playerSchema.methods.start = function() {
 	this.position = character.POS_STANDING;
 };
 
+playerSchema.methods.enterGame = function() {
+	this.position = character.POS_STANDING;
+};
+
 var playerModel = mongoose.model('player', playerSchema);
 
 // Constants
