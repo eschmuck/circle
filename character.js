@@ -203,6 +203,9 @@ characterSchema.methods.sleep = function() {
     }
 };
 
+characterSchema.methods.move = function(direction) {
+	console.log(direction);
+};
 
 
 var characterModel = mongoose.model('character', characterSchema);

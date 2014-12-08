@@ -456,7 +456,7 @@ function do_say(character, command) {
 }
 
 function do_move(character, command) {
-    // TODO: Implement this
+    character.move(command.subCommand);
 }
 
 function do_action(character, command) {
