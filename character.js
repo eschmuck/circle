@@ -94,8 +94,6 @@ characterSchema.methods.social = function(action, parameter) {
 };
 
 characterSchema.methods.stand = function() {
-	console.log(this.position);
-	
 	switch(this.position) {
 		case POS_STANDING:
 			this.emitMessage("You are already standing.");
@@ -105,7 +103,22 @@ characterSchema.methods.stand = function() {
 			this.emitRoomMessage(this.name + " clambers to " + this.getPossessivePronoun() + " feet.");
 			this.position = POS_STANDING;
 			break;
-		// TODO: Finish
+        case POS_RESTING:
+            this.emitMessage("You stop resting, and stand up.");
+			this.emitRoomMessage(this.name + ' stops resting, and clambers on ' + this.getPossessivePronoun() + ' feet.');
+            this.position = POS_STANDING;
+            break;
+        case POS_SLEEPING:
+            this.emitMessage("You have to wake up first!");
+            break;
+        case POS_FIGHTING:
+            this.emitMessage("Do you not consider fighting as standing?");
+            break;
+        default:
+            this.emitMessage("You stop floating around, and put your feet on the ground.");
+            this.emitRoomMessage(this.name + " stops floating around and puts " + this.getPossessivePronoun() + ' feet on the ground.');
+            this.position = POS_STANDING;
+            break;
 	}
 };
 
@@ -119,11 +132,77 @@ characterSchema.methods.sit = function() {
 		case POS_SITTING:
 			this.emitMessage("You're sitting already.");
 			break;
+        case POS_RESTING:
+            this.emitMessage("You stop resting, and sit up.");
+            this.emitRoomMessage(this.name + ' stops resting.');
+            this.position = POS_SITTING;
+            break;
+        case POS_SLEEPING:
+            this.emitMessage("You have to wake up first.");
+            break;
+        case POS_FIGHTING:
+            this.emitMessage('Sit down while fighting? Are you MAD?');
+            break;
+        default:
+            this.emitMessage('You stop floating around, and sit down.');
+            this.emitRoomMessage(this.name + ' stops floating around, and sit down.');
+            this.position = POS_SITTING;
+            break;
 	}
-
-	// TODO: Finish
-
 };
+
+characterSchema.methods.sleep = function() {
+	switch(this.position) {
+        case POS_STANDING:
+            this.emitMessage('You sit down and rest your tired bones.');
+            this.emitRoomMessage(this.name + ' sits down and rests.');
+            this.position = POS_RESTING;
+            break;
+        case POS_SITTING:
+            this.emitMessage('You rest your tired bones.');
+            this.emitRoomMessage(this.name + ' rests.');
+            this.position = POS_RESTING;
+            break;
+        case POS_RESTING:
+		    this.emitMessage('You are already resting.');
+		    break;
+        case POS_SLEEPING:
+            this.emitMessage('You have to wake up first.');
+            break;
+        case POS_FIGHTING:
+            this.emitMessage('Rest down while fighting? Are you MAD?');
+            break;
+        default:
+            this.emitMessage('You stop floating around, and stop to rest your tired bones.');
+            this.emitRoomMessage(this.name + ' stops floating around, and rests.');
+            this.position = POS_SITTING;
+            break;
+	}
+};
+
+characterSchema.methods.sleep = function() {
+    switch(this.postion) {
+	    case POS_STANDING:
+	    case POS_SITTING:
+	    case POS_RESTING:
+	        this.emitMessage('You go to sleep.');
+	        this.emitRoomMessage(this.name + ' lies down and falls asleep.');
+	        this.position = POS_SLEEPING;
+	        break;
+        case POS_SLEEPING:
+            this.emitMessage('You are already sound asleep.');
+            break;
+        case POS_FIGHTING:
+            this.emitMessage('Sleep while fighting? Are you MAD?');
+            break;
+        default:
+            this.emitMessage('You stop floating around, and lie down to sleep.');
+            this.emitRoomMessage(this.name + ' stops floating around, and lie down to sleep.');
+            this.position = POS_SLEEPING;
+            break;
+    }
+};
+
 
 
 var characterModel = mongoose.model('character', characterSchema);

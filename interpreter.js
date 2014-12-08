@@ -196,6 +196,7 @@ var COMMAND_LIST = [
           { command: "punch"    , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_PUNCH },
           { command: "purr"     , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_PURR },
 
+          { command: "rest"     , minimumPosition: Character.POS_RESTING , functionPointer: do_rest       , minimumLevel: 0, subCommand: 0 },
           { command: "roll"     , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_ROLL },
           { command: "ruffle"   , minimumPosition: Character.POS_STANDING, functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_RUFFLE },
 
@@ -209,6 +210,7 @@ var COMMAND_LIST = [
           { command: "sing"     , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_SING },
           { command: "sit"      , minimumPosition: Character.POS_RESTING , functionPointer: do_sit        , minimumLevel: 0, subCommand: 0 },
           { command: "slap"     , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_SLAP },
+          { command: "sleep"    , minimumPosition: Character.POS_SLEEPING, functionPointer: do_sleep      , minimumLevel: 0, subCommand: 0 },
           { command: "smile"    , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_SMILE },
           { command: "smirk"    , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_SMIRK },
           { command: "snap"     , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_SNAP },
@@ -470,7 +472,13 @@ function do_sit(character) {
     character.sit();
 }
 
+function do_rest(character) {
+    character.rest();
+}
 
+function do_sleep(character) {
+    character.sleep();
+}
 
 
 

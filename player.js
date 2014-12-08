@@ -44,13 +44,9 @@ playerSchema.methods.start = function() {
 	this.hunger = 24;
 	this.thirst = 24;
 	this.drunk = 0;
-	
-	this.position = character.POS_STANDING;
 };
 
 playerSchema.methods.enterGame = function() {
-	console.log(character.POS_STANDING);
-
 	this.position = character.POS_STANDING;
 };
 
