@@ -209,7 +209,8 @@ characterSchema.methods.move = function(direction) {
 	var exit = null;
 
 	console.log(this.room);
-
+	console.log(this.room.northernExit);
+	
 	switch(direction) {
 		case 0:
 			exit = this.room.northernExit;
