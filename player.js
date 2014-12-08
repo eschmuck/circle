@@ -49,7 +49,9 @@ playerSchema.methods.start = function() {
 };
 
 playerSchema.methods.enterGame = function() {
-	this.position = 8;
+	console.log(character.POS_STANDING);
+
+	this.position = character.POS_STANDING;
 };
 
 var playerModel = mongoose.model('player', playerSchema);
