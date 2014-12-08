@@ -17,9 +17,10 @@ var roomSchema = new schema({
     id: Number,
     title: String,
     description: String,
-    northernExit: [exitSchema,
     people: [],
-    contents: []
+    contents: [],
+    northernExit: [exitSchema],
+	southernExit: [exitSchema]    
 });
 
 roomSchema.methods.contains = function(item) {
