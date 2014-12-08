@@ -19,12 +19,28 @@ var roomSchema = new schema({
     description: String,
     people: [],
     contents: [],
-    northernExit: { type: schema.ObjectId, ref: exitSchema },
-	southernExit: { type: schema.ObjectId, ref: exitSchema },
-	westernExit: { type: schema.ObjectId, ref: exitSchema },
-	easternExit: { type: schema.ObjectId, ref: exitSchema },
-	upwardExit: { type: schema.ObjectId, ref: exitSchema },
-	downwardExit: { type: schema.ObjectId, ref: exitSchema }    
+    northernExit: {
+		description: String,
+		doorKeyId: Number,
+		doorKeywords: [],
+		isClosable: Boolean,
+		isClosed: Boolean,
+		isLockable: Boolean,
+		isLocked: Boolean,
+		isPickproof: Boolean,
+		toRoomId: Number
+	},
+	southernExit: {
+		description: String,
+		doorKeyId: Number,
+		doorKeywords: [],
+		isClosable: Boolean,
+		isClosed: Boolean,
+		isLockable: Boolean,
+		isLocked: Boolean,
+		isPickproof: Boolean,
+		toRoomId: Number
+	}
 });
 
 roomSchema.methods.contains = function(item) {
