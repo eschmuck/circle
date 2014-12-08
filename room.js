@@ -1,22 +1,26 @@
 var mongoose = require('mongoose');
 var schema = mongoose.Schema;
 
-var exitSchema = new schema({
-	description: String,
-	doorKeyId: Number,
-	doorKeywords: [],
-	isClosable: Boolean,
-	isClosed: Boolean,
-	isLockable: Boolean,
-	isLocked: Boolean,
-	isPickproof: Boolean,
-	toRoomId: Number
-});
+// var exitSchema = new schema({
+// 	description: String,
+// 	doorKeyId: Number,
+// 	doorKeywords: [],
+// 	isClosable: Boolean,
+// 	isClosed: Boolean,
+// 	isLockable: Boolean,
+// 	isLocked: Boolean,
+// 	isPickproof: Boolean,
+// 	toRoomId: Number
+// });
 
 var roomSchema = new schema({
     id: Number,
     title: String,
     description: String,
+    northernExit: {
+    	description: String,
+		isClosed: Boolean,
+	},
     people: [],
     contents: []
 });

@@ -7,12 +7,12 @@ function Interpreter() {
 }
 
 // Constants
-exports.SCMD_NORTH	= 1;
-exports.SCMD_EAST	= 2;
-exports.SCMD_SOUTH	= 3;
-exports.SCMD_WEST	= 4;
-exports.SCMD_UP		= 5;
-exports.SCMD_DOWN	= 6;
+exports.SCMD_NORTH	= 0;
+exports.SCMD_EAST	= 1;
+exports.SCMD_SOUTH	= 2;
+exports.SCMD_WEST	= 3;
+exports.SCMD_UP		= 4;
+exports.SCMD_DOWN	= 5;
 
 exports.SCMD_ACCUSE     = 0;
 exports.SCMD_APPLAUD    = 1;
