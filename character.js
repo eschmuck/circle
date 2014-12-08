@@ -209,6 +209,8 @@ characterSchema.methods.move = function(direction) {
 	var exit = null;
 	
 	console.log(this.room);
+	console.log(direction);
+	console.log(this.room.easternExit);
 	
 	switch(direction) {
 		case 0:
@@ -230,9 +232,7 @@ characterSchema.methods.move = function(direction) {
 			exit = this.room.downwardExit;
 			break;
 	}
-	
-	console.log(this.room.easternExit);
-	
+
 	
 	if(exit === null) {
 		this.emitMessage("Alas, you cannot go that way...");
