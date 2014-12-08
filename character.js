@@ -94,6 +94,8 @@ characterSchema.methods.social = function(action, parameter) {
 };
 
 characterSchema.methods.stand = function() {
+	console.log(this.position);
+	
 	switch(this.position) {
 		case POS_STANDING:
 			this.emitMessage("You are already standing.");
