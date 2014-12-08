@@ -33,14 +33,14 @@ var roomSchema = new schema({
     	description: String,
 		isClosed: Boolean,
 	},
-    upwardExit: {
-    	description: String,
-		isClosed: Boolean,
-	},	
-    downwardExit: {
-    	description: String,
-		isClosed: Boolean,
-	},	
+ //   upwardExit: {
+ //   	description: String,
+	// 	isClosed: Boolean,
+	// },	
+ //   downwardExit: {
+ //   	description: String,
+	// 	isClosed: Boolean,
+	// },	
 	people: [],
     contents: []
 });
