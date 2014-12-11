@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var schema = mongoose.Schema;
 var extend = require('mongoose-schema-extend');
 var Social =  require("./social");
+var util = require('util');
 
 var directions = [ 'north', 'east', 'south', 'west', 'up', 'down' ];
 
@@ -210,6 +211,9 @@ function isWaterWet(document) {
 	console.log(document);
 	
 	console.log(typeof document);
+	
+
+	console.log(util.inspect(document, {showHidden: false, depth: null}));	
 }
 
 characterSchema.methods.move = function(direction) {
