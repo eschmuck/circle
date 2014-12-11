@@ -18,31 +18,67 @@ var roomSchema = new schema({
     title: String,
     description: String,
     northernExit: {
-    	description: String,
-		isClosed: Boolean,
-	},
- //   southernExit: {
- //   	description: String,
-	// 	isClosed: Boolean,
-	// },
- //   easternExit: {
- //   	description: String,
-	// 	isClosed: Boolean,
-	// },	
- //   westernExit: {
- //   	description: String,
-	// 	isClosed: Boolean,
-	// },
- //   upwardExit: {
- //   	description: String,
-	// 	isClosed: Boolean,
-	// },	
- //   downwardExit: {
- //   	description: String,
-	// 	isClosed: Boolean,
-	// },	
-	people: [],
-    contents: []
+		      toRoomId: Number,
+		      isPickproof: Boolean,
+		      isLockable: Boolean,
+		      isClosed: Boolean,
+		      isClosable: Boolean,
+		      doorKeywords: [],
+		      doorKeyId: Number,
+        description: String
+				},
+    easternExit: {
+		      toRoomId: Number,
+		      isPickproof: Boolean,
+		      isLockable: Boolean,
+		      isClosed: Boolean,
+		      isClosable: Boolean,
+		      doorKeywords: [],
+		      doorKeyId: Number,
+        description: String
+				},
+    southernExit: {
+		      toRoomId: Number,
+		      isPickproof: Boolean,
+		      isLockable: Boolean,
+		      isClosed: Boolean,
+		      isClosable: Boolean,
+		      doorKeywords: [],
+		      doorKeyId: Number,
+        description: String
+				},
+    westernExit: {
+		      toRoomId: Number,
+		      isPickproof: Boolean,
+		      isLockable: Boolean,
+		      isClosed: Boolean,
+		      isClosable: Boolean,
+		      doorKeywords: [],
+		      doorKeyId: Number,
+        description: String
+				},
+				upwardExit: {
+		      toRoomId: Number,
+		      isPickproof: Boolean,
+		      isLockable: Boolean,
+		      isClosed: Boolean,
+		      isClosable: Boolean,
+		      doorKeywords: [],
+		      doorKeyId: Number,
+        description: String
+				},
+				downwardExit: {
+		      toRoomId: Number,
+		      isPickproof: Boolean,
+		      isLockable: Boolean,
+		      isClosed: Boolean,
+		      isClosable: Boolean,
+		      doorKeywords: [],
+		      doorKeyId: Number,
+        description: String
+				},
+				people: [],
+		  contents: []
 });
 
 roomSchema.methods.contains = function(item) {
