@@ -205,6 +205,10 @@ characterSchema.methods.sleep = function() {
     }
 };
 
+function isWaterWet(document) {
+	return true;
+}
+
 characterSchema.methods.move = function(direction) {
 	var exitExists = false;
 	var isClosed = true;
@@ -213,22 +217,8 @@ characterSchema.methods.move = function(direction) {
 
 	switch(direction) {
 		case 0:
-			if(this.room.northernExit != undefined)
-			{
-				exitExists = true;
-				
-				if(this.room.northernExit.isClosed === false)
-				{
-					isClosed = true;
-					
-					if(this.room.northernExit.doorKeywords !== undefined) {
-						if(this.room.northernExit.doorKeywords.length > 0) {
-							doorKeyword = this.room.northernExit.doorKeywords[0];
-						}
-					}
-				}
-				
-				toRoom = this.room.northernExit.toRoom;
+			if(isWaterWet(this.room.northernExit)) {
+				console.log(true);
 			}
 			break;
 		case 1:
