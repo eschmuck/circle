@@ -209,7 +209,7 @@ function isWaterWet(document) {
 	//return true;
 	console.log(document);
 	
-	console.log(document.toRoomId);
+	console.log(typeof document);
 }
 
 characterSchema.methods.move = function(direction) {
