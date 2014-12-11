@@ -262,9 +262,12 @@ characterSchema.methods.move = function(direction) {
 	 	this.emitMessage("The " + exit.doorKeywords[0] + " seems to be closed.");
 	}
 	else {
+		
+		console.log(this.world);
+		
 	 	var newRoom = this.world.getRoom(exit.toRoom);
 	 	
-	 	if(newRoom !== undefined) {
+	 	if(newRoom !== null) {
 		 	this.emitRoomMessage(this.name + " leaves " + directions[direction] + ".");
 		 	this.room.removeCharacter(this);
 	 		
