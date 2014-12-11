@@ -253,7 +253,7 @@ characterSchema.methods.move = function(direction) {
 			break;
 	}
 
-	//console.log(exit.toRoomId);
+	console.log(exit);
 
 	if(exit === undefined) {
 	 	this.emitMessage("Alas, you cannot go that way...");
