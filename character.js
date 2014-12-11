@@ -206,30 +206,7 @@ characterSchema.methods.sleep = function() {
     }
 };
 
-// function isWaterWet(document) {
-// 	//return true;
-// 	console.log(document);
-	
-// 	console.log(typeof document);
-	
-//     var keys = Object.keys(document),
-//     len = keys.length;
-    
-//     for(var i = 0; i < len; i++) {
-//     	console.log(keys[i]);
-//     }
-	
-// 	console.log(document.toRoomId);
-// 	console.log(document[0]);
-// 	console.log(util.inspect(document, {showHidden: false, depth: null}));
-// }
-
 characterSchema.methods.move = function(direction) {
-	// var exitExists = false;
-	// var isClosed = true;
-	// var doorKeyword = "";
-	// var toRoom = -1;
-	
 	var exit;
 
 	switch(direction) {
@@ -253,16 +230,13 @@ characterSchema.methods.move = function(direction) {
 			break;
 	}
 
-	console.log(exit);
-
-	if(exit === undefined) {
+	if(exit === null) {
 	 	this.emitMessage("Alas, you cannot go that way...");
 	}
 	else if(exit.isClosed === true) {
 	 	this.emitMessage("The " + exit.doorKeywords[0] + " seems to be closed.");
 	}
 	else {
-		
 	 	var newRoom = this.world.getRoom(exit.toRoomId);
 	 	
 	 	if(newRoom !== null) {
@@ -277,7 +251,6 @@ characterSchema.methods.move = function(direction) {
 	 	else {
 	 		this.emitMessage("Although you should be able to go there, you cannot!");
 	 	}
-
 	}
 };
 
