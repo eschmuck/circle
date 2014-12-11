@@ -262,14 +262,21 @@ characterSchema.methods.move = function(direction) {
 	 	this.emitMessage("The " + exit.doorKeywords[0] + " seems to be closed.");
 	}
 	else {
-	 	this.emitRoomMessage(this.name + " leaves " + directions[direction] + ".");
-	 	this.room.removeCharacter(this);
-		
 	 	var newRoom = this.world.getRoom(exit.toRoom);
-	 	newRoom.addCharacter(this);
-	 	this.emitRoomMessage(this.name + " has arrived.");
-		
-	 	newRoom.showRoomToCharacter(this);
+	 	
+	 	if(newRoom !== undefined) {
+		 	this.emitRoomMessage(this.name + " leaves " + directions[direction] + ".");
+		 	this.room.removeCharacter(this);
+	 		
+		 	newRoom.addCharacter(this);
+		 	this.emitRoomMessage(this.name + " has arrived.");
+			
+		 	newRoom.showRoomToCharacter(this);
+	 	}
+	 	else {
+	 		this.emitMessage("Although you should be able to go there, you cannot!");
+	 	}
+
 	}
 };
 
