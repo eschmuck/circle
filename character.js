@@ -206,7 +206,10 @@ characterSchema.methods.sleep = function() {
 };
 
 function isWaterWet(document) {
-	return true;
+	//return true;
+	console.log(document);
+	
+	console.log(document.toRoomId);
 }
 
 characterSchema.methods.move = function(direction) {
