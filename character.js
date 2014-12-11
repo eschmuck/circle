@@ -208,7 +208,7 @@ characterSchema.methods.sleep = function() {
 characterSchema.methods.move = function(direction) {
 	var exitExists = false;
 	var isClosed = true;
-	var doorKeyword;
+	var doorKeyword = "";
 	var toRoom = -1;
 
 	switch(direction) {
@@ -220,27 +220,26 @@ characterSchema.methods.move = function(direction) {
 				if(this.room.northernExit.isClosed === false)
 				{
 					isClosed = true;
-					doorKeyword = this.room.northernExit.doorKeywords[0];
+					
+					if(this.room.northernExit.doorKeywords !== undefined) {
+						if(this.room.northernExit.doorKeywords.length > 0) {
+							doorKeyword = this.room.northernExit.doorKeywords[0];
+						}
+					}
 				}
 				
 				toRoom = this.room.northernExit.toRoom;
 			}
-			exit = this.room.northernExit;
 			break;
 		case 1:
-			exit = this.room.easternExit;
 			break;
 		case 2:
-			exit = this.room.southernExit;
 			break;
 		case 3:
-			exit = this.room.westernExit;
 			break;
 		case 4:
-			exit = this.room.upwardExit;
 			break;
 		case 5:
-			exit = this.room.downwardExit;
 			break;
 	}
 
