@@ -229,24 +229,24 @@ characterSchema.methods.move = function(direction) {
 			break;
 	}
 
-	// console.log(exit);
+	console.log(exit);
 
-	if(exit === null) {
-		this.emitMessage("Alas, you cannot go that way...");
-	}
-	else if(exit.isClosed) {
-		this.emitMessage("The " + exit.doorKeywords[0] + " seems to be closed.");
-	}
-	else {
-		this.emitRoomMessage(this.name + " leaves " + directions[direction] + ".");
-		this.room.removeCharacter(this);
+	// if(exit === null) {
+	// 	this.emitMessage("Alas, you cannot go that way...");
+	// }
+	// else if(exit.isClosed) {
+	// 	this.emitMessage("The " + exit.doorKeywords[0] + " seems to be closed.");
+	// }
+	// else {
+	// 	this.emitRoomMessage(this.name + " leaves " + directions[direction] + ".");
+	// 	this.room.removeCharacter(this);
 		
-		var newRoom = this.world.getRoom(exit.toRoomId);
-		newRoom.addCharacter(this);
-		this.emitRoomMessage(this.name + " has arrived.");
+	// 	var newRoom = this.world.getRoom(exit.toRoomId);
+	// 	newRoom.addCharacter(this);
+	// 	this.emitRoomMessage(this.name + " has arrived.");
 		
-		newRoom.showRoomToCharacter(this);
-	}
+	// 	newRoom.showRoomToCharacter(this);
+	// }
 };
 
 
