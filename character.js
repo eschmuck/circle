@@ -263,9 +263,7 @@ characterSchema.methods.move = function(direction) {
 	}
 	else {
 		
-		console.log(this.world);
-		
-	 	var newRoom = this.world.getRoom(exit.toRoom);
+	 	var newRoom = this.world.getRoom(exit.toRoomId);
 	 	
 	 	if(newRoom !== null) {
 		 	this.emitRoomMessage(this.name + " leaves " + directions[direction] + ".");
