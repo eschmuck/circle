@@ -211,7 +211,7 @@ characterSchema.methods.move = function(direction) {
 	console.log(this.room);
 	console.log(this.room.northernExit);
 	
-	var x = this.room.northernExit;
+	var x = JSON.parse(this.room.northernExit);
 	console.log(x);
 	console.log(x.isLocked);
 	
