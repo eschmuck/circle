@@ -206,54 +206,56 @@ characterSchema.methods.sleep = function() {
 };
 
 characterSchema.methods.move = function(direction) {
-	var exit = null;
+	// var exit = null;
 
 	console.log(this.room);
 	console.log(this.room.northernExit);
 	
-	var x = JSON.parse(this.room.northernExit);
-	console.log(x);
-	console.log(x.isLocked);
+	// var x = this.room.northernExit;
+
+	var exit = eval(this.room.northernExit);
+	console.log(exit)
+
 	
-	switch(direction) {
-		case 0:
-			exit = this.room.northernExit;
-			break;
-		case 1:
-			exit = this.room.easternExit;
-			break;
-		case 2:
-			exit = this.room.southernExit;
-			break;
-		case 3:
-			exit = this.room.westernExit;
-			break;
-		case 4:
-			exit = this.room.upwardExit;
-			break;
-		case 5:
-			exit = this.room.downwardExit;
-			break;
-	}
+	// switch(direction) {
+	// 	case 0:
+	// 		exit = this.room.northernExit;
+	// 		break;
+	// 	case 1:
+	// 		exit = this.room.easternExit;
+	// 		break;
+	// 	case 2:
+	// 		exit = this.room.southernExit;
+	// 		break;
+	// 	case 3:
+	// 		exit = this.room.westernExit;
+	// 		break;
+	// 	case 4:
+	// 		exit = this.room.upwardExit;
+	// 		break;
+	// 	case 5:
+	// 		exit = this.room.downwardExit;
+	// 		break;
+	// }
 
-	console.log(exit);
+	// console.log(exit);
 
-	if(exit === null) {
-		this.emitMessage("Alas, you cannot go that way...");
-	}
-	else if(exit.isClosed) {
-		this.emitMessage("The " + exit.doorKeywords[0] + " seems to be closed.");
-	}
-	else {
-		this.emitRoomMessage(this.name + " leaves " + directions[direction] + ".");
-		this.room.removeCharacter(this);
+	// if(exit === null) {
+	// 	this.emitMessage("Alas, you cannot go that way...");
+	// }
+	// else if(exit.isClosed) {
+	// 	this.emitMessage("The " + exit.doorKeywords[0] + " seems to be closed.");
+	// }
+	// else {
+	// 	this.emitRoomMessage(this.name + " leaves " + directions[direction] + ".");
+	// 	this.room.removeCharacter(this);
 		
-		var newRoom = this.world.getRoom(this.exit.toRoomId);
-		newRoom.addCharacter(this);
-		this.emitRoomMessage(this.name + " has arrived.");
+	// 	var newRoom = this.world.getRoom(this.exit.toRoomId);
+	// 	newRoom.addCharacter(this);
+	// 	this.emitRoomMessage(this.name + " has arrived.");
 		
-		newRoom.showRoomToCharacter(this);
-	}
+	// 	newRoom.showRoomToCharacter(this);
+	// }
 };
 
 
