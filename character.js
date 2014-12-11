@@ -206,35 +206,38 @@ characterSchema.methods.sleep = function() {
     }
 };
 
-function isWaterWet(document) {
-	//return true;
-	console.log(document);
+// function isWaterWet(document) {
+// 	//return true;
+// 	console.log(document);
 	
-	console.log(typeof document);
+// 	console.log(typeof document);
 	
-    var keys = Object.keys(document),
-    len = keys.length;
+//     var keys = Object.keys(document),
+//     len = keys.length;
     
-    for(var i = 0; i < len; i++) {
-    	console.log(keys[i]);
-    }
+//     for(var i = 0; i < len; i++) {
+//     	console.log(keys[i]);
+//     }
 	
-	console.log(document.toRoomId);
-	console.log(document[0]);
-	console.log(util.inspect(document, {showHidden: false, depth: null}));
-}
+// 	console.log(document.toRoomId);
+// 	console.log(document[0]);
+// 	console.log(util.inspect(document, {showHidden: false, depth: null}));
+// }
 
 characterSchema.methods.move = function(direction) {
-	var exitExists = false;
-	var isClosed = true;
-	var doorKeyword = "";
-	var toRoom = -1;
+	// var exitExists = false;
+	// var isClosed = true;
+	// var doorKeyword = "";
+	// var toRoom = -1;
+	
+	var exit;
 
 	switch(direction) {
 		case 0:
-			if(isWaterWet(this.room.northernExit)) {
-				console.log(true);
-			}
+			// if(isWaterWet(this.room.northernExit)) {
+			// 	console.log(true);
+			// }
+			exit = this.room.northernExit;
 			break;
 		case 1:
 			break;
@@ -248,22 +251,24 @@ characterSchema.methods.move = function(direction) {
 			break;
 	}
 
-	if(exitExists === false) {
-		this.emitMessage("Alas, you cannot go that way...");
-	}
-	else if(isClosed === true) {
-		this.emitMessage("The " + doorKeyword + " seems to be closed.");
-	}
-	else {
-		this.emitRoomMessage(this.name + " leaves " + directions[direction] + ".");
-		this.room.removeCharacter(this);
+	console.log(exit.toRoomId);
+
+	// if(exitExists === false) {
+	// 	this.emitMessage("Alas, you cannot go that way...");
+	// }
+	// else if(isClosed === true) {
+	// 	this.emitMessage("The " + doorKeyword + " seems to be closed.");
+	// }
+	// else {
+	// 	this.emitRoomMessage(this.name + " leaves " + directions[direction] + ".");
+	// 	this.room.removeCharacter(this);
 		
-		var newRoom = this.world.getRoom(toRoom);
-		newRoom.addCharacter(this);
-		this.emitRoomMessage(this.name + " has arrived.");
+	// 	var newRoom = this.world.getRoom(toRoom);
+	// 	newRoom.addCharacter(this);
+	// 	this.emitRoomMessage(this.name + " has arrived.");
 		
-		newRoom.showRoomToCharacter(this);
-	}
+	// 	newRoom.showRoomToCharacter(this);
+	// }
 };
 
 
