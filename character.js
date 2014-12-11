@@ -212,8 +212,9 @@ function isWaterWet(document) {
 	
 	console.log(typeof document);
 	
-
-	console.log(util.inspect(document, {showHidden: false, depth: null}));	
+	console.log(document.toRoomId);
+	console.log(document[0]);
+	console.log(util.inspect(document, {showHidden: false, depth: null}));
 }
 
 characterSchema.methods.move = function(direction) {
