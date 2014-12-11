@@ -212,6 +212,13 @@ function isWaterWet(document) {
 	
 	console.log(typeof document);
 	
+    var keys = Object.keys(document),
+    len = keys.length;
+    
+    for(var i = 0; i < len; i++) {
+    	console.log(keys[i]);
+    }
+	
 	console.log(document.toRoomId);
 	console.log(document[0]);
 	console.log(util.inspect(document, {showHidden: false, depth: null}));
