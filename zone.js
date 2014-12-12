@@ -37,13 +37,12 @@ zoneSchema.methods.reset = function(rooms) {
     // console.log(this.world);
     
     for(var i = 0; i < this.resetCommands.length; i++) {
-        this.executeZoneResetCommands(this.resetCommands[i], 0, null);
+        executeZoneResetCommands(this.resetCommands[i], 0, this.world, null);
     }
 };
 
 
-//function executeZoneResetCommands(commands, instructionNumber, lastNpcLoaded) {
-zoneSchema.methods.executeZoneResetCommands = function(commands, instructionNumber, lastNpcLoaded) {
+function executeZoneResetCommands(commands, instructionNumber, world, lastNpcLoaded) {
     if(instructionNumber < commands.length) {
         var command = commands[instructionNumber].split(" ");
         
@@ -55,24 +54,21 @@ zoneSchema.methods.executeZoneResetCommands = function(commands, instructionNumb
             case "M":  // mobile
                 var thisMob = new mob();
                 //thisMob.id = commands[2];
-                thisMob.load(command[2], this.afterMobLoaded, commands, instructionNumber);
+                thisMob.load(command[2], afterMobLoaded, commands, world, instructionNumber);
                 break;
         }
     }
-};
+}
 
-//function afterMobLoaded(mob, commands, instructionNumber) {
-zoneSchema.methods.afterMobLoaded = function(mob, commands, instructionNumber) {
+function afterMobLoaded(mob, commands, world, instructionNumber) {
     // console.log('here');
     // console.log(mob);
     
     var command = commands[instructionNumber].split(" ");
-    
-    
-    //this.world.getRoom(command[4]).addCharacter(mob);
+    world.getRoom(command[4]).addCharacter(mob);
 
-    this.executeZoneResetCommands(commands, (instructionNumber + 1), mob);
-};
+    executeZoneResetCommands(commands, world, (instructionNumber + 1), mob);
+}
 
 
 var zoneModel = mongoose.model('zone', zoneSchema);
