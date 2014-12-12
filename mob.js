@@ -14,7 +14,7 @@ var mobSchema = characterSchema.extend({
 });
 
 mobSchema.methods.load = function(id, callback, commandSet, instructionNumber) {
-	mobSchema.find({ id: id }, function(err, docs) {
+	mobModel.find({ id: id }, function(err, docs) {
 		callback(docs, commandSet, instructionNumber);
 	});
 };
