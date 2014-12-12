@@ -53,7 +53,6 @@ function executeZoneResetCommands(commands, instructionNumber, world, lastNpcLoa
                 break;
             case "M":  // mobile
                 var thisMob = new mob();
-                console.log(thisMob.blah());
                 var mobId = parseInt(command[2], 10);
                 thisMob.load(mobId, afterMobLoaded, commands, world, instructionNumber);
                 break;

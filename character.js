@@ -85,10 +85,9 @@ characterSchema.methods.emitMessage = function(message, color) {
 characterSchema.methods.emitRoomMessage = function(message, color) {
 	for(var i = 0; i < this.room.people.length; i++) {
 		if(this.room.people[i] !== this) {
-			// if(!this.room.people[i].isNpc()) {
-			// 	this.room.people[i].emitMessage(message);
-			// }
-			console.log(this.room.people[i].blah());
+			if(!this.room.people[i].isNpc()) {
+				this.room.people[i].emitMessage(message);
+			}
 		}
 	}
 };
