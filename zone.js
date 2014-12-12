@@ -34,11 +34,11 @@ zoneSchema.methods.reset = function(rooms) {
     //     }
     //}
 
-    console.log(this.world);
+    // console.log(this.world);
     
-    // for(var i = 0; i < this.resetCommands.length; i++) {
-    //     executeZoneResetCommands(this.resetCommands[i], 0, null);
-    // }
+    for(var i = 0; i < this.resetCommands.length; i++) {
+        executeZoneResetCommands(this.resetCommands[i], 0, null);
+    }
 };
 
 
@@ -61,8 +61,8 @@ function executeZoneResetCommands(commands, instructionNumber, lastNpcLoaded) {
 }
 
 function afterMobLoaded(mob, commands, instructionNumber) {
-    console.log('here');
-    console.log(mob);
+    // console.log('here');
+    // console.log(mob);
     
     var command = commands[instructionNumber].split(" ");
     this.world.getRoom(command[4]).addCharacter(mob);
