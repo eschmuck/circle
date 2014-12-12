@@ -201,8 +201,6 @@ io.sockets.on('connection', function(socket) {
       });
     }
 
-  console.log(socket.player);
-
     emitMessage(socket, text.WelcomeMessage);
     socket.connectionState = connections.CON_PLAYING;
     socket.player.socket = socket;

@@ -51,14 +51,18 @@ function executeZoneResetCommands(commands, instructionNumber, world, lastNpcLoa
             case "*":  // ignore
                 break;
             case "M":  // mobile
+                var thisMob = new mob();
+                world.addCharacter(thisMob);
+                
                 var mobId = parseInt(command[2], 10);
-                mob.load(mobId, afterMobLoaded, commands, world, instructionNumber);
+                mob.load(mobId, thisMob, afterMobLoaded, commands, world, instructionNumber);
                 break;
         }
     }
 }
 
-function afterMobLoaded(mob, commands, world, instructionNumber) {
+function afterMobLoaded(document, mob, commands, world, instructionNumber) {
+    mob = document[0];
     var command = commands[instructionNumber].split(" ");
     var roomId = parseInt(command[4], 10);
     world.getRoom(roomId).addCharacter(mob);

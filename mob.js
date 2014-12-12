@@ -14,9 +14,9 @@ var mobSchema = characterSchema.extend({
 	damRollFormula: String
 });
 
-mobSchema.statics.load = function(id, callback, commands, world, instructionNumber) {
+mobSchema.statics.load = function(id, mob, callback, commands, world, instructionNumber) {
  	this.find({ id: id }, function(err, docs) {
- 		callback(docs, commands, world, instructionNumber);
+ 		callback(docs, mob, commands, world, instructionNumber);
  	});
 };
 
