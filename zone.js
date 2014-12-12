@@ -66,7 +66,7 @@ function afterMobLoaded(mob, commands, world, instructionNumber) {
     
     var command = commands[instructionNumber].split(" ");
     
-    var roomId = command[4];
+    var roomId = parseInt(command[4], 10);
     console.log(roomId);
     
     var room = world.getRoom(roomId);
