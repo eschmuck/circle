@@ -115,12 +115,16 @@ roomSchema.methods.showRoomToCharacter = function(character) {
 
 	console.log(this.northernExit);
 	console.log(typeof(this.northernExit));
-	console.log(this.northernExit == null);
-	console.log(this.northernExit === null);
-	console.log(!this.northernExit);
+	// console.log(this.northernExit == null);
+	// console.log(this.northernExit === null);
+	// console.log(!this.northernExit);
+	JSON.stringify(this.northernExit);
 	
     if(this.northernExit != null) {
-        if(!this.northernExit.isClosed) {
+    	if(this.northernExit.isClosed) {
+    		exits = exits + ' n';
+    	}
+       else {
             exits = exits + ' N';
         }
     }
