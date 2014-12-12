@@ -208,49 +208,52 @@ characterSchema.methods.sleep = function() {
 
 characterSchema.methods.move = function(direction) {
 	var exit;
+	var exitExists = this.room.exitExists(direction);
 
-	switch(direction) {
-		case 0:
-			exit = this.room.northernExit;
-			break;
-		case 1:
-			exit = this.room.easternExit;
-			break;
-		case 2:
-			exit = this.room.southernExit;
-			break;
-		case 3:
-			exit = this.room.westernExit;
-			break;
-		case 4:
-			exit = this.room.upwardExit;
-			break;
-		case 5:
-			exit = this.room.downwardExit;
-			break;
-	}
-
-	if(exit === null) {
+	if(!exitExists) {
 	 	this.emitMessage("Alas, you cannot go that way...");
 	}
-	else if(exit.isClosed === true) {
-	 	this.emitMessage("The " + exit.doorKeywords[0] + " seems to be closed.");
-	}
 	else {
-	 	var newRoom = this.world.getRoom(exit.toRoomId);
-	 	
-	 	if(newRoom !== null) {
-		 	this.emitRoomMessage(this.name + " leaves " + directions[direction] + ".");
-		 	this.room.removeCharacter(this);
-	 		
-		 	newRoom.addCharacter(this);
-		 	this.emitRoomMessage(this.name + " has arrived.");
-			
-		 	newRoom.showRoomToCharacter(this);
-	 	}
-	 	else {
-	 		this.emitMessage("Although you should be able to go there, you cannot!");
-	 	}
+		switch(direction) {
+			case 0:
+				exit = this.room.northernExit;
+				break;
+			case 1:
+				exit = this.room.easternExit;
+				break;
+			case 2:
+				exit = this.room.southernExit;
+				break;
+			case 3:
+				exit = this.room.westernExit;
+				break;
+			case 4:
+				exit = this.room.upwardExit;
+				break;
+			case 5:
+				exit = this.room.downwardExit;
+				break;
+		}
+	
+		if(exit.isClosed === true) {
+		 	this.emitMessage("The " + exit.doorKeywords[0] + " seems to be closed.");
+		}
+		else {
+		 	var newRoom = this.world.getRoom(exit.toRoomId);
+		 	
+		 	if(newRoom !== null) {
+			 	this.emitRoomMessage(this.name + " leaves " + directions[direction] + ".");
+			 	this.room.removeCharacter(this);
+		 		
+			 	newRoom.addCharacter(this);
+			 	this.emitRoomMessage(this.name + " has arrived.");
+				
+			 	newRoom.showRoomToCharacter(this);
+		 	}
+		 	else {
+		 		this.emitMessage("Although you should be able to go there, you cannot!");
+		 	}
+		}
 	}
 };
 

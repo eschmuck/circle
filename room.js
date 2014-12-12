@@ -104,6 +104,59 @@ roomSchema.methods.getCharacter = function(key) {
 	return null;
 };
 
+roomSchema.methods.exitExists = function(direction) {
+	switch(direction) {
+		case 0:
+			if(JSON.stringify(this.room.northernExit) === "null") {
+				return false;
+			}
+			else {
+				return true;
+			}
+			break;
+		case 1:
+			if(JSON.stringify(this.room.easternExit) === "null") {
+				return false;
+			}
+			else {
+				return true;
+			}
+			break;
+		case 2:
+			if(JSON.stringify(this.room.southerExit) === "null") {
+				return false;
+			}
+			else {
+				return true;
+			}
+			break;
+		case 3:
+			if(JSON.stringify(this.room.westernExit) === "null") {
+				return false;
+			}
+			else {
+				return true;
+			}
+			break;
+		case 4:
+			if(JSON.stringify(this.room.upwardExit) === "null") {
+				return false;
+			}
+			else {
+				return true;
+			}
+			break;
+		case 5:
+			if(JSON.stringify(this.room.downwardExit) === "null") {
+				return false;
+			}
+			else {
+				return true;
+			}
+			break;
+	}	
+}
+
 roomSchema.methods.showRoomToCharacter = function(character) {
 	
 	// TODO: Dark room, blind character
@@ -113,16 +166,7 @@ roomSchema.methods.showRoomToCharacter = function(character) {
 	
 	var exits = '';
 
-	// console.log(this.northernExit);
-	// console.log(typeof(this.northernExit));
-	// console.log(this.northernExit == null);
-	// console.log(this.northernExit === null);
-	// console.log(!this.northernExit);
-	console.log(JSON.stringify(this.northernExit));
-	
-	console.log(JSON.stringify(this.northernExit) === 'null');
-	
-    if(this.northernExit != null) {
+    if(this.exitExists(0)) {
     	if(this.northernExit.isClosed) {
     		exits = exits + ' n';
     	}
@@ -131,41 +175,50 @@ roomSchema.methods.showRoomToCharacter = function(character) {
         }
     }
 
-	//console.log(this.easternExit);
-
-	if(this.easternExit !== null) {
-	    if(!this.easternExit.isClosed) {
-            exits = exits + ' E';
+	if(this.exitExists(1)) {
+	    if(this.easternExit.isClosed) {
+            exits = exits + ' e';
+        }
+        else {
+        	exits = exits + ' E';
         }
 	}
 
-	//console.log(this.southernExit);
-
-    if(this.southernExit !== null) {
-        if(!this.southernExit.isClosed) {
-            exits = exits + ' S';
+	if(this.exitExists(2)) {
+	    if(this.southernExit.isClosed) {
+            exits = exits + ' s';
         }
-    }
-
-	//console.log(this.westernExit);
-
-    if(this.westernExit !== null) {
-        if(!this.westernExit.isClosed) {
-            exits = exits + ' W';
+        else {
+        	exits = exits + ' S';
         }
-    }
+	}
 
-    if(this.upwardExit !== null) {
-        if(!this.upwardExit.isClosed) {
-            exits = exits + ' U';
+	if(this.exitExists(3)) {
+	    if(this.westernExit.isClosed) {
+            exits = exits + ' w';
         }
-    }
+        else {
+        	exits = exits + ' W';
+        }
+	}
 
-    if(this.downwardExit !== null) {
-    if(!this.downwardExit.isClosed) {
-            exits = exits + ' D';
+	if(this.exitExists(4)) {
+	    if(this.upwardExit.isClosed) {
+            exits = exits + ' u';
         }
-    }
+        else {
+        	exits = exits + ' U';
+        }
+	}
+
+	if(this.exitExists(5)) {
+	    if(this.downwardExit.isClosed) {
+            exits = exits + ' d';
+        }
+        else {
+        	exits = exits + ' D';
+        }
+	}
 
     if(exits === '') {
 	    exits = ' None!';
