@@ -1,6 +1,5 @@
 var mongoose = require('mongoose');
 var mob = require('./mob').mob;
-var mobSchema = require('./mob').schema;
 
 var schema = mongoose.Schema;
 
@@ -52,7 +51,6 @@ function executeZoneResetCommands(commands, instructionNumber, world, lastNpcLoa
             case "*":  // ignore
                 break;
             case "M":  // mobile
-                //var thisMob = new mob();
                 var mobId = parseInt(command[2], 10);
                 mob.load(mobId, afterMobLoaded, commands, world, instructionNumber);
                 break;
@@ -61,7 +59,6 @@ function executeZoneResetCommands(commands, instructionNumber, world, lastNpcLoa
 }
 
 function afterMobLoaded(mob, commands, world, instructionNumber) {
-    //console.log(mob.isNpc());
     var command = commands[instructionNumber].split(" ");
     var roomId = parseInt(command[4], 10);
     world.getRoom(roomId).addCharacter(mob);

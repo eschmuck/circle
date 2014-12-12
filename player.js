@@ -26,6 +26,7 @@ playerSchema.methods.isNpc = function() {
 	return false;
 };
 
+// TODO: change to 'statics'?
 playerSchema.methods.load = function(name, callback) {
 	playerModel.find({ name: name }, function(err, docs) {
 		callback(docs);
