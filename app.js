@@ -31,6 +31,7 @@ http.createServer(app).listen(app.get('port'), function() {
 });
 
 room.getRooms(function(roomDocs) {
+  console.log('here0');
   gameWorld.rooms = roomDocs;
   
   console.log('here1');
