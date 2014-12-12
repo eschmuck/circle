@@ -34,15 +34,15 @@ room.getRooms(function(roomDocs) {
   console.log('here0');
   gameWorld.rooms = roomDocs;
   
-  console.log('here1');
-  zone.getZones(function(zoneDocs) {
-    gameWorld.zones = zoneDocs;
-    console.log('here2');
-    for(var i = 0; i < gameWorld.zones.length; i++) {
-      console.log('reseting zone ' + gameWorld.zones[i].id);
-      gameWorld.zones[i].reset(gameWorld.rooms);
-    }
-  });
+  // console.log('here1');
+  // zone.getZones(function(zoneDocs) {
+  //   gameWorld.zones = zoneDocs;
+  //   console.log('here2');
+  //   for(var i = 0; i < gameWorld.zones.length; i++) {
+  //     console.log('reseting zone ' + gameWorld.zones[i].id);
+  //     gameWorld.zones[i].reset(gameWorld.rooms);
+  //   }
+  // });
 });
 
 io.sockets.on('connection', function(socket) {
