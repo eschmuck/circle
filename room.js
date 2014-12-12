@@ -155,7 +155,7 @@ roomSchema.methods.exitExists = function(direction) {
 			}
 			break;
 	}	
-}
+};
 
 roomSchema.methods.showRoomToCharacter = function(character) {
 	

@@ -9,12 +9,13 @@ var database = require('./database');
 var player = require('./player').player;
 var text = require('./text');
 var room = require('./room');
+var zone = require('./zone');
 var world = require('./world');
 var interpreter = require('./interpreter');
 
 var app = express();
 var server = app.listen(3000);
-var gameDb = new database();
+//var gameDb = new database();
 var gameWorld = new world();
 var inputInterpreter = new interpreter();
 
@@ -29,8 +30,11 @@ http.createServer(app).listen(app.get('port'), function() {
   console.log("Express server listening on port 3000");
 });
 
-room.getRooms(function(docs) {
-  gameWorld.rooms = docs;
+room.getRooms(function(roomDocs) {
+  gameWorld.rooms = roomDocs;
+  zone.getZones(function(zoneDocs) {
+    gameWorld.zones = zoneDocs;
+  });
 });
 
 io.sockets.on('connection', function(socket) {
