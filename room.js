@@ -120,6 +120,8 @@ roomSchema.methods.showRoomToCharacter = function(character) {
 	// console.log(!this.northernExit);
 	console.log(JSON.stringify(this.northernExit));
 	
+	console.log(JSON.stringify(this.northernExit) === 'null');
+	
     if(this.northernExit != null) {
     	if(this.northernExit.isClosed) {
     		exits = exits + ' n';
