@@ -4,7 +4,7 @@ var extend = require('mongoose-schema-extend');
 var character = require("./character");
 var characterSchema = require("./character").schema;
 
-//var connection = mongoose.connect('mongodb://localhost/circledb');
+var connection = mongoose.connect('mongodb://localhost/circledb');
 
 var playerSchema = characterSchema.extend({
 	password: String,
