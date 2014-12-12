@@ -69,7 +69,6 @@ function afterMobLoaded(document, mob, commands, world, instructionNumber) {
     executeZoneResetCommands(commands, world, (instructionNumber + 1), mob);
 }
 
-
 var zoneModel = mongoose.model('zone', zoneSchema);
 
 exports.getZones = function getZones(callback) {

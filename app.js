@@ -206,8 +206,6 @@ io.sockets.on('connection', function(socket) {
     socket.player.socket = socket;
     socket.player.enterGame();
 
-    console.log(socket.player.isNpc());
-
     gameWorld.addCharacter(socket.player);
 
     var startRoom = gameWorld.getRoom(3001);
