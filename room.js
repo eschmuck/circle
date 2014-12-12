@@ -233,8 +233,6 @@ roomSchema.methods.showRoomToCharacter = function(character) {
     		character.emitMessage(this.people[i].getDescription(), 'Orange');
     	}
     }
-    
-    character.emitMessage('\n');
 };
 
 var roomModel = mongoose.model('room', roomSchema);

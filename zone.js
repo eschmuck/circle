@@ -1,27 +1,36 @@
-// var mongoose = require('mongoose');
-// var schema = mongoose.Schema;
+var mongoose = require('mongoose');
+var schema = mongoose.Schema;
 
-// var zoneSchema = new schema({
-//     id: Number,
-//     name: String,
-//     lowestRoomNumber: Number,
-//     highestRoomNumber: Number,
-//     lifespan: Number,
-//     resetMode: Number,
-//     resetCommands: [],
-//     age: Number
-// });
+var connection = mongoose.connect('mongodb://localhost/circledb');
 
-// zoneSchema.methods.reset = function(rooms) {
-//     // for(var i = 0; i < this.resetCommands.length; i++) {
-//     //     console.log(this.resetCommands[i]);
-//     // }
-// };
+var zoneSchema = new schema({
+    id: Number,
+    name: String,
+    lowestRoomNumber: Number,
+    highestRoomNumber: Number,
+    lifespan: Number,
+    resetMode: Number,
+    resetCommands: [],
+    age: Number
+});
 
-// var zoneModel = mongoose.model('zone', zoneSchema);
+zoneSchema.methods.reset = function(rooms) {
+    // for(var i = 0; i < this.resetCommands.length; i++) {
+    //     console.log(this.resetCommands[i]);
+    // }
+    
+    console.log('reset this now.');
+};
 
-// exports.getZones = function getZones(callback) {
-// 	zoneModel.find({}, function(err, docs) {
-// 		callback(docs);
-// 	});
-// };
+var zoneModel = mongoose.model('zone', zoneSchema);
+
+exports.getZones = function getZones(callback) {
+	zoneModel.find({}, function(err, docs) {
+		callback(docs);
+	});
+};
+
+module.exports = {
+	schema: zoneSchema,
+	zone: zoneModel
+};
