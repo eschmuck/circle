@@ -67,7 +67,9 @@ zoneSchema.methods.afterMobLoaded = function(mob, commands, instructionNumber) {
     // console.log(mob);
     
     var command = commands[instructionNumber].split(" ");
-    this.world.getRoom(command[4]).addCharacter(mob);
+    
+    
+    //this.world.getRoom(command[4]).addCharacter(mob);
 
     this.executeZoneResetCommands(commands, (instructionNumber + 1), mob);
 };
