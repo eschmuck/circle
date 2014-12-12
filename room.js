@@ -89,6 +89,16 @@ roomSchema.methods.removeCharacter = function(character) {
 	character.room = null;
 };
 
+roomSchema.methods.addItem = function(item) {
+	this.contents.add(item);
+	item.room = this;
+};
+
+roomSchema.methods.removeItem = function(item) {
+	this.contents.splice(this.contents.indexOf(item), 1);
+	item.room = null;
+};
+
 roomSchema.methods.getCharacter = function(key) {
 	// TODO: Handle NPCs
 	// TODO: Handle stuff like 2.guard
@@ -226,8 +236,6 @@ roomSchema.methods.showRoomToCharacter = function(character) {
 
     character.emitMessage('[ Exits:' + exits + ' ]', 'Cyan');
     
-    // TODO: Contents, People
-    
     for(var i = 0; i < this.people.length; i++) {
     	if(this.people[i] !== character) {
     		if(this.people[i].isNpc()) {
@@ -237,6 +245,10 @@ roomSchema.methods.showRoomToCharacter = function(character) {
     			character.emitMessage(this.people[i].getDescription(), 'Orange');
     		}
     	}
+    }
+    
+    for(var i = 0; i < this.contents.length; i++) {
+    	character.emitMessage(this.contents[i].longDescription, 'Green');
     }
 };
 

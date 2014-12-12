@@ -2,6 +2,7 @@
 function World() {
 	this.rooms = [];
 	this.people = [];
+	this.items = [];
 	this.zones = [];
 }
 
@@ -9,6 +10,7 @@ function World() {
 World.prototype.rooms;
 World.prototype.people;
 World.prototype.zones;
+World.prototype.items;
 
 World.prototype.getRoom = function(id) {
 	for(var i = 0; i < this.rooms.length; i++) {
@@ -28,6 +30,16 @@ World.prototype.addCharacter = function(character) {
 World.prototype.removeCharacter = function(character) {
 	this.people.splice(this.people.indexOf(character), 1);
 	character.world = null;
+};
+
+World.prototype.addItem = function(item) {
+	this.items.push(item);
+	item.world = this;
+};
+
+World.prototype.removeItem = function(item) {
+	this.items.splice(this.items.indexOf(item), 1);
+	item.world = null;
 };
 
 

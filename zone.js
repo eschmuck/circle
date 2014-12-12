@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var mob = require('./mob').mob;
+var item = require('./item').item;
 
 var schema = mongoose.Schema;
 
@@ -41,7 +42,7 @@ zoneSchema.methods.reset = function(rooms) {
 };
 
 
-function executeZoneResetCommands(commands, instructionNumber, world, lastNpcLoaded) {
+function executeZoneResetCommands(commands, instructionNumber, world, lastObjectLoaded) {
     if(instructionNumber < commands.length) {
         var command = commands[instructionNumber].split(" ");
         
@@ -57,6 +58,13 @@ function executeZoneResetCommands(commands, instructionNumber, world, lastNpcLoa
                 var mobId = parseInt(command[2], 10);
                 mob.load(mobId, thisMob, afterMobLoaded, commands, world, instructionNumber);
                 break;
+            case "O":  // item
+                var thisItem = new item();
+                world.addItem(thisItem);
+                
+                var itemId = parseInt(command[2], 10);
+                item.load(itemId, thisItem, afterRoomItemLoaded, commands, world, instructionNumber);
+                break;
         }
     }
 }
@@ -67,6 +75,14 @@ function afterMobLoaded(document, mob, commands, world, instructionNumber) {
     var roomId = parseInt(command[4], 10);
     world.getRoom(roomId).addCharacter(mob);
     executeZoneResetCommands(commands, world, (instructionNumber + 1), mob);
+}
+
+function afterRoomItemLoaded(document, item, commands, world, instructionNumber) {
+    item = document[0];
+    var command = commands[instructionNumber].split(" ");
+    var roomId = parseInt(command[4], 10);
+    world.getRoom(roomId).addItem(item);
+    executeZoneResetCommands(commands, world, (instructionNumber + 1), item);
 }
 
 var zoneModel = mongoose.model('zone', zoneSchema);
