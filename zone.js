@@ -54,7 +54,7 @@ function executeZoneResetCommands(commands, instructionNumber, world, lastNpcLoa
             case "M":  // mobile
                 //var thisMob = new mob();
                 var mobId = parseInt(command[2], 10);
-                mobSchema.load(mobId, afterMobLoaded, commands, world, instructionNumber);
+                mob.load(mobId, afterMobLoaded, commands, world, instructionNumber);
                 break;
         }
     }
