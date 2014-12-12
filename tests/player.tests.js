@@ -1,4 +1,3 @@
-//var Player = require("../player");
 var Player = require("../player").player;
 
 exports.player_name_works = function(test) {
@@ -16,9 +15,16 @@ exports.meh_works = function(test) {
 
 exports.blah_works = function(test) {
 	var thisPlayer = new Player();
-	test.equal('blah', thisPlayer.blah());
+	test.equal('override blah', thisPlayer.blah());
 	test.done();
 };
+
+exports.isNpc_works = function(test) {
+	var thisPlayer = new Player();
+	test.equal(false, thisPlayer.isNpc());
+	test.done();
+};
+
 
 exports.start_works = function(test) {
 	var thisPlayer = new Player();
