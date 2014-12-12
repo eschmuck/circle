@@ -107,7 +107,7 @@ roomSchema.methods.getCharacter = function(key) {
 roomSchema.methods.exitExists = function(direction) {
 	switch(direction) {
 		case 0:
-			if(JSON.stringify(this.room.northernExit) === "null") {
+			if(JSON.stringify(this.northernExit) === "null") {
 				return false;
 			}
 			else {
@@ -115,7 +115,7 @@ roomSchema.methods.exitExists = function(direction) {
 			}
 			break;
 		case 1:
-			if(JSON.stringify(this.room.easternExit) === "null") {
+			if(JSON.stringify(this.easternExit) === "null") {
 				return false;
 			}
 			else {
@@ -123,7 +123,7 @@ roomSchema.methods.exitExists = function(direction) {
 			}
 			break;
 		case 2:
-			if(JSON.stringify(this.room.southerExit) === "null") {
+			if(JSON.stringify(this.southerExit) === "null") {
 				return false;
 			}
 			else {
@@ -131,7 +131,7 @@ roomSchema.methods.exitExists = function(direction) {
 			}
 			break;
 		case 3:
-			if(JSON.stringify(this.room.westernExit) === "null") {
+			if(JSON.stringify(this.westernExit) === "null") {
 				return false;
 			}
 			else {
@@ -139,7 +139,7 @@ roomSchema.methods.exitExists = function(direction) {
 			}
 			break;
 		case 4:
-			if(JSON.stringify(this.room.upwardExit) === "null") {
+			if(JSON.stringify(this.upwardExit) === "null") {
 				return false;
 			}
 			else {
@@ -147,7 +147,7 @@ roomSchema.methods.exitExists = function(direction) {
 			}
 			break;
 		case 5:
-			if(JSON.stringify(this.room.downwardExit) === "null") {
+			if(JSON.stringify(this.downwardExit) === "null") {
 				return false;
 			}
 			else {
