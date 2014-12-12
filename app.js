@@ -2,6 +2,7 @@ var express = require('express');
 var http = require('http');
 var path = require('path');
 var socketio = require('socket.io');
+var mongoose = require('mongoose');
 
 var character = require('./character');
 var connections = require('./connections');
@@ -12,6 +13,8 @@ var room = require('./room');
 var zone = require('./zone');
 var world = require('./world');
 var interpreter = require('./interpreter');
+
+var connection = mongoose.connect('mongodb://localhost/circledb');
 
 var app = express();
 var server = app.listen(3000);

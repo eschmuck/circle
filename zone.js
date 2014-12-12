@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var schema = mongoose.Schema;
 
-var connection = mongoose.connect('mongodb://localhost/circledb');
+//ar connection = mongoose.connect('mongodb://localhost/circledb');
 
 var zoneSchema = new schema({
     id: Number,
