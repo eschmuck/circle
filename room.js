@@ -113,39 +113,45 @@ roomSchema.methods.showRoomToCharacter = function(character) {
 	
 	var exits = '';
 
-	console.log(this);
+	console.log(this.northernExit);
 
-    if(this.northernExit !== undefined) {
+    if(this.northernExit !== null) {
         if(!this.northernExit.isClosed) {
             exits = exits + ' N';
         }
     }
 
-	if(this.easternExit !== undefined) {
+	console.log(this.easternExit);
+
+	if(this.easternExit !== null) {
 	    if(!this.easternExit.isClosed) {
             exits = exits + ' E';
         }
 	}
 
-    if(this.southernExit !== undefined) {
+	console.log(this.southernExit);
+
+    if(this.southernExit !== null) {
         if(!this.southernExit.isClosed) {
             exits = exits + ' S';
         }
     }
 
-    if(this.westernExit !== undefined) {
+	console.log(this.westernExit);
+
+    if(this.westernExit !== null) {
         if(!this.westernExit.isClosed) {
             exits = exits + ' W';
         }
     }
 
-    if(this.upwardExit !== undefined) {
+    if(this.upwardExit !== null) {
         if(!this.upwardExit.isClosed) {
             exits = exits + ' U';
         }
     }
 
-    if(this.downwardExit !== undefined) {
+    if(this.downwardExit !== null) {
     if(!this.downwardExit.isClosed) {
             exits = exits + ' D';
         }
