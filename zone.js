@@ -16,7 +16,9 @@ var zoneSchema = new schema({
 
 zoneSchema.methods.reset = function(rooms) {
     for(var i = 0; i < this.resetCommands.length; i++) {
-        console.log(this.resetCommands[i]);
+        //console.log(this.resetCommands[i]);
+        
+        console.log(this.resetCommands[i].length);
     }
 };
 
