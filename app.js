@@ -9,13 +9,13 @@ var database = require('./database');
 var player = require('./player').player;
 var text = require('./text');
 var room = require('./room');
-var zone = require('./zone');
+// var zone = require('./zone');
 var world = require('./world');
 var interpreter = require('./interpreter');
 
 var app = express();
 var server = app.listen(3000);
-//var gameDb = new database();
+var gameDb = new database();
 var gameWorld = new world();
 var inputInterpreter = new interpreter();
 
