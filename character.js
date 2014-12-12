@@ -68,6 +68,7 @@ characterSchema.methods.getDescription = function() {
 
 characterSchema.methods.isNpc = function() {
 	// Implementation overriden by child schemas	
+	return false;
 };
 
 characterSchema.methods.emitMessage = function(message, color) {
