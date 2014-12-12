@@ -230,7 +230,12 @@ roomSchema.methods.showRoomToCharacter = function(character) {
     
     for(var i = 0; i < this.people.length; i++) {
     	if(this.people[i] !== character) {
-    		character.emitMessage(this.people[i].getDescription(), 'Orange');
+    		if(this.people[i].isNpc()) {
+    			character.emitMessage(this.people[i].longDescription, 'Orange');
+    		}
+    		else {
+    			character.emitMessage(this.people[i].getDescription(), 'Orange');
+    		}
     	}
     }
 };

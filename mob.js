@@ -19,6 +19,10 @@ mobSchema.methods.load = function(id, callback, commands, world, instructionNumb
 	});
 };
 
+mobSchema.methods.isNpc = function() {
+	return true;
+};
+
 var mobModel = mongoose.model('mob', mobSchema);
 
 module.exports = {
