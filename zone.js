@@ -53,26 +53,17 @@ function executeZoneResetCommands(commands, instructionNumber, world, lastNpcLoa
                 break;
             case "M":  // mobile
                 var thisMob = new mob();
-                //thisMob.id = commands[2];
-                thisMob.load(command[2], afterMobLoaded, commands, world, instructionNumber);
+                var mobId = parseInt(command[2], 10);
+                thisMob.load(mobId, afterMobLoaded, commands, world, instructionNumber);
                 break;
         }
     }
 }
 
 function afterMobLoaded(mob, commands, world, instructionNumber) {
-    // console.log('here');
-    // console.log(mob);
-    
     var command = commands[instructionNumber].split(" ");
-    
     var roomId = parseInt(command[4], 10);
-    console.log(roomId);
-    
-    var room = world.getRoom(roomId);
-    console.log(room);
-    room.addCharacter(mob);
-
+    world.getRoom(roomId).addCharacter(mob);
     executeZoneResetCommands(commands, world, (instructionNumber + 1), mob);
 }
 
