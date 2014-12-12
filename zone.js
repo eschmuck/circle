@@ -45,19 +45,19 @@ function executeZoneResetCommands(commands, instructionNumber, lastNpcLoaded) {
         
         // TODO: Determine if load would exceed global quota
         
-        switch(commands[0]) {
+        switch(command[0]) {
             case "*":  // ignore
                 break;
             case "M":  // mobile
                 var thisMob = new mob();
                 //thisMob.id = commands[2];
-                thisMob.load(commands[2], afterMobLoaded);
+                thisMob.load(command[2], afterMobLoaded);
                 break;
         }
     }
 }
 
-function afterMobLoaded(document) {
+function afterMobLoaded(document, commandSet, instructionNumber) {
     console.log('here');
     console.log(document);
 }
