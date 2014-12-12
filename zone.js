@@ -65,7 +65,10 @@ function afterMobLoaded(mob, commands, world, instructionNumber) {
     // console.log(mob);
     
     var command = commands[instructionNumber].split(" ");
-    world.getRoom(command[4]).addCharacter(mob);
+    
+    var roomId = command[4];
+    console.log(roomId);
+    world.getRoom(roomId).addCharacter(mob);
 
     executeZoneResetCommands(commands, world, (instructionNumber + 1), mob);
 }
