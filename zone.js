@@ -30,7 +30,7 @@ exports.getZones = function getZones(callback) {
 	});
 };
 
-module.exports = {
-	schema: zoneSchema,
-	zone: zoneModel
-};
+// module.exports = {
+// 	schema: zoneSchema,
+// 	zone: zoneModel
+// };
