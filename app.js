@@ -32,10 +32,13 @@ http.createServer(app).listen(app.get('port'), function() {
 
 room.getRooms(function(roomDocs) {
   gameWorld.rooms = roomDocs;
+  
+  console.log('here1');
   zone.getZones(function(zoneDocs) {
     gameWorld.zones = zoneDocs;
-    
+    console.log('here2');
     for(var i = 0; i < gameWorld.zones.length; i++) {
+      console.log('reseting zone ' + gameWorld.zones[i].id);
       gameWorld.zones[i].reset(gameWorld.rooms);
     }
   });
