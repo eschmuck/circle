@@ -63,7 +63,11 @@ characterSchema.methods.blah = function() {
 };
 
 characterSchema.methods.getDescription = function() {
-	// Implementation overriden by player	
+	// Implementation overriden by child schemas	
+};
+
+characterSchema.methods.isNpc = function() {
+	// Implementation overriden by child schemas	
 };
 
 characterSchema.methods.emitMessage = function(message, color) {
