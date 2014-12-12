@@ -7,9 +7,16 @@ var zoneSchema = new schema({
     lowestRoomNumber: Number,
     highestRoomNumber: Number,
     lifespan: Number,
-    resetMode: Number
+    resetMode: Number,
+    resetCommands: [],
+    age: Number
 });
 
+zoneSchema.methods.reset = function(rooms) {
+    for(var i = 0; i < this.resetCommands.length; i++) {
+        console.log(this.resetCommands[i]);
+    }
+};
 
 var zoneModel = mongoose.model('zone', zoneSchema);
 

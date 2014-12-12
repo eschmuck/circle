@@ -34,6 +34,10 @@ room.getRooms(function(roomDocs) {
   gameWorld.rooms = roomDocs;
   zone.getZones(function(zoneDocs) {
     gameWorld.zones = zoneDocs;
+    
+    for(var i = 0; i < gameWorld.zones.length; i++) {
+      gameWorld.zones[i].reset(gameWorld.rooms);
+    }
   });
 });
 
