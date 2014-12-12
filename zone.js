@@ -15,11 +15,9 @@ var zoneSchema = new schema({
 });
 
 zoneSchema.methods.reset = function(rooms) {
-    // for(var i = 0; i < this.resetCommands.length; i++) {
-    //     console.log(this.resetCommands[i]);
-    // }
-    
-    console.log('reset this now.');
+    for(var i = 0; i < this.resetCommands.length; i++) {
+        console.log(this.resetCommands[i]);
+    }
 };
 
 var zoneModel = mongoose.model('zone', zoneSchema);
