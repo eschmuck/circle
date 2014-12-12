@@ -225,6 +225,10 @@ roomSchema.methods.showRoomToCharacter = function(character) {
     }
 
     character.emitMessage('[ Exits:' + exits + ' ]', 'Cyan');
+    
+    // TODO: Contents, People
+    
+    character.emitMessage('\r\n');
 };
 
 var roomModel = mongoose.model('room', roomSchema);

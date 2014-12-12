@@ -20,6 +20,10 @@ playerSchema.methods.meh = function() {
 	return 'meh';
 };
 
+playerSchema.methods.blah = function() {
+	return 'override blah';
+};
+
 playerSchema.methods.load = function(name, callback) {
 	playerModel.find({ name: name }, function(err, docs) {
 		callback(docs);
