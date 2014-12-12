@@ -14,7 +14,7 @@ var zoneSchema = new schema({
     lifespan: Number,
     resetMode: Number,
     resetCommands: [],
-    age: Number
+    age: Number,
 });
 
 zoneSchema.methods.reset = function(rooms) {
@@ -33,10 +33,12 @@ zoneSchema.methods.reset = function(rooms) {
     //         }
     //     }
     //}
+
+    console.log(this.world);
     
-    for(var i = 0; i < this.resetCommands.length; i++) {
-        executeZoneResetCommands(this.resetCommands[i], 0, null);
-    }
+    // for(var i = 0; i < this.resetCommands.length; i++) {
+    //     executeZoneResetCommands(this.resetCommands[i], 0, null);
+    // }
 };
 
 
