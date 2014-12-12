@@ -18,7 +18,7 @@ var connection = mongoose.connect('mongodb://localhost/circledb');
 
 var app = express();
 var server = app.listen(3000);
-var gameDb = new database();
+//var gameDb = new database();
 var gameWorld = new world();
 var inputInterpreter = new interpreter();
 
@@ -39,6 +39,7 @@ room.getRooms(function(roomDocs) {
     gameWorld.zones = zoneDocs;
     for(var i = 0; i < gameWorld.zones.length; i++) {
       console.log('reseting zone ' + gameWorld.zones[i].id);
+      gameWorld.zones[i].world = gameWorld;
       gameWorld.zones[i].reset(gameWorld.rooms);
     }
   });

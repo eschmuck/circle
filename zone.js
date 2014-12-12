@@ -58,9 +58,14 @@ function executeZoneResetCommands(commands, instructionNumber, lastNpcLoaded) {
     }
 }
 
-function afterMobLoaded(document, commandSet, instructionNumber) {
+function afterMobLoaded(mob, commands, instructionNumber) {
     console.log('here');
-    console.log(document);
+    console.log(mob);
+    
+    var command = commands[instructionNumber].split(" ");
+    this.world.getRoom(command[4]).addCharacter(mob);
+
+    // executeZoneResetCommands(commands, (instructionNumber + 1), mob);
 }
 
 
