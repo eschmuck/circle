@@ -14,10 +14,10 @@ var mobSchema = characterSchema.extend({
 	damRollFormula: String
 });
 
-mobSchema.methods.load = function(id, callback, commands, world, instructionNumber) {
-	mobModel.find({ id: id }, function(err, docs) {
-		callback(docs, commands, world, instructionNumber);
-	});
+mobSchema.statics.load = function(id, callback, commands, world, instructionNumber) {
+ 	this.find({ id: id }, function(err, docs) {
+ 		callback(docs, commands, world, instructionNumber);
+ 	});
 };
 
 mobSchema.methods.isNpc = function() {
