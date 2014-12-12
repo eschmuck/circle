@@ -90,7 +90,7 @@ roomSchema.methods.removeCharacter = function(character) {
 };
 
 roomSchema.methods.addItem = function(item) {
-	this.contents.add(item);
+	this.contents.push(item);
 	item.room = this;
 };
 
