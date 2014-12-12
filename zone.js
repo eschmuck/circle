@@ -35,6 +35,7 @@ zoneSchema.methods.reset = function(rooms) {
     //}
     
     for(var i = 0; i < this.resetCommands.length; i++) {
+        executeZoneResetCommands(this.resetCommands[i], 0, null);
     }
 };
 
