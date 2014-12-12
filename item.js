@@ -10,7 +10,7 @@ var itemSchema = new schema({
 
 itemSchema.statics.load = function(id, item, callback, commands, world, instructionNumber) {
  	this.find({ id: id }, function(err, docs) {
- 		//callback(docs, mob, commands, world, instructionNumber);
+ 		callback(docs, item, commands, world, instructionNumber);
  	});
 };
 
