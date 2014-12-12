@@ -114,6 +114,7 @@ roomSchema.methods.showRoomToCharacter = function(character) {
 	var exits = '';
 
 	console.log(this.northernExit);
+	console.log(this.northernExit !== null);
 
     if(this.northernExit !== null) {
         if(!this.northernExit.isClosed) {
