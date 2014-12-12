@@ -228,6 +228,10 @@ roomSchema.methods.showRoomToCharacter = function(character) {
     
     // TODO: Contents, People
     
+    for(var i = 0; i < this.people.length; i++) {
+    	character.emitMessage(this.people[i].getDescription(), 'Orange');
+    }
+    
     character.emitMessage('\r\n');
 };
 

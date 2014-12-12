@@ -30,7 +30,6 @@ playerSchema.methods.load = function(name, callback) {
 	});
 };
 
-
 playerSchema.methods.start = function() {
 	this.level = 1;
 	this.experience = 1;
@@ -53,6 +52,31 @@ playerSchema.methods.start = function() {
 playerSchema.methods.enterGame = function() {
 	this.position = character.POS_STANDING;
 };
+
+playerSchema.methods.getDescription = function() {
+	var positions = [
+	    ' is lying here, dead.',
+	    ' is lying here, mortally wounded.',
+	    ' is lying here, incapacitated.',
+	    ' is lying here, stunned.',
+	    ' is sleeping here.',
+	    ' is resting here.',
+	    ' is sitting here.',
+	    '!FIGHTING!',
+	    ' is standing here.'
+	];
+	
+	var description = this.name + " " + this.title;
+	
+	if(this.position !== character.POS_FIGHTING) {
+		description = description + positions[this.position];
+	}
+	
+	// TODO: More (affections, etc)
+	
+	return description;
+};
+
 
 var playerModel = mongoose.model('player', playerSchema);
 

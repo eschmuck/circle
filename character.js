@@ -62,6 +62,10 @@ characterSchema.methods.blah = function() {
 	return 'blah';
 };
 
+characterSchema.methods.getDescription = function() {
+	// Implementation overriden by player	
+};
+
 characterSchema.methods.emitMessage = function(message, color) {
 	if(this.socket !== undefined) {
 		if(color !== undefined) {
