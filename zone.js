@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var mob = require('./mob').mob;
-
+var mobSchema = require('./mob').schema;
 
 var schema = mongoose.Schema;
 
@@ -52,9 +52,9 @@ function executeZoneResetCommands(commands, instructionNumber, world, lastNpcLoa
             case "*":  // ignore
                 break;
             case "M":  // mobile
-                var thisMob = new mob();
+                //var thisMob = new mob();
                 var mobId = parseInt(command[2], 10);
-                thisMob.load(mobId, afterMobLoaded, commands, world, instructionNumber);
+                mobSchema.load(mobId, afterMobLoaded, commands, world, instructionNumber);
                 break;
         }
     }
