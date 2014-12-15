@@ -233,6 +233,7 @@ var COMMAND_LIST = [
           { command: "tackle"   , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_TACKLE },
           { command: "tango"    , minimumPosition: Character.POS_STANDING, functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_TANGO },
           { command: "taunt"    , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_TAUNT },
+          { command: "tell"     , minimumPosition: Character.POS_DEAD    , functionPointer: do_tell       , minimumLevel: 0, subCommand: 0 },
           { command: "thank"    , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_THANK },
           { command: "think"    , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_THINK },
           { command: "tickle"   , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_TICKLE },
@@ -374,11 +375,10 @@ Interpreter.prototype.tokenize = function(input) {
     return tokens;
 };
 
-Interpreter.prototype.getCommandToken = function(input) {
-    
+Interpreter.prototype.getCommand = function(input) {
     if(input.length === 0) {
         return null;
-    }
+    }    
     
     var cleanedInput = this.cleanInput(input);
     var cleanedTokens = this.tokenize(cleanedInput);
@@ -387,11 +387,7 @@ Interpreter.prototype.getCommandToken = function(input) {
         return null;
     }
     
-    return cleanedTokens[0];
-};
-
-Interpreter.prototype.getCommand = function(input) {
-    var commandToken = this.getCommandToken(input);
+    var commandToken = cleanedTokens[0];
     
     if(commandToken === null || commandToken === " ") {
         return null;
@@ -402,9 +398,16 @@ Interpreter.prototype.getCommand = function(input) {
     for(var i = 0; i < COMMAND_LIST.length; i++) {
         if(COMMAND_LIST[i].command.substr(0, commandToken.length) === commandToken) {
             command = COMMAND_LIST[i];
-            command.subInput = input.replace(commandToken, '');
+            command.subInput = input.replace(commandToken, '').trim();
             break;
         }
+    }
+
+    if(cleanedTokens.length > 1) {
+        command.tokens = cleanedTokens.slice(1);
+    }
+    else {
+        command.tokens = [];
     }
 
     return command;
@@ -480,6 +483,14 @@ function do_sleep(character) {
     character.sleep();
 }
 
+function do_tell(character, command) {
+    if(command.tokens.length > 0) {
+        character.tell(command.tokens[0], command.subInput.replace(command.tokens[0], '').trim());
+    }
+    else {
+        character.emitMessage('Tell what to who?');
+    }
+}
 
 
 

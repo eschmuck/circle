@@ -102,6 +102,46 @@ characterSchema.methods.say = function(message) {
 	}
 };
 
+characterSchema.methods.canTellTarget = function(target) {
+	if(this === target) {
+		this.emitMessage("You try to tell yourself something.  Did it work?");
+	}
+	//else if(this.isNoTell) {
+	// 	this.emitMessage("You cannot tell other people while you have notell on.");
+	// }
+	// else if(this.room.isSoundproof) {
+	// 	this.emitMessage("The walls seem to absorb your words.");
+	// }
+	// else if(target.room.isSoundproof || target.isNoTell) {
+	// 	this.emitMessage(target.getPersonalPronoun + " can't hear you.");
+	// }
+	// else if(target.isWriting) {
+	// 	this.emitMessage(target.getPersonalPronoun + "'s writing a message right now; try again later.");
+	// }
+	// else if(target.isLinkless) {
+	// 	this.emitMessage(target.getPersonalPronoun + "'s linkless at the moment.");
+	// }
+	else {
+		return true;
+	}
+	
+	return false;
+};
+
+characterSchema.methods.tell = function(targetName, message) {
+	var target = this.world.getCharacter(targetName);
+	
+	if(target === null) {
+		this.emitMessage("No-one by that name here.");
+	}
+	else {
+		if(this.canTellTarget(target)) {
+			this.emitMessage("You tell " + target.name + ", '" + message + "'", "Red");
+			target.emitMessage(this.name + " tells you, '" + message + "'", "Red");
+		}
+	}
+};
+
 characterSchema.methods.social = function(action, parameter) {
 	var thisSocial = new Social(action, parameter, this);
 	thisSocial.emitMessages();
