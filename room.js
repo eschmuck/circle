@@ -282,8 +282,6 @@ roomSchema.methods.showRoomToCharacter = function(character) {
 		if (this.people[i] !== character) {
 			if (this.people[i].isNpc()) {
 				character.emitMessage(this.people[i].longDescription, 'Orange');
-				character.emitMessage(this.people[i].thac0);
-				character.emitMessage(this.people[i].keywords);
 			}
 			else {
 				character.emitMessage(this.people[i].getDescription(), 'Orange');

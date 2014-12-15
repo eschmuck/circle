@@ -53,15 +53,13 @@ function executeZoneResetCommands(commands, instructionNumber, world, lastObject
                 break;
             case "M":  // mobile
                 var thisMob = new mob();
-                world.addCharacter(thisMob);
-                
+                //world.addCharacter(thisMob);
                 var mobId = parseInt(command[2], 10);
                 mob.load(mobId, thisMob, afterMobLoaded, commands, world, instructionNumber);
                 break;
             case "O":  // item
                 var thisItem = new item();
-                world.addItem(thisItem);
-                
+                //world.addItem(thisItem);
                 var itemId = parseInt(command[2], 10);
                 item.load(itemId, thisItem, afterRoomItemLoaded, commands, world, instructionNumber);
                 break;
@@ -73,6 +71,7 @@ function afterMobLoaded(document, mob, commands, world, instructionNumber) {
     mob = document[0];
     var command = commands[instructionNumber].split(" ");
     var roomId = parseInt(command[4], 10);
+    world.addCharacter(mob);
     world.getRoom(roomId).addCharacter(mob);
     executeZoneResetCommands(commands, world, (instructionNumber + 1), mob);
 }
@@ -81,6 +80,7 @@ function afterRoomItemLoaded(document, item, commands, world, instructionNumber)
     item = document[0];
     var command = commands[instructionNumber].split(" ");
     var roomId = parseInt(command[4], 10);
+    world.addItem(item);
     world.getRoom(roomId).addItem(item);
     executeZoneResetCommands(commands, world, (instructionNumber + 1), item);
 }
