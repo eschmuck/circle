@@ -42,6 +42,63 @@ World.prototype.removeItem = function(item) {
 	item.world = null;
 };
 
+World.prototype.getCharacter = function(parameter) {
+	var name = parameter;
+	var member = 1;
+	
+	if(parameter.indexOf(".") > -1) {
+		var tokens = parameter.split(".");
+		
+		member = tokens[0];
+		name = tokens[1];
+	}
+	
+	var counter = 0;
+	
+	if(member === 0) {
+		return this.findPlayer(name);
+	}
+	else {
+		var key = name.toLowerCase();
+		
+		for(var i = 0; i < this.people.length; i++) {
+			if(this.people[i].isNpc()) {
+				for(var j = 0; j < this.people[i].keywords.length; j++) {
+					if(this.people[i].keywords[j].substr(0, key.length) === key) {
+						counter++;
+						break;
+					}
+				}
+			}
+			else {
+				if(this.people[i].name.substr(0, key.length) === key) {
+					counter++;
+				}
+			}
+			
+			if(counter === member) {
+				return this.people[i];
+			}
+		}
+	}
+	
+	return null;
+};
+
+World.prototype.getPlayer = function(name) {
+	var key = name.toLowerCase();	
+	
+	for(var i = 0; i < this.people.length; i++)	{
+		if(!this.people[i].isNpc()) {
+			if(this.people[i].name.substr(0, key.length) === key) {
+				return this.people[i];
+			}
+		}
+	}
+	
+	return null;
+};
+
 
 // Exports
 module.exports = World;

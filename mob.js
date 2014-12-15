@@ -6,6 +6,7 @@ var characterSchema = require("./character").schema;
 
 var mobSchema = characterSchema.extend({
     id: Number,
+    keywords: [],
 	longDescription: String,
 	detailedDescription: Number,
 	thac0: Number,
