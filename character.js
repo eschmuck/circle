@@ -2,7 +2,9 @@ var mongoose = require('mongoose');
 var schema = mongoose.Schema;
 var extend = require('mongoose-schema-extend');
 var Social =  require("./social");
+var interpreter = require("./interpreter");
 var util = require('util');
+
 
 var directions = [ 'north', 'east', 'south', 'west', 'up', 'down' ];
 
@@ -86,7 +88,17 @@ characterSchema.methods.emitRoomMessage = function(message, color) {
 	for(var i = 0; i < this.room.people.length; i++) {
 		if(this.room.people[i] !== this) {
 			if(!this.room.people[i].isNpc()) {
-				this.room.people[i].emitMessage(message);
+				this.room.people[i].emitMessage(message, color);
+			}
+		}
+	}
+};
+
+characterSchema.methods.emitWorldMessage = function(message, color) {
+	for(var i = 0; i < this.world.people.length; i++) {
+		if(this.world.people[i] !== this) {
+			if(!this.world.people[i].isNpc()) {
+				this.world.people[i].emitMessage(message, color);
 			}
 		}
 	}
@@ -99,6 +111,116 @@ characterSchema.methods.say = function(message) {
 	else {
 		this.emitMessage("You say, '" + message + "'");
 		this.emitRoomMessage(this.name + " says, '" + message + "'");
+	}
+};
+
+characterSchema.methods.generalCommunication = function(subCommand, message) {
+	if(this.room.isSoundproof) {
+		this.emitMessage('The walls seem to absorb your words.');
+		return;
+	}
+	
+    var commType;
+    var commColor;
+    var cannotComm;
+
+    switch(subCommand) {
+		case interpreter.SCMD_HOLLER:
+			if(this.isNoHoller) {
+				this.emitMessage('Turn off your noholler flag first!');
+				return;
+			}
+			
+			commType = 'holler';
+			cannotComm = 'You cannot holler!';
+			commColor = 'Orange';
+			break;
+		case interpreter.SCMD_SHOUT:
+			if(this.isNoShout) {
+				this.emitMessage('Turn off your noshout flag first!');
+				return;
+			}
+			
+			commType = 'shout';
+			cannotComm = 'You cannot shout!';
+			commColor = 'Yellow';
+			break;
+		case interpreter.SCMD_GOSSIP:
+			if(this.isNoGossip) {
+				this.emitMessage('You aren\'t even on the channel!');
+				return;
+			}
+			
+			commType = 'gossip';
+			cannotComm = 'You cannot gossip!';
+			commColor = 'Orange';
+			break;
+		case interpreter.SCMD_AUCTION:
+			if(this.isNoAuction) {
+				this.emitMessage('You aren\'t even on the channel!');
+				return;
+			}
+			
+			commType = 'auction';
+			cannotComm = 'You cannot auction!';
+			commColor = 'Magenta';
+			break;
+		case interpreter.SCMD_GRATZ:
+			if(this.isNoGratz) {
+				this.emitMessage('You aren\'t listening to congratulations messages!');
+				return;
+			}
+			
+			commType = 'congrat';
+			cannotComm = 'You cannot congratulate!';
+			commColor = 'Green';
+			break;
+	}
+
+	if(message.length < 1) {
+		this.emitMessage("Yes, " + commType + ", fine, " + commType + " we must, but WHAT???");
+		return;
+	}
+
+	this.emitMessage("You " + commType + ", '" + message + "'", commColor);
+	var outputMessage = this.name + " " + commType + ", '" + message + "'";
+	
+	for(var i = 0; i < this.world.people.length; i++) {
+		if(this.world.people[i] !== this) {
+			if(!this.world.people[i].isNpc()) {
+				if(!this.world.people[i].room.isSoundproof) {
+					switch(subCommand) {
+						case interpreter.SCMD_HOLLER:
+							if(!this.world.people[i].isNoHoller) {
+								this.world.people[i].emitMessage(outputMessage, commColor);
+							}
+							break;
+						case interpreter.SCMD_SHOUT:
+							if(!this.world.people[i].isNoShout) {
+								if(this.world.people[i].room.zone.id === this.room.zone.id) {
+									this.world.people[i].emitMessage(outputMessage, commColor);
+								}
+							}
+							break;
+						case interpreter.SCMD_GOSSIP:
+							if(!this.world.people[i].isNoGossip) {
+								this.world.people[i].emitMessage(outputMessage, commColor);
+							}
+							break;
+						case interpreter.SCMD_AUCTION:
+							if(!this.world.people[i].isNoAuction) {
+								this.world.people[i].emitMessage(outputMessage, commColor);
+							}
+							break;
+						case interpreter.SCMD_GRATZ:
+							if(!this.world.people[i].isNoGratz) {
+								this.world.people[i].emitMessage(outputMessage, commColor);
+							}
+							break;
+					}
+				}
+			}
+		}
 	}
 };
 

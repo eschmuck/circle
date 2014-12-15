@@ -14,6 +14,12 @@ exports.SCMD_WEST	= 3;
 exports.SCMD_UP		= 4;
 exports.SCMD_DOWN	= 5;
 
+exports.SCMD_HOLLER  = 0;
+exports.SCMD_SHOUT   = 1;
+exports.SCMD_GOSSIP  = 2;
+exports.SCMD_AUCTION = 3;
+exports.SCMD_GRATZ   = 4;
+
 exports.SCMD_ACCUSE     = 0;
 exports.SCMD_APPLAUD    = 1;
 exports.SCMD_BEG        = 2;
@@ -161,6 +167,7 @@ var COMMAND_LIST = [
           { command: "gasp"     , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_GASP },
           { command: "giggle"   , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_GIGGLE },
           { command: "glare"    , minimumPosition: Character.POS_RESTING,  functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_GLARE },
+          { command: "gossip"   , minimumPosition: Character.POS_SLEEPING, functionPointer: do_gen_comm   , minimumLevel: 0, subCommand: exports.SCMD_GOSSIP },
           { command: "greet"    , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_GREET },
           { command: "grin"     , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_GRIN },
           { command: "groan"    , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_GROAN },
@@ -456,6 +463,10 @@ Interpreter.prototype.handleInput = function(character, input) {
 
 function do_say(character, command) {
     character.say(command.subInput.trim());
+}
+
+function do_gen_comm(character, command) {
+    character.generalCommunication(command.subCommand, command.subInput.trim());
 }
 
 function do_move(character, command) {
