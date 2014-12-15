@@ -60,21 +60,20 @@ World.prototype.getCharacter = function(parameter) {
 	}
 	else {
 		var key = name.toLowerCase();
-		console.log(key);
-		console.log(counter);
-		console.log(member);
-		
+
+		console.log(this.people.length);
+
 		for(var i = 0; i < this.people.length; i++) {
 			if(this.people[i].isNpc()) {
 				for(var j = 0; j < this.people[i].keywords.length; j++) {
-					if(this.people[i].keywords[j].substr(0, key.length) === key) {
+					if(this.people[i].keywords[j].substr(0, key.length).toLowerCase() === key) {
 						counter++;
 						break;
 					}
 				}
 			}
 			else {
-				if(this.people[i].name.substr(0, key.length) === key) {
+				if(this.people[i].name.substr(0, key.length).toLowerCase() === key) {
 					counter++;
 				}
 			}
@@ -93,7 +92,7 @@ World.prototype.getPlayer = function(name) {
 	
 	for(var i = 0; i < this.people.length; i++)	{
 		if(!this.people[i].isNpc()) {
-			if(this.people[i].name.substr(0, key.length) === key) {
+			if(this.people[i].name.substr(0, key.length).toLowerCase() === key) {
 				return this.people[i];
 			}
 		}
