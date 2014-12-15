@@ -60,6 +60,9 @@ World.prototype.getCharacter = function(parameter) {
 	}
 	else {
 		var key = name.toLowerCase();
+		console.log(key);
+		console.log(counter);
+		console.log(member);
 		
 		for(var i = 0; i < this.people.length; i++) {
 			if(this.people[i].isNpc()) {
