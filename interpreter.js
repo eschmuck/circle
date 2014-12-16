@@ -468,8 +468,8 @@ Interpreter.prototype.handleInput = function(character, input) {
     }
     
     if(!character.isNpc()) {
-        character.save(function(err, thing) {
-           console.log(err);
+        character.save(function(err) {
+           // TODO: Log error?
         });
     }
 };

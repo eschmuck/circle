@@ -100,24 +100,26 @@ roomSchema.methods.removeItem = function(item) {
 };
 
 roomSchema.methods.findItem = function(index, keyword) {
-	var counter = 0;
+	// var counter = 0;
 	
-	for(var i = 0; i < this.contents.length; i++) {
-		for(var j = 0; j < this.contents[i].keywords.length; j++) {
-			if(this.contents[i].keywords[j].toLowerCase().substr(0, keyword.length) === keyword.toLowerCase()) {
-				counter++;
+	// for(var i = 0; i < this.contents.length; i++) {
+	// 	for(var j = 0; j < this.contents[i].keywords.length; j++) {
+	// 		if(this.contents[i].keywords[j].toLowerCase().substr(0, keyword.length) === keyword.toLowerCase()) {
+	// 			counter++;
 				
-				if(counter === index) {
-					return this.contents[i];
-				}
-				else {
-					break;
-				}
-			}
-		}
-	}
+	// 			if(counter === index) {
+	// 				return this.contents[i];
+	// 			}
+	// 			else {
+	// 				break;
+	// 			}
+	// 		}
+	// 	}
+	// }
 	
-	return null;
+	// return null;
+	
+	return this.contents.findItem(index, keyword);
 };
 
 roomSchema.methods.findItems = function(keyword) {

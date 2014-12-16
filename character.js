@@ -506,64 +506,73 @@ characterSchema.methods.takeItem = function(keyword) {
 	}
 };
 
+characterSchema.methods.findInventoryItem = function(index, keyword) {
+	return null;
+};
+
+characterSchema.methods.findInventoryItems = function(keyword) {
+	var items = [];
+	return items;
+};
+
 characterSchema.methods.dropItem = function(keyword) {
-	// var itemToDrop;
-	// var itemsToDrop;
+	var itemToDrop;
+	var itemsToDrop;
 	
-	// if(keyword.indexOf(".") > -1) {
-	// 	var tokens = keyword.split(".");
+	if(keyword.indexOf(".") > -1) {
+		var tokens = keyword.split(".");
 		
-	// 	if(tokens[1].length === 0) {
-	// 		this.emitMessage("Drop what?");
-	// 		return;
-	// 	}
+		if(tokens[1].length === 0) {
+			this.emitMessage("Drop what?");
+			return;
+		}
 		
-	// 	if(tokens[0].toLowerCase() === "all") {
-	// 		itemsToDrop = this.room.findItems(tokens[1]);
+	 	if(tokens[0].toLowerCase() === "all") {
+			itemsToDrop = this.findInventoryItems(tokens[1]);
 			
-	// 		if(itemsToTake.length === 0) {
-	// 			this.emitMessage("You can't find a " + tokens[1] + " here.");
-	// 			return;
-	// 		}
-	// 		else {
-	// 			this.takeObjects(itemsToTake);
-	// 		}
-	// 	}
-	// 	else {
-	// 		itemToTake = this.room.findItem(tokens[0], tokens[1]);
+			if(itemsToDrop.length === 0) {
+				this.emitMessage("You don't seem to be carrying a " + tokens[1] + ".");
+				return;
+			}
+			else {
+				this.dropObjects(itemsToDrop);
+			}
+		}
+		else {
+			itemToDrop = this.findInventoryItem(tokens[0], tokens[1]);
 			
-	// 		if(itemToTake === null) {
-	// 			this.emitMessage("You can't find a " + tokens[1] + " here.");
-	// 			return;			
-	// 		}
-	// 		else {
-	// 			this.takeObject(itemToTake);
-	// 		}
-	// 	}
-	// }
-	// else {
-	// 	if(keyword.toLowerCase().trim() === 'all') {
-	// 		itemsToTake = this.room.findItems('all');
+			if(itemToDrop === null) {
+				this.emitMessage("You don't seem to have a " + tokens[1] + ".");
+				return;			
+			}
+			else {
+				this.dropObject(itemToDrop);
+			}
+		}
+	}
+	else {
+		if(keyword.toLowerCase().trim() === 'all') {
+			itemsToDrop = this.findInventoryItems('all');
 			
-	// 		if(itemsToTake.length === 0) {
-	// 			this.emitMessage("There isn't anything here to take!");
-	// 			return;
-	// 		}
+			if(itemsToDrop.length === 0) {
+				this.emitMessage("You aren't carrying anything!");
+				return;
+			}
 			
-	// 		this.takeObjects(itemsToTake);
-	// 	}
-	// 	else {
-	// 		 itemToTake = this.room.findItem(1, keyword);
+			this.dropObjects(itemsToDrop);
+		}
+		else {
+			 itemToDrop = this.findInventoryItem(1, keyword);
 			
-	// 		if(itemToTake === null) {
-	// 			this.emitMessage("You can't find a " + keyword + " here.");
-	// 			return;			
-	// 		}
-	// 		else {
-	// 			this.takeObject(itemToTake);
-	// 		}
-	// 	}
-	// }	
+			if(itemToDrop === null) {
+				this.emitMessage("You don't seem to have a " + keyword + ".");
+				return;			
+			}
+			else {
+				this.dropObject(itemToDrop);
+			}
+		}
+	}	
 };
 
 var characterModel = mongoose.model('character', characterSchema);
