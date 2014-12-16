@@ -14,11 +14,11 @@ exports.SCMD_WEST	= 3;
 exports.SCMD_UP		= 4;
 exports.SCMD_DOWN	= 5;
 
-exports.SCMD_HOLLER  = 0;
-exports.SCMD_SHOUT   = 1;
-exports.SCMD_GOSSIP  = 2;
-exports.SCMD_AUCTION = 3;
-exports.SCMD_GRATZ   = 4;
+module.exports.SCMD_HOLLER  = 0;
+module.exports.SCMD_SHOUT   = 1;
+module.exports.SCMD_GOSSIP  = 2;
+module.exports.SCMD_AUCTION = 3;
+module.exports.SCMD_GRATZ   = 4;
 
 exports.SCMD_ACCUSE     = 0;
 exports.SCMD_APPLAUD    = 1;
