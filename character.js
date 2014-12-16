@@ -451,7 +451,7 @@ characterSchema.methods.takeItem = function(keyword) {
 
 		if(tokens[0].toLowercase() === "all") {
 			for(var i = 0; i < this.room.contents.length; i++) {
-				if(this.room.contents[i].keywords.toLowercase().substr(0, tokens[1].length) === keyword.toLowercase()) {
+				if(this.room.contents[i].keywords.toLowerCase().substr(0, tokens[1].length) === keyword.toLowerCase()) {
 					this.takeObject(this.room.contents[i]);
 				}
 			}
@@ -467,7 +467,7 @@ characterSchema.methods.takeItem = function(keyword) {
 				var counter = 0;
 				
 				for(var i = 0; i < this.room.contents.length; i++) {
-					if(this.room.contents[i].keywords.toLowercase().substr(0, keyword.length) === tokens[1].toLowercase()) {
+					if(this.room.contents[i].keywords.toLowerCase().substr(0, keyword.length) === tokens[1].toLowerCase()) {
 						if(counter === index) {
 							this.takeObject(this.room.contents[i]);
 							return;
@@ -482,7 +482,7 @@ characterSchema.methods.takeItem = function(keyword) {
 	}
 	else {
 		for(var i = 0; i < this.room.contents.length; i++) {
-			if(this.room.contents[i].keywords.toLowercase().substr(0, keyword.length) === keyword.toLowercase()) {
+			if(this.room.contents[i].keywords.toLowerCase().substr(0, keyword.length) === keyword.toLowerCase()) {
 				this.takeObject(this.room.contents[i]);
 				return;
 			}
