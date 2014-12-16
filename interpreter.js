@@ -166,6 +166,7 @@ var COMMAND_LIST = [
           { command: "fume"     , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_FUME },
 
           { command: "gasp"     , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_GASP },
+          { command: "get"      , minimumPosition: Character.POS_RESTING , functionPointer: do_take       , minimumLevel: 0, subCommand: 0 },          
           { command: "giggle"   , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_GIGGLE },
           { command: "glare"    , minimumPosition: Character.POS_RESTING,  functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_GLARE },
           { command: "gossip"   , minimumPosition: Character.POS_SLEEPING, functionPointer: do_gen_comm   , minimumLevel: 0, subCommand: global.SCMD_GOSSIP },
@@ -242,6 +243,7 @@ var COMMAND_LIST = [
           { command: "sulk"     , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_SULK },
 
           { command: "tackle"   , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_TACKLE },
+          { command: "take"     , minimumPosition: Character.POS_RESTING , functionPointer: do_take       , minimumLevel: 0, subCommand: 0 },
           { command: "tango"    , minimumPosition: Character.POS_STANDING, functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_TANGO },
           { command: "taunt"    , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_TAUNT },
           { command: "tell"     , minimumPosition: Character.POS_DEAD    , functionPointer: do_tell       , minimumLevel: 0, subCommand: 0 },
@@ -496,6 +498,15 @@ function do_rest(character) {
 
 function do_sleep(character) {
     character.sleep();
+}
+
+function do_take(character, command) {
+    if(command.tokens.length === 0) {
+        character.emitMessage('Take what?');
+    }
+    else {
+        character.takeItem(command.tokens[0]);
+    }
 }
 
 function do_tell(character, command) {

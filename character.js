@@ -23,7 +23,9 @@ var characterSchema = new schema({
 	experience: Number,
 	level: Number,
 	
-	position: Number
+	position: Number,
+	
+	inventory: []
 });
 
 characterSchema.methods.getPersonalPronoun = function() {
@@ -429,6 +431,63 @@ characterSchema.methods.move = function(direction) {
 		 	}
 		}
 	}
+};
+
+characterSchema.methods.takeObject = function(object) {
+	this.room.removeItem(object);
+	this.inventory.push(object);
+	this.emitMessage("You take " + object.shortDescription);
+	this.emitRoomMessage(this.name + " takes " + object.shortDescription);
+};
+
+characterSchema.methods.take = function(keyword) {
+	if(keyword.indexOf(".") > -1) {
+		var tokens = keyword.split(".");
+
+		if(tokens[0].toLowercase() === "all") {
+			if(tokens[1].length === 0) {
+				this.emitMessage("Take all of what?");
+				return;
+			}
+			
+			for(var i = 0; i < this.room.contents.length; i++) {
+				if(this.room.contents[i].keywords.toLowercase().substr(0, tokens[1].length) === keyword.toLowercase()) {
+					this.takeObject(this.room.contents[i]);
+				}
+			}
+		}
+		else {
+			var index = parseInt(tokens[0], 10);
+
+			if(isNaN(index) || tokens[1] === "") {
+				this.emitMessage("Take what exactly?");
+				return;
+			}
+			else {
+				var counter = 0;
+				
+				if(this.room.contents[i].keywords.toLowercase().substr(0, keyword.length) === tokens[1].toLowercase()) {
+					if(counter === index) {
+						this.takeObject(this.room.contents[i]);
+						return;
+					}
+					else {
+						counter++;
+					}
+				}
+			}
+		}
+	}
+	else {
+		for(var i = 0; i < this.room.contents.length; i++) {
+			if(this.room.contents[i].keywords.toLowercase().substr(0, keyword.length) === keyword.toLowercase()) {
+				this.takeObject(this.room.contents[i]);
+				return;
+			}
+		}
+	}
+	
+	this.emitMessage("You don't see any " + keyword + "s here.");
 };
 
 
