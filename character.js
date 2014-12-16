@@ -436,75 +436,67 @@ characterSchema.methods.move = function(direction) {
 characterSchema.methods.takeObject = function(object) {
 	this.room.removeItem(object);
 	this.inventory.push(object);
-	this.emitMessage("You take " + object.shortDescription);
-	this.emitRoomMessage(this.name + " takes " + object.shortDescription);
+	this.emitMessage("You take " + object.shortDescription + ".");
+	this.emitRoomMessage(this.name + " takes " + object.shortDescription + ".");
+};
+
+characterSchema.methods.takeObjects = function(objectArray) {
+	while(objectArray.peek() !== null) {
+		this.takeObject(objectArray.pop());
+	}
 };
 
 characterSchema.methods.takeItem = function(keyword) {
+	var itemToTake;
+	
 	if(keyword.indexOf(".") > -1) {
 		var tokens = keyword.split(".");
-
+		
 		if(tokens[1].length === 0) {
 			this.emitMessage("Take what?");
 			return;
 		}
-
-		if(tokens[0].toLowercase() === "all") {
-			for(var i = 0; i < this.room.contents.length; i++) {
-				for(var j = 0; j < this.room.contents[i].keywords.length; j++) {				
-					if(this.room.contents[i].keywords[j].toLowerCase().substr(0, tokens[1].length) === keyword.toLowerCase()) {
-						this.takeObject(this.room.contents[i]);
-					}
-				}
-			}
-		}
-		else {
-			var index = parseInt(tokens[0], 10);
+		
+		if(tokens[0].toLowerCase() === "all") {
+			var itemsToTake = this.room.findItems(tokens[1]);
 			
-			if(isNaN(index)) {
-				this.emitMessage("Take what exactly?");
+			if(itemsToTake.length === 0) {
+				this.emitMessage("You can't find a " + tokens[1] + " here.");
 				return;
 			}
 			else {
-				var counter = 0;
-				
-				for(var i = 0; i < this.room.contents.length; i++) {
-					for(var j = 0; j < this.room.contents[i].keywords.length; j++) {
-						if(this.room.contents[i].keywords[j].toLowerCase().substr(0, keyword.length) === tokens[1].toLowerCase()) {
-							if(counter === index) {
-								this.takeObject(this.room.contents[i]);
-								return;
-							}
-						}
-						else {
-							counter++;
-						}
-					}
-				}
+				this.takeObjects(itemsToTake);
+			}
+		}
+		else {
+			itemToTake = this.room.findItem(tokens[0], tokens[1]);
+			
+			if(itemToTake === null) {
+				this.emitMessage("You can't find a " + tokens[1] + " here.");
+				return;			
+			}
+			else {
+				this.takeObject(itemToTake);
 			}
 		}
 	}
 	else {
-		if(keyword.toLowerCase() === 'all') {
-			for(var i = 0; i < this.room.contents.length; i++) {
-				this.takeObject(this.room.contents[i]);
-			}
+		if(keyword.toLowerCase().trim() === 'all') {
+			this.takeObjects(this.room.contents);
 		}
 		else {
-			for(var i = 0; i < this.room.contents.length; i++) {
-				for(var j = 0; j < this.room.contents[i].keywords.length; j++) {
-					if(this.room.contents[i].keywords[j].toLowerCase().substr(0, keyword.length) === keyword.toLowerCase()) {
-						this.takeObject(this.room.contents[i]);
-						return;
-					}
-				}
+			 itemToTake = this.room.findItem(1, keyword);
+			
+			if(itemToTake === null) {
+				this.emitMessage("You can't find a " + keyword + " here.");
+				return;			
+			}
+			else {
+				this.takeObject(itemToTake);
 			}
 		}
 	}
-	
-	this.emitMessage("You don't see any " + keyword + "s here.");
 };
-
 
 var characterModel = mongoose.model('character', characterSchema);
 

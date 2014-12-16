@@ -99,6 +99,42 @@ roomSchema.methods.removeItem = function(item) {
 	item.room = null;
 };
 
+roomSchema.methods.findItem = function(index, keyword) {
+	var counter = 0;
+	
+	for(var i = 0; i < this.contents.length; i++) {
+		for(var j = 0; j < this.contents[i].keywords.length; j++) {
+			if(this.contents[i].keywords[j].toLowerCase().substr(0, keyword.length) === keyword.toLowerCase()) {
+				counter++;
+				
+				if(counter === index) {
+					return this.contents[i];
+				}
+				else {
+					break;
+				}
+			}
+		}
+	}
+	
+	return null;
+};
+
+roomSchema.methods.findItems = function(keyword) {
+	var items = [];
+	
+	for(var i = 0; i < this.contents.length; i++) {
+		for(var j = 0; j < this.contents[i].keywords.length; j++) {
+			if(this.contents[i].keywords[j].toLowerCase().substr(0, keyword.length) === keyword.toLowerCase()) {
+				items.push(this.contents[i]);
+				break;
+			}
+		}
+	}
+	
+	return items;
+};
+
 roomSchema.methods.getCharacter = function(parameter) {
 	var name = parameter;
 	var member = 1;
