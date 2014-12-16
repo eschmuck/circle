@@ -506,6 +506,20 @@ characterSchema.methods.takeItem = function(keyword) {
 	}
 };
 
+characterSchema.methods.dropObject = function(object) {
+	this.inventory.splice(this.inventory.indexOf(object), 1);
+	this.room.addItem(object);
+	this.emitMessage("You drop " + object.shortDescription + ".");
+	this.emitRoomMessage(this.name + " drops " + object.shortDescription + ".");
+};
+
+characterSchema.methods.dropObjects = function(objectArray) {
+	for(var i = 0; i < objectArray.length; i++) {
+		this.dropObject(objectArray[i]);
+	}
+};
+
+
 characterSchema.methods.findInventoryItem = function(index, keyword) {
 	return this.inventory.findItem(index, keyword);
 };
