@@ -448,6 +448,7 @@ characterSchema.methods.takeObjects = function(objectArray) {
 
 characterSchema.methods.takeItem = function(keyword) {
 	var itemToTake;
+	var itemsToTake;
 	
 	if(keyword.indexOf(".") > -1) {
 		var tokens = keyword.split(".");
@@ -458,7 +459,7 @@ characterSchema.methods.takeItem = function(keyword) {
 		}
 		
 		if(tokens[0].toLowerCase() === "all") {
-			var itemsToTake = this.room.findItems(tokens[1]);
+			itemsToTake = this.room.findItems(tokens[1]);
 			
 			if(itemsToTake.length === 0) {
 				this.emitMessage("You can't find a " + tokens[1] + " here.");
@@ -482,7 +483,14 @@ characterSchema.methods.takeItem = function(keyword) {
 	}
 	else {
 		if(keyword.toLowerCase().trim() === 'all') {
-			this.takeObjects(this.room.contents);
+			itemsToTake = this.room.findItem('all');
+			
+			if(itemsToTake.length === 0) {
+				this.emitMessage("There isn't anything here to take!");
+				return;
+			}
+			
+			this.takeObjects(itemsToTake);
 		}
 		else {
 			 itemToTake = this.room.findItem(1, keyword);
