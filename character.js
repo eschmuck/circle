@@ -466,13 +466,15 @@ characterSchema.methods.takeItem = function(keyword) {
 			else {
 				var counter = 0;
 				
-				if(this.room.contents[i].keywords.toLowercase().substr(0, keyword.length) === tokens[1].toLowercase()) {
-					if(counter === index) {
-						this.takeObject(this.room.contents[i]);
-						return;
-					}
-					else {
-						counter++;
+				for(var i = 0; i < this.room.contents.length; i++) {
+					if(this.room.contents[i].keywords.toLowercase().substr(0, keyword.length) === tokens[1].toLowercase()) {
+						if(counter === index) {
+							this.takeObject(this.room.contents[i]);
+							return;
+						}
+						else {
+							counter++;
+						}
 					}
 				}
 			}

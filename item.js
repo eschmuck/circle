@@ -3,6 +3,7 @@ var schema = mongoose.Schema;
 
 var itemSchema = new schema({
     id: Number,
+    keywords: [ String ],
     shortDescription: String,
     longDescription: String,
     isGlowing: Boolean
