@@ -485,11 +485,18 @@ characterSchema.methods.takeItem = function(keyword) {
 		}
 	}
 	else {
-		for(var i = 0; i < this.room.contents.length; i++) {
-			for(var j = 0; j < this.room.contents[i].keywords.length; j++) {
-				if(this.room.contents[i].keywords[j].toLowerCase().substr(0, keyword.length) === keyword.toLowerCase()) {
-					this.takeObject(this.room.contents[i]);
-					return;
+		if(keyword.toLowerCase() === 'all') {
+			for(var i = 0; i < this.room.contents.length; i++) {
+				this.takeObject(this.room.contents[i]);
+			}
+		}
+		else {
+			for(var i = 0; i < this.room.contents.length; i++) {
+				for(var j = 0; j < this.room.contents[i].keywords.length; j++) {
+					if(this.room.contents[i].keywords[j].toLowerCase().substr(0, keyword.length) === keyword.toLowerCase()) {
+						this.takeObject(this.room.contents[i]);
+						return;
+					}
 				}
 			}
 		}
