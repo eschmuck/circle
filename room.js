@@ -123,11 +123,18 @@ roomSchema.methods.findItem = function(index, keyword) {
 roomSchema.methods.findItems = function(keyword) {
 	var items = [];
 	
-	for(var i = 0; i < this.contents.length; i++) {
-		for(var j = 0; j < this.contents[i].keywords.length; j++) {
-			if(this.contents[i].keywords[j].toLowerCase().substr(0, keyword.length) === keyword.toLowerCase()) {
-				items.push(this.contents[i]);
-				break;
+	if(keyword.toLowerCase().trim() === 'all') {
+		for(var i = 0; i < this.contents.length; i++) {
+			items.push(this.contents[i]);
+		}
+	}
+	else {
+		for(var i = 0; i < this.contents.length; i++) {
+			for(var j = 0; j < this.contents[i].keywords.length; j++) {
+				if(this.contents[i].keywords[j].toLowerCase().substr(0, keyword.length) === keyword.toLowerCase()) {
+					items.push(this.contents[i]);
+					break;
+				}
 			}
 		}
 	}
