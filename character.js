@@ -145,7 +145,7 @@ characterSchema.methods.generalCommunication = function(subCommand, message) {
 			cannotComm = 'You cannot shout!';
 			commColor = 'Yellow';
 			break;
-		case interpreter.SCMD_GOSSIP:
+		case global.SCMD_GOSSIP:
 			if(this.isNoGossip) {
 				this.emitMessage('You aren\'t even on the channel!');
 				return;
