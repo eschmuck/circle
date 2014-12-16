@@ -483,7 +483,7 @@ characterSchema.methods.takeItem = function(keyword) {
 	}
 	else {
 		if(keyword.toLowerCase().trim() === 'all') {
-			itemsToTake = this.room.findItem('all');
+			itemsToTake = this.room.findItems('all');
 			
 			if(itemsToTake.length === 0) {
 				this.emitMessage("There isn't anything here to take!");
