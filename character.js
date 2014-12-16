@@ -441,8 +441,8 @@ characterSchema.methods.takeObject = function(object) {
 };
 
 characterSchema.methods.takeObjects = function(objectArray) {
-	while(objectArray.peek() !== null) {
-		this.takeObject(objectArray.pop());
+	for(var i = 0; i < objectArray.length; i++) {
+		this.takeObject(objectArray[i]);
 	}
 };
 
