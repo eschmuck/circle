@@ -153,6 +153,7 @@ var COMMAND_LIST = [
           
           { command: "dance"    , minimumPosition: Character.POS_STANDING, functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_DANCE },
           { command: "daydream" , minimumPosition: Character.POS_SLEEPING, functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_DAYDREAM },
+          //{ command: "drop"     , minimumPosition: Character.POS_RESTING , functionPointer: do_drop       , minimumLevel: 0, subCommand:0 },
           { command: "drool"    , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_DROOL },
 
           { command: "embrace"  , minimumPosition: Character.POS_STANDING, functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_EMBRACE },
@@ -465,6 +466,12 @@ Interpreter.prototype.handleInput = function(character, input) {
             command.functionPointer(character, command);
         }
     }
+    
+    if(!character.isNpc()) {
+        character.save(function(err, thing) {
+           console.log(err);
+        });
+    }
 };
 
 function do_say(character, command) {
@@ -506,6 +513,15 @@ function do_take(character, command) {
     }
     else {
         character.takeItem(command.tokens[0]);
+    }
+}
+
+function do_drop(character, command) {
+    if(command.tokens.length === 0) {
+        character.emitMessage('Drop what?');
+    }
+    else {
+        character.dropItem(command.tokens[0]);
     }
 }
 
