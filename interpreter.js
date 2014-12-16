@@ -167,7 +167,7 @@ var COMMAND_LIST = [
           { command: "gasp"     , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_GASP },
           { command: "giggle"   , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_GIGGLE },
           { command: "glare"    , minimumPosition: Character.POS_RESTING,  functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_GLARE },
-          { command: "gossip"   , minimumPosition: Character.POS_SLEEPING, functionPointer: do_gen_comm   , minimumLevel: 0, subCommand: exports.SCMD_GOSSIP },
+          { command: "gossip"   , minimumPosition: Character.POS_SLEEPING, functionPointer: do_gen_comm   , minimumLevel: 0, subCommand: global.SCMD_GOSSIP },
           { command: "greet"    , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_GREET },
           { command: "grin"     , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_GRIN },
           { command: "groan"    , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_GROAN },
@@ -176,6 +176,7 @@ var COMMAND_LIST = [
           { command: "growl"    , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_GROWL },
 
           { command: "hiccup"   , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_HICCUP },
+          { command: "holler"   , minimumPosition: Character.POS_RESTING,  functionPointer: do_gen_comm   , minimumLevel: 0, subCommand: global.SCMD_HOLLER },
           { command: "hug"      , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_HUG },
 
           { command: "kiss"     , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_KISS },
