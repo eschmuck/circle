@@ -183,7 +183,7 @@ characterSchema.methods.generalCommunication = function(subCommand, message) {
 	}
 
 	this.emitMessage("You " + commType + ", '" + message + "'", commColor);
-	var outputMessage = this.name + " " + commType + ", '" + message + "'";
+	var outputMessage = this.name + " " + commType + "s, '" + message + "'";
 	
 	for(var i = 0; i < this.world.people.length; i++) {
 		if(this.world.people[i] !== this) {
@@ -197,9 +197,10 @@ characterSchema.methods.generalCommunication = function(subCommand, message) {
 							break;
 						case global.SCMD_SHOUT:
 							if(!this.world.people[i].isNoShout) {
-								if(this.world.people[i].room.zone.id === this.room.zone.id) {
+								// TODO: Put this back in eventually!
+								//if(this.world.people[i].room.zone.id === this.room.zone.id) {
 									this.world.people[i].emitMessage(outputMessage, commColor);
-								}
+								//}
 							}
 							break;
 						case global.SCMD_GOSSIP:
