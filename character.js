@@ -506,6 +506,66 @@ characterSchema.methods.takeItem = function(keyword) {
 	}
 };
 
+characterSchema.methods.dropItem = function(keyword) {
+	// var itemToDrop;
+	// var itemsToDrop;
+	
+	// if(keyword.indexOf(".") > -1) {
+	// 	var tokens = keyword.split(".");
+		
+	// 	if(tokens[1].length === 0) {
+	// 		this.emitMessage("Drop what?");
+	// 		return;
+	// 	}
+		
+	// 	if(tokens[0].toLowerCase() === "all") {
+	// 		itemsToDrop = this.room.findItems(tokens[1]);
+			
+	// 		if(itemsToTake.length === 0) {
+	// 			this.emitMessage("You can't find a " + tokens[1] + " here.");
+	// 			return;
+	// 		}
+	// 		else {
+	// 			this.takeObjects(itemsToTake);
+	// 		}
+	// 	}
+	// 	else {
+	// 		itemToTake = this.room.findItem(tokens[0], tokens[1]);
+			
+	// 		if(itemToTake === null) {
+	// 			this.emitMessage("You can't find a " + tokens[1] + " here.");
+	// 			return;			
+	// 		}
+	// 		else {
+	// 			this.takeObject(itemToTake);
+	// 		}
+	// 	}
+	// }
+	// else {
+	// 	if(keyword.toLowerCase().trim() === 'all') {
+	// 		itemsToTake = this.room.findItems('all');
+			
+	// 		if(itemsToTake.length === 0) {
+	// 			this.emitMessage("There isn't anything here to take!");
+	// 			return;
+	// 		}
+			
+	// 		this.takeObjects(itemsToTake);
+	// 	}
+	// 	else {
+	// 		 itemToTake = this.room.findItem(1, keyword);
+			
+	// 		if(itemToTake === null) {
+	// 			this.emitMessage("You can't find a " + keyword + " here.");
+	// 			return;			
+	// 		}
+	// 		else {
+	// 			this.takeObject(itemToTake);
+	// 		}
+	// 	}
+	// }	
+};
+
 var characterModel = mongoose.model('character', characterSchema);
 
 // Constants
