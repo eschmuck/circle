@@ -18,3 +18,8 @@ Array.prototype.findItem = function(index, keyword) {
 	
 	return null;
 };
+
+
+
+// Exports
+module.exports = Array;

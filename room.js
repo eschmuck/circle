@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var schema = mongoose.Schema;
+var extensions = require('./extensions');
 
 var roomSchema = new schema({
 	id: Number,
