@@ -4,7 +4,7 @@ var extend = require('mongoose-schema-extend');
 var Social =  require("./social");
 var interpreter = require("./interpreter");
 var util = require('util');
-
+var extensions = require('./extensions');
 
 var directions = [ 'north', 'east', 'south', 'west', 'up', 'down' ];
 
@@ -507,12 +507,11 @@ characterSchema.methods.takeItem = function(keyword) {
 };
 
 characterSchema.methods.findInventoryItem = function(index, keyword) {
-	return null;
+	return this.inventory.findItem(index, keyword);
 };
 
 characterSchema.methods.findInventoryItems = function(keyword) {
-	var items = [];
-	return items;
+	return this.inventory.findItems(keyword);
 };
 
 characterSchema.methods.dropItem = function(keyword) {

@@ -153,7 +153,7 @@ var COMMAND_LIST = [
           
           { command: "dance"    , minimumPosition: Character.POS_STANDING, functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_DANCE },
           { command: "daydream" , minimumPosition: Character.POS_SLEEPING, functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_DAYDREAM },
-          //{ command: "drop"     , minimumPosition: Character.POS_RESTING , functionPointer: do_drop       , minimumLevel: 0, subCommand:0 },
+          { command: "drop"     , minimumPosition: Character.POS_RESTING , functionPointer: do_drop       , minimumLevel: 0, subCommand:0 },
           { command: "drool"    , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_DROOL },
 
           { command: "embrace"  , minimumPosition: Character.POS_STANDING, functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_EMBRACE },
