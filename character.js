@@ -440,7 +440,7 @@ characterSchema.methods.takeObject = function(object) {
 	this.emitRoomMessage(this.name + " takes " + object.shortDescription);
 };
 
-characterSchema.methods.take = function(keyword) {
+characterSchema.methods.takeItem = function(keyword) {
 	if(keyword.indexOf(".") > -1) {
 		var tokens = keyword.split(".");
 
