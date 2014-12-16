@@ -125,7 +125,7 @@ characterSchema.methods.generalCommunication = function(subCommand, message) {
     var cannotComm;
 
     switch(subCommand) {
-		case interpreter.SCMD_HOLLER:
+		case global.SCMD_HOLLER:
 			if(this.isNoHoller) {
 				this.emitMessage('Turn off your noholler flag first!');
 				return;
@@ -135,7 +135,7 @@ characterSchema.methods.generalCommunication = function(subCommand, message) {
 			cannotComm = 'You cannot holler!';
 			commColor = 'Orange';
 			break;
-		case interpreter.SCMD_SHOUT:
+		case global.SCMD_SHOUT:
 			if(this.isNoShout) {
 				this.emitMessage('Turn off your noshout flag first!');
 				return;
@@ -155,7 +155,7 @@ characterSchema.methods.generalCommunication = function(subCommand, message) {
 			cannotComm = 'You cannot gossip!';
 			commColor = 'Orange';
 			break;
-		case interpreter.SCMD_AUCTION:
+		case global.SCMD_AUCTION:
 			if(this.isNoAuction) {
 				this.emitMessage('You aren\'t even on the channel!');
 				return;
@@ -165,7 +165,7 @@ characterSchema.methods.generalCommunication = function(subCommand, message) {
 			cannotComm = 'You cannot auction!';
 			commColor = 'Magenta';
 			break;
-		case interpreter.SCMD_GRATZ:
+		case global.SCMD_GRATZ:
 			if(this.isNoGratz) {
 				this.emitMessage('You aren\'t listening to congratulations messages!');
 				return;
@@ -190,29 +190,29 @@ characterSchema.methods.generalCommunication = function(subCommand, message) {
 			if(!this.world.people[i].isNpc()) {
 				if(!this.world.people[i].room.isSoundproof) {
 					switch(subCommand) {
-						case interpreter.SCMD_HOLLER:
+						case global.SCMD_HOLLER:
 							if(!this.world.people[i].isNoHoller) {
 								this.world.people[i].emitMessage(outputMessage, commColor);
 							}
 							break;
-						case interpreter.SCMD_SHOUT:
+						case global.SCMD_SHOUT:
 							if(!this.world.people[i].isNoShout) {
 								if(this.world.people[i].room.zone.id === this.room.zone.id) {
 									this.world.people[i].emitMessage(outputMessage, commColor);
 								}
 							}
 							break;
-						case interpreter.SCMD_GOSSIP:
+						case global.SCMD_GOSSIP:
 							if(!this.world.people[i].isNoGossip) {
 								this.world.people[i].emitMessage(outputMessage, commColor);
 							}
 							break;
-						case interpreter.SCMD_AUCTION:
+						case global.SCMD_AUCTION:
 							if(!this.world.people[i].isNoAuction) {
 								this.world.people[i].emitMessage(outputMessage, commColor);
 							}
 							break;
-						case interpreter.SCMD_GRATZ:
+						case global.SCMD_GRATZ:
 							if(!this.world.people[i].isNoGratz) {
 								this.world.people[i].emitMessage(outputMessage, commColor);
 							}
