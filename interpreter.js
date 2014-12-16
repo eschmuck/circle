@@ -14,11 +14,9 @@ exports.SCMD_WEST	= 3;
 exports.SCMD_UP		= 4;
 exports.SCMD_DOWN	= 5;
 
-var SCMD_GOSSIP = 2;
-
 module.exports.SCMD_HOLLER  = 0;
 module.exports.SCMD_SHOUT   = 1;
-exports.SCMD_GOSSIP  = SCMD_GOSSIP;
+global.SCMD_GOSSIP  = 2;
 module.exports.SCMD_AUCTION = 3;
 module.exports.SCMD_GRATZ   = 4;
 
