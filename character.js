@@ -444,12 +444,12 @@ characterSchema.methods.take = function(keyword) {
 	if(keyword.indexOf(".") > -1) {
 		var tokens = keyword.split(".");
 
+		if(tokens[1].length === 0) {
+			this.emitMessage("Take what?");
+			return;
+		}
+
 		if(tokens[0].toLowercase() === "all") {
-			if(tokens[1].length === 0) {
-				this.emitMessage("Take all of what?");
-				return;
-			}
-			
 			for(var i = 0; i < this.room.contents.length; i++) {
 				if(this.room.contents[i].keywords.toLowercase().substr(0, tokens[1].length) === keyword.toLowercase()) {
 					this.takeObject(this.room.contents[i]);
@@ -458,8 +458,8 @@ characterSchema.methods.take = function(keyword) {
 		}
 		else {
 			var index = parseInt(tokens[0], 10);
-
-			if(isNaN(index) || tokens[1] === "") {
+			
+			if(isNaN(index)) {
 				this.emitMessage("Take what exactly?");
 				return;
 			}
