@@ -546,64 +546,68 @@ characterSchema.methods.findInventoryItems = function(keyword) {
 	return this.inventory.findItems(keyword);
 };
 
-characterSchema.methods.dropItem = function(keyword) {
-	var itemToDrop;
-	var itemsToDrop;
+characterSchema.methods.manipulateItem = function(singularFunctionPointer, multipleFunctionPointer, operation, keyword) {
+	var item;
+	var items;
 	
 	if(keyword.indexOf(".") > -1) {
 		var tokens = keyword.split(".");
 		
 		if(tokens[1].length === 0) {
-			this.emitMessage("Drop what?");
+			this.emitMessage(operation + " what?");
 			return;
 		}
 		
 	 	if(tokens[0].toLowerCase() === "all") {
-			itemsToDrop = this.findInventoryItems(tokens[1]);
+			items = this.findInventoryItems(tokens[1]);
 			
-			if(itemsToDrop.length === 0) {
+			if(items.length === 0) {
 				this.emitMessage("You don't seem to be carrying a " + tokens[1] + ".");
 				return;
 			}
 			else {
-				this.dropObjects(itemsToDrop);
+				multipleFunctionPointer(items);
 			}
 		}
 		else {
-			itemToDrop = this.findInventoryItem(tokens[0], tokens[1]);
+			item = this.findInventoryItem(tokens[0], tokens[1]);
 			
-			if(itemToDrop === null) {
+			if(item === null) {
 				this.emitMessage("You don't seem to have a " + tokens[1] + ".");
 				return;			
 			}
 			else {
-				this.dropObject(itemToDrop);
+				singularFunctionPointer(item);
 			}
 		}
 	}
 	else {
 		if(keyword.toLowerCase().trim() === 'all') {
-			itemsToDrop = this.findInventoryItems('all');
+			items = this.findInventoryItems('all');
 			
-			if(itemsToDrop.length === 0) {
+			if(items.length === 0) {
 				this.emitMessage("You aren't carrying anything!");
 				return;
 			}
 			
-			this.dropObjects(itemsToDrop);
+			multipleFunctionPointer(items);
 		}
 		else {
-			 itemToDrop = this.findInventoryItem(1, keyword);
+			 item = this.findInventoryItem(1, keyword);
 			
-			if(itemToDrop === null) {
+			if(item === null) {
 				this.emitMessage("You don't seem to have a " + keyword + ".");
 				return;			
 			}
 			else {
-				this.dropObject(itemToDrop);
+				singularFunctionPointer(item);
 			}
 		}
 	}	
+};
+
+characterSchema.methods.dropItem = function(keyword) {
+	this.manipulateItem(this.dropObject, this.dropObjects, "drop", keyword);
 };
 
 characterSchema.methods.junkItem = function(keyword) {
