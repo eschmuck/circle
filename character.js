@@ -509,8 +509,8 @@ characterSchema.methods.takeItem = function(keyword) {
 characterSchema.methods.dropObject = function(object) {
 	this.inventory.splice(this.inventory.indexOf(object), 1);
 	this.room.addItem(object);
-	this.emitMessage("You drop " + object.shortDescription + ".");
-	this.emitRoomMessage(this.name + " drops " + object.shortDescription + ".");
+	this.emitMessage("You drop " + object.shortDescription + ".\n\rIt vanishes in a puff of smoke!");
+	this.emitRoomMessage(this.name + " drops " + object.shortDescription + ".\n\rIt vanishes in a puff of smoke!");
 };
 
 characterSchema.methods.dropObjects = function(objectArray) {
@@ -519,6 +519,18 @@ characterSchema.methods.dropObjects = function(objectArray) {
 	}
 };
 
+characterSchema.methods.junkObject = function(object) {
+	this.inventory.splice(this.inventory.indexOf(object), 1);
+	this.world.removeItem(object);
+	this.emitMessage("You junk " + object.shortDescription + ".");
+	this.emitRoomMessage(this.name + " junk " + object.shortDescription + ".");
+};
+
+characterSchema.methods.junkObjects = function(objectArray) {
+	for(var i = 0; i < objectArray.length; i++) {
+		this.junkObject(objectArray[i]);
+	}
+};
 
 characterSchema.methods.findInventoryItem = function(index, keyword) {
 	return this.inventory.findItem(index, keyword);
@@ -587,6 +599,67 @@ characterSchema.methods.dropItem = function(keyword) {
 		}
 	}	
 };
+
+characterSchema.methods.junkItem = function(keyword) {
+	var itemToJunk;
+	var itemsToJunk;
+	
+	if(keyword.indexOf(".") > -1) {
+		var tokens = keyword.split(".");
+		
+		if(tokens[1].length === 0) {
+			this.emitMessage("Junk what?");
+			return;
+		}
+		
+	 	if(tokens[0].toLowerCase() === "all") {
+			itemsToJunk = this.findInventoryItems(tokens[1]);
+			
+			if(itemsToJunk.length === 0) {
+				this.emitMessage("You don't seem to be carrying a " + tokens[1] + ".");
+				return;
+			}
+			else {
+				this.junkObjects(itemsToJunk);
+			}
+		}
+		else {
+			itemToJunk = this.findInventoryItem(tokens[0], tokens[1]);
+			
+			if(itemToJunk === null) {
+				this.emitMessage("You don't seem to have a " + tokens[1] + ".");
+				return;			
+			}
+			else {
+				this.junkObject(itemToJunk);
+			}
+		}
+	}
+	else {
+		if(keyword.toLowerCase().trim() === 'all') {
+			itemsToJunk = this.findInventoryItems('all');
+			
+			if(itemsToJunk.length === 0) {
+				this.emitMessage("You aren't carrying anything!");
+				return;
+			}
+			
+			this.junkObjects(itemsToJunk);
+		}
+		else {
+			 itemToJunk = this.findInventoryItem(1, keyword);
+			
+			if(itemToJunk === null) {
+				this.emitMessage("You don't seem to have a " + keyword + ".");
+				return;			
+			}
+			else {
+				this.junkObject(itemToJunk);
+			}
+		}
+	}	
+};
+
 
 var characterModel = mongoose.model('character', characterSchema);
 

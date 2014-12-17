@@ -153,7 +153,7 @@ var COMMAND_LIST = [
           
           { command: "dance"    , minimumPosition: Character.POS_STANDING, functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_DANCE },
           { command: "daydream" , minimumPosition: Character.POS_SLEEPING, functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_DAYDREAM },
-          { command: "drop"     , minimumPosition: Character.POS_RESTING , functionPointer: do_drop       , minimumLevel: 0, subCommand:0 },
+          { command: "drop"     , minimumPosition: Character.POS_RESTING , functionPointer: do_drop       , minimumLevel: 0, subCommand: 0 },
           { command: "drool"    , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_DROOL },
 
           { command: "embrace"  , minimumPosition: Character.POS_STANDING, functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_EMBRACE },
@@ -182,6 +182,9 @@ var COMMAND_LIST = [
           { command: "hiccup"   , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_HICCUP },
           { command: "holler"   , minimumPosition: Character.POS_RESTING,  functionPointer: do_gen_comm   , minimumLevel: 0, subCommand: global.SCMD_HOLLER },
           { command: "hug"      , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_HUG },
+
+          { command: "junk"     , minimumPosition: Character.POS_RESTING , functionPointer: do_junk       , minimumLevel: 0, subCommand: 0 },
+
 
           { command: "kiss"     , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_KISS },
 
@@ -519,6 +522,15 @@ function do_take(character, command) {
 function do_drop(character, command) {
     if(command.tokens.length === 0) {
         character.emitMessage('Drop what?');
+    }
+    else {
+        character.dropItem(command.tokens[0]);
+    }
+}
+
+function do_junk(character, command) {
+    if(command.tokens.length === 0) {
+        character.emitMessage('Junk what?');
     }
     else {
         character.dropItem(command.tokens[0]);
