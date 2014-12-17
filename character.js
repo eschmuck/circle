@@ -549,6 +549,8 @@ characterSchema.methods.findInventoryItems = function(keyword) {
 
 characterSchema.methods.findInventoryFromKeywords = function (keyword) {
 	var result = { };
+	result.items = [];
+
 	var item;
 	
 	if(keyword.indexOf(".") > -1) {
@@ -604,7 +606,7 @@ characterSchema.methods.dropItem = function(keyword) {
 		return;
 	}
 	
-	if(result.items === null) {
+	if(result.items === null || result.items.length === 0) {
 		this.emitMessage("You don't seem to have a " + result.token);
 		return;
 	}
