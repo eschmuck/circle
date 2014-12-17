@@ -509,8 +509,8 @@ characterSchema.methods.takeItem = function(keyword) {
 characterSchema.methods.dropObject = function(object) {
 	this.inventory.splice(this.inventory.indexOf(object), 1);
 	this.room.addItem(object);
-	this.emitMessage("You drop " + object.shortDescription + ".\n\rIt vanishes in a puff of smoke!");
-	this.emitRoomMessage(this.name + " drops " + object.shortDescription + ".\n\rIt vanishes in a puff of smoke!");
+	this.emitMessage("You drop " + object.shortDescription + ".");
+	this.emitRoomMessage(this.name + " drops " + object.shortDescription + ".");
 };
 
 characterSchema.methods.dropObjects = function(objectArray) {
@@ -522,8 +522,10 @@ characterSchema.methods.dropObjects = function(objectArray) {
 characterSchema.methods.junkObject = function(object) {
 	this.inventory.splice(this.inventory.indexOf(object), 1);
 	this.world.removeItem(object);
-	this.emitMessage("You junk " + object.shortDescription + ".");
-	this.emitRoomMessage(this.name + " junk " + object.shortDescription + ".");
+	this.emitMessage("You junk " + object.shortDescription + ".\n\rYou have been rewarded by the gods!");
+	this.emitRoomMessage(this.name + " junk " + object.shortDescription + ".\n\r" + this.name + " has been rewarded by the gods!");
+	// TODO: This line of code
+	//this.gold = this.gold + (object.value * 0.02);
 };
 
 characterSchema.methods.junkObjects = function(objectArray) {
@@ -660,6 +662,84 @@ characterSchema.methods.junkItem = function(keyword) {
 	}	
 };
 
+characterSchema.methods.donateObject = function(object) {
+	this.inventory.splice(this.inventory.indexOf(object), 1);
+	this.emitMessage("You donate " + object.shortDescription + ".\n\rIt vanishes in a puff of smoke!");
+	this.emitRoomMessage(this.name + " donates " + object.shortDescription + ".\n\rIt vanishes in a puff of smoke!");
+	
+	var donationRoom = this.world.getRoom(3063);
+	
+	if(donationRoom !== null) {
+		donationRoom.addItem(object);
+		donationRoom.emitMessage(object.shortDescription + " appears in a puff of smoke!");
+	}
+};
+
+characterSchema.methods.junkObjects = function(objectArray) {
+	for(var i = 0; i < objectArray.length; i++) {
+		this.junkObject(objectArray[i]);
+	}
+};
+
+characterSchema.methods.donateItem = function(keyword) {
+	var itemToDonate;
+	var itemsToDonate;
+	
+	if(keyword.indexOf(".") > -1) {
+		var tokens = keyword.split(".");
+		
+		if(tokens[1].length === 0) {
+			this.emitMessage("Donate what?");
+			return;
+		}
+		
+	 	if(tokens[0].toLowerCase() === "all") {
+			itemsToDonate = this.findInventoryItems(tokens[1]);
+			
+			if(itemsToDonate.length === 0) {
+				this.emitMessage("You don't seem to be carrying a " + tokens[1] + ".");
+				return;
+			}
+			else {
+				this.donateObjects(itemsToDonate);
+			}
+		}
+		else {
+			itemToDonate = this.findInventoryItem(tokens[0], tokens[1]);
+			
+			if(itemToDonate === null) {
+				this.emitMessage("You don't seem to have a " + tokens[1] + ".");
+				return;			
+			}
+			else {
+				this.donateObject(itemToDonate);
+			}
+		}
+	}
+	else {
+		if(keyword.toLowerCase().trim() === 'all') {
+			itemsToDonate = this.findInventoryItems('all');
+			
+			if(itemsToDonate.length === 0) {
+				this.emitMessage("You aren't carrying anything!");
+				return;
+			}
+			
+			this.donateObjects(itemsToDonate);
+		}
+		else {
+			 itemToDonate = this.findInventoryItem(1, keyword);
+			
+			if(itemToDonate === null) {
+				this.emitMessage("You don't seem to have a " + keyword + ".");
+				return;			
+			}
+			else {
+				this.donateObject(itemToDonate);
+			}
+		}
+	}	
+};
 
 var characterModel = mongoose.model('character', characterSchema);
 

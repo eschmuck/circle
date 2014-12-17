@@ -108,6 +108,14 @@ roomSchema.methods.findItems = function(keyword) {
 	return this.contents.findItems(keyword);
 };
 
+roomSchema.methods.emitMessage = function(message, color) {
+	for(var i = 0; i < this.people.length; i++) {
+		if(!this.people[i].isNpc()) {
+			this.people[i].emitMessage(message, color);
+		}
+	}
+};
+
 roomSchema.methods.getCharacter = function(parameter) {
 	var name = parameter;
 	var member = 1;

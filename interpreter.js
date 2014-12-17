@@ -153,6 +153,7 @@ var COMMAND_LIST = [
           
           { command: "dance"    , minimumPosition: Character.POS_STANDING, functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_DANCE },
           { command: "daydream" , minimumPosition: Character.POS_SLEEPING, functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_DAYDREAM },
+          { command: "donate"   , minimumPosition: Character.POS_RESTING , functionPointer: do_donate     , minimumLevel: 0, subCommand: 0 },
           { command: "drop"     , minimumPosition: Character.POS_RESTING , functionPointer: do_drop       , minimumLevel: 0, subCommand: 0 },
           { command: "drool"    , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_DROOL },
 
@@ -184,7 +185,6 @@ var COMMAND_LIST = [
           { command: "hug"      , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_HUG },
 
           { command: "junk"     , minimumPosition: Character.POS_RESTING , functionPointer: do_junk       , minimumLevel: 0, subCommand: 0 },
-
 
           { command: "kiss"     , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_KISS },
 
@@ -519,6 +519,15 @@ function do_take(character, command) {
     }
 }
 
+function do_donate(character, command) {
+    if(command.tokens.length === 0) {
+        character.emitMessage('Donate what?');
+    }
+    else {
+        character.donateItem(command.tokens[0]);
+    }
+}
+
 function do_drop(character, command) {
     if(command.tokens.length === 0) {
         character.emitMessage('Drop what?');
@@ -533,7 +542,7 @@ function do_junk(character, command) {
         character.emitMessage('Junk what?');
     }
     else {
-        character.dropItem(command.tokens[0]);
+        character.junkItem(command.tokens[0]);
     }
 }
 
