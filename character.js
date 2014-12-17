@@ -599,13 +599,14 @@ characterSchema.methods.dropItem = function(keyword) {
 		return;
 	}
 	
-	if(result.items.length === 0) {
+	if(result.items === null) {
 		this.emitMessage("You don't seem to have a " + result.token);
 		return;
 	}
 	
+	console.log(result.items.length);
+	
 	for(var i = 0; i < result.items.length; i++) {
-		console.log('here');
 		this.dropObject(result.items[i]);
 	}
 };
