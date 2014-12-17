@@ -517,14 +517,12 @@ characterSchema.methods.dropObject = function(object) {
 	this.emitRoomMessage(this.name + " drops " + object.shortDescription + ".");
 };
 
-characterSchema.methods.dropObjects = function(objectArray) {
-	for(var i = 0; i < objectArray.length; i++) {
-		
-		console.log(this);
-		
-		this.dropObject(objectArray[i]);
-	}
-};
+// THis might be unnecessary
+// characterSchema.methods.dropObjects = function(objectArray) {
+// 	for(var i = 0; i < objectArray.length; i++) {
+// 		this.dropObject(objectArray[i]);
+// 	}
+// };
 
 characterSchema.methods.junkObject = function(object) {
 	this.inventory.splice(this.inventory.indexOf(object), 1);
@@ -549,68 +547,64 @@ characterSchema.methods.findInventoryItems = function(keyword) {
 	return this.inventory.findItems(keyword);
 };
 
-characterSchema.methods.manipulateItem = function(singularFunctionPointer, multipleFunctionPointer, operation, keyword) {
-	var item;
-	var items;
+characterSchema.methods.findInventoryFromKeywords = function (keyword) {
+	var result = { };
 	
 	if(keyword.indexOf(".") > -1) {
 		var tokens = keyword.split(".");
 		
 		if(tokens[1].length === 0) {
-			this.emitMessage(operation + " what?");
-			return;
+			return null;
 		}
 		
-	 	if(tokens[0].toLowerCase() === "all") {
-			items = this.findInventoryItems(tokens[1]);
-			
-			if(items.length === 0) {
-				this.emitMessage("You don't seem to be carrying a " + tokens[1] + ".");
-				return;
-			}
-			else {
-				multipleFunctionPointer(items);
-			}
+		if(tokens[0].toLowerCase() === "all") {
+			result.mode = 'all.item';
+			result.token = tokens[1];
+			result.items = this.findInventoryItems(tokens[1]);
 		}
 		else {
-			item = this.findInventoryItem(tokens[0], tokens[1]);
-			
-			if(item === null) {
-				this.emitMessage("You don't seem to have a " + tokens[1] + ".");
-				return;			
-			}
-			else {
-				singularFunctionPointer(item);
-			}
+			result.mode = 'n.item';
+			result.token = tokens[1];
+			result.items = this.findInventoryItem(tokens[0], tokens[1]);
 		}
 	}
 	else {
 		if(keyword.toLowerCase().trim() === 'all') {
-			items = this.findInventoryItems('all');
-			
-			if(items.length === 0) {
-				this.emitMessage("You aren't carrying anything!");
-				return;
-			}
-			
-			multipleFunctionPointer(items);
+			result.mode = 'all';
+			result.token = '';
+			result.items = this.findInventoryItems('all');
 		}
 		else {
-			 item = this.findInventoryItem(1, keyword);
-			
-			if(item === null) {
-				this.emitMessage("You don't seem to have a " + keyword + ".");
-				return;			
-			}
-			else {
-				singularFunctionPointer(item);
-			}
+			result.mode = '1.item';
+			result.token = keyword;
+			result.items = this.findInventoryItem(1, keyword);
 		}
-	}	
+	}
+	
+	return result;
 };
 
 characterSchema.methods.dropItem = function(keyword) {
-	this.manipulateItem(this.dropObject, this.dropObjects, "drop", keyword);
+	var result = this.findInventoryFromKeywords(keyword);
+	
+	if(result === null) {
+		this.emitMessage("Drop what?!?");
+		return;
+	}
+	
+	if(result.mode === 'all' && result.items.length === 0) {
+		this.emitMessage("You aren't carrying anything!");
+		return;
+	}
+	
+	if(result.items.length === 0) {
+		this.emitMessage("You don't seem to have a " + result.token);
+		return;
+	}
+	
+	for(var i = 0; i < result.items.length; i++) {
+		this.dropObject(result.items[i]);
+	}
 };
 
 characterSchema.methods.junkItem = function(keyword) {
