@@ -549,6 +549,7 @@ characterSchema.methods.findInventoryItems = function(keyword) {
 
 characterSchema.methods.findInventoryFromKeywords = function (keyword) {
 	var result = { };
+	var item;
 	
 	if(keyword.indexOf(".") > -1) {
 		var tokens = keyword.split(".");
@@ -565,7 +566,9 @@ characterSchema.methods.findInventoryFromKeywords = function (keyword) {
 		else {
 			result.mode = 'n.item';
 			result.token = tokens[1];
-			result.items = this.findInventoryItem(tokens[0], tokens[1]);
+			
+			item = this.findInventoryItem(tokens[0], tokens[1]);
+			result.items.push(item);
 		}
 	}
 	else {
@@ -577,7 +580,9 @@ characterSchema.methods.findInventoryFromKeywords = function (keyword) {
 		else {
 			result.mode = '1.item';
 			result.token = keyword;
-			result.items = this.findInventoryItem(1, keyword);
+			
+			item = this.findInventoryItem(1, keyword);
+			result.items.push(item);
 		}
 	}
 	
