@@ -29,8 +29,13 @@ playerSchema.methods.isNpc = function() {
 playerSchema.methods.listInventory = function() {
 	this.emitMessage("You are carrying:");
 	
-	for(var i = 0; i < this.inventory.length; i++) {
-		this.emitMessage(this.inventory[i].shortDescription, "Green");
+	if(this.inventory.length === 0) {
+		this.emitMessage("   Absolutely nothing!!!");
+	}
+	else {
+		for(var i = 0; i < this.inventory.length; i++) {
+			this.emitMessage(this.inventory[i].shortDescription, "Green");
+		}
 	}
 };
 	
