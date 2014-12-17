@@ -184,6 +184,9 @@ var COMMAND_LIST = [
           { command: "holler"   , minimumPosition: Character.POS_RESTING,  functionPointer: do_gen_comm   , minimumLevel: 0, subCommand: global.SCMD_HOLLER },
           { command: "hug"      , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_HUG },
 
+          { command: "inventory", minimumPosition: Character.POS_DEAD    , functionPointer: do_inventory  , minimumLevel: 0, subCommand: 0 },
+
+
           { command: "junk"     , minimumPosition: Character.POS_RESTING , functionPointer: do_junk       , minimumLevel: 0, subCommand: 0 },
 
           { command: "kiss"     , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_KISS },
@@ -544,6 +547,10 @@ function do_junk(character, command) {
     else {
         character.junkItem(command.tokens[0]);
     }
+}
+
+function do_inventory(character) {
+    character.listInventory();
 }
 
 function do_tell(character, command) {

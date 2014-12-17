@@ -70,6 +70,10 @@ characterSchema.methods.getDescription = function() {
 	// Implementation overriden by child schemas	
 };
 
+characterSchema.methods.listInventory = function() {
+	// Implementation overriden by child schemas	
+};
+
 characterSchema.methods.isNpc = function() {
 	// Implementation overriden by child schemas	
 	return false;

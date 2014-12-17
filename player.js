@@ -26,6 +26,14 @@ playerSchema.methods.isNpc = function() {
 	return false;
 };
 
+playerSchema.methods.listInventory = function() {
+	this.emitMessage("You are carrying:");
+	
+	for(var i = 0; i < this.inventory.length; i++) {
+		this.emitMessage(this.inventory[i].shortDescription, "Green");
+	}
+};
+	
 // TODO: change to 'statics'?
 playerSchema.methods.load = function(name, callback) {
 	playerModel.find({ name: name }, function(err, docs) {
