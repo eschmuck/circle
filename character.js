@@ -519,6 +519,9 @@ characterSchema.methods.dropObject = function(object) {
 
 characterSchema.methods.dropObjects = function(objectArray) {
 	for(var i = 0; i < objectArray.length; i++) {
+		
+		console.log(this);
+		
 		this.dropObject(objectArray[i]);
 	}
 };
