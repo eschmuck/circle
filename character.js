@@ -573,7 +573,10 @@ characterSchema.methods.findInventoryFromKeywords = function (keyword) {
 			result.token = keyword;
 			
 			item = this.findInventoryItem(1, keyword);
-			result.items.push(item);
+			
+			if(item !== null) {
+				result.items.push(item);
+			}
 		}
 	}
 	
@@ -582,9 +585,6 @@ characterSchema.methods.findInventoryFromKeywords = function (keyword) {
 
 characterSchema.methods.dropItem = function(keyword) {
 	var result = this.findInventoryFromKeywords(keyword);
-
-	console.log(result.items);
-	console.log(result.items.length);
 
 	if(result === null) {
 		this.emitMessage("Drop what?!?");
@@ -596,7 +596,7 @@ characterSchema.methods.dropItem = function(keyword) {
 		return;
 	}
 	
-	if(result.items === null || result.items.length === 0) {
+	if(result.items.length === 0) {
 		this.emitMessage("You don't seem to have a " + result.token);
 		return;
 	}
