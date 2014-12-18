@@ -81,30 +81,39 @@ characterSchema.methods.isNpc = function() {
 
 characterSchema.methods.emitMessage = function(message, color) {
 	if(this.socket !== undefined) {
+		
+		var formattedMessage = message.substring(0, 1).toUpperCase() + message.substring(1);
+		
 		if(color !== undefined) {
-			this.socket.emit('message', { message: message, color: color });
+			this.socket.emit('message', { message: formattedMessage, color: color });
 		}
 		else {
-			this.socket.emit('message', { message: message });
+			this.socket.emit('message', { message: formattedMessage });
 		}
 	}
 };
 
 characterSchema.methods.emitRoomMessage = function(message, color) {
+	
+	var formattedMessage = message.substring(0, 1).toUpperCase() + message.substring(1);
+
 	for(var i = 0; i < this.room.people.length; i++) {
 		if(this.room.people[i] !== this) {
 			if(!this.room.people[i].isNpc()) {
-				this.room.people[i].emitMessage(message, color);
+				this.room.people[i].emitMessage(formattedMessage, color);
 			}
 		}
 	}
 };
 
 characterSchema.methods.emitWorldMessage = function(message, color) {
+	
+	var formattedMessage = message.substring(0, 1).toUpperCase() + message.substring(1);
+
 	for(var i = 0; i < this.world.people.length; i++) {
 		if(this.world.people[i] !== this) {
 			if(!this.world.people[i].isNpc()) {
-				this.world.people[i].emitMessage(message, color);
+				this.world.people[i].emitMessage(formattedMessage, color);
 			}
 		}
 	}
@@ -599,7 +608,7 @@ characterSchema.methods.dropItem = function(keyword) {
 	}
 	
 	if(result.items.length === 0) {
-		this.emitMessage("You don't seem to have a " + result.token);
+		this.emitMessage("You don't seem to have a " + result.token + ".");
 		return;
 	}
 
@@ -621,8 +630,8 @@ characterSchema.methods.junkItem = function(keyword) {
 		return;
 	}
 	
-	if(result.items === null || result.items.length === 0) {
-		this.emitMessage("You don't seem to have a " + result.token);
+	if(result.items.length === 0) {
+		this.emitMessage("You don't seem to have a " + result.token + ".");
 		return;
 	}
 
@@ -657,14 +666,14 @@ characterSchema.methods.donateItem = function(keyword) {
 		return;
 	}
 	
-	if(result.items === null || result.items.length === 0) {
-		this.emitMessage("You don't seem to have a " + result.token);
+	if(result.items.length === 0) {
+		this.emitMessage("You don't seem to have a " + result.token + ".");
 		return;
 	}
 
 	for(var i = 0; i < result.items.length; i++) {
 		this.donateObject(result.items[i]);
-	}	
+	}
 };
 
 var characterModel = mongoose.model('character', characterSchema);
