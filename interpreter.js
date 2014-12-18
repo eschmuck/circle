@@ -559,9 +559,6 @@ function do_junk(character, command) {
 
 function do_eat(character, command) {
     if(command.tokens.length === 0) {
-        
-        console.log(command.subCommand);
-        
         if(command.subCommand === SCMD_EAT) {
             character.emitMessage('Eat what?');
         }
@@ -569,6 +566,7 @@ function do_eat(character, command) {
             character.emitMessage('Taste what?');
         }
         else {
+            console.log(command.subCommand);
             character.eatItem(command.tokens[0], command.subCommand);
         }
     }
