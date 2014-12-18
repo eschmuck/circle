@@ -598,6 +598,10 @@ characterSchema.methods.dropItem = function(keyword) {
 	}
 
 	for(var i = 0; i < result.items.length; i++) {
+		
+		console.log(result.items[i]);
+		
+		
 		this.dropObject(result.items[i]);
 	}
 };
