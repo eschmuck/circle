@@ -10,11 +10,7 @@ Array.prototype.findItem = function(index, keyword) {
 		for(var j = 0; j < this[i].keywords.length; j++) {
 			if(this[i].keywords[j].toLowerCase().substr(0, keyword.length) === keyword.toLowerCase()) {
 				counter++;
-				
-				console.log("keyword match");
-				console.log(counter);
-				console.log(index);
-				
+
 				if(counter === index) {
 					
 					console.log("counter = index");
@@ -27,9 +23,7 @@ Array.prototype.findItem = function(index, keyword) {
 			}
 		}
 	}
-	
-	console.log("not found");
-	
+
 	return null;
 };
 

@@ -558,9 +558,7 @@ characterSchema.methods.findInventoryFromKeywords = function (keyword) {
 			result.token = tokens[1];
 			
 			item = this.findInventoryItem(parseInt(tokens[0], 10), tokens[1]);
-			
-			console.log('here' + item);
-			
+
 			result.items.push(item);
 		}
 	}
@@ -601,10 +599,6 @@ characterSchema.methods.dropItem = function(keyword) {
 	}
 
 	for(var i = 0; i < result.items.length; i++) {
-		
-		console.log(result.items[i]);
-		
-		
 		this.dropObject(result.items[i]);
 	}
 };
