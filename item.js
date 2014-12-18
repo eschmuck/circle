@@ -6,7 +6,8 @@ var itemSchema = new schema({
     keywords: [ String ],
     shortDescription: String,
     longDescription: String,
-    isGlowing: Boolean
+    isGlowing: Boolean,
+    type: String
 });
 
 itemSchema.statics.load = function(id, item, callback, commands, world, instructionNumber) {
@@ -22,3 +23,5 @@ module.exports = {
 	item: itemModel
 };
 
+global.ITEM_LIGHT = "Light";
+global.ITEM_FOOD  = "Food";

@@ -5,6 +5,7 @@ var Social =  require("./social");
 var interpreter = require("./interpreter");
 var util = require('util');
 var extensions = require('./extensions');
+var item = require("./item");
 
 var directions = [ 'north', 'east', 'south', 'west', 'up', 'down' ];
 
@@ -530,8 +531,8 @@ characterSchema.methods.dropObject = function(object) {
 characterSchema.methods.junkObject = function(object) {
 	this.inventory.splice(this.inventory.indexOf(object), 1);
 	this.world.removeItem(object);
-	this.emitMessage("You junk " + object.shortDescription + ".\n\r  You have been rewarded by the gods!");
-	this.emitRoomMessage(this.name + " junk " + object.shortDescription + ".\n\r  " + this.name + " has been rewarded by the gods!");
+	this.emitMessage("You junk " + object.shortDescription + ".\n\rYou have been rewarded by the gods!");
+	this.emitRoomMessage(this.name + " junk " + object.shortDescription + ".\n\r" + this.name + " has been rewarded by the gods!");
 	// TODO: This line of code
 	//this.gold = this.gold + (object.value * 0.02);
 };
@@ -642,8 +643,8 @@ characterSchema.methods.junkItem = function(keyword) {
 
 characterSchema.methods.donateObject = function(object) {
 	this.inventory.splice(this.inventory.indexOf(object), 1);
-	this.emitMessage("You donate " + object.shortDescription + ".\n\r  It vanishes in a puff of smoke!");
-	this.emitRoomMessage(this.name + " donates " + object.shortDescription + ".\n\r  It vanishes in a puff of smoke!");
+	this.emitMessage("You donate " + object.shortDescription + ".\n\rIt vanishes in a puff of smoke!");
+	this.emitRoomMessage(this.name + " donates " + object.shortDescription + ".\n\rIt vanishes in a puff of smoke!");
 	
 	var donationRoom = this.world.getRoom(3063);
 	
@@ -673,6 +674,74 @@ characterSchema.methods.donateItem = function(keyword) {
 
 	for(var i = 0; i < result.items.length; i++) {
 		this.donateObject(result.items[i]);
+	}
+};
+
+characterSchema.methods.eatObject = function(object, mode) {
+	var extractObject = false;
+	var amount = 0;
+	
+	if(mode === global.SCMD_EAT) {
+		this.emitMessage("You eat " + object.shortDescription + ".");
+		this.emitRoomMessage(this.name + " eats " + object.shortDescription + ".");
+		amount = object.hoursOfHunger;
+		extractObject = true;
+		
+	}
+	else if(mode === global.SCMD_TASTE) {
+		this.emitMessage("You nibble a little bit of " + object.shortDescription + ".");
+		this.emitRoomMessage(this.name + " nibbles a little but of " + object.shortDescription + ".");
+		amount = 1;
+		
+		if(--object.hoursOfHunger <= 0) {
+			extractObject = true;
+		}
+	}
+	
+	// TODO: Gain condition hunger
+
+	// TODO: poison
+	
+	if(extractObject) {
+		if(mode === global.SCMD_TASTE) {
+			this.emitMessage("There's nothing left of it now.");
+		}
+		
+		this.inventory.splice(this.inventory.indexOf(object), 1);
+		this.world.removeItem(object);
+	}
+};
+
+
+characterSchema.methods.eatItem = function(keyword, mode) {
+	var result = this.findInventoryFromKeywords(keyword);
+	
+	if(result === null) {
+		this.emitMessage("Eat what?!?");
+		return;
+	}
+	
+	if(result.mode === 'all' && result.items.length === 0) {
+		this.emitMessage("You aren't carrying anything!");
+		return;
+	}
+	
+	if(result.items.length === 0) {
+		this.emitMessage("You don't seem to have " + result.token.indefiniteArticle() + " " + result.token + ".");
+		return;
+	}
+
+	for(var i = 0; i < result.items.length; i++) {
+		if(result.items[i].type !== global.ITEM_FOOD) {
+			this.emitMessage(result.items[i].shortDescription + " -- You can't eat THAT!");
+		}
+		else if(this.hunger > 20) {
+			this.emitMessage("You are too full to eat any more!");
+			return;
+		}
+		else {
+			this.eatObject(result.items[i], mode);
+		}
 	}
 };
 
