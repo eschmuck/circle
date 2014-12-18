@@ -517,12 +517,6 @@ characterSchema.methods.dropObject = function(object) {
 	this.emitRoomMessage(this.name + " drops " + object.shortDescription + ".");
 };
 
-// THis might be unnecessary
-// characterSchema.methods.dropObjects = function(objectArray) {
-// 	for(var i = 0; i < objectArray.length; i++) {
-// 		this.dropObject(objectArray[i]);
-// 	}
-// };
 
 characterSchema.methods.junkObject = function(object) {
 	this.inventory.splice(this.inventory.indexOf(object), 1);
@@ -531,12 +525,6 @@ characterSchema.methods.junkObject = function(object) {
 	this.emitRoomMessage(this.name + " junk " + object.shortDescription + ".\n\r" + this.name + " has been rewarded by the gods!");
 	// TODO: This line of code
 	//this.gold = this.gold + (object.value * 0.02);
-};
-
-characterSchema.methods.junkObjects = function(objectArray) {
-	for(var i = 0; i < objectArray.length; i++) {
-		this.junkObject(objectArray[i]);
-	}
 };
 
 characterSchema.methods.findInventoryItem = function(index, keyword) {
@@ -593,9 +581,7 @@ characterSchema.methods.findInventoryFromKeywords = function (keyword) {
 
 characterSchema.methods.dropItem = function(keyword) {
 	var result = this.findInventoryFromKeywords(keyword);
-	
-	console.log(result);
-	
+
 	if(result === null) {
 		this.emitMessage("Drop what?!?");
 		return;
@@ -610,72 +596,33 @@ characterSchema.methods.dropItem = function(keyword) {
 		this.emitMessage("You don't seem to have a " + result.token);
 		return;
 	}
-	
-	console.log(result.items.length);
-	
+
 	for(var i = 0; i < result.items.length; i++) {
 		this.dropObject(result.items[i]);
 	}
 };
 
 characterSchema.methods.junkItem = function(keyword) {
-	var itemToJunk;
-	var itemsToJunk;
-	
-	if(keyword.indexOf(".") > -1) {
-		var tokens = keyword.split(".");
-		
-		if(tokens[1].length === 0) {
-			this.emitMessage("Junk what?");
-			return;
-		}
-		
-	 	if(tokens[0].toLowerCase() === "all") {
-			itemsToJunk = this.findInventoryItems(tokens[1]);
-			
-			if(itemsToJunk.length === 0) {
-				this.emitMessage("You don't seem to be carrying a " + tokens[1] + ".");
-				return;
-			}
-			else {
-				this.junkObjects(itemsToJunk);
-			}
-		}
-		else {
-			itemToJunk = this.findInventoryItem(tokens[0], tokens[1]);
-			
-			if(itemToJunk === null) {
-				this.emitMessage("You don't seem to have a " + tokens[1] + ".");
-				return;			
-			}
-			else {
-				this.junkObject(itemToJunk);
-			}
-		}
+	var result = this.findInventoryFromKeywords(keyword);
+
+	if(result === null) {
+		this.emitMessage("Junk what?!?");
+		return;
 	}
-	else {
-		if(keyword.toLowerCase().trim() === 'all') {
-			itemsToJunk = this.findInventoryItems('all');
-			
-			if(itemsToJunk.length === 0) {
-				this.emitMessage("You aren't carrying anything!");
-				return;
-			}
-			
-			this.junkObjects(itemsToJunk);
-		}
-		else {
-			 itemToJunk = this.findInventoryItem(1, keyword);
-			
-			if(itemToJunk === null) {
-				this.emitMessage("You don't seem to have a " + keyword + ".");
-				return;			
-			}
-			else {
-				this.junkObject(itemToJunk);
-			}
-		}
-	}	
+	
+	if(result.mode === 'all' && result.items.length === 0) {
+		this.emitMessage("You aren't carrying anything!");
+		return;
+	}
+	
+	if(result.items === null || result.items.length === 0) {
+		this.emitMessage("You don't seem to have a " + result.token);
+		return;
+	}
+
+	for(var i = 0; i < result.items.length; i++) {
+		this.junkObject(result.items[i]);
+	}
 };
 
 characterSchema.methods.donateObject = function(object) {
@@ -691,69 +638,26 @@ characterSchema.methods.donateObject = function(object) {
 	}
 };
 
-characterSchema.methods.junkObjects = function(objectArray) {
-	for(var i = 0; i < objectArray.length; i++) {
-		this.junkObject(objectArray[i]);
-	}
-};
-
 characterSchema.methods.donateItem = function(keyword) {
-	var itemToDonate;
-	var itemsToDonate;
-	
-	if(keyword.indexOf(".") > -1) {
-		var tokens = keyword.split(".");
-		
-		if(tokens[1].length === 0) {
-			this.emitMessage("Donate what?");
-			return;
-		}
-		
-	 	if(tokens[0].toLowerCase() === "all") {
-			itemsToDonate = this.findInventoryItems(tokens[1]);
-			
-			if(itemsToDonate.length === 0) {
-				this.emitMessage("You don't seem to be carrying a " + tokens[1] + ".");
-				return;
-			}
-			else {
-				this.donateObjects(itemsToDonate);
-			}
-		}
-		else {
-			itemToDonate = this.findInventoryItem(tokens[0], tokens[1]);
-			
-			if(itemToDonate === null) {
-				this.emitMessage("You don't seem to have a " + tokens[1] + ".");
-				return;			
-			}
-			else {
-				this.donateObject(itemToDonate);
-			}
-		}
+	var result = this.findInventoryFromKeywords(keyword);
+
+	if(result === null) {
+		this.emitMessage("Donate what?!?");
+		return;
 	}
-	else {
-		if(keyword.toLowerCase().trim() === 'all') {
-			itemsToDonate = this.findInventoryItems('all');
-			
-			if(itemsToDonate.length === 0) {
-				this.emitMessage("You aren't carrying anything!");
-				return;
-			}
-			
-			this.donateObjects(itemsToDonate);
-		}
-		else {
-			 itemToDonate = this.findInventoryItem(1, keyword);
-			
-			if(itemToDonate === null) {
-				this.emitMessage("You don't seem to have a " + keyword + ".");
-				return;			
-			}
-			else {
-				this.donateObject(itemToDonate);
-			}
-		}
+	
+	if(result.mode === 'all' && result.items.length === 0) {
+		this.emitMessage("You aren't carrying anything!");
+		return;
+	}
+	
+	if(result.items === null || result.items.length === 0) {
+		this.emitMessage("You don't seem to have a " + result.token);
+		return;
+	}
+
+	for(var i = 0; i < result.items.length; i++) {
+		this.donateObject(result.items[i]);
 	}	
 };
 
