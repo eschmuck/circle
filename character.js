@@ -559,7 +559,9 @@ characterSchema.methods.findInventoryFromKeywords = function (keyword) {
 			
 			item = this.findInventoryItem(parseInt(tokens[0], 10), tokens[1]);
 
-			result.items.push(item);
+			if(item !== null) {
+				result.items.push(item);
+			}
 		}
 	}
 	else {
