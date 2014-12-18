@@ -565,10 +565,9 @@ function do_eat(character, command) {
         else if(command.subCommand === SCMD_TASTE) {
             character.emitMessage('Taste what?');
         }
-        else {
-            console.log(command.subCommand);
-            character.eatItem(command.tokens[0], command.subCommand);
-        }
+    }
+    else {
+        character.eatItem(command.tokens[0], command.subCommand);
     }
 }
 
