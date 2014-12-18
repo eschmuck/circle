@@ -583,6 +583,9 @@ characterSchema.methods.findInventoryFromKeywords = function (keyword) {
 characterSchema.methods.dropItem = function(keyword) {
 	var result = this.findInventoryFromKeywords(keyword);
 
+	console.log(result.items);
+	console.log(result.items.length);
+
 	if(result === null) {
 		this.emitMessage("Drop what?!?");
 		return;
