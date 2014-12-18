@@ -38,7 +38,7 @@ Array.prototype.findItems = function(keyword) {
 		}
 	}
 
-	console.log(items.length);
+	console.log('items.length=' + items.length);
 	
 	return items;
 };
