@@ -12,9 +12,6 @@ Array.prototype.findItem = function(index, keyword) {
 				counter++;
 
 				if(counter === index) {
-					
-					console.log("counter = index");
-					
 					return this[i];
 				}
 				else {
