@@ -6,7 +6,12 @@ Array.prototype.findItem = function(index, keyword) {
 			if(this[i].keywords[j].toLowerCase().substr(0, keyword.length) === keyword.toLowerCase()) {
 				counter++;
 				
+				console.log("keyword match")
+				
 				if(counter === index) {
+					
+					console.log("counter = index");
+					
 					return this[i];
 				}
 				else {
@@ -15,6 +20,8 @@ Array.prototype.findItem = function(index, keyword) {
 			}
 		}
 	}
+	
+	console.log("not found");
 	
 	return null;
 };
@@ -38,8 +45,6 @@ Array.prototype.findItems = function(keyword) {
 		}
 	}
 
-	console.log('items.length=' + items.length);
-	
 	return items;
 };
 
