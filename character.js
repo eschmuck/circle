@@ -530,8 +530,8 @@ characterSchema.methods.dropObject = function(object) {
 characterSchema.methods.junkObject = function(object) {
 	this.inventory.splice(this.inventory.indexOf(object), 1);
 	this.world.removeItem(object);
-	this.emitMessage("You junk " + object.shortDescription + ".\n\rYou have been rewarded by the gods!");
-	this.emitRoomMessage(this.name + " junk " + object.shortDescription + ".\n\r" + this.name + " has been rewarded by the gods!");
+	this.emitMessage("You junk " + object.shortDescription + ".\n\r  You have been rewarded by the gods!");
+	this.emitRoomMessage(this.name + " junk " + object.shortDescription + ".\n\r  " + this.name + " has been rewarded by the gods!");
 	// TODO: This line of code
 	//this.gold = this.gold + (object.value * 0.02);
 };
@@ -642,8 +642,8 @@ characterSchema.methods.junkItem = function(keyword) {
 
 characterSchema.methods.donateObject = function(object) {
 	this.inventory.splice(this.inventory.indexOf(object), 1);
-	this.emitMessage("You donate " + object.shortDescription + ".\n\rIt vanishes in a puff of smoke!");
-	this.emitRoomMessage(this.name + " donates " + object.shortDescription + ".\n\rIt vanishes in a puff of smoke!");
+	this.emitMessage("You donate " + object.shortDescription + ".\n\r  It vanishes in a puff of smoke!");
+	this.emitRoomMessage(this.name + " donates " + object.shortDescription + ".\n\r  It vanishes in a puff of smoke!");
 	
 	var donationRoom = this.world.getRoom(3063);
 	
