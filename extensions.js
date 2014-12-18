@@ -46,6 +46,26 @@ Array.prototype.findItems = function(keyword) {
 	return items;
 };
 
+String.prototype.indefiniteArticle = function() {
+	if(this.length < 1) {
+		return "a";
+	}
+	else {
+		var firstChar = this.toLowerCase().substr(0, 1);
+                
+		switch(firstChar) {
+			case 'a':
+			case 'e':
+			case 'i':
+			case 'o':
+			case 'u':
+				return 'an';
+			default:
+				return 'a';
+		}
+	}
+};
 
 // Exports
 module.exports = Array;
+module.exports = String;

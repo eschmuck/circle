@@ -608,7 +608,7 @@ characterSchema.methods.dropItem = function(keyword) {
 	}
 	
 	if(result.items.length === 0) {
-		this.emitMessage("You don't seem to have a " + result.token + ".");
+		this.emitMessage("You don't seem to have " + result.token.indefiniteArticle() + " " + result.token + ".");
 		return;
 	}
 
@@ -631,7 +631,7 @@ characterSchema.methods.junkItem = function(keyword) {
 	}
 	
 	if(result.items.length === 0) {
-		this.emitMessage("You don't seem to have a " + result.token + ".");
+		this.emitMessage("You don't seem to have " + result.token.indefiniteArticle() + " " + result.token + ".");
 		return;
 	}
 
@@ -667,7 +667,7 @@ characterSchema.methods.donateItem = function(keyword) {
 	}
 	
 	if(result.items.length === 0) {
-		this.emitMessage("You don't seem to have a " + result.token + ".");
+		this.emitMessage("You don't seem to have " + result.token.indefiniteArticle() + " " + result.token + ".");
 		return;
 	}
 
