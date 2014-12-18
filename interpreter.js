@@ -429,11 +429,13 @@ Interpreter.prototype.getCommand = function(input) {
         }
     }
 
-    if(cleanedTokens.length > 1) {
-        command.tokens = cleanedTokens.slice(1);
-    }
-    else {
-        command.tokens = [];
+    if(command !== null) {
+        if(cleanedTokens.length > 1) {
+            command.tokens = cleanedTokens.slice(1);
+        }
+        else {
+            command.tokens = [];
+        }
     }
 
     return command;
