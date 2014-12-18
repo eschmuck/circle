@@ -75,6 +75,10 @@ characterSchema.methods.listInventory = function() {
 	// Implementation overriden by child schemas	
 };
 
+characterSchema.methods.listScore = function() {
+	// Implementation overriden by child schemas	
+};
+
 characterSchema.methods.isNpc = function() {
 	// Implementation overriden by child schemas	
 	return false;
@@ -717,9 +721,7 @@ characterSchema.methods.eatObject = function(object, mode) {
 
 characterSchema.methods.eatItem = function(keyword, mode) {
 	var result = this.findInventoryFromKeywords(keyword);
-	
-	console.log('here1');
-	
+
 	if(result === null) {
 		this.emitMessage("Eat what?!?");
 		return;
@@ -736,9 +738,6 @@ characterSchema.methods.eatItem = function(keyword, mode) {
 	}
 
 	for(var i = 0; i < result.items.length; i++) {
-
-		console.log('here2');
-		
 		if(result.items[i].type !== global.ITEM_FOOD) {
 			this.emitMessage(result.items[i].shortDescription + " -- You can't eat THAT!");
 		}

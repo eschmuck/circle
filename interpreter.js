@@ -225,6 +225,7 @@ var COMMAND_LIST = [
 
           { command: "'"        , minimumPosition: Character.POS_RESTING , functionPointer: do_say        , minimumLevel: 0, subCommand: 0 },
           { command: "say"      , minimumPosition: Character.POS_RESTING , functionPointer: do_say        , minimumLevel: 0, subCommand: 0 },
+          { command: "score"    , minimumPosition: Character.POS_DEAD    , functionPointer: do_score      , minimumLevel: 0, subCommand: 0 },
           { command: "scream"   , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_SCREAM },
           { command: "shake"    , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_SHAKE },
           { command: "shiver"   , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_SHIVER },
@@ -569,6 +570,10 @@ function do_eat(character, command) {
     else {
         character.eatItem(command.tokens[0], command.subCommand);
     }
+}
+
+function do_score(character) {
+    character.listScore();
 }
 
 function do_inventory(character) {
