@@ -557,7 +557,7 @@ characterSchema.methods.findInventoryFromKeywords = function (keyword) {
 			result.mode = 'n.item';
 			result.token = tokens[1];
 			
-			item = this.findInventoryItem(tokens[0], tokens[1]);
+			item = this.findInventoryItem(parseInt(tokens[0], 10), tokens[1]);
 			
 			console.log('here' + item);
 			

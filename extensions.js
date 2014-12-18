@@ -1,4 +1,9 @@
 Array.prototype.findItem = function(index, keyword) {
+	
+	if(isNaN(index)) {
+		return null;
+	}
+	
 	var counter = 0;
 
 	for(var i = 0; i < this.length; i++) {
@@ -6,7 +11,9 @@ Array.prototype.findItem = function(index, keyword) {
 			if(this[i].keywords[j].toLowerCase().substr(0, keyword.length) === keyword.toLowerCase()) {
 				counter++;
 				
-				console.log("keyword match")
+				console.log("keyword match");
+				console.log(counter);
+				console.log(index);
 				
 				if(counter === index) {
 					
