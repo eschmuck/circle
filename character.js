@@ -681,6 +681,8 @@ characterSchema.methods.eatObject = function(object, mode) {
 	var extractObject = false;
 	var amount = 0;
 	
+	console.log(mode);
+	
 	if(mode === global.SCMD_EAT) {
 		this.emitMessage("You eat " + object.shortDescription + ".");
 		this.emitRoomMessage(this.name + " eats " + object.shortDescription + ".");
