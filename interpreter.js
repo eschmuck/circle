@@ -119,13 +119,13 @@ exports.SCMD_TWIDDLE    = 95;
 
 var SCMD_EAT   = 0;
 var SCMD_TASTE = 1;
-exports.SCMD_EAT    = SCMD_EAT;
-exports.SCMD_TASTE  = SCMD_TASTE;
+global.SCMD_EAT    = SCMD_EAT;
+global.SCMD_TASTE  = SCMD_TASTE;
 
 var SCMD_DRINK = 0;
 var SCMD_SIP   = 1;
-exports.SCMD_DRINK = SCMD_DRINK;
-exports.SCMD_SIP   = SCMD_SIP;
+global.SCMD_DRINK = SCMD_DRINK;
+global.SCMD_SIP   = SCMD_SIP;
 
 var COMMAND_LIST = [
     
