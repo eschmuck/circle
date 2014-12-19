@@ -469,62 +469,25 @@ characterSchema.methods.takeObjects = function(objectArray) {
 };
 
 characterSchema.methods.takeItem = function(keyword) {
-	var itemToTake;
-	var itemsToTake;
+	var result = this.room.findRoomContentsFromKeywords(keyword);
 	
-	if(keyword.indexOf(".") > -1) {
-		var tokens = keyword.split(".");
-		
-		if(tokens[1].length === 0) {
-			this.emitMessage("Take what?");
-			return;
-		}
-		
-		if(tokens[0].toLowerCase() === "all") {
-			itemsToTake = this.room.findItems(tokens[1]);
-			
-			if(itemsToTake.length === 0) {
-				this.emitMessage("You can't find a " + tokens[1] + " here.");
-				return;
-			}
-			else {
-				this.takeObjects(itemsToTake);
-			}
-		}
-		else {
-			itemToTake = this.room.findItem(tokens[0], tokens[1]);
-			
-			if(itemToTake === null) {
-				this.emitMessage("You can't find a " + tokens[1] + " here.");
-				return;			
-			}
-			else {
-				this.takeObject(itemToTake);
-			}
-		}
+	if(result === null) {
+		this.emitMessage("Take what?!?");
+		return;
 	}
-	else {
-		if(keyword.toLowerCase().trim() === 'all') {
-			itemsToTake = this.room.findItems('all');
-			
-			if(itemsToTake.length === 0) {
-				this.emitMessage("There isn't anything here to take!");
-				return;
-			}
-			
-			this.takeObjects(itemsToTake);
-		}
-		else {
-			 itemToTake = this.room.findItem(1, keyword);
-			
-			if(itemToTake === null) {
-				this.emitMessage("You can't find a " + keyword + " here.");
-				return;			
-			}
-			else {
-				this.takeObject(itemToTake);
-			}
-		}
+	
+	if(result.mode === 'all' && result.items.length === 0) {
+		this.emitMessage("You can't find " + result.token.indefiniteArticle() + " " + result.token + " here.");
+		return;
+	}
+	
+	if(result.items.length === 0) {
+		this.emitMessage("You can't seem to find " + result.token.indefiniteArticle() + " " + result.token + ".");
+		return;
+	}
+
+	for(var i = 0; i < result.items.length; i++) {
+		this.takeObject(result.items[i]);
 	}
 };
 
@@ -761,6 +724,8 @@ characterSchema.methods.drinkFromObject = function(object, mode) {
 	// TODO: names and effects
 	var drinkName = "water";
 
+	console.log(mode);
+
 	if(mode === global.SCMD_DRINK) {
 		this.emitMessage("You drink the " + drinkName + ".");
 		this.emitRoomMessage(this.name + " drinks " + drinkName + " from " + object.shortDescription + ".");
@@ -773,7 +738,7 @@ characterSchema.methods.drinkFromObject = function(object, mode) {
 		amount = 1;
 	}
 
-	object.quantity = Math.max(0, amount);
+	object.quantity = Math.max(0, (object.quantity - amount));
 	
 	if(!this.isNpc()) {
 		this.thirst = this.thirst + amount;
