@@ -575,6 +575,9 @@ function do_eat(character, command) {
         }
     }
     else {
+        
+        console.log(command.subCommand);
+        
         character.eatItem(command.tokens[0], command.subCommand);
     }
 }
