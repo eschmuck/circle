@@ -730,9 +730,11 @@ characterSchema.methods.drinkFromObject = function(object, mode) {
 		amount = 1;
 	}
 
+	this.emitMessage("It had " + object.quantity + " drinks left.");
+
 	object.quantity = Math.max(0, (object.quantity - amount));
 	
-	console.log(object.quantity);
+	this.emitMessage("It has " + object.quantity + " drinks left.");
 	
 	if(!this.isNpc()) {
 		this.thirst = this.thirst + amount;
