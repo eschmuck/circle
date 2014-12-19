@@ -720,18 +720,14 @@ characterSchema.methods.eatItem = function(keyword, mode) {
 
 characterSchema.methods.drinkFromObject = function(object, mode) {
 	var amount = 0;
-	// TODO: names and effects
-	var drinkName = "water";
-
-	console.log(mode);
 
 	if(mode === global.SCMD_DRINK) {
-		this.emitMessage("You drink the " + drinkName + ".");
-		this.emitRoomMessage(this.name + " drinks " + drinkName + " from " + object.shortDescription + ".");
+		this.emitMessage("You drink the " + global.DRINK_NAMES[object.containsLiquid] + ".");
+		this.emitRoomMessage(this.name + " drinks " + global.DRINK_NAMES[object.containsLiquid] + " from " + object.shortDescription + ".");
 		amount = 8;
 	}
 	else if(mode === global.SCMD_SIP) {
-		this.emitMessage("It tastes like " + drinkName + ".");
+		this.emitMessage("It tastes like " + global.DRINK_NAMES[object.containsLiquid] + ".");
 		this.emitRoomMessage(this.name + " sips from " + object.shortDescription + ".");
 		amount = 1;
 	}
