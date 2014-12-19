@@ -225,6 +225,5 @@ function emitMessage(socket, text, color, mask) {
 }
 
 function hourElapsed() {
-  //world.hourElapsed();
-  console.log(gameWorld.people);
+  gameWorld.hourElapsed();
 }
