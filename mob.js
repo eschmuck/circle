@@ -21,6 +21,10 @@ mobSchema.statics.load = function(id, mob, callback, commands, world, instructio
  	});
 };
 
+mobSchema.methods.hourlyUpdate = function() {
+
+};
+
 mobSchema.methods.isNpc = function() {
 	return true;
 };
