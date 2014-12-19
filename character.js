@@ -79,6 +79,10 @@ characterSchema.methods.listScore = function() {
 	// Implementation overriden by child schemas	
 };
 
+characterSchema.methods.hourlyUpdate = function() {
+	// Implementation overriden by child schemas	
+};
+
 characterSchema.methods.isNpc = function() {
 	// Implementation overriden by child schemas	
 	return false;
@@ -704,7 +708,9 @@ characterSchema.methods.eatObject = function(object, mode) {
 		}
 	}
 	
-	// TODO: Gain condition hunger
+	if(!this.isNpc()) {
+		this.hunger = this.hunger + amount;
+	}
 
 	// TODO: poison
 	

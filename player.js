@@ -95,7 +95,6 @@ playerSchema.methods.getDescription = function() {
 
 
 playerSchema.methods.listScore = function() {
-	
 	this.emitMessage("This ranks you as " + this.name + " " + this.title + " (level " + this.level + ")");
 	
 	if(this.hunger === 0) {
@@ -103,6 +102,32 @@ playerSchema.methods.listScore = function() {
 	}
 };
 
+playerSchema.methods.hourlyUpdate = function() {
+	if(this.hunger > -1) {
+		this.hunger = Math.max((this.hunger - 1), 0);
+	}
+	
+	if(this.hunger === 0) {
+		this.emitMessage("You are hungry.");
+		this.emitRoomMessage(this.name + "'s stomach growls loudly.");
+	}
+	
+	if(this.thirst > -1) {
+		this.thirst = Math.max((this.thirst - 1), 0);
+	}
+	
+	if(this.thirst === 0) {
+		this.emitMessage("You are thirsty.");
+	}
+	
+	if(this.drunk > 0) {
+		this.drunk = Math.max((this.drunk - 1), 0);
+		
+		if(this.drunk === 0) {
+			this.emitMessage("You are now sober.");
+		}
+	}
+};
 
 var playerModel = mongoose.model('player', playerSchema);
 
