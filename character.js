@@ -730,7 +730,6 @@ characterSchema.methods.drinkFromObject = function(object, mode) {
 		this.emitMessage("You drink the " + drinkName + ".");
 		this.emitRoomMessage(this.name + " drinks " + drinkName + " from " + object.shortDescription + ".");
 		amount = 8;
-
 	}
 	else if(mode === global.SCMD_SIP) {
 		this.emitMessage("It tastes like " + drinkName + ".");

@@ -162,7 +162,7 @@ var COMMAND_LIST = [
           
           { command: "dance"    , minimumPosition: Character.POS_STANDING, functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_DANCE },
           { command: "daydream" , minimumPosition: Character.POS_SLEEPING, functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_DAYDREAM },
-          { command: "drink"    , minimumPosition: Character.POS_RESTING , functionPointer: do_drink      , minimumLevel: 0, subCommand: exports.SCMD_SIP },
+          { command: "drink"    , minimumPosition: Character.POS_RESTING , functionPointer: do_drink      , minimumLevel: 0, subCommand: exports.SCMD_DRINK },
           { command: "donate"   , minimumPosition: Character.POS_RESTING , functionPointer: do_donate     , minimumLevel: 0, subCommand: 0 },
           { command: "drop"     , minimumPosition: Character.POS_RESTING , functionPointer: do_drop       , minimumLevel: 0, subCommand: 0 },
           { command: "drool"    , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_DROOL },
@@ -239,7 +239,7 @@ var COMMAND_LIST = [
           { command: "shrug"    , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_SHRUG },
           { command: "shout"    , minimumPosition: Character.POS_RESTING,  functionPointer: do_gen_comm   , minimumLevel: 0, subCommand: global.SCMD_SHOUT },
           { command: "sing"     , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_SING },
-          { command: "sip"    , minimumPosition: Character.POS_RESTING , functionPointer: do_drink        , minimumLevel: 0, subCommand: exports.SCMD_DRINK },
+          { command: "sip"    , minimumPosition: Character.POS_RESTING , functionPointer: do_drink        , minimumLevel: 0, subCommand: exports.SCMD_SIP },
           { command: "sit"      , minimumPosition: Character.POS_RESTING , functionPointer: do_sit        , minimumLevel: 0, subCommand: 0 },
           { command: "slap"     , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_SLAP },
           { command: "sleep"    , minimumPosition: Character.POS_SLEEPING, functionPointer: do_sleep      , minimumLevel: 0, subCommand: 0 },
