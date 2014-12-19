@@ -104,9 +104,9 @@ World.prototype.hourElapsed = function() {
 	
 	console.log(this.people);
 	
-	for(var i = 0; i < this.people.length; i++)	{
-		this.people.hourlyUpdate();
-	}
+	// for(var i = 0; i < this.people.length; i++)	{
+	// 	this.people.hourlyUpdate();
+	// }
 };
 
 
