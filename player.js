@@ -96,7 +96,7 @@ playerSchema.methods.getDescription = function() {
 
 playerSchema.methods.listScore = function() {
 	
-	this.emitMessage("This ranks you as " + this.name + " " + this.title + " (level + " + this.level + ")");
+	this.emitMessage("This ranks you as " + this.name + " " + this.title + " (level " + this.level + ")");
 	
 	if(this.hunger === 0) {
 		this.emitMessage("You are hungry.");

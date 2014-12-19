@@ -45,6 +45,8 @@ room.getRooms(function(roomDocs) {
   });
 });
 
+setInterval(gameWorld.hourElapsed, 10000);
+
 io.sockets.on('connection', function(socket) {
   console.log('A new user connected!');
 

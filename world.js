@@ -99,6 +99,10 @@ World.prototype.getPlayer = function(name) {
 	return null;
 };
 
+World.prototype.hourElapsed = function() {
+	console.log('An hour is up!');
+};
+
 
 // Exports
 module.exports = World;
