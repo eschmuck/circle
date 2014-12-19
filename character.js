@@ -6,8 +6,11 @@ var interpreter = require("./interpreter");
 var util = require('util');
 var extensions = require('./extensions');
 var item = require("./item");
+var utility = require("./utility");
 
 var directions = [ 'north', 'east', 'south', 'west', 'up', 'down' ];
+
+global.NUM_WEARS  = 18;
 
 var characterSchema = new schema({
 	name: String,
@@ -26,7 +29,8 @@ var characterSchema = new schema({
 	
 	position: Number,
 	
-	inventory: []
+	wearing: [],
+	inventory: [],
 });
 
 characterSchema.methods.getPersonalPronoun = function() {
@@ -83,6 +87,10 @@ characterSchema.methods.listGold = function() {
 	// Implementation overriden by child schemas	
 };
 
+characterSchema.methods.listEquipment = function() {
+	// Implementation overriden by child schemas	
+};
+
 characterSchema.methods.hourlyUpdate = function() {
 	// Implementation overriden by child schemas	
 };
@@ -107,7 +115,6 @@ characterSchema.methods.emitMessage = function(message, color) {
 };
 
 characterSchema.methods.emitRoomMessage = function(message, color) {
-	
 	var formattedMessage = message.substring(0, 1).toUpperCase() + message.substring(1);
 
 	for(var i = 0; i < this.room.people.length; i++) {
@@ -120,13 +127,24 @@ characterSchema.methods.emitRoomMessage = function(message, color) {
 };
 
 characterSchema.methods.emitWorldMessage = function(message, color) {
-	
 	var formattedMessage = message.substring(0, 1).toUpperCase() + message.substring(1);
 
 	for(var i = 0; i < this.world.people.length; i++) {
 		if(this.world.people[i] !== this) {
 			if(!this.world.people[i].isNpc()) {
 				this.world.people[i].emitMessage(formattedMessage, color);
+			}
+		}
+	}
+};
+
+characterSchema.methods.emitObservedMessage = function(target, message, color) {
+		var formattedMessage = message.substring(0, 1).toUpperCase() + message.substring(1);
+
+	for(var i = 0; i < this.room.people.length; i++) {
+		if(this.room.people[i] !== this && this.room.people[i] !== target) {
+			if(!this.room.people[i].isNpc()) {
+				this.room.people[i].emitMessage(formattedMessage, color);
 			}
 		}
 	}
@@ -296,6 +314,44 @@ characterSchema.methods.tell = function(targetName, message) {
 characterSchema.methods.social = function(action, parameter) {
 	var thisSocial = new Social(action, parameter, this);
 	thisSocial.emitMessages();
+};
+
+characterSchema.methods.insult = function(parameter) {
+	var target = this.room.getCharacter(parameter);
+	
+	if(target === null) {
+		this.emitMessage("Can't find that person!!!");
+		return;
+	}
+	
+	if(target === this) {
+		this.emitMessage("You feel insulted.");
+		this.emitRoomMessage(this.name + " calls " + this.getPossessivePronoun() + " own mother a donkey.");
+		return;
+	}
+	
+	var randomNumber = utility.randomNumber(1, 3);
+	
+	this.emitMessage("You insult " + target.name + ".");
+	
+	switch(randomNumber) {
+		case 1:
+			if(target.gender !== GENDER_FEMALE) {
+				target.emitMessage(this.name + " accuses you of fighting like a woman.");
+			}
+			else {
+				target.emitMessage(this.name + " says women can't fight.");
+			}
+			break;
+		case 2:
+			target.emitMessage(this.name + " calls your mother a horse-faced troll.");
+			break;
+		case 3:
+			target.emitMessage(this.name + " tells you to get lost!");
+			break;
+	}
+	
+	this.emitObservedMessage(target, this.name + " insults " + target.name + ".");
 };
 
 characterSchema.methods.stand = function() {
@@ -797,6 +853,8 @@ characterSchema.methods.drinkItem = function(keyword, mode) {
 		}
 	}
 };
+
+
 
 var characterModel = mongoose.model('character', characterSchema);
 

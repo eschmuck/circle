@@ -196,6 +196,7 @@ var COMMAND_LIST = [
           { command: "holler"   , minimumPosition: Character.POS_RESTING,  functionPointer: do_gen_comm   , minimumLevel: 0, subCommand: global.SCMD_HOLLER },
           { command: "hug"      , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_HUG },
 
+          { command: "insult"   , minimumPosition: Character.POS_RESTING , functionPointer: do_insult     , minimumLevel: 0, subCommand: 0 },
           { command: "inventory", minimumPosition: Character.POS_DEAD    , functionPointer: do_inventory  , minimumLevel: 0, subCommand: 0 },
 
 
@@ -275,6 +276,7 @@ var COMMAND_LIST = [
           { command: "twiddle"  , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_TWIDDLE },
 
           { command: "wave"     , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_WAVE },
+          { command: "wear"     , minimumPosition: Character.POS_RESTING , functionPointer: do_wear       , minimumLevel: 0, subCommand: 0 },
           { command: "whine"    , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_WHINE },
           { command: "whistle"  , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_WHISTLE },
           { command: "wiggle"   , minimumPosition: Character.POS_STANDING, functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_WIGGLE},
@@ -505,6 +507,13 @@ function do_gen_comm(character, command) {
     character.generalCommunication(command.subCommand, command.subInput.trim());
 }
 
+function do_insult(character, command) {
+    if(command.tokens.length === 0) {
+        character.emitMessage("I'm sure you don't want to insult *everybody*...");
+    }
+    else 
+}
+
 function do_move(character, command) {
     character.move(command.subCommand);
 }
@@ -598,6 +607,20 @@ function do_drink(character, command) {
             character.drinkItem(command.tokens[0], command.subCommand);
         }
     }
+}
+
+function do_wear(character, command) {
+    // if(command.tokens.length === 0) {
+    //     character.emitMessage("Wear what?");
+    // }
+    // if(command.tokens.length === 1) {
+    //     character.wearItem(command.tokens[0]);
+    // }
+    // else {
+    //     character.wearItemAtLocation(command.tokens[0], command.tokens[1]);
+    // }
+    
+    // TODO: Implement this
 }
 
 function do_score(character) {

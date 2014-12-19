@@ -38,6 +38,12 @@ playerSchema.methods.listInventory = function() {
 		}
 	}
 };
+
+playerSchema.methods.listEquipment = function() {
+	//this.emitMessage("You are using: ");
+	
+	
+};
 	
 // TODO: change to 'statics'?
 playerSchema.methods.load = function(name, callback) {
@@ -63,6 +69,8 @@ playerSchema.methods.start = function() {
 	this.hunger = 24;
 	this.thirst = 24;
 	this.drunk = 0;
+	
+	this.gold = 0;
 };
 
 playerSchema.methods.enterGame = function() {
@@ -121,11 +129,7 @@ playerSchema.methods.listScore = function() {
 	else if(this.thirst < 5) {
 		this.emitMessage("You will be thirsty pretty soon!");
 	}
-	
-		
 };
-
-
 
 playerSchema.methods.hourlyUpdate = function() {
 	if(this.hunger > -1) {
