@@ -101,7 +101,7 @@ World.prototype.getPlayer = function(name) {
 
 World.prototype.hourElapsed = function() {
 	for(var i = 0; i < this.people.length; i++)	{
-		this.people.hourlyUpdate();
+		this.people[i].hourlyUpdate();
 	}
 };
 
