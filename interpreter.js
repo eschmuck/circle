@@ -182,6 +182,7 @@ var COMMAND_LIST = [
           { command: "get"      , minimumPosition: Character.POS_RESTING , functionPointer: do_take       , minimumLevel: 0, subCommand: 0 },          
           { command: "giggle"   , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_GIGGLE },
           { command: "glare"    , minimumPosition: Character.POS_RESTING,  functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_GLARE },
+          { command: "gold"     , minimumPosition: Character.POS_SLEEPING, functionPointer: do_gold       , minimumLevel: 0, subCommand: 0 },
           { command: "gossip"   , minimumPosition: Character.POS_SLEEPING, functionPointer: do_gen_comm   , minimumLevel: 0, subCommand: global.SCMD_GOSSIP },
           { command: "gratz"    , minimumPosition: Character.POS_SLEEPING, functionPointer: do_gen_comm   , minimumLevel: 0, subCommand: global.SCMD_GRATZ },
           { command: "greet"    , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_GREET },
@@ -601,6 +602,10 @@ function do_drink(character, command) {
 
 function do_score(character) {
     character.listScore();
+}
+
+function do_gold(character) {
+    character.listGold();
 }
 
 function do_inventory(character) {

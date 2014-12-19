@@ -79,6 +79,10 @@ characterSchema.methods.listScore = function() {
 	// Implementation overriden by child schemas	
 };
 
+characterSchema.methods.listGold = function() {
+	// Implementation overriden by child schemas	
+};
+
 characterSchema.methods.hourlyUpdate = function() {
 	// Implementation overriden by child schemas	
 };
@@ -730,12 +734,8 @@ characterSchema.methods.drinkFromObject = function(object, mode) {
 		amount = 1;
 	}
 
-	this.emitMessage("It had " + object.quantity + " drinks left.");
-
 	object.quantity = Math.max(0, (object.quantity - amount));
-	
-	this.emitMessage("It has " + object.quantity + " drinks left.");
-	
+
 	if(!this.isNpc()) {
 		this.thirst = this.thirst + amount;
 

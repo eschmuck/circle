@@ -93,6 +93,17 @@ playerSchema.methods.getDescription = function() {
 	return description;
 };
 
+playerSchema.methods.listGold = function() {
+	if(this.gold === 0) {
+		this.emitMessage("You're dead broke!");
+	}
+	else if(this.gold === 1) {
+		this.emitMessage("You have one miserable little gold coin.");
+	}
+	else {
+		this.emitMessage("You have " + this.gold + " gold coins.");
+	}
+};
 
 playerSchema.methods.listScore = function() {
 	this.emitMessage("This ranks you as " + this.name + " " + this.title + " (level " + this.level + ")");
@@ -100,7 +111,21 @@ playerSchema.methods.listScore = function() {
 	if(this.hunger === 0) {
 		this.emitMessage("You are hungry.");
 	}
+	else if(this.hunger < 5) {
+		this.emitMessage("You will be hungry pretty soon!");
+	}
+
+	if(this.thirst === 0) {
+		this.emitMessage("You are thirsty.");
+	}	
+	else if(this.thirst < 5) {
+		this.emitMessage("You will be thirsty pretty soon!");
+	}
+	
+		
 };
+
+
 
 playerSchema.methods.hourlyUpdate = function() {
 	if(this.hunger > -1) {
