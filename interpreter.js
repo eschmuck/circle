@@ -508,10 +508,7 @@ function do_gen_comm(character, command) {
 }
 
 function do_insult(character, command) {
-    if(command.tokens.length === 0) {
-        character.emitMessage("I'm sure you don't want to insult *everybody*...");
-    }
-    else 
+    
 }
 
 function do_move(character, command) {
