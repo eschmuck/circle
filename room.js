@@ -80,6 +80,65 @@ roomSchema.methods.contains = function(item) {
 	return false;
 };
 
+roomSchema.methods.findContentsItem = function(index, keyword) {
+	return this.contents.findItem(index, keyword);
+};
+
+roomSchema.methods.findContentsItems = function(keyword) {
+	return this.contents.findItems(keyword);
+};
+
+roomSchema.methods.findRoomContentsFromKeywords = function (keyword) {
+	var result = { };
+	result.items = [];
+
+	var item;
+	
+	if(keyword.indexOf(".") > -1) {
+		var tokens = keyword.split(".");
+		
+		if(tokens[1].length === 0) {
+			return null;
+		}
+		
+		if(tokens[0].toLowerCase() === "all") {
+			result.mode = 'all.item';
+			result.token = tokens[1];
+			result.items = this.findContentsItems(tokens[1]);
+		}
+		else {
+			result.mode = 'n.item';
+			result.token = tokens[1];
+			
+			item = this.findContentsItem(parseInt(tokens[0], 10), tokens[1]);
+
+			if(item !== null) {
+				result.items.push(item);
+			}
+		}
+	}
+	else {
+		if(keyword.toLowerCase().trim() === 'all') {
+			result.mode = 'all';
+			result.token = '';
+			result.items = this.findContentsItems('all');
+		}
+		else {
+			result.mode = '1.item';
+			result.token = keyword;
+			
+			item = this.findContentsItem(1, keyword);
+			
+			if(item !== null) {
+				result.items.push(item);
+			}
+		}
+	}
+	
+	return result;
+};
+
+
 roomSchema.methods.addCharacter = function(character) {
 	this.people.push(character);
 	character.room = this;

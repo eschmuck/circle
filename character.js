@@ -794,7 +794,7 @@ characterSchema.methods.drinkItem = function(keyword, mode) {
 	
 	if(result === null) {
 		inInventory = false;
-		result = this.findRoomContentsFromKeywords(keyword);
+		result = this.room.findRoomContentsFromKeywords(keyword);
 	}
 
 	if(result === null) {
