@@ -817,7 +817,7 @@ characterSchema.methods.drinkItem = function(keyword, mode) {
 			this.emitMessage("You can't drink any more!!!");
 			return;
 		}
-		if(result.items[i].type !== global.ITEM_DRINKCONTAINER && result[i].type !== global.ITEM_FOUNTAIN) {
+		if(result.items[i].type !== global.ITEM_DRINKCONTAINER && result.items[i].type !== global.ITEM_FOUNTAIN) {
 			this.emitMessage(result.items[i].shortDescription + " -- You can't drink from THAT!");
 			break;
 		}
