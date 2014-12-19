@@ -724,7 +724,6 @@ characterSchema.methods.eatObject = function(object, mode) {
 	}
 };
 
-
 characterSchema.methods.eatItem = function(keyword, mode) {
 	var result = this.findInventoryFromKeywords(keyword);
 
@@ -753,6 +752,87 @@ characterSchema.methods.eatItem = function(keyword, mode) {
 		}
 		else {
 			this.eatObject(result.items[i], mode);
+		}
+	}
+};
+
+characterSchema.methods.drinkFromObject = function(object, mode) {
+	var amount = 0;
+	// TODO: names and effects
+	var drinkName = "water";
+
+	if(mode === global.SCMD_DRINK) {
+		this.emitMessage("You drink the " + drinkName + ".");
+		this.emitRoomMessage(this.name + " drinks " + drinkName + " from " + object.shortDescription + ".");
+		amount = 8;
+
+	}
+	else if(mode === global.SCMD_SIP) {
+		this.emitMessage("It tastes like " + drinkName + ".");
+		this.emitRoomMessage(this.name + " sips from " + object.shortDescription + ".");
+		amount = 1;
+	}
+
+	object.quantity = Math.max(0, amount);
+	
+	if(!this.isNpc()) {
+		this.thirst = this.thirst + amount;
+
+		if(this.thirst > 20) {
+			this.emitMessage("You don't feel thirsty anymore.");
+		}
+	}
+
+	// TODO: poison
+	
+	
+};
+
+characterSchema.methods.drinkItem = function(keyword, mode) {
+	var inInventory = true;
+	var result = this.findInventoryFromKeywords(keyword);
+	
+	if(result === null) {
+		inInventory = false;
+		result = this.findRoomContentsFromKeywords(keyword);
+	}
+
+	if(result === null) {
+		this.emitMessage("Drink what?!?");
+		return;
+	}
+	
+	if(result.mode === 'all' && result.items.length === 0) {
+		this.emitMessage("You can't drink everything!!!  Are you a fish?");
+		return;
+	}
+	
+	if(result.items.length === 0) {
+		this.emitMessage("You can't seem to find " + result.token.indefiniteArticle() + " " + result.token + ".");
+		return;
+	}
+
+	for(var i = 0; i < result.items.length; i++) {
+		if(this.thirst > 20) {
+			this.emitMessage("You can't drink any more!!!");
+			return;
+		}
+		if(result.items[i].type !== global.ITEM_DRINKCONTAINER && result[i].type !== global.ITEM_FOUNTAIN) {
+			this.emitMessage(result.items[i].shortDescription + " -- You can't drink from THAT!");
+			break;
+		}
+		else {
+			if(result.items[i].type === global.ITEM_DRINKCONTAINER && !inInventory) {
+				this.emitMessage("You have to be holding that to drink from it.");
+				break;
+			}
+			
+			if(result.items[i].quantity < 1) {
+				this.emitMessage("It's empty!");
+				break;
+			}
+			
+			this.drinkFromObject(result.items[i], mode);
 		}
 	}
 };
