@@ -23,6 +23,9 @@ World.prototype.getRoom = function(id) {
 };
 
 World.prototype.addCharacter = function(character) {
+	
+	console.log(this.people.length);
+	
 	this.people.push(character);
 	character.world = this;
 };
