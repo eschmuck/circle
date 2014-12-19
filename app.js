@@ -45,7 +45,7 @@ room.getRooms(function(roomDocs) {
   });
 });
 
-setInterval(hourElapsed(gameWorld), 10000);
+setInterval(hourElapsed, 10000);
 
 io.sockets.on('connection', function(socket) {
   console.log('A new user connected!');
@@ -224,6 +224,7 @@ function emitMessage(socket, text, color, mask) {
   });
 }
 
-function hourElapsed(world) {
-  world.hourElapsed();
+function hourElapsed() {
+  //world.hourElapsed();
+  console.log(gameWorld.people);
 }
