@@ -653,13 +653,14 @@ characterSchema.methods.eatObject = function(object, mode) {
 	var amount = 0;
 	
 	console.log(mode);
+	console.log(global.SCMD_EAT);
+	console.log(global.SCMD_TASTE);
 	
 	if(mode === global.SCMD_EAT) {
 		this.emitMessage("You eat " + object.shortDescription + ".");
 		this.emitRoomMessage(this.name + " eats " + object.shortDescription + ".");
 		amount = object.hoursOfHunger;
 		extractObject = true;
-		
 	}
 	else if(mode === global.SCMD_TASTE) {
 		this.emitMessage("You nibble a little bit of " + object.shortDescription + ".");
