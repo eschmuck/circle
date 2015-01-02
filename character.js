@@ -551,7 +551,12 @@ characterSchema.methods.takeItem = function(keyword) {
 	}
 
 	for(var i = 0; i < result.items.length; i++) {
-		this.takeObject(result.items[i]);
+		if(result.items[i].canBeTaken === true) {
+			this.takeObject(result.items[i]);
+		}
+		else {
+			this.emitMessage(result.items[i].shortDescription + ": You can't take THAT!");
+		}
 	}
 };
 
@@ -571,16 +576,6 @@ characterSchema.methods.junkObject = function(object) {
 	// TODO: This line of code
 	//this.gold = this.gold + (object.value * 0.02);
 };
-
-
-
-// characterSchema.methods.findInventoryItem = function(index, keyword) {
-// 	return this.inventory.findItem(index, keyword);
-// };
-
-// characterSchema.methods.findInventoryItems = function(keyword) {
-// 	return this.inventory.findItems(keyword);
-// };
 
 characterSchema.methods.findFromKeywords = function(keyword, list) {
 	var result = { };
@@ -637,9 +632,6 @@ characterSchema.methods.findInventoryFromKeywords = function (keyword) {
 };
 
 characterSchema.methods.findWearingFromKeywords = function (keyword) {
-	
-	console.log(this.wearing);
-	
 	return this.findFromKeywords(keyword, this.wearing);
 };
 
@@ -719,9 +711,14 @@ characterSchema.methods.donateItem = function(keyword) {
 		this.emitMessage("You don't seem to have " + result.token.indefiniteArticle() + " " + result.token + ".");
 		return;
 	}
-
+	
 	for(var i = 0; i < result.items.length; i++) {
-		this.donateObject(result.items[i]);
+		if(result.items[i].canBeDonated === true) {
+			this.donateObject(result.items[i]);
+		}
+		else {
+			this.emitMessage(result.items[i].shortDescription + " can't be donated!");
+		}
 	}
 };
 
