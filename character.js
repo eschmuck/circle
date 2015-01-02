@@ -822,10 +822,8 @@ characterSchema.methods.drinkFromObject = function(object, mode) {
 characterSchema.methods.drinkItem = function(keyword, mode) {
 	var inInventory = true;
 	var result = this.findInventoryFromKeywords(keyword);
-	
-	console.log(result);
-	
-	if(result === null) {
+
+	if(result.items.length === 0) {
 		inInventory = false;
 		result = this.room.findRoomContentsFromKeywords(keyword);
 	}
