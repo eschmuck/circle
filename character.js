@@ -1105,7 +1105,7 @@ characterSchema.methods.giveObject = function(object, target) {
 	
 	this.emitMessage("You give " + object.shortDescription + " to " + target.name + ".");
 	target.emitMessage(this.name + " gives you " + object.shortDescription + ".");
-	this.emitObservedMessage(target, this.name + " gives " + object.shortDescription + " to " + target.name);
+	this.emitObservedMessage(target, this.name + " gives " + object.shortDescription + " to " + target.name + ".");
 	
 	this.inventory.splice(this.inventory.indexOf(object), 1);
 	target.inventory.push(object);
@@ -1133,6 +1133,11 @@ characterSchema.methods.giveItem = function(keyword, targetName) {
 	
 	if(target === null) {
 		this.emitMessage("No-one by that name here.");
+		return;
+	}
+	
+	if(target === this) {
+		this.emitMessage("Give something to yourself?!?");
 		return;
 	}
 

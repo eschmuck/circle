@@ -207,6 +207,7 @@ var COMMAND_LIST = [
 
           { command: "kiss"     , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_KISS },
 
+          { command: "look"     , minimumPosition: Character.POS_RESTING , functionPointer: do_look       . minimumLevel: 0, subCommand: 0},
           { command: "laugh"    , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_LAUGH },
           { command: "lick"     , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_LICK },
           { command: "love"     , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_LOVE },
@@ -411,8 +412,22 @@ Interpreter.prototype.cleanInput = function(input) {
     return cleanInput;
 };
 
+Interpreter.prototype.dropFill = function(input) {
+    var fill = ["in", "from", "with", "the", "on", "at", "to" ];
+    
+    for(var i = 0; i < fill.length; i++) {
+        while (input.indexOf(fill[i] > -1)) {
+            input = input.splice(input.indexOf(fill[i]), 1);
+        }
+    }
+    
+    return input;
+};
+
 Interpreter.prototype.tokenize = function(input) {
     var tokens = input.split(' ');
+    
+    tokens = this.dropFill(tokens);
     return tokens;
 };
 
@@ -650,7 +665,21 @@ function do_give(character, command) {
         character.emitMessage("Give what to who?");
     }
     else {
-        character.giveItem(command.tokens[0], command.tokens[1]);
+        if(command.tokens[1].toLowerCase() !== "to") {
+            character.giveItem(command.tokens[0], command.tokens[1]);
+        }
+        else {
+            character.giveItem(command.tokens[0], command.tokens[2]);
+        }
+    }
+}
+
+function do_look(character, command) {
+    if(command.tokens.length === 0) {
+        character.room.showRoomToCharacter(character);
+    }
+    else {
+        //character.lookAtTarget(command.tokens[0]);
     }
 }
 
