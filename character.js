@@ -753,6 +753,8 @@ characterSchema.methods.lookAtTarget = function(keyword) {
 		this.lookAtCharacter(target);
 		return;
 	}
+
+	// TODO: Look in direction
 	
 	target = this.findInventoryFromKeywords(keyword);
 
@@ -774,8 +776,10 @@ characterSchema.methods.lookAtTarget = function(keyword) {
 		target.items[0].showItemToCharacter(this);
 		return;
 	}
-	
+
 	// TODO: Extras (room and objects)
+
+	this.emitMessage("You do not see that here.");
 };
 
 characterSchema.methods.eatObject = function(object, mode) {

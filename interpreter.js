@@ -231,6 +231,8 @@ var COMMAND_LIST = [
           { command: "punch"    , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_PUNCH },
           { command: "purr"     , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_PURR },
 
+          { command: "quit"     , minimumPosition: Character.POS_STANDING, functionPointer: do_quit       , minimumLevel: 0, subCommand: 0 },
+
           { command: "remove"   , minimumPosition: Character.POS_RESTING , functionPointer: do_remove     , minimumLevel: 0, subCommand: 0 },
           { command: "rest"     , minimumPosition: Character.POS_RESTING , functionPointer: do_rest       , minimumLevel: 0, subCommand: 0 },
           { command: "roll"     , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_ROLL },
@@ -415,15 +417,11 @@ Interpreter.prototype.cleanInput = function(input) {
 Interpreter.prototype.dropFill = function(tokens) {
     var fill = ["in", "from", "with", "the", "on", "at", "to" ];
 
-    console.log(tokens);
-    
     for(var i = 0; i < fill.length; i++) {
         while(tokens.indexOf(fill[i]) > -1) {
             tokens.splice(tokens.indexOf(fill[i]), 1);
         }
     }
-    
-    console.log(tokens);
     
     return tokens;
 };
@@ -521,6 +519,18 @@ Interpreter.prototype.handleInput = function(character, input) {
         });
     }
 };
+
+function do_quit(character, command) {
+    character.emitMessage("Goodbye friend.... Come back soon!");
+    character.emitRoomMessage(character.name + " has quit the game.");
+    
+    if(character.socket !== undefined) {
+        character.socket.disconnect();
+    }
+    
+    character.room.removeCharacter(character);
+    character.world.removeCharacter(character);
+}
 
 function do_say(character, command) {
     character.say(command.subInput.trim());
