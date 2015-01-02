@@ -229,6 +229,7 @@ var COMMAND_LIST = [
           { command: "punch"    , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_PUNCH },
           { command: "purr"     , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_PURR },
 
+          { command: "remove"   , minimumPosition: Character.POS_RESTING , functionPointer: do_remove     , minimumLevel: 0, subCommand: 0 },
           { command: "rest"     , minimumPosition: Character.POS_RESTING , functionPointer: do_rest       , minimumLevel: 0, subCommand: 0 },
           { command: "roll"     , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_ROLL },
           { command: "ruffle"   , minimumPosition: Character.POS_STANDING, functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_RUFFLE },
@@ -613,11 +614,20 @@ function do_drink(character, command) {
     }
 }
 
+function do_remove(character, command) {
+    if(command.tokens.length === 0) {
+        character.emitMessage("Remove what?");
+    }
+    else {
+        character.removeItem(command.tokens[0]);
+    }
+}
+
 function do_wear(character, command) {
     if(command.tokens.length === 0) {
         character.emitMessage("Wear what?");
     }
-    if(command.tokens.length === 1) {
+    else if(command.tokens.length === 1) {
         character.wearItem(command.tokens[0]);
     }
     else {
