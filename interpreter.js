@@ -198,9 +198,8 @@ var COMMAND_LIST = [
           { command: "holler"   , minimumPosition: Character.POS_RESTING,  functionPointer: do_gen_comm   , minimumLevel: 0, subCommand: global.SCMD_HOLLER },
           { command: "hug"      , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_HUG },
 
-          { command: "insult"   , minimumPosition: Character.POS_RESTING , functionPointer: do_insult     , minimumLevel: 0, subCommand: 0 },
           { command: "inventory", minimumPosition: Character.POS_DEAD    , functionPointer: do_inventory  , minimumLevel: 0, subCommand: 0 },
-
+          { command: "insult"   , minimumPosition: Character.POS_RESTING , functionPointer: do_insult     , minimumLevel: 0, subCommand: 0 },
 
           { command: "junk"     , minimumPosition: Character.POS_RESTING , functionPointer: do_junk       , minimumLevel: 0, subCommand: 0 },
 
@@ -621,7 +620,6 @@ function do_wear(character, command) {
         character.wearItem(command.tokens[0]);
     }
     else {
-        var location = -1;
         var locationToken = command.tokens[1].toLowerCase();
         
         for(var i = 0; i < WEAR_LIST.length; i++) {

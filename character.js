@@ -867,6 +867,8 @@ characterSchema.methods.wearObject = function(object, location) {
 		location++;
 	}
 	
+	console.log(this.wearing[location]);
+	
 	if(this.wearing[location] === null) {
 		this.wearing[location] = object;
 		this.inventory.splice(this.inventory.indexOf(object), 1);
