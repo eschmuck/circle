@@ -944,6 +944,7 @@ characterSchema.methods.removeObject = function(object) {
 	for(var i = 0; i < this.wearing.length; i++) {
 		if(this.wearing[i] === object) {
 			this.wearing[i] = null;
+			break;
 		}
 	}
 	
@@ -964,9 +965,7 @@ characterSchema.methods.removeItem = function(keyword) {
 	}
 	
 	for(var i = 0; i < result.items.length; i++) {
-		if(result.items[i].wearSlots.indexOf(location) > -1) {
-			this.removeObject(result.items[i]);
-		}
+		this.removeObject(result.items[i]);
 	}
 };
 
