@@ -42,7 +42,8 @@
         });
 
         socket.on('disconnect', function() {
-          alert('disconnect');
+          $('body').terminal(this).clear();
+          $('body').terminal(this).destroy();
         });
 
         jQuery(document).ready(function ($) {
