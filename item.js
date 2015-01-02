@@ -11,7 +11,7 @@ var itemSchema = new schema({
     canBeTaken: Boolean,
     type: String,
     wearSlots: [ Number ]
-});
+}, { discrimatorKey: 'type'});
 
 
 global.ITEM_LIGHT = "Light";
