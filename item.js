@@ -31,6 +31,8 @@ global.ITEM_PEN = "Pen";
 global.ITEM_BOAT = "Boat";
 global.ITEM_FOUNTAIN = "Fountain";
 
+global.MAX_WEARS = 17;
+
 global.WEAR_LIGHT    =  0;
 global.WEAR_FINGER_R =  1;
 global.WEAR_FINGER_L =  2;
@@ -50,7 +52,28 @@ global.WEAR_WRIST_L  = 15;
 global.WEAR_WIELD    = 16;
 global.WEAR_HOLD     = 17;
 
-global.DRINK_NAMES =[
+global.WEAR_WHERE = [
+    "<used as light>      ",
+    "<worn on finger>     ",
+    "<worn on finger>     ",
+    "<worn around neck>   ",
+    "<worn around neck>   ",
+    "<worn on body>       ",
+    "<worn on head>       ",
+    "<worn on legs>       ",
+    "<worn on feet>       ",
+    "<worn on hands>      ",
+    "<worn on arms>       ",
+    "<worn as shield>     ",
+    "<worn about body>    ",
+    "<worn about waist>   ",
+    "<worn around wrist>  ",
+    "<worn around wrist>  ",
+    "<wielded>            ",
+    "<held>               "
+  ];
+
+global.DRINK_NAMES = [
   "water",
   "beer",
   "wine",

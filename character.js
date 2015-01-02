@@ -79,6 +79,10 @@ characterSchema.methods.listInventory = function() {
 	// Implementation overriden by child schemas	
 };
 
+characterSchema.methods.listEquipment = function() {
+	// Implementation overriden by child schemas
+}
+
 characterSchema.methods.listScore = function() {
 	// Implementation overriden by child schemas	
 };
@@ -866,9 +870,7 @@ characterSchema.methods.wearObject = function(object, location) {
 	if(location === global.WEAR_WRIST_R && this.wearing[global.WEAR_WRIST_R] !== null) {
 		location++;
 	}
-	
-	console.log(this.wearing[location]);
-	
+
 	if(this.wearing[location] === null || this.wearing[location] === undefined) {
 		this.wearing[location] = object;
 		this.inventory.splice(this.inventory.indexOf(object), 1);
