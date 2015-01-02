@@ -40,9 +40,9 @@
             $('body').terminal(this).echo(data['message']);
           }
         });
-        
+
         socket.on('disconnect', function() {
-          alert('disconnected!');
+          alert('disconnect');
         });
 
         jQuery(document).ready(function ($) {
