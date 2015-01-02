@@ -572,23 +572,17 @@ characterSchema.methods.junkObject = function(object) {
 	//this.gold = this.gold + (object.value * 0.02);
 };
 
-characterSchema.methods.findWornItem = function(index, keyword) {
-	return this.wearing.findItem(index, keyword);
-};
 
-characterSchema.methods.findWornItems = function(keyword) {
-	return this.wearing.findItems(keyword);
-};
 
-characterSchema.methods.findInventoryItem = function(index, keyword) {
-	return this.inventory.findItem(index, keyword);
-};
+// characterSchema.methods.findInventoryItem = function(index, keyword) {
+// 	return this.inventory.findItem(index, keyword);
+// };
 
-characterSchema.methods.findInventoryItems = function(keyword) {
-	return this.inventory.findItems(keyword);
-};
+// characterSchema.methods.findInventoryItems = function(keyword) {
+// 	return this.inventory.findItems(keyword);
+// };
 
-characterSchema.methods.findFromKeywords = function(keyword, pluralFunction, singleFunction) {
+characterSchema.methods.findFromKeywords = function(keyword, list) {
 	var result = { };
 	result.items = [];
 
@@ -604,13 +598,13 @@ characterSchema.methods.findFromKeywords = function(keyword, pluralFunction, sin
 		if(tokens[0].toLowerCase() === "all") {
 			result.mode = 'all.item';
 			result.token = tokens[1];
-			result.items = pluralFunction(tokens[1]);
+			result.items = list.findItems(tokens[1]);
 		}
 		else {
 			result.mode = 'n.item';
 			result.token = tokens[1];
 			
-			item = singleFunction(parseInt(tokens[0], 10), tokens[1]);
+			item = list.findItem(parseInt(tokens[0], 10), tokens[1]);
 
 			if(item !== null) {
 				result.items.push(item);
@@ -621,13 +615,13 @@ characterSchema.methods.findFromKeywords = function(keyword, pluralFunction, sin
 		if(keyword.toLowerCase().trim() === 'all') {
 			result.mode = 'all';
 			result.token = '';
-			result.items = pluralFunction('all');
+			result.items = list.findItems('all');
 		}
 		else {
 			result.mode = '1.item';
 			result.token = keyword;
 			
-			item = singleFunction(1, keyword);
+			item = list.findItem(1, keyword);
 			
 			if(item !== null) {
 				result.items.push(item);
@@ -635,61 +629,16 @@ characterSchema.methods.findFromKeywords = function(keyword, pluralFunction, sin
 		}
 	}
 	
-	return result;	
+	return result;
 };
 
 characterSchema.methods.findInventoryFromKeywords = function (keyword) {
-	// var result = { };
-	// result.items = [];
-
-	// var item;
-	
-	// if(keyword.indexOf(".") > -1) {
-	// 	var tokens = keyword.split(".");
-		
-	// 	if(tokens[1].length === 0) {
-	// 		return null;
-	// 	}
-		
-	// 	if(tokens[0].toLowerCase() === "all") {
-	// 		result.mode = 'all.item';
-	// 		result.token = tokens[1];
-	// 		result.items = this.findInventoryItems(tokens[1]);
-	// 	}
-	// 	else {
-	// 		result.mode = 'n.item';
-	// 		result.token = tokens[1];
-			
-	// 		item = this.findInventoryItem(parseInt(tokens[0], 10), tokens[1]);
-
-	// 		if(item !== null) {
-	// 			result.items.push(item);
-	// 		}
-	// 	}
-	// }
-	// else {
-	// 	if(keyword.toLowerCase().trim() === 'all') {
-	// 		result.mode = 'all';
-	// 		result.token = '';
-	// 		result.items = this.findInventoryItems('all');
-	// 	}
-	// 	else {
-	// 		result.mode = '1.item';
-	// 		result.token = keyword;
-			
-	// 		item = this.findInventoryItem(1, keyword);
-			
-	// 		if(item !== null) {
-	// 			result.items.push(item);
-	// 		}
-	// 	}
-	// }
-	
-	// return result;
-	
-	this.findFromKeywords(keyword, this.findInventoryItems, this.findInventoryItem);
+	return this.findFromKeywords(keyword, this.inventory);
 };
 
+characterSchema.methods.findWearingFromKeywords = function (keyword) {
+	return this.findFromKeywords(keyword, this.wearing);
+};
 
 characterSchema.methods.dropItem = function(keyword) {
 	var result = this.findInventoryFromKeywords(keyword);
