@@ -31,6 +31,25 @@ global.ITEM_PEN = "Pen";
 global.ITEM_BOAT = "Boat";
 global.ITEM_FOUNTAIN = "Fountain";
 
+global.WEAR_LIGHT    =  0;
+global.WEAR_FINGER_R =  1;
+global.WEAR_FINGER_L =  2;
+global.WEAR_NECK_1   =  3;
+global.WEAR_NECK_2   =  4;
+global.WEAR_BODY     =  5;
+global.WEAR_HEAD     =  6;
+global.WEAR_LEGS     =  7;
+global.WEAR_FEET     =  8;
+global.WEAR_HANDS    =  9;
+global.WEAR_ARMS     = 10;
+global.WEAR_SHIELD   = 11;
+global.WEAR_ABOUT    = 12;
+global.WEAR_WAIST    = 13;
+global.WEAR_WRIST_R  = 14;
+global.WEAR_WRIST_L  = 15;
+global.WEAR_WIELD    = 16;
+global.WEAR_HOLD     = 17;
+
 global.DRINK_NAMES =[
   "water",
   "beer",

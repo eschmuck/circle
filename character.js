@@ -854,6 +854,29 @@ characterSchema.methods.drinkItem = function(keyword, mode) {
 	}
 };
 
+characterSchema.methods.wearObject = function(object, location) {
+	if(location === global.WEAR_FINGER_R && this.wearing[global.WEAR_FINGER_R] !== null) {
+		location++;
+	}
+	
+	if(location === global.WEAR_NECK_1 && this.wearing[global.WEAR_NECK_1] !== null) {
+		location++;
+	}
+	
+	if(location === global.WEAR_WRIST_R && this.wearing[global.WEAR_WRIST_R] !== null) {
+		location++;
+	}
+	
+	if(this.wearing[location] === null) {
+		this.wearing[location] = object;
+		this.inventory.splice(this.inventory.indexOf(object), 1);
+		this.wearMessage(object, location);
+	}
+	else {
+		this.alreadyWearing(location);
+    }
+};
+
 characterSchema.methods.wearItem = function(keyword) {
 	var result = this.findInventoryFromKeywords(keyword);
 
@@ -869,20 +892,149 @@ characterSchema.methods.wearItem = function(keyword) {
 
 	for(var i = 0; i < result.items.length; i++) {
 		if(result.items[i].wearSlots.length === 0) {
-			this.emitMessage("You can't wear " + result.items[i].shortDescription);
+			this.emitMessage("You can't wear " + result.items[i].shortDescription + ".");
 		}
 		else {
-			console.log(result.items[i].wearSlots[0]);
+			this.wearObject(result.items[i], result.items[i].wearSlots[0]);
 		}
 	}
-
 };
 
 characterSchema.methods.wearItemAtLocation = function(keyword, location) {
-	
 };
 
+characterSchema.methods.alreadyWearing = function(location) {
+    switch(location) {
+        case 0:
+        	this.emitMessage("You're already using a light.");
+            break;
+        case 1:
+        	this.emitMessage("YOU SHOULD NEVER SEE THIS MESSAGE.  PLEASE REPORT.");
+            break;
+        case 2:
+        	this.emitMessage("You're already wearing something on both of your ring fingers.");
+            break;
+        case 3:
+        	this.emitMessage("YOU SHOULD NEVER SEE THIS MESSAGE.  PLEASE REPORT.");
+            break;
+        case 4:
+        	this.emitMessage("You can't wear anything else around your neck.");
+            break;
+        case 5:
+        	this.emitMessage("You're already wearing something on your body.");
+            break;
+        case 6:
+        	this.emitMessage("You're already wearing something on your head.");
+            break;
+        case 7:
+        	this.emitMessage("You're already wearing something on your legs.");
+            break;
+        case 8:
+        	this.emitMessage("You're already wearing something on your feet.");
+            break;
+        case 9:
+        	this.emitMessage("You're already wearing something on your hands.");
+            break;
+        case 10:
+        	this.emitMessage("You're already wearing something on your arms.");
+            break;
+        case 11:
+        	this.emitMessage("You're already using a shield.");
+            break;
+        case 12:
+        	this.emitMessage("You're already wearing something about your body.");
+            break;
+        case 13:
+        	this.emitMessage("You're already wearing something around your waist.");
+            break;
+        case 14:
+        	this.emitMessage("YOU SHOULD NEVER SEE THIS MESSAGE.  PLEASE REPORT.");
+            break;
+        case 15:
+        	this.emitMessage("You're already wearing something around both of your wrists.");
+            break;
+        case 16:
+        	this.emitMessage("You're already wielding a weapon.");
+            break;
+        case 17:
+        	this.emitMessage("You're already holding something.");
+            break;
+    }
+};
 
+characterSchema.methods.wearMessage = function(object, location) {
+	switch(location) {
+		case 0:
+			this.emitMessage("You light " + object.shortDescription + " and hold it.");
+			this.emitRoomMessage(this.name + " lights " + object.shortDescription + " and holds it.");
+			break;
+		case 1:
+			this.emitMessage("You slide " + object.shortDescription + " onto your right ring finger.");
+			this.emitRoomMessage(this.name + " slides " + object.shortDescription + " onto " + this.getPossessivePronoun() + " right ring finger.");
+			break;
+		case 2:
+			this.emitMessage("You slide " + object.shortDescription + " onto your left ring finger.");
+			this.emitRoomMessage(this.name + " slides " + object.shortDescription + " onto " + this.getPossessivePronoun() + " left ring finger.");
+			break;
+		case 3:
+		case 4:
+			this.emitMessage("You wear " + object.shortDescription + " around your neck.");
+			this.emitRoomMessage(this.name + " wears " + object.shortDescription + " around " + this.getPossessivePronoun() + " neck.");
+			break;
+		case 5:
+			this.emitMessage("You wear " + object.shortDescription + " on your body.");
+			this.emitRoomMessage(this.name + " wears " + object.shortDescription + " on " + this.getPossessivePronoun() + " body.");
+			break;
+		case 6:
+			this.emitMessage("You wear " + object.shortDescription + " on your head.");
+			this.emitRoomMessage(this.name + " wear " + object.shortDescription + " on " + this.getPossessivePronoun() + " head.");
+			break;
+		case 7:
+			this.emitMessage("You wear " + object.shortDescription + " on your legs.");
+			this.emitRoomMessage(this.name + " wears " + object.shortDescription + " on " + this.getPossessivePronoun() + " legs.");
+			break;
+		case 8:
+			this.emitMessage("You wear " + object.shortDescription + " on your feet.");
+			this.emitRoomMessage(this.name + " wears " + object.shortDescription + " on " + this.getPossessivePronoun() + " feet.");
+			break;
+		case 9:
+			this.emitMessage("You wear " + object.shortDescription + " on your hands.");
+			this.emitRoomMessage(this.name + " wears " + object.shortDescription + " on " + this.getPossessivePronoun() + " hands.");
+			break;
+		case 10:
+			this.emitMessage("You wear " + object.shortDescription + " on your arms.");
+			this.emitRoomMessage(this.name + " wears " + object.shortDescription + " on " + this.getPossessivePronoun() + " arms.");
+			break;
+		case 11:
+			this.emitMessage("You start to use " + object.shortDescription + " as a shield.");
+			this.emitRoomMessage(this.name + " straps " + object.shortDescription + " around " + this.getPossessivePronoun() + " arm as a shield.");
+			break;
+		case 12:
+			this.emitMessage("You wear " + object.shortDescription + " around your body.");
+			this.emitRoomMessage(this.name + " wears " + object.shortDescription + " about " + this.getPossessivePronoun() + " body.");
+			break;
+		case 13:
+			this.emitMessage("You wear " + object.shortDescription + " around your waist.");
+			this.emitRoomMessage(this.name + " wears " + object.shortDescription + " around " + this.getPossessivePronoun() + " waist.");
+			break;
+		case 14:
+			this.emitMessage("You wear " + object.shortDescription + " around your right wrist.");
+			this.emitRoomMessage(this.name + " wears " + object.shortDescription + " around " + this.getPossessivePronoun() + " right wrist.");
+			break;
+		case 15:
+			this.emitMessage("You wear " + object.shortDescription + " around your left wrist.");
+			this.emitRoomMessage(this.name + " wears " + object.shortDescription + " around " + this.getPossessivePronoun() + " left wrist.");
+			break;
+		case 16:
+			this.emitMessage("You wield " + object.shortDescription + ".");
+			this.emitRoomMessage(this.name + " wields " + object.shortDescription + ".");
+			break;
+		case 17:
+			this.emitMessage("You grab " + object.shortDescription + ".");
+			this.emitRoomMessage(this.name + " grabs " + object.shortDescription + ".");
+			break;
+	}
+};
 
 var characterModel = mongoose.model('character', characterSchema);
 

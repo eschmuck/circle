@@ -127,6 +127,8 @@ var SCMD_SIP   = 1;
 global.SCMD_DRINK = SCMD_DRINK;
 global.SCMD_SIP   = SCMD_SIP;
 
+var WEAR_LIST = [ "light", "finger", "NOTUSED", "neck", "NOTUSED", "body", "head", "feet", "hands", "arms", "shield", "about", "waist", "wrist", "NOTUSED", "wield", "hold" ];
+
 var COMMAND_LIST = [
     
           { command: "north"    , minimumPosition: Character.POS_STANDING, functionPointer: do_move       , minimumLevel: 0, subCommand: exports.SCMD_NORTH },
@@ -613,13 +615,23 @@ function do_drink(character, command) {
 
 function do_wear(character, command) {
     if(command.tokens.length === 0) {
-         character.emitMessage("Wear what?");
+        character.emitMessage("Wear what?");
     }
     if(command.tokens.length === 1) {
-         character.wearItem(command.tokens[0]);
+        character.wearItem(command.tokens[0]);
     }
     else {
-         character.wearItemAtLocation(command.tokens[0], command.tokens[1]);
+        var location = -1;
+        var locationToken = command.tokens[1].toLowerCase();
+        
+        for(var i = 0; i < WEAR_LIST.length; i++) {
+            if(WEAR_LIST[i].substr(0, locationToken.length) === locationToken) {
+                character.wearItemAtLocation(command.tokens[0], i);
+                return;
+            }
+        }
+        
+        character.emitMessage("Wear what where?");
     }
 }
 
