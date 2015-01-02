@@ -16,7 +16,7 @@ var itemSchema = new schema({
     containsLiquid: Number,
     isPoisoned: Boolean
     
-}, { discrimatorKey: 'type'});
+});
 
 
 global.ITEM_LIGHT = "Light";
