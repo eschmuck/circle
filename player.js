@@ -43,10 +43,17 @@ playerSchema.methods.listInventory = function() {
 playerSchema.methods.listEquipment = function() {
 	this.emitMessage("You are using: ");
 	
+	var found = false;
+	
 	for(var i = 0; i < global.MAX_WEARS; i++) {
 		if(this.wearing[i] !== null && this.wearing[i] !== undefined) {
 			this.emitMessage(global.WEAR_WHERE[i] + this.wearing[i].shortDescription);
+			found = true;
 		}
+	}
+	
+	if(found === false) {
+		this.emitMessage("  Absolutely nothing!!!");
 	}
 };
 	

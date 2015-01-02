@@ -896,7 +896,7 @@ characterSchema.methods.wearItem = function(keyword) {
 
 	for(var i = 0; i < result.items.length; i++) {
 		
-		console.log(result.items[i]);
+		console.log(result.items[i].wearSlots);
 		
 		if(result.items[i].wearSlots.length === 0) {
 			this.emitMessage("You can't wear " + result.items[i].shortDescription + ".");
