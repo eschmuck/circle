@@ -427,7 +427,7 @@ Interpreter.prototype.dropFill = function(input) {
 Interpreter.prototype.tokenize = function(input) {
     var tokens = input.split(' ');
     
-    tokens = this.dropFill(tokens);
+    //tokens = this.dropFill(tokens);
     return tokens;
 };
 
