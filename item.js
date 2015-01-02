@@ -7,7 +7,8 @@ var itemSchema = new schema({
     shortDescription: String,
     longDescription: String,
     isGlowing: Boolean,
-    type: String
+    type: String,
+    wearSlots: [ Number ]
 });
 
 
