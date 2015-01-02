@@ -414,12 +414,16 @@ Interpreter.prototype.cleanInput = function(input) {
 
 Interpreter.prototype.dropFill = function(tokens) {
     var fill = ["in", "from", "with", "the", "on", "at", "to" ];
+
+    console.log(tokens);
     
     for(var i = 0; i < fill.length; i++) {
         while(tokens.indexOf(fill[i]) > -1) {
             tokens.splice(tokens.indexOf(fill[i], 1));
         }
     }
+    
+    console.log(tokens);
     
     return tokens;
 };
@@ -675,9 +679,6 @@ function do_give(character, command) {
 }
 
 function do_look(character, command) {
-    
-    console.log(command.tokens);
-    
     if(command.tokens.length === 0) {
         character.room.showRoomToCharacter(character);
     }
