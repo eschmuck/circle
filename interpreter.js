@@ -184,6 +184,7 @@ var COMMAND_LIST = [
           { command: "gasp"     , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_GASP },
           { command: "get"      , minimumPosition: Character.POS_RESTING , functionPointer: do_take       , minimumLevel: 0, subCommand: 0 },          
           { command: "giggle"   , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_GIGGLE },
+          { command: "give"     , minimumPosition: Character.POS_RESTING , functionPointer: do_give       , minimumLevel: 0, subCommand: 0 },
           { command: "glare"    , minimumPosition: Character.POS_RESTING,  functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_GLARE },
           { command: "gold"     , minimumPosition: Character.POS_SLEEPING, functionPointer: do_gold       , minimumLevel: 0, subCommand: 0 },
           { command: "gossip"   , minimumPosition: Character.POS_SLEEPING, functionPointer: do_gen_comm   , minimumLevel: 0, subCommand: global.SCMD_GOSSIP },
@@ -641,6 +642,15 @@ function do_wear(character, command) {
         }
         
         character.emitMessage("Wear what where?");
+    }
+}
+
+function do_give(character, command) {
+    if(command.tokens.length < 2) {
+        character.emitMessage("Give what to who?");
+    }
+    else {
+        character.giveItem(command.tokens[0], command.tokens[1]);
     }
 }
 

@@ -159,6 +159,7 @@ playerSchema.methods.hourlyUpdate = function() {
 	
 	if(this.thirst === 0) {
 		this.emitMessage("You are thirsty.");
+		this.emitRoomMessage(this.name " looks parched!");
 	}
 	
 	if(this.drunk > 0) {

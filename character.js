@@ -792,8 +792,6 @@ characterSchema.methods.eatItem = function(keyword, mode) {
 
 characterSchema.methods.drinkFromObject = function(object, mode) {
 	var amount = 0;
-	
-	console.log(object.containsLiquid);
 
 	if(mode === global.SCMD_DRINK) {
 		this.emitMessage("You drink the " + global.DRINK_NAMES[object.containsLiquid] + ".");
@@ -1099,6 +1097,47 @@ characterSchema.methods.wearMessage = function(object, location) {
 			this.emitMessage("You grab " + object.shortDescription + ".");
 			this.emitRoomMessage(this.name + " grabs " + object.shortDescription + ".");
 			break;
+	}
+};
+
+characterSchema.methods.giveObject = function(object, target) {
+	// TODO: Check for number of items, weight, etc
+	
+	this.emitMessage("You give " + object.shortDescription + " to " + target.name + ".");
+	target.emitMessage(this.name + " gives you " + object.shortDescription + ".");
+	this.emitObservedMessage(target, this.name + " gives " + object.shortDescription + " to " + target.name);
+	
+	this.inventory.splice(this.inventory.indexOf(object), 1);
+	target.inventory.push(object);
+};
+
+characterSchema.methods.giveItem = function(keyword, targetName) {
+	var result = this.findInventoryFromKeywords(keyword);
+
+	if(result === null) {
+		this.emitMessage("Give what?!?");
+		return;
+	}
+	
+	if(result.mode === 'all' && result.items.length === 0) {
+		this.emitMessage("You aren't carrying anything!");
+		return;
+	}
+	
+	if(result.items.length === 0) {
+		this.emitMessage("You don't seem to have " + result.token.indefiniteArticle() + " " + result.token + ".");
+		return;
+	}
+
+	var target = this.world.getCharacter(targetName);
+	
+	if(target === null) {
+		this.emitMessage("No-one by that name here.");
+		return;
+	}
+
+	for(var i = 0; i < result.items.length; i++) {
+		this.giveObject(result.items[i], target);
 	}
 };
 
