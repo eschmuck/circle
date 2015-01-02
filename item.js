@@ -119,6 +119,13 @@ global.DRINK_AFFECTS = [
   { Drunkness: 0,  Fullness: 0, Thirst: 13 }
 ];
 
+itemSchema.methods.showItemToCharacter = function(character) {
+  character.emitMessage("You look at " + this.shortDescription + ".");
+  character.emitRoomMessage(character.name + " looks at " + this.shortDescription + ".");
+
+  character.emitMessage(this.longDescription);
+};
+
 itemSchema.statics.load = function(id, item, callback, commands, world, instructionNumber) {
  	this.find({ id: id }, function(err, docs) {
  		callback(docs, item, commands, world, instructionNumber);

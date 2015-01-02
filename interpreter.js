@@ -679,7 +679,7 @@ function do_look(character, command) {
         character.room.showRoomToCharacter(character);
     }
     else {
-        //character.lookAtTarget(command.tokens[0]);
+        character.lookAtTarget(command.tokens[0]);
     }
 }
 

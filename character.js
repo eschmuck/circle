@@ -722,6 +722,62 @@ characterSchema.methods.donateItem = function(keyword) {
 	}
 };
 
+characterSchema.methods.lookAtCharacter = function(target) {
+	this.emitMessage("You look at " + target.name + ".");
+	this.emitObservedMessage(target, this.name + " looks at " + target.name + ".");
+	target.emitMessage(this.name + " looks at you.");
+	
+	if(target.description !== undefined) {
+		this.emitMessage(target.description);
+	}
+	else if(target.longDescription !== undefined) {
+		this.emitMessage(target.longDescription);
+	}
+	else {
+		this.emitMessage("You see nothing special about " + target.getObjectPronoun() + ".");
+	}
+	
+	for(var i = 0; i < global.MAX_WEARS; i++) {
+		if(target.wearing[i] !== null && target.wearing[i] !== undefined) {
+			this.emitMessage(global.WEAR_WHERE[i] + target.wearing[i].shortDescription);
+		}
+	}
+	
+	// TODO: Thief can see in inventory
+};
+
+characterSchema.methods.lookAtTarget = function(keyword) {
+	var target = this.room.getCharacter(keyword);
+	
+	if(target !== null) {
+		this.lookAtCharacter(target);
+		return;
+	}
+	
+	target = this.findInventoryFromKeywords(keyword);
+
+	if(target !== null) {
+		target.showItemToCharacter(this);
+		return;
+	}
+	
+	target = this.findWearingFromKeywords(keyword);
+
+	if(target !== null) {
+		target.showItemToCharacter(this);
+		return;
+	}
+
+	target = this.room.findRoomContentsFromKeywords(keyword);
+	
+	if(target !== null) {
+		target.showItemToCharacter(this);
+		return;
+	}
+	
+	// TODO: Extras (room and objects)
+};
+
 characterSchema.methods.eatObject = function(object, mode) {
 	var extractObject = false;
 	var amount = 0;
@@ -844,11 +900,10 @@ characterSchema.methods.drinkItem = function(keyword, mode) {
 	}
 
 	for(var i = 0; i < result.items.length; i++) {
-		// TODO: Put this back
-		// if(this.thirst > 20) {
-		// 	this.emitMessage("You can't drink any more!!!");
-		// 	return;
-		// }
+		if(this.thirst > 20) {
+			this.emitMessage("You can't drink any more!!!");
+			return;
+		}
 		if(result.items[i].type !== global.ITEM_DRINKCONTAINER && result.items[i].type !== global.ITEM_FOUNTAIN) {
 			this.emitMessage(result.items[i].shortDescription + " -- You can't drink from THAT!");
 			break;

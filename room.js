@@ -67,7 +67,10 @@ var roomSchema = new schema({
 		description: String
 	},
 	people: [],
-	contents: []
+	contents: [],
+	extras: [
+		{ description: String, keywords: [] }
+	]
 });
 
 roomSchema.methods.contains = function(item) {
