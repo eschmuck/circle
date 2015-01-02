@@ -40,6 +40,10 @@
             $('body').terminal(this).echo(data['message']);
           }
         });
+        
+        socket.on('disconnect', function() {
+          alert('disconnected!');
+        });
 
         jQuery(document).ready(function ($) {
             $('body').terminal(function (command, terminal) {
