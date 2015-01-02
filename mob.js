@@ -8,7 +8,7 @@ var mobSchema = characterSchema.extend({
     id: Number,
     keywords: [ String ],
 	longDescription: String,
-	detailedDescription: Number,
+	detailedDescription: String,
 	thac0: Number,
 	armorClass: Number,
 	hitpointFormula: String,
