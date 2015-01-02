@@ -81,7 +81,7 @@ characterSchema.methods.listInventory = function() {
 
 characterSchema.methods.listEquipment = function() {
 	// Implementation overriden by child schemas
-}
+};
 
 characterSchema.methods.listScore = function() {
 	// Implementation overriden by child schemas	

@@ -40,9 +40,13 @@ playerSchema.methods.listInventory = function() {
 };
 
 playerSchema.methods.listEquipment = function() {
-	//this.emitMessage("You are using: ");
+	this.emitMessage("You are using: ");
 	
-	
+	for(var i = 0; i < global.MAX_WEARS; i++) {
+		if(this.wearing[i] !== null && this.wearing[i] !== undefined) {
+			this.emitMessage(global.WHERE_WHERE[i] + this.wearing[i].shortDescription);
+		}
+	}
 };
 	
 // TODO: change to 'statics'?
