@@ -412,22 +412,22 @@ Interpreter.prototype.cleanInput = function(input) {
     return cleanInput;
 };
 
-Interpreter.prototype.dropFill = function(input) {
+Interpreter.prototype.dropFill = function(tokens) {
     var fill = ["in", "from", "with", "the", "on", "at", "to" ];
     
     for(var i = 0; i < fill.length; i++) {
-        while (input.indexOf(fill[i] > -1)) {
-            input = input.splice(input.indexOf(fill[i]), 1);
+        while(tokens.indexOf(fill[i]) > -1) {
+            tokens.splice(tokens.indexOf(fill[i], 1));
         }
     }
     
-    return input;
+    return tokens;
 };
 
 Interpreter.prototype.tokenize = function(input) {
-    var tokens = input.split(' ');
+    var filledTokens = input.split(' ');
     
-    //tokens = this.dropFill(tokens);
+    var tokens = this.dropFill(filledTokens);
     return tokens;
 };
 
