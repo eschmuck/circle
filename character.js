@@ -637,6 +637,9 @@ characterSchema.methods.findInventoryFromKeywords = function (keyword) {
 };
 
 characterSchema.methods.findWearingFromKeywords = function (keyword) {
+	
+	console.log(this.wearing);
+	
 	return this.findFromKeywords(keyword, this.wearing);
 };
 
