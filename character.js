@@ -915,10 +915,56 @@ characterSchema.methods.wearItem = function(keyword) {
 };
 
 characterSchema.methods.wearItemAtLocation = function(keyword, location) {
+	var result = this.findInventoryFromKeywords(keyword);
+	
+	if(result === null) {
+		this.emitMessage("Wear what?!?");
+		return;
+	}
+
+	if(result.items.length === 0) {
+		this.emitMessage("You can't seem to find " + result.token.indefiniteArticle() + " " + result.token + ".");
+		return;
+	}
+
+	for(var i = 0; i < result.items.length; i++) {
+		if(result.items[i].wearSlots.indexOf(location) > -1) {
+			this.wearObject(result.items[i], location);
+		}
+	}
+};
+
+characterSchema.methods.removeObject = function(object) {
+	this.emitMessage("You stop using " + object.shortDescription + ".");
+	this.emitRoomMessage(this.name + " stops using " + object.shortDescription + ".");
+	
+	for(var i = 0; i < this.wearing.length; i++) {
+		if(this.wearing[i] === object) {
+			this.wearing[i] = null;
+		}
+	}
+	
+	this.inventory.push(object);
 };
 
 characterSchema.methods.removeItem = function(keyword) {
+	var result = this.findWearingFromKeywords(keyword);
 	
+	if(result === null) {
+		this.emitMessage("Remove what?");
+		return;
+	}
+	
+	if(result.length === 0) {
+		this.emitMessage("You can't seem to find " + result.token.indefiniteArticle() + " " + result.token + ".");
+		return;
+	}
+	
+	for(var i = 0; i < result.items.length; i++) {
+		if(result.items[i].wearSlots.indexOf(location) > -1) {
+			this.removeObject(result.items[i]);
+		}
+	}
 };
 
 characterSchema.methods.alreadyWearing = function(location) {
