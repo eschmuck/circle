@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var schema = mongoose.Schema;
 var extend = require('mongoose-schema-extend');
+var item = require("./item");
 var character = require("./character");
 var characterSchema = require("./character").schema;
 
