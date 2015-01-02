@@ -612,17 +612,15 @@ function do_drink(character, command) {
 }
 
 function do_wear(character, command) {
-    // if(command.tokens.length === 0) {
-    //     character.emitMessage("Wear what?");
-    // }
-    // if(command.tokens.length === 1) {
-    //     character.wearItem(command.tokens[0]);
-    // }
-    // else {
-    //     character.wearItemAtLocation(command.tokens[0], command.tokens[1]);
-    // }
-    
-    // TODO: Implement this
+    if(command.tokens.length === 0) {
+         character.emitMessage("Wear what?");
+    }
+    if(command.tokens.length === 1) {
+         character.wearItem(command.tokens[0]);
+    }
+    else {
+         character.wearItemAtLocation(command.tokens[0], command.tokens[1]);
+    }
 }
 
 function do_score(character) {

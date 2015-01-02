@@ -854,6 +854,34 @@ characterSchema.methods.drinkItem = function(keyword, mode) {
 	}
 };
 
+characterSchema.methods.wearItem = function(keyword) {
+	var result = this.findInventoryFromKeywords(keyword);
+
+	if(result === null) {
+		this.emitMessage("Wear what?!?");
+		return;
+	}
+
+	if(result.items.length === 0) {
+		this.emitMessage("You can't seem to find " + result.token.indefiniteArticle() + " " + result.token + ".");
+		return;
+	}
+
+	for(var i = 0; i < result.items.length; i++) {
+		if(result.items[i].wearSlots.length === 0) {
+			this.emitMessage("You can't wear " + result.items[i].shortDescription);
+		}
+		else {
+			console.log(result.items[i].wearSlots[0]);
+		}
+	}
+
+};
+
+characterSchema.methods.wearItemAtLocation = function(keyword, location) {
+	
+};
+
 
 
 var characterModel = mongoose.model('character', characterSchema);
