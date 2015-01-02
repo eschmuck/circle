@@ -846,10 +846,11 @@ characterSchema.methods.drinkItem = function(keyword, mode) {
 	}
 
 	for(var i = 0; i < result.items.length; i++) {
-		if(this.thirst > 20) {
-			this.emitMessage("You can't drink any more!!!");
-			return;
-		}
+		// TODO: Put this back
+		// if(this.thirst > 20) {
+		// 	this.emitMessage("You can't drink any more!!!");
+		// 	return;
+		// }
 		if(result.items[i].type !== global.ITEM_DRINKCONTAINER && result.items[i].type !== global.ITEM_FOUNTAIN) {
 			this.emitMessage(result.items[i].shortDescription + " -- You can't drink from THAT!");
 			break;

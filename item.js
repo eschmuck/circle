@@ -10,7 +10,12 @@ var itemSchema = new schema({
     canBeDonated: Boolean,
     canBeTaken: Boolean,
     type: String,
-    wearSlots: [ Number ]
+    wearSlots: [ Number ],
+    
+    capacity: Number,
+    containsLiquid: Number,
+    isPoisoned: Boolean
+    
 }, { discrimatorKey: 'type'});
 
 
