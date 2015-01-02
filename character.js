@@ -759,8 +759,8 @@ characterSchema.methods.lookAtTarget = function(keyword) {
 	console.log(target);
 
 
-	if(target !== null) {
-		target.showItemToCharacter(this);
+	if(target.items.length > 0) {
+		target.items[0].showItemToCharacter(this);
 		return;
 	}
 	
@@ -768,8 +768,8 @@ characterSchema.methods.lookAtTarget = function(keyword) {
 	console.log("2");
 	console.log(target);
 
-	if(target !== null) {
-		target.showItemToCharacter(this);
+	if(target.items.length > 0) {
+		target.items[0].showItemToCharacter(this);
 		return;
 	}
 
@@ -778,8 +778,8 @@ characterSchema.methods.lookAtTarget = function(keyword) {
 	console.log("3");
 	console.log(target);
 	
-	if(target !== null) {
-		target.showItemToCharacter(this);
+	if(target.items.length > 0) {
+		target.items[0].showItemToCharacter(this);
 		return;
 	}
 	
