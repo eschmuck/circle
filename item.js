@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var schema = mongoose.Schema;
+var extend = require('mongoose-schema-extend');
 
 var itemSchema = new schema({
     id: Number,
@@ -17,6 +18,13 @@ var itemSchema = new schema({
     isPoisoned: Boolean
     
 });
+
+itemSchema.methods.showItemToCharacter = function(character) {
+  character.emitMessage("You look at " + this.shortDescription + ".");
+  character.emitRoomMessage(character.name + " looks at " + this.shortDescription + ".");
+
+  character.emitMessage(this.longDescription);
+};
 
 
 global.ITEM_LIGHT = "Light";
@@ -118,13 +126,6 @@ global.DRINK_AFFECTS = [
   { Drunkness: 0,  Fullness: 1, Thirst: -2 },
   { Drunkness: 0,  Fullness: 0, Thirst: 13 }
 ];
-
-itemSchema.methods.showItemToCharacter = function(character) {
-  character.emitMessage("You look at " + this.shortDescription + ".");
-  character.emitRoomMessage(character.name + " looks at " + this.shortDescription + ".");
-
-  character.emitMessage(this.longDescription);
-};
 
 itemSchema.statics.load = function(id, item, callback, commands, world, instructionNumber) {
  	this.find({ id: id }, function(err, docs) {

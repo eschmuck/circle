@@ -730,8 +730,8 @@ characterSchema.methods.lookAtCharacter = function(target) {
 	if(target.description !== undefined) {
 		this.emitMessage(target.description);
 	}
-	else if(target.longDescription !== undefined) {
-		this.emitMessage(target.longDescription);
+	else if(target.detailedDescription !== undefined) {
+		this.emitMessage(target.detailedDescription);
 	}
 	else {
 		this.emitMessage("You see nothing special about " + target.getObjectPronoun() + ".");
