@@ -45,7 +45,7 @@ playerSchema.methods.listEquipment = function() {
 	
 	for(var i = 0; i < global.MAX_WEARS; i++) {
 		if(this.wearing[i] !== null && this.wearing[i] !== undefined) {
-			this.emitMessage(global.WHERE_WHERE[i] + this.wearing[i].shortDescription);
+			this.emitMessage(global.WEAR_WHERE[i] + this.wearing[i].shortDescription);
 		}
 	}
 };
