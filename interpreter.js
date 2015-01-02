@@ -207,7 +207,7 @@ var COMMAND_LIST = [
 
           { command: "kiss"     , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_KISS },
 
-          { command: "look"     , minimumPosition: Character.POS_RESTING , functionPointer: do_look       . minimumLevel: 0, subCommand: 0},
+          { command: "look"     , minimumPosition: Character.POS_RESTING , functionPointer: do_look       , minimumLevel: 0, subCommand: 0},
           { command: "laugh"    , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_LAUGH },
           { command: "lick"     , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_LICK },
           { command: "love"     , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_LOVE },
