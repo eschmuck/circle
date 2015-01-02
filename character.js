@@ -792,6 +792,8 @@ characterSchema.methods.eatItem = function(keyword, mode) {
 
 characterSchema.methods.drinkFromObject = function(object, mode) {
 	var amount = 0;
+	
+	console.log(object.containsLiquid);
 
 	if(mode === global.SCMD_DRINK) {
 		this.emitMessage("You drink the " + global.DRINK_NAMES[object.containsLiquid] + ".");
