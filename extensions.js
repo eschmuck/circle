@@ -7,15 +7,17 @@ Array.prototype.findItem = function(index, keyword) {
 	var counter = 0;
 
 	for(var i = 0; i < this.length; i++) {
-		for(var j = 0; j < this[i].keywords.length; j++) {
-			if(this[i].keywords[j].toLowerCase().substr(0, keyword.length) === keyword.toLowerCase()) {
-				counter++;
-
-				if(counter === index) {
-					return this[i];
-				}
-				else {
-					break;
+		if(this[i] !== null && this[i] !== undefined) {
+			for(var j = 0; j < this[i].keywords.length; j++) {
+				if(this[i].keywords[j].toLowerCase().substr(0, keyword.length) === keyword.toLowerCase()) {
+					counter++;
+	
+					if(counter === index) {
+						return this[i];
+					}
+					else {
+						break;
+					}
 				}
 			}
 		}
@@ -29,15 +31,19 @@ Array.prototype.findItems = function(keyword) {
 	
 	if(keyword.toLowerCase().trim() === 'all') {
 		for(var i = 0; i < this.length; i++) {
-			items.push(this[i]);
+			if(this[i] !== null && this[i] !== undefined) {
+				items.push(this[i]);
+			}
 		}
 	}
 	else {
 		for(var i = 0; i < this.length; i++) {
-			for(var j = 0; j < this[i].keywords.length; j++) {
-				if(this[i].keywords[j].toLowerCase().substr(0, keyword.length) === keyword.toLowerCase()) {
-					items.push(this[i]);
-					break;
+			if(this[i] !== null && this[i] !== undefined) {
+				for(var j = 0; j < this[i].keywords.length; j++) {
+					if(this[i].keywords[j].toLowerCase().substr(0, keyword.length) === keyword.toLowerCase()) {
+						items.push(this[i]);
+						break;
+					}
 				}
 			}
 		}
