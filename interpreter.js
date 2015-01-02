@@ -419,7 +419,7 @@ Interpreter.prototype.dropFill = function(tokens) {
     
     for(var i = 0; i < fill.length; i++) {
         while(tokens.indexOf(fill[i]) > -1) {
-            tokens.splice(tokens.indexOf(fill[i], 1));
+            tokens.splice(tokens.indexOf(fill[i]), 1);
         }
     }
     
