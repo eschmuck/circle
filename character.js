@@ -769,6 +769,8 @@ characterSchema.methods.lookAtTarget = function(keyword) {
 	}
 
 	target = this.room.findRoomContentsFromKeywords(keyword);
+
+	console.log(target);
 	
 	if(target !== null) {
 		target.showItemToCharacter(this);
