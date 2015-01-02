@@ -53,24 +53,24 @@ global.WEAR_WIELD    = 16;
 global.WEAR_HOLD     = 17;
 
 global.WEAR_WHERE = [
-    "<used as light>      ",
-    "<worn on finger>     ",
-    "<worn on finger>     ",
-    "<worn around neck>   ",
-    "<worn around neck>   ",
-    "<worn on body>       ",
-    "<worn on head>       ",
-    "<worn on legs>       ",
-    "<worn on feet>       ",
-    "<worn on hands>      ",
-    "<worn on arms>       ",
-    "<worn as shield>     ",
-    "<worn about body>    ",
-    "<worn about waist>   ",
-    "<worn around wrist>  ",
-    "<worn around wrist>  ",
-    "<wielded>            ",
-    "<held>               "
+    "  <used as light>      ",
+    "  <worn on finger>     ",
+    "  <worn on finger>     ",
+    "  <worn around neck>   ",
+    "  <worn around neck>   ",
+    "  <worn on body>       ",
+    "  <worn on head>       ",
+    "  <worn on legs>       ",
+    "  <worn on feet>       ",
+    "  <worn on hands>      ",
+    "  <worn on arms>       ",
+    "  <worn as shield>     ",
+    "  <worn about body>    ",
+    "  <worn about waist>   ",
+    "  <worn around wrist>  ",
+    "  <worn around wrist>  ",
+    "  <wielded>            ",
+    "  <held>               "
   ];
 
 global.DRINK_NAMES = [
