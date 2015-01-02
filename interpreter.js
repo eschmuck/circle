@@ -675,6 +675,9 @@ function do_give(character, command) {
 }
 
 function do_look(character, command) {
+    
+    console.log(command.tokens);
+    
     if(command.tokens.length === 0) {
         character.room.showRoomToCharacter(character);
     }

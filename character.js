@@ -755,9 +755,6 @@ characterSchema.methods.lookAtTarget = function(keyword) {
 	}
 	
 	target = this.findInventoryFromKeywords(keyword);
-	console.log("1");
-	console.log(target);
-
 
 	if(target.items.length > 0) {
 		target.items[0].showItemToCharacter(this);
@@ -765,8 +762,6 @@ characterSchema.methods.lookAtTarget = function(keyword) {
 	}
 	
 	target = this.findWearingFromKeywords(keyword);
-	console.log("2");
-	console.log(target);
 
 	if(target.items.length > 0) {
 		target.items[0].showItemToCharacter(this);
@@ -775,9 +770,6 @@ characterSchema.methods.lookAtTarget = function(keyword) {
 
 	target = this.room.findRoomContentsFromKeywords(keyword);
 
-	console.log("3");
-	console.log(target);
-	
 	if(target.items.length > 0) {
 		target.items[0].showItemToCharacter(this);
 		return;
