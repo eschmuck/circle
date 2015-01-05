@@ -162,7 +162,21 @@ playerSchema.methods.advanceLevel = function() {
     else {
 	    this.practiceSessions += Math.min(2, Math.max(1, global.wisdomApply[this.wisdom]));
     }
+    
+    this.setTitle();
 };
+
+playerSchema.methods.setTitle = function(title) {
+	if(title === undefined) {
+		if(this.gender === global.GENDER_MALE) {
+			this.title = this.setMaleTitle();
+		}
+		else {
+			this.title = this.setFemaleTitle();
+		}
+	}
+};
+
 
 playerSchema.methods.start = function() {
 	this.level = 1;
@@ -233,12 +247,8 @@ playerSchema.methods.listGold = function() {
 playerSchema.methods.listScore = function() {
 	this.emitMessage("This ranks you as " + this.name + " " + this.title + " (level " + this.level + ")");
 	
-	this.emitMessage("Strength: " + this.strength + "/" + this.strengthAdd);
-	this.emitMessage("Dexterity: " + this.dexterity);
-	this.emitMessage("Intelligence: " + this.intelligence);
-	this.emitMessage("Wisdom: " + this.wisdom);
-	this.emitMessage("Constitution: " + this.constitution);
-	this.emitMessage("Charisma: " + this.charisma);
+	this.emitMessage("Strength: [" + this.strength + "/" + this.strengthAdd + "] Dexterity: [" + this.dexterity + "] Intelligence: [" + this.intelligence + "]");
+	this.emitMessage("Wisdom: [" + this.wisdom + "] Constitution: [" + this.constitution + "] Charisma: [" + this.charisma + "]");
 
 	this.emitMessage("You have " + this.practiceSessions + " practice sessions.");
 
@@ -285,14 +295,291 @@ playerSchema.methods.hourlyUpdate = function() {
 	}
 };
 
+
+playerSchema.methods.setMaleTitle = function() {
+	if(this.level <= 0 || this.level > global.LVL_IMPL) {
+	    return 'the Man';
+	}
+	else if(this.level === global.LVL_IMPL) {
+        return 'the Implementor';
+    }
+    else {
+    	switch(this.class) {
+			case global.CLASS_MAGIC_USER:
+				switch (this.level) {
+					case  1: return "the Apprentice of Magic";
+					case  2: return "the Spell Student";
+					case  3: return "the Scholar of Magic";
+					case  4: return "the Delver in Spells";
+					case  5: return "the Medium of Magic";
+					case  6: return "the Scribe of Magic";
+					case  7: return "the Seer";
+					case  8: return "the Sage";
+					case  9: return "the Illusionist";
+					case 10: return "the Abjurer";
+					case 11: return "the Invoker";
+					case 12: return "the Enchanter";
+					case 13: return "the Conjurer";
+					case 14: return "the Magician";
+					case 15: return "the Creator";
+					case 16: return "the Savant";
+					case 17: return "the Magus";
+					case 18: return "the Wizard";
+					case 19: return "the Warlock";
+					case 20: return "the Sorcerer";
+					case 21: return "the Necromancer";
+					case 22: return "the Thaumaturge";
+					case 23: return "the Student of the Occult";
+					case 24: return "the Disciple of the Uncanny";
+					case 25: return "the Minor Elemental";
+					case 26: return "the Greater Elemental";
+					case 27: return "the Crafter of Magics";
+					case 28: return "the Shaman";
+					case 29: return "the Keeper of Talismans";
+					case 30: return "the Archmage";
+					case global.LVL_IMMORT: return "the Immortal Warlock";
+					case global.LVL_GOD: return "the Avatar of Magic";
+					case global.LVL_GRGOD: return "the God of Magic";
+					default: return "the Mage";
+				}
+				break;
+			case global.CLASS_CLERIC:
+				switch (this.level) {
+					case  1: return "the Believer";
+					case  2: return "the Attendant";
+					case  3: return "the Acolyte";
+					case  4: return "the Novice";
+					case  5: return "the Missionary";
+					case  6: return "the Adept";
+					case  7: return "the Deacon";
+					case  8: return "the Vicar";
+					case  9: return "the Priest";
+					case 10: return "the Minister";
+					case 11: return "the Canon";
+					case 12: return "the Levite";
+					case 13: return "the Curate";
+					case 14: return "the Monk";
+					case 15: return "the Healer";
+					case 16: return "the Chaplain";
+					case 17: return "the Expositor";
+					case 18: return "the Bishop";
+					case 19: return "the Arch Bishop";
+					case 20: return "the Patriarch";
+					/* no one ever thought up these titles 21-30 */
+					case global.LVL_IMMORT: return "the Immortal Cardinal";
+					case global.LVL_GOD: return "the Inquisitor";
+					case global.LVL_GRGOD: return "the God of good and evil";
+					default: return "the Cleric";
+				}
+				break;
+			case global.CLASS_THIEF:
+				switch (this.level) {
+					case  1: return "the Pilferer";
+					case  2: return "the Footpad";
+					case  3: return "the Filcher";
+					case  4: return "the Pick-Pocket";
+					case  5: return "the Sneak";
+					case  6: return "the Pincher";
+					case  7: return "the Cut-Purse";
+					case  8: return "the Snatcher";
+					case  9: return "the Sharper";
+					case 10: return "the Rogue";
+					case 11: return "the Robber";
+					case 12: return "the Magsman";
+					case 13: return "the Highwayman";
+					case 14: return "the Burglar";
+					case 15: return "the Thief";
+					case 16: return "the Knifer";
+					case 17: return "the Quick-Blade";
+					case 18: return "the Killer";
+					case 19: return "the Brigand";
+					case 20: return "the Cut-Throat";
+					/* no one ever thought up these titles 21-30 */
+					case global.LVL_IMMORT: return "the Immortal Assasin";
+					case global.LVL_GOD: return "the Demi God of Thieves";
+					case global.LVL_GRGOD: return "the God of Thieves and Tradesmen";
+					default: return "the Thief";
+				}
+				break;
+			case global.CLASS_WARRIOR:
+				switch(this.level) {
+					case  1: return "the Swordpupil";
+					case  2: return "the Recruit";
+					case  3: return "the Sentry";
+					case  4: return "the Fighter";
+					case  5: return "the Soldier";
+					case  6: return "the Warrior";
+					case  7: return "the Veteran";
+					case  8: return "the Swordsman";
+					case  9: return "the Fencer";
+					case 10: return "the Combatant";
+					case 11: return "the Hero";
+					case 12: return "the Myrmidon";
+					case 13: return "the Swashbuckler";
+					case 14: return "the Mercenary";
+					case 15: return "the Swordmaster";
+					case 16: return "the Lieutenant";
+					case 17: return "the Champion";
+					case 18: return "the Dragoon";
+					case 19: return "the Cavalier";
+					case 20: return "the Knight";
+					/* no one ever thought up these titles 21-30 */
+					case global.LVL_IMMORT: return "the Immortal Warlord";
+					case global.LVL_GOD: return "the Extirpator";
+					case global.LVL_GRGOD: return "the God of war";
+					default: return "the Warrior";
+				}
+				break;
+			default:
+				/* Default title for classes which do not have titles defined */
+				return "the Classless";
+		}
+	}
+};
+
+playerSchema.methods.setFemaleTitle = function() {
+	if(this.level <= 0 || this.level > global.LVL_IMPL) {
+	    return 'the Woman';
+	}
+	else if(this.level === global.LVL_IMPL) {
+        return 'the Implementress';
+    }
+    else {
+    	switch(this.class) {
+			case global.CLASS_MAGIC_USER:
+				switch (this.level) {
+					case  1: return "the Apprentice of Magic";
+					case  2: return "the Spell Student";
+					case  3: return "the Scholar of Magic";
+					case  4: return "the Delveress in Spells";
+					case  5: return "the Medium of Magic";
+					case  6: return "the Scribess of Magic";
+					case  7: return "the Seeress";
+					case  8: return "the Sage";
+					case  9: return "the Illusionist";
+					case 10: return "the Abjuress";
+					case 11: return "the Invoker";
+					case 12: return "the Enchantress";
+					case 13: return "the Conjuress";
+					case 14: return "the Witch";
+					case 15: return "the Creator";
+					case 16: return "the Savant";
+					case 17: return "the Craftess";
+					case 18: return "the Wizard";
+					case 19: return "the War Witch";
+					case 20: return "the Sorceress";
+					case 21: return "the Necromancress";
+					case 22: return "the Thaumaturgess";
+					case 23: return "the Student of the Occult";
+					case 24: return "the Disciple of the Uncanny";
+					case 25: return "the Minor Elementress";
+					case 26: return "the Greater Elementress";
+					case 27: return "the Crafter of Magics";
+					case 28: return "Shaman";
+					case 29: return "the Keeper of Talismans";
+					case 30: return "Archwitch";
+					case global.LVL_IMMORT: return "the Immortal Enchantress";
+					case global.LVL_GOD: return "the Empress of Magic";
+					case global.LVL_GRGOD: return "the Goddess of Magic";
+					default: return "the Witch";
+				}
+				break;
+			case global.CLASS_CLERIC:
+				switch (this.level) {
+					case  1: return "the Believer";
+					case  2: return "the Attendant";
+					case  3: return "the Acolyte";
+					case  4: return "the Novice";
+					case  5: return "the Missionary";
+					case  6: return "the Adept";
+					case  7: return "the Deaconess";
+					case  8: return "the Vicaress";
+					case  9: return "the Priestess";
+					case 10: return "the Lady Minister";
+					case 11: return "the Canon";
+					case 12: return "the Levitess";
+					case 13: return "the Curess";
+					case 14: return "the Nunne";
+					case 15: return "the Healess";
+					case 16: return "the Chaplain";
+					case 17: return "the Expositress";
+					case 18: return "the Bishop";
+					case 19: return "the Arch Lady of the Church";
+					case 20: return "the Matriarch";
+					/* no one ever thought up these titles 21-30 */
+					case global.LVL_IMMORT: return "the Immortal Priestess";
+					case global.LVL_GOD: return "the Inquisitress";
+					case global.LVL_GRGOD: return "the Goddess of good and evil";
+					default: return "the Cleric";
+				}
+				break;
+			case global.CLASS_THIEF:
+				switch (this.level) {
+					case  1: return "the Pilferess";
+					case  2: return "the Footpad";
+					case  3: return "the Filcheress";
+					case  4: return "the Pick-Pocket";
+					case  5: return "the Sneak";
+					case  6: return "the Pincheress";
+					case  7: return "the Cut-Purse";
+					case  8: return "the Snatcheress";
+					case  9: return "the Sharpress";
+					case 10: return "the Rogue";
+					case 11: return "the Robber";
+					case 12: return "the Magswoman";
+					case 13: return "the Highwaywoman";
+					case 14: return "the Burglaress";
+					case 15: return "the Thief";
+					case 16: return "the Knifer";
+					case 17: return "the Quick-Blade";
+					case 18: return "the Murderess";
+					case 19: return "the Brigand";
+					case 20: return "the Cut-Throat";
+					/* no one ever thought up these titles 21-30 */
+					case global.LVL_IMMORT: return "the Immortal Assasin";
+					case global.LVL_GOD: return "the Demi Goddess of thieves";
+					case global.LVL_GRGOD: return "the Goddess of thieves and tradesmen";
+					default: return "the Thief";
+				}
+				break;
+			case global.CLASS_WARRIOR:
+				switch(this.level) {
+					case  1: return "the Swordpupil";
+					case  2: return "the Recruit";
+					case  3: return "the Sentress";
+					case  4: return "the Fighter";
+					case  5: return "the Soldier";
+					case  6: return "the Warrior";
+					case  7: return "the Veteran";
+					case  8: return "the Swordswoman";
+					case  9: return "the Fenceress";
+					case 10: return "the Combatess";
+					case 11: return "the Heroine";
+					case 12: return "the Myrmidon";
+					case 13: return "the Swashbuckleress";
+					case 14: return "the Mercenaress";
+					case 15: return "the Swordmistress";
+					case 16: return "the Lieutenant";
+					case 17: return "the Lady Champion";
+					case 18: return "the Lady Dragoon";
+					case 19: return "the Cavalier";
+					case 20: return "the Lady Knight";
+					/* no one ever thought up these titles 21-30 */
+					case global.LVL_IMMORT: return "the Immortal Lady of War";
+					case global.LVL_GOD: return "the Queen of Destruction";
+					case global.LVL_GRGOD: return "the Goddess of war";
+					default: return "the Warrior";
+				}
+				break;
+			default:
+				/* Default title for classes which do not have titles defined */
+				return "the Classless";
+		}
+	}
+};
+
 var playerModel = mongoose.model('player', playerSchema);
 
-// Constants
-global.CLASS_UNDEFINED	  = -1;
-global.CLASS_MAGIC_USER  = 0;
-global.CLASS_CLERIC      = 1;
-global.CLASS_THIEF       = 2;
-global.CLASS_WARRIOR     = 3;
 
 
 module.exports = {

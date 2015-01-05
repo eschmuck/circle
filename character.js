@@ -7,6 +7,7 @@ var util = require('util');
 var extensions = require('./extensions');
 var item = require("./item");
 var utility = require("./utility");
+var constants = require("./constants");
 
 var directions = [ 'north', 'east', 'south', 'west', 'up', 'down' ];
 
@@ -43,33 +44,33 @@ var characterSchema = new schema({
 
 characterSchema.methods.getPersonalPronoun = function() {
 	switch(this.gender) {
-		case GENDER_NEUTRAL:
+		case global.GENDER_NEUTRAL:
 			return "it";
-		case GENDER_MALE:
+		case global.GENDER_MALE:
 			return "he";
-		case GENDER_FEMALE:
+		case global.GENDER_FEMALE:
 			return "she";
 	}
 };
 
 characterSchema.methods.getObjectPronoun = function() {
 	switch(this.gender) {
-		case GENDER_NEUTRAL:
+		case global.GENDER_NEUTRAL:
 			return "it";
-		case GENDER_MALE:
+		case global.GENDER_MALE:
 			return "him";
-		case GENDER_FEMALE:
+		case global.GENDER_FEMALE:
 			return "her";
 	}
 };
 
 characterSchema.methods.getPossessivePronoun = function() {
 	switch(this.gender) {
-		case GENDER_NEUTRAL:
+		case global.GENDER_NEUTRAL:
 			return "its";
-		case GENDER_MALE:
+		case global.GENDER_MALE:
 			return "his";
-		case GENDER_FEMALE:
+		case global.GENDER_FEMALE:
 			return "her";
 	}
 };
@@ -1214,11 +1215,6 @@ characterSchema.methods.giveItem = function(keyword, targetName) {
 
 var characterModel = mongoose.model('character', characterSchema);
 
-// Constants
-var GENDER_NEUTRAL = 0;
-var GENDER_MALE    = 1;
-var GENDER_FEMALE  = 2;
-
 var POS_DEAD       = 0;
 var POS_MORTALLYW  = 1;
 var POS_INCAP      = 2;
@@ -1232,11 +1228,7 @@ var POS_STANDING   = 8;
 module.exports = {
 	schema: characterSchema,
 	character: characterModel,
-	
-	GENDER_NEUTRAL: GENDER_NEUTRAL,
-	GENDER_MALE:    GENDER_MALE,
-	GENDER_FEMALE:  GENDER_FEMALE,
-	
+
 	POS_DEAD:      POS_DEAD,
 	POS_MORTALLYW: POS_MORTALLYW,
 	POS_INCAP:     POS_INCAP,

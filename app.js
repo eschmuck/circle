@@ -159,12 +159,12 @@ io.sockets.on('connection', function(socket) {
     var sexInput = msg['input'].substring(0, 1).toUpperCase();
 
     if (sexInput === 'M') {
-      socket.player.gender = character.GENDER_MALE;
+      socket.player.gender = global.GENDER_MALE;
       socket.connectionState = global.CON_QCLASS;
       emitMessage(socket, text.ClassMenu);
     }
     else if (sexInput === 'F') {
-      socket.player.gender = character.GENDER_MALE;
+      socket.player.gender = global.GENDER_MALE;
       socket.connectionState = global.CON_QCLASS;
       emitMessage(socket, text.ClassMenu);
     }

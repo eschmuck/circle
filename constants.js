@@ -12,6 +12,21 @@ global.CON_MENU       = 10;
 
 global.SECONDS_PER_MUDHOUR = 75;
 
+global.GENDER_NEUTRAL = 0;
+global.GENDER_MALE    = 1;
+global.GENDER_FEMALE  = 2;
+
+global.LVL_IMMORT = 31;
+global.LVL_GOD    = 32;
+global.LVL_GRGOD  = 33;
+global.LVL_IMPL   = 34;
+
+global.CLASS_UNDEFINED	 = -1;
+global.CLASS_MAGIC_USER  = 0;
+global.CLASS_CLERIC      = 1;
+global.CLASS_THIEF       = 2;
+global.CLASS_WARRIOR     = 3;
+
 global.constitutionApplyType_Hitpoints = 0;
 global.constitutionApplyType_Shock = 1;
 
