@@ -13,6 +13,7 @@ var room = require('./room');
 var zone = require('./zone');
 var world = require('./world');
 var interpreter = require('./interpreter');
+var mudlog = require('./mudlog');
 
 var connection = mongoose.connect('mongodb://localhost/circledb');
 
@@ -234,6 +235,8 @@ io.sockets.on('connection', function(socket) {
     startRoom.showRoomToCharacter(socket.player);
     
     socket.player.enterGame();
+    
+    mudlog(socket.player + " has entered the game");
   }
 });
 
