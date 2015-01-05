@@ -27,6 +27,14 @@ var characterSchema = new schema({
 	experience: Number,
 	level: Number,
 	
+	strength: Number,
+	strengthAdd: Number,
+	intelligence: Number,
+	wisdom: Number,
+	dexterity: Number,
+	constitution: Number,
+	charisma: Number,
+	
 	position: Number,
 	
 	wearing: [],

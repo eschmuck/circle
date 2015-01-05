@@ -45,7 +45,7 @@ room.getRooms(function(roomDocs) {
   });
 });
 
-setInterval(hourElapsed, 10000);
+setInterval(hourElapsed, global.SECONDS_PER_MUDHOUR * 1000);
 
 io.sockets.on('connection', function(socket) {
   console.log('A new user connected!');
@@ -156,16 +156,16 @@ io.sockets.on('connection', function(socket) {
   function getPlayerClass(msg) {
     var classInput = msg['input'].substring(0, 1).toUpperCase();
     if (classInput === 'C') {
-      socket.player.class = player.CLASS_CLERIC;
+      socket.player.class = global.CLASS_CLERIC;
     }
     else if (classInput === 'M') {
-      socket.player.class = player.CLASS_MAGIC_USER;
+      socket.player.class = global.CLASS_MAGIC_USER;
     }
     else if (classInput === 'W') {
-      socket.player.class = player.CLASS_WARRIOR;
+      socket.player.class = global.CLASS_WARRIOR;
     }
     else if (classInput === 'T') {
-      socket.player.class = player.CLASS_THIEF;
+      socket.player.class = global.CLASS_THIEF;
     }
     else {
       emitMessage(socket, '\r\nThat\'s not a class.\r\nClass: ');

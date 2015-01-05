@@ -4,6 +4,7 @@ var extend = require('mongoose-schema-extend');
 var item = require("./item");
 var character = require("./character");
 var characterSchema = require("./character").schema;
+var utility = require("./utility");
 
 var playerSchema = characterSchema.extend({
 	password: String,
@@ -64,9 +65,109 @@ playerSchema.methods.load = function(name, callback) {
 	});
 };
 
+playerSchema.methods.rollRealAbilities = function() {
+	var table = [6];
+	var rolls = [4];
+
+	for(var i = 0; i < 6; i++) {
+	    for(var j = 0 ; j < 4; j++) {
+	            rolls[j] = utility.randomNumber(1, 6);
+	        }
+	
+	    table[i] = rolls[0] + rolls[1] + rolls[2] + rolls[3] -
+	        Math.min(rolls[0], Math.min(rolls[1], Math.min(rolls[2], rolls[3])));
+	}
+	
+	table.sort(function(a, b) { return b - a; } );
+	
+	this.strengthAdd = 0;
+	
+	switch(this.class) {
+	    case global.CLASS_MAGIC_USER:
+	        this.intelligence = table[0];
+	        this.wisdom = table[1];
+	        this.dexterity = table[2];
+	        this.strength = table[3];
+	        this.constitution = table[4];
+	        this.charisma = table[5];
+	        break;
+	    case global.CLASS_CLERIC:
+	        this.wisdom = table[0];
+	        this.intelligence = table[1];
+	        this.strength = table[2];
+	        this.dexterity = table[3];
+	        this.constitution = table[4];
+	        this.charisma = table[5];
+	        break;
+	    case global.CLASS_THIEF:
+	        this.dexterity = table[0];
+	        this.strength = table[1];
+	        this.constitution = table[2];
+	        this.intelligence = table[3];
+	        this.wisdom = table[4];
+	        this.charisma = table[5];
+	        break;
+	    case global.CLASS_WARRIOR:
+	        this.strength = table[0];
+	        this.dexterity = table[1];
+	        this.constitution = table[2];
+	        this.wisdom = table[3];
+	        this.intelligence = table[4];
+	        this.charisma = table[5];
+	
+	        if(this.strength === 18) {
+	        	this.strengthAdd = utility.randomNumber(0, 100);
+            }
+	        break;
+	}
+};
+
+playerSchema.methods.advanceLevel = function() {
+    var addHitpoints = global.constitutionApply[this.constitution][global.constitutionApplyType_Hitpoints];
+    var addManapoints = 0;
+    var addMovePoints = 0;
+
+    switch(this.class) {
+            case global.CLASS_MAGIC_USER:
+                addHitpoints += utility.randomNumber(3, 8);
+                addManapoints = utility.randomNumber(this.level, 1.5 * this.level);
+                addMovePoints = utility.randomNumber(0, 2);
+                break;
+            case global.CLASS_CLERIC:
+                addHitpoints += utility.random_number(5, 10);
+                addManapoints = utility.random_number(this.level, 1.5 * this.level);
+                addMovePoints = utility.random_number(0, 2);
+                break;
+            case global.CLASS_THIEF:
+                addHitpoints += utility.random_number(7, 13);
+                addMovePoints = utility.random_number(1, 3);
+                break;
+            case global.CLASS_WARRIOR:
+                addHitpoints += utility.random_number(10, 15);
+                addMovePoints = utility.random_number(1, 3);
+                break;
+        }
+
+    this.maximumHitpoints += Math.max(1, addHitpoints);
+    this.maximumMovepoints += Math.max(1, addMovePoints);
+    
+    if(this.level > 1) {
+	    this.maximumManapoints += addManapoints;
+    }
+
+    if(this.class === global.CLASS_MAGIC_USER || this.class === global.CLASS_CLERIC) {
+	    this.practiceSessions += Math.max(2, global.wisdomApply[this.wisdom]);
+    }
+    else {
+	    this.practiceSessions += Math.min(2, Math.max(1, global.wisdomApply[this.wisdom]));
+    }
+};
+
 playerSchema.methods.start = function() {
 	this.level = 1;
 	this.experience = 1;
+	
+	this.rollRealAbilities();
 	
 	this.maximumHitpoints = 10;
 	this.maximumManapoints = 100;
@@ -83,6 +184,8 @@ playerSchema.methods.start = function() {
 	this.drunk = 0;
 	
 	this.gold = 0;
+	
+	this.advanceLevel();
 };
 
 playerSchema.methods.enterGame = function() {
@@ -128,6 +231,15 @@ playerSchema.methods.listGold = function() {
 playerSchema.methods.listScore = function() {
 	this.emitMessage("This ranks you as " + this.name + " " + this.title + " (level " + this.level + ")");
 	
+	this.emitMessage("Strength: " + this.strength + "/" + this.strengthAdd);
+	this.emitMessage("Dexterity: " + this.dexterity);
+	this.emitMessage("Intelligence: " + this.intelligence);
+	this.emitMessage("Wisdom: " + this.wisdom);
+	this.emitMessage("Constitution: " + this.constitution);
+	this.emitMessage("Charisma: " + this.charisma);
+
+	this.emitMessage("You have " + this.practiceSessions + " practice sessions.");
+
 	if(this.hunger === 0) {
 		this.emitMessage("You are hungry.");
 	}
@@ -174,11 +286,11 @@ playerSchema.methods.hourlyUpdate = function() {
 var playerModel = mongoose.model('player', playerSchema);
 
 // Constants
-exports.CLASS_UNDEFINED	  = -1;
-exports.CLASS_MAGIC_USER  = 0;
-exports.CLASS_CLERIC      = 1;
-exports.CLASS_THIEF       = 2;
-exports.CLASS_WARRIOR     = 3;
+global.CLASS_UNDEFINED	  = -1;
+global.CLASS_MAGIC_USER  = 0;
+global.CLASS_CLERIC      = 1;
+global.CLASS_THIEF       = 2;
+global.CLASS_WARRIOR     = 3;
 
 
 module.exports = {
