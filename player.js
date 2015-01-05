@@ -135,17 +135,17 @@ playerSchema.methods.advanceLevel = function() {
                 addMovePoints = utility.randomNumber(0, 2);
                 break;
             case global.CLASS_CLERIC:
-                addHitpoints += utility.random_number(5, 10);
-                addManapoints = utility.random_number(this.level, 1.5 * this.level);
-                addMovePoints = utility.random_number(0, 2);
+                addHitpoints += utility.randomNumber(5, 10);
+                addManapoints = utility.randomNumber(this.level, 1.5 * this.level);
+                addMovePoints = utility.randomNumber(0, 2);
                 break;
             case global.CLASS_THIEF:
-                addHitpoints += utility.random_number(7, 13);
-                addMovePoints = utility.random_number(1, 3);
+                addHitpoints += utility.randomNumber(7, 13);
+                addMovePoints = utility.randomNumber(1, 3);
                 break;
             case global.CLASS_WARRIOR:
-                addHitpoints += utility.random_number(10, 15);
-                addMovePoints = utility.random_number(1, 3);
+                addHitpoints += utility.randomNumber(10, 15);
+                addMovePoints = utility.randomNumber(1, 3);
                 break;
         }
 
