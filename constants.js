@@ -1,3 +1,15 @@
+global.CON_PLAYING    = 0;
+global.CON_GET_NAME   = 2; // By what name ..?
+global.CON_NAME_CNFRM = 3; // Did I get that right, x?
+global.CON_PASSWORD   = 4; // Password:
+global.CON_NEWPASSWD  = 5;	// Give me a password for x
+global.CON_CNFPASSWD  = 6;	// Please retype password:
+global.CON_QSEX       = 7; // Sex?
+global.CON_QCLASS     = 8; // Class?
+global.CON_RMOTD      = 9;
+global.CON_MENU       = 10;
+
+
 global.SECONDS_PER_MUDHOUR = 75;
 
 global.constitutionApplyType_Hitpoints = 0;
