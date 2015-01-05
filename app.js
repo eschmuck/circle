@@ -236,7 +236,7 @@ io.sockets.on('connection', function(socket) {
     
     socket.player.enterGame();
     
-    mudlog.log(socket.player + " has entered the game");
+    mudlog.log(socket.player.name + " has entered the game");
   }
 });
 
