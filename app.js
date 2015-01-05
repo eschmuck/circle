@@ -92,7 +92,6 @@ io.sockets.on('connection', function(socket) {
           emitMessage(socket, 'Wrong password.\n\rPassword: ', 'Gray', 'true');
         }
         else {
-          
           var existingPlayer = gameWorld.getPlayer(socket.player.name);
           
           if(existingPlayer !== null) {
@@ -227,13 +226,14 @@ io.sockets.on('connection', function(socket) {
     emitMessage(socket, text.WelcomeMessage);
     socket.connectionState = global.CON_PLAYING;
     socket.player.socket = socket;
-    socket.player.enterGame();
 
     gameWorld.addCharacter(socket.player);
 
     var startRoom = gameWorld.getRoom(3001);
     startRoom.addCharacter(socket.player);
     startRoom.showRoomToCharacter(socket.player);
+    
+    socket.player.enterGame();
   }
 });
 

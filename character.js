@@ -114,7 +114,6 @@ characterSchema.methods.isNpc = function() {
 
 characterSchema.methods.emitMessage = function(message, color) {
 	if(this.socket !== undefined) {
-		
 		var formattedMessage = message.substring(0, 1).toUpperCase() + message.substring(1);
 		
 		if(color !== undefined) {
