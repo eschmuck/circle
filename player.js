@@ -5,6 +5,7 @@ var item = require("./item");
 var character = require("./character");
 var characterSchema = require("./character").schema;
 var utility = require("./utility");
+var constants = require("./constants");
 
 var playerSchema = characterSchema.extend({
 	password: String,
