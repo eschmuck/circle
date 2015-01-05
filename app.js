@@ -92,8 +92,23 @@ io.sockets.on('connection', function(socket) {
           emitMessage(socket, 'Wrong password.\n\rPassword: ', 'Gray', 'true');
         }
         else {
-          socket.connectionState = global.CON_RMOTD;
-          emitMessage(socket, text.Motd + '\n\r*** PRESS RETURN: ');
+          
+          var existingPlayer = gameWorld.getPlayer(socket.player.name);
+          
+          if(existingPlayer !== null) {
+            emitMessage(socket, "You take over your own body, already in use!");
+            existingPlayer.emitRoomMessage(socket.player.name + " suddenly keels over in pain, surrounded by a white aura...");
+            existingPlayer.emitRoomMessage(socket.player.name + "'s body has been taken over by a new spirit!");
+            existingPlayer.socket.disconnect();
+            
+            existingPlayer.socket = socket;
+            socket.player = existingPlayer;
+            socket.connectionState = global.CON_PLAYING;
+          }
+          else {
+            socket.connectionState = global.CON_RMOTD;
+            emitMessage(socket, text.Motd + '\n\r*** PRESS RETURN: ');
+          }            
         }
         break;
       case global.CON_NEWPASSWD:

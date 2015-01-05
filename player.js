@@ -190,6 +190,7 @@ playerSchema.methods.start = function() {
 };
 
 playerSchema.methods.enterGame = function() {
+	this.emitRoomMessage(this.name + " has entered the game.");
 	this.position = character.POS_STANDING;
 };
 

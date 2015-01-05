@@ -56,7 +56,7 @@ World.prototype.getCharacter = function(parameter) {
 	var counter = 0;
 	
 	if(member === 0) {
-		return this.findPlayer(name);
+		return this.getPlayer(name);
 	}
 	else {
 		var key = name.toLowerCase();
