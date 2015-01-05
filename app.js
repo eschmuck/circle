@@ -57,6 +57,12 @@ io.sockets.on('connection', function(socket) {
   sockets.push(socket);
 
   socket.on('disconnect', function() {
+    
+    if(socket.player !== undefined) {
+      socket.player.emitRoomMessage(socket.player + " vanishes in a flash of white light!");
+      gameWorld.removeCharacter(socket.player);
+    }
+    
     sockets.splice(sockets.indexOf(socket), 1);
   });
 
