@@ -1,5 +1,5 @@
 
 
-exports.mudlog = function mudlog(message) {
+exports.log = function log(message) {
     console.log(message);
 };

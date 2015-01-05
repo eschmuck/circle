@@ -59,10 +59,10 @@ io.sockets.on('connection', function(socket) {
 
   socket.on('disconnect', function() {
     
-    if(socket.player !== undefined) {
-      socket.player.emitRoomMessage(socket.player + " vanishes in a flash of white light!");
-      gameWorld.removeCharacter(socket.player);
-    }
+    // if(socket.player !== undefined) {
+    //   socket.player.emitRoomMessage(socket.player + " vanishes in a flash of white light!");
+    //   gameWorld.removeCharacter(socket.player);
+    // }
     
     sockets.splice(sockets.indexOf(socket), 1);
   });
@@ -236,7 +236,7 @@ io.sockets.on('connection', function(socket) {
     
     socket.player.enterGame();
     
-    mudlog(socket.player + " has entered the game");
+    mudlog.log(socket.player + " has entered the game");
   }
 });
 
