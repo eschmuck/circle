@@ -45,17 +45,9 @@ zoneSchema.methods.reset = function(rooms) {
 
 
 function executeZoneResetCommands(commands, instructionNumber, world, lastThingLoaded) {
-    
-    console.log('commands.length=' + commands.length);
-    console.log('instructionNumber=' + instructionNumber);
-    
     if(instructionNumber < commands.length) {
-        console.log(commands[instructionNumber]);
-        
         var command = commands[instructionNumber].split(" ");
-        
-        console.log(command);
-        
+
         // TODO: Determine if load would exceed global quota
 
         switch(command[0]) {
@@ -106,11 +98,8 @@ function afterMobLoaded(document, mob, commands, world, instructionNumber) {
     var roomId = parseInt(command[4], 10);
     world.addCharacter(mob);
     world.getRoom(roomId).addCharacter(mob);
-    
-    // console.log(commands);
-    // console.log(instructionNumber + 1);
 
-    executeZoneResetCommands(commands, world, (instructionNumber + 1), null, mob);
+    executeZoneResetCommands(commands, (instructionNumber + 1), world, mob);
 }
 
 function afterRoomItemLoaded(document, item, commands, world, mob, instructionNumber) {
@@ -122,7 +111,7 @@ function afterRoomItemLoaded(document, item, commands, world, mob, instructionNu
     
     world.addItem(item);
     world.getRoom(roomId).addItem(item);
-    executeZoneResetCommands(commands, world, (instructionNumber + 1), item);
+    executeZoneResetCommands(commands, (instructionNumber + 1), world, item);
 }
 
 function afterGivenItemLoaded(document, item, commands, world, mob, instructionNumber) {
@@ -132,7 +121,7 @@ function afterGivenItemLoaded(document, item, commands, world, mob, instructionN
     mudlog.info("Giving " + item.id + " to mob " + mob.id);
 
     mob.inventory.push(item);
-    executeZoneResetCommands(commands, world, (instructionNumber + 1), item);
+    executeZoneResetCommands(commands, (instructionNumber + 1), world, item);
 }
 
 function afterEquippedItemLoaded(document, item, commands, world, mob, instructionNumber) {
@@ -144,7 +133,7 @@ function afterEquippedItemLoaded(document, item, commands, world, mob, instructi
 
     world.addItem(item);
     mob.wearing[location] = item;
-    executeZoneResetCommands(commands, world, (instructionNumber + 1), item);
+    executeZoneResetCommands(commands, (instructionNumber + 1), world, item);
 }
 
 var zoneModel = mongoose.model('zone', zoneSchema);
