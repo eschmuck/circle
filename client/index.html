@@ -35,6 +35,10 @@
                 div.css('color', data['color']);
               }
             });
+            
+          if(data['prompt'] !== undefined) {
+            $('body').terminal(this).set_prompt(data['prompt']);
+          }
           }
           else {
             $('body').terminal(this).echo(data['message']);

@@ -117,11 +117,13 @@ characterSchema.methods.emitMessage = function(message, color) {
 	if(this.socket !== undefined) {
 		var formattedMessage = message.substring(0, 1).toUpperCase() + message.substring(1);
 		
+		var prompt = this.hitpoints + "H " + this.manapoints + "M " + this.movepoints + "V >";
+		
 		if(color !== undefined) {
-			this.socket.emit('message', { message: formattedMessage, color: color });
+			this.socket.emit('message', { message: formattedMessage, color: color, prompt: prompt });
 		}
 		else {
-			this.socket.emit('message', { message: formattedMessage });
+			this.socket.emit('message', { message: formattedMessage, prompt: prompt });
 		}
 	}
 };
@@ -322,13 +324,17 @@ characterSchema.methods.toggleQuest = function(mode) {
 	// Implementation overriden by child schemas	
 };
 
+characterSchema.methods.toggleTell = function(mode) {
+	// Implementation overriden by child schemas	
+};
+
 characterSchema.methods.canTellTarget = function(target) {
 	if(this === target) {
 		this.emitMessage("You try to tell yourself something.  Did it work?");
 	}
-	//else if(this.isNoTell) {
-	// 	this.emitMessage("You cannot tell other people while you have notell on.");
-	// }
+	else if(this.isNoTell) {
+		this.emitMessage("You cannot tell other people while you have notell on.");
+	}
 	// else if(this.room.isSoundproof) {
 	// 	this.emitMessage("The walls seem to absorb your words.");
 	// }

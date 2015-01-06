@@ -23,7 +23,8 @@ var playerSchema = characterSchema.extend({
 	isNoHoller: Boolean,
 	isNoShout: Boolean,
 	isNoGratz: Boolean,
-	isNoQuest: Boolean
+	isNoQuest: Boolean,
+	isNoTell: Boolean
 });
 
 playerSchema.methods.meh = function() {
@@ -215,6 +216,7 @@ playerSchema.methods.start = function() {
 	this.isNoShout = false;
 	this.isNoGratz = false;
 	this.isNoQuest = false;	
+	this.isNoTell = false;
 	
 	this.advanceLevel();
 };
@@ -272,6 +274,11 @@ playerSchema.methods.toggleShout = function(mode) {
 playerSchema.methods.toggleQuest = function(mode) {
 	this.isNoQuest = this.toggle(mode, this.isNoQuest, "You are now deaf to quest messages.", "You can now hear quest messages.");
 	mudlog.info(this.name + " turned quest channel to " + this.isNoQuest);
+};
+
+playerSchema.methods.toggleTell = function(mode) {
+	this.isNoTell = this.toggle(mode, this.isNoTell, "You are now deaf to tells.", "You can now hear tells.");
+	mudlog.info(this.name + " turned tells to " + this.isNoTell);
 };
 
 playerSchema.methods.enterGame = function() {
