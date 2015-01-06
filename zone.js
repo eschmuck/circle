@@ -37,7 +37,7 @@ zoneSchema.methods.reset = function(rooms) {
     // console.log(this.world);
     
     for(var i = 0; i < this.resetCommands.length; i++) {
-        executeZoneResetCommands(this.resetCommands[i], 0, this.world, null, null);
+        executeZoneResetCommands(this.resetCommands[i], 0, this.world, null);
     }
 };
 
@@ -48,6 +48,7 @@ function executeZoneResetCommands(commands, instructionNumber, world, lastThingL
         
         // TODO: Determine if load would exceed global quota
         
+        console.log(commands);
         console.log(command[0]);
         
         switch(command[0]) {
