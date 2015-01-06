@@ -73,7 +73,7 @@ function afterMobLoaded(document, mob, commands, world, instructionNumber) {
     var hitpointFormulaTokens =  mob.hitpointFormula.split("+");
     var hitpointTotal = hitpointFormulaTokens[1];
     
-    var hitpointDice = hitpointFormulaTokens.split("d");
+    var hitpointDice = hitpointFormulaTokens[0].split("d");
     
     for(var i = 0; i < hitpointDice[0]; i++) {
         hitpointTotal += utility.randomNumber(1, hitpointDice[1]);
