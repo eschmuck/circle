@@ -132,7 +132,7 @@ function afterGivenItemLoaded(document, item, commands, world, mob, instructionN
     //console.log(mob.inventory);
 
     mob.inventory.push(item);
-    executeZoneResetCommands(commands, (instructionNumber + 1), world, item);
+    executeZoneResetCommands(commands, (instructionNumber + 1), world, mob);
 }
 
 function afterEquippedItemLoaded(document, item, commands, world, mob, instructionNumber) {
@@ -144,7 +144,7 @@ function afterEquippedItemLoaded(document, item, commands, world, mob, instructi
 
     world.addItem(item);
     mob.wearing[location] = item;
-    executeZoneResetCommands(commands, (instructionNumber + 1), world, item);
+    executeZoneResetCommands(commands, (instructionNumber + 1), world, mob);
 }
 
 var zoneModel = mongoose.model('zone', zoneSchema);
