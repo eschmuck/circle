@@ -234,7 +234,7 @@ playerSchema.methods.toggle = function(mode, property, trueMessage, falseMessage
 	
 	property = toggle;
 	
-	if(toggle === true) {
+	if(property === true) {
 		this.emitMessage(trueMessage);
 	}
 	else {
@@ -267,6 +267,8 @@ playerSchema.methods.toggleAuction = function(mode) {
 	// }
 	
 	this.toggle(mode, this.isNoAuction, "You are now deaf to auctions.", "You can now hear auctions.");
+	
+	console.log(this.isNoAuction);
 };
 
 playerSchema.methods.toggleGossip = function(mode) {
