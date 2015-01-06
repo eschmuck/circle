@@ -52,6 +52,8 @@ function executeZoneResetCommands(commands, instructionNumber, world, lastThingL
     if(instructionNumber < commands.length) {
         var command = commands[instructionNumber].split(" ");
         
+        console.log(command);
+        
         // TODO: Determine if load would exceed global quota
 
         switch(command[0]) {
