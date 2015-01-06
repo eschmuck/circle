@@ -119,20 +119,26 @@ function afterRoomItemLoaded(document, item, commands, world, mob, instructionNu
 
 function afterGivenItemLoaded(document, item, commands, world, mob, instructionNumber) {
     item = document[0];
-    world.addItem(item);
-
-    mudlog.info("Giving " + item.id + " to mob " + mob.id);
-
-    //console.log(mob.inventory);
-
-    if(mob.inventory === undefined) {
-        mob.inventory = [];
-    }
     
-    //console.log(mob.inventory);
-
-    mob.inventory.push(item);
-    executeZoneResetCommands(commands, (instructionNumber + 1), world, mob);
+    if(item !== undefined) {
+        world.addItem(item);
+    
+        mudlog.info("Giving " + item.id + " to mob " + mob.id);
+    
+        //console.log(mob.inventory);
+    
+        // if(mob.inventory === undefined) {
+        //     mob.inventory = [];
+        // }
+        
+        //console.log(mob.inventory);
+    
+        mob.inventory.push(item);
+        executeZoneResetCommands(commands, (instructionNumber + 1), world, mob);
+    }
+    else {
+        mudlog.warn("Undefined item load attempted - " + commands + " - " + instructionNumber);
+    }
 }
 
 function afterEquippedItemLoaded(document, item, commands, world, mob, instructionNumber) {
