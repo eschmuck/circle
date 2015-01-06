@@ -36,6 +36,8 @@ zoneSchema.methods.reset = function(rooms) {
 
     // console.log(this.world);
     
+    console.log(this.resetCommands.length);
+    
     for(var i = 0; i < this.resetCommands.length; i++) {
         executeZoneResetCommands(this.resetCommands[i], 0, this.world, null);
     }
@@ -44,7 +46,7 @@ zoneSchema.methods.reset = function(rooms) {
 
 function executeZoneResetCommands(commands, instructionNumber, world, lastThingLoaded) {
     
-    console.log(commands);
+    //console.log(commands);
     console.log(instructionNumber);
     
     if(instructionNumber < commands.length) {
