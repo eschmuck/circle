@@ -397,7 +397,7 @@ playerSchema.methods.getNameForWho = function(shortListMode) {
 	
 	result += this.level + " " + this.getClassAbbreviation() + "] " + this.name;
 	
-	if(longMode === false) {
+	if(shortListMode === false) {
 		result += " " + this.title;
 	}
 	
