@@ -373,6 +373,20 @@ playerSchema.methods.hourlyUpdate = function() {
 	}
 };
 
+playerSchema.methods.getClassAbbreviation = function() {
+	switch(this.class) {
+		case global.CLASS_MAGIC_USER:
+			return "Ma";
+		case global.CLASS_CLERIC:
+			return "Cl";
+		case global.CLASS_THIEF:
+			return "Th";
+		case global.CLASS_WARRIOR:
+			return "Wa";
+		default:
+			return "??";
+	}
+};
 
 playerSchema.methods.setMaleTitle = function() {
 	if(this.level <= 0 || this.level > global.LVL_IMPL) {

@@ -298,6 +298,7 @@ var COMMAND_LIST = [
           { command: "wear"     , minimumPosition: Character.POS_RESTING , functionPointer: do_wear       , minimumLevel: 0, subCommand: 0 },
           { command: "whine"    , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_WHINE },
           { command: "whistle"  , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_WHISTLE },
+          { command: "who"      , minimumPosition: Character.POS_DEAD    , functionPointer: do_who        , minimumLevel: 0, subCommand: exports.0 },
           { command: "wiggle"   , minimumPosition: Character.POS_STANDING, functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_WIGGLE},
           { command: "wink"     , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_WINK},
           { command: "worship"  , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_WORSHIP },
@@ -542,6 +543,22 @@ function do_quit(character, command) {
     
     character.room.removeCharacter(character);
     character.world.removeCharacter(character);
+}
+
+function do_who(character, command) {
+    character.emitMessage("Players ---------------------");
+    
+    var numberCanSee = 0;
+    
+    for(var i = 0; i < character.world.people.length; i++) {
+        var player = character.world.people[i];
+        
+        if(!player.isNpc()) {
+            character.emitMessage('[' + player.level + " " + player.getClassAbbreviation(), "Orange");
+            numberCanSee++;
+        }
+    }
+    
 }
 
 function do_say(character, command) {
