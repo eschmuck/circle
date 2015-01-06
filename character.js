@@ -801,6 +801,8 @@ characterSchema.methods.lookAtCharacter = function(target) {
 		}
 	}
 	
+	this.emitMessage(target.getDiagnosis());
+	
 	// TODO: Thief can see in inventory
 };
 
@@ -1261,6 +1263,34 @@ characterSchema.methods.giveItem = function(keyword, targetName) {
 	for(var i = 0; i < result.items.length; i++) {
 		this.giveObject(result.items[i], target);
 	}
+};
+
+characterSchema.methods.getDiagnosis = function() {
+	var diagnosis = [];
+	
+	diagnosis[0] = { percent: 100, description: "is in excellent condition." };
+	diagnosis[1] = { percent: 90, description: "has a few scratches." };
+	diagnosis[2] = { percent: 75, description: "has some small wounds and bruises." };
+	diagnosis[3] = { percent: 50, description: "has quite a few wounds." };
+	diagnosis[4] = { percent: 30, description: "has some big nasty wounds and scratches." };
+	diagnosis[5] = { percent: 15, description: "looks pretty hurt." };
+	diagnosis[6] = { percent: 0, description: "is in awful condition." };
+	diagnosis[7] = { percent: -1, description: "is bleeding awfully from big wounds." };
+	
+	var percent = -1;
+	var index = 0;
+	
+	if(this.maximumHitpoints > 0) {
+		percent = (100 * this.hitpoints) / this.maximumHitpoints;
+	}
+
+	for(index = 0; index < diagnosis.length; index++) {
+		if(percent >= diagnosis[index].percent) {
+			break;
+		}
+	}
+	
+	return diagnosis[index].description;
 };
 
 var characterModel = mongoose.model('character', characterSchema);

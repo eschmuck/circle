@@ -299,6 +299,7 @@ var COMMAND_LIST = [
           { command: "whine"    , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_WHINE },
           { command: "whistle"  , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_WHISTLE },
           { command: "who"      , minimumPosition: Character.POS_DEAD    , functionPointer: do_who        , minimumLevel: 0, subCommand: 0 },
+          { command: "whoami"   , minimumPosition: Character.POS_DEAD    , functionPointer: do_whoami     , minimumLevel: 0, subCommand: 0 },
           { command: "wiggle"   , minimumPosition: Character.POS_STANDING, functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_WIGGLE},
           { command: "wink"     , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_WINK},
           { command: "worship"  , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_WORSHIP },
@@ -546,9 +547,6 @@ function do_quit(character, command) {
 }
 
 function do_who(character, command) {
-    
-    console.log(command);
-    
     var shortList = false;
     
     if(command.tokens.indexOf("-s") > -1) {
@@ -604,6 +602,10 @@ function do_who(character, command) {
     else {
         character.emitMessage("  " + players.length + " characters displayed.");
     }
+}
+
+function do_whoami(character, command) {
+    character.emitMessage('You are ' + character.name + '.');
 }
 
 function do_say(character, command) {
