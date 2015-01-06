@@ -221,6 +221,9 @@ var COMMAND_LIST = [
           { command: "nod"      , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_NOD },
           { command: "nudge"    , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_NUDGE },
           { command: "nuzzle"   , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_NUZZLE },
+          
+          { command: "noauction", minimumPosition: Character.POS_DEAD    , functionPointer: do_tog_auction, minimumLevel: 0, subCommand: 0 },
+          
 
           { command: "pat"      , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_PAT },
           { command: "peer"     , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_PEER },
@@ -732,7 +735,22 @@ function do_tell(character, command) {
 
 
 
-
+function do_tog_auction(character, command) {
+    if(command.tokens.length > 0) {
+        if(command.tokens[0].toLowerCase().trim() === "on") {
+            character.toggleAuction(true);
+        }
+        else if(command.tokens[0].toLowerCase().trim() === "off") {
+            character.toggleAuction(false);
+        }
+        else {
+            character.toggleAuction();
+        }
+    }
+    else {
+        character.toggleAuction();
+    }
+}
 
 
 

@@ -14,7 +14,9 @@ var playerSchema = characterSchema.extend({
 	thirst: Number,
 	drunk: Number,
 	title: String,
-	class: Number
+	class: Number,
+	
+	isNoAuction: Boolean
 });
 
 playerSchema.methods.meh = function() {
@@ -200,7 +202,34 @@ playerSchema.methods.start = function() {
 	
 	this.gold = 0;
 	
+	this.isNoAuction = false;
+	
 	this.advanceLevel();
+};
+
+playerSchema.methods.toggleAuction = function(mode) {
+	var toggle = false;
+	
+	if(mode === undefined) {
+		if(this.isNoAuction) {
+			toggle = true;
+		}
+		else {
+			toggle = false;
+		}
+	}
+	else {
+		toggle = mode;
+	}
+
+	this.isNoAuction = toggle;
+	
+	if(this.isNoAuction === true) {
+		this.emitMessage("You are now deaf to auctions");
+	}
+	else {
+		this.emitMessage("You can now hear auctions.");
+	}
 };
 
 playerSchema.methods.enterGame = function() {

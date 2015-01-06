@@ -298,6 +298,10 @@ characterSchema.methods.generalCommunication = function(subCommand, message) {
 	}
 };
 
+characterSchema.methods.toggleAuction = function(mode) {
+	// Implementation overriden by child schemas	
+};
+
 characterSchema.methods.canTellTarget = function(target) {
 	if(this === target) {
 		this.emitMessage("You try to tell yourself something.  Did it work?");
@@ -368,7 +372,7 @@ characterSchema.methods.insult = function(parameter) {
 	
 	switch(randomNumber) {
 		case 1:
-			if(target.gender !== GENDER_FEMALE) {
+			if(target.gender !== global.GENDER_FEMALE) {
 				target.emitMessage(this.name + " accuses you of fighting like a woman.");
 			}
 			else {
