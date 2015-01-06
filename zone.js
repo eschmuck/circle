@@ -53,15 +53,23 @@ function executeZoneResetCommands(commands, instructionNumber, world, lastObject
                 break;
             case "M":  // mobile
                 var thisMob = new mob();
-                //world.addCharacter(thisMob);
                 var mobId = parseInt(command[2], 10);
                 mob.load(mobId, thisMob, afterMobLoaded, commands, world, instructionNumber);
                 break;
             case "O":  // item
-                var thisItem = new item();
-                //world.addItem(thisItem);
-                var itemId = parseInt(command[2], 10);
-                item.load(itemId, thisItem, afterRoomItemLoaded, commands, world, instructionNumber);
+                var roomItem = new item();
+                var roomItemId = parseInt(command[2], 10);
+                item.load(roomItemId, roomItem, afterRoomItemLoaded, commands, world, null, instructionNumber);
+                break;
+            case "G":
+                var givenItem = new item();
+                var givenItemId = parseInt(command[2], 10);
+                item.load(givenItemId, givenItem, afterGivenItemLoaded, commands, world, mob, instructionNumber);
+                break;
+            case "E":
+                var equippedItem = new item();
+                var equippedItemId = parseInt(command[2], 10);
+                item.load(equippedItemId, equippedItem, afterGivenItemLoaded, commands, world, mob, instructionNumber);
                 break;
         }
     }
@@ -79,7 +87,7 @@ function afterMobLoaded(document, mob, commands, world, instructionNumber) {
         hitpointTotal += utility.randomNumber(1, hitpointDice[1]);
     }
     
-    mudlog.info("Loading " + mob.name + " with " + hitpointTotal + " hitpoints");
+    mudlog.log("Loading " + mob.name + " with " + hitpointTotal + " hitpoints");
     
     mob.hitpoints = hitpointTotal;
     mob.maximumHitpoints = mob.hitpoints;
@@ -91,12 +99,28 @@ function afterMobLoaded(document, mob, commands, world, instructionNumber) {
     executeZoneResetCommands(commands, world, (instructionNumber + 1), mob);
 }
 
-function afterRoomItemLoaded(document, item, commands, world, instructionNumber) {
+function afterRoomItemLoaded(document, item, commands, world, mob, instructionNumber) {
     item = document[0];
     var command = commands[instructionNumber].split(" ");
     var roomId = parseInt(command[4], 10);
     world.addItem(item);
     world.getRoom(roomId).addItem(item);
+    executeZoneResetCommands(commands, world, (instructionNumber + 1), item);
+}
+
+function afterGivenItemLoaded(document, item, commands, world, mob, instructionNumber) {
+    item = document[0];
+    world.addItem(item);
+    mob.inventory.push(item);
+    executeZoneResetCommands(commands, world, (instructionNumber + 1), item);
+}
+
+function afterEquippedItemLoaded(document, item, commands, world, mob, instructionNumber) {
+    item = document[0];
+    var command = commands[instructionNumber].split(" ");
+    var location = parseInt(command[4], 10);
+    world.addItem(item);
+    mob.wearing[location] = item;
     executeZoneResetCommands(commands, world, (instructionNumber + 1), item);
 }
 

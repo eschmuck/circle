@@ -127,9 +127,9 @@ global.DRINK_AFFECTS = [
   { Drunkness: 0,  Fullness: 0, Thirst: 13 }
 ];
 
-itemSchema.statics.load = function(id, item, callback, commands, world, instructionNumber) {
+itemSchema.statics.load = function(id, item, callback, commands, world, mob, instructionNumber) {
  	this.find({ id: id }, function(err, docs) {
- 		callback(docs, item, commands, world, instructionNumber);
+ 		callback(docs, item, commands, world, mob, instructionNumber);
  	});
 };
 
