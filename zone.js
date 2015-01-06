@@ -82,7 +82,7 @@ function afterMobLoaded(document, mob, commands, world, instructionNumber) {
     mudlog.info("Loading " + mob.name + " with " + hitpointTotal + " hitpoints");
     
     mob.hitpoints = hitpointTotal;
-    mob.hitpoints = mob.maximumHitpoints;
+    mob.maximumHitpoints = mob.hitpoints;
     
     var command = commands[instructionNumber].split(" ");
     var roomId = parseInt(command[4], 10);
