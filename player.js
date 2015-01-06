@@ -388,6 +388,22 @@ playerSchema.methods.getClassAbbreviation = function() {
 	}
 };
 
+playerSchema.methods.getNameForWho = function(longMode) {
+	var result = "  [";
+	
+	if(this.level <= 9) {
+		result += " ";
+	}
+	
+	result += this.level + " " + this.getClassAbbreviation() + "] " + this.name;
+	
+	if(longMode === true) {
+		result += " " + this.title;
+	}
+	
+	return result;
+};
+
 playerSchema.methods.setMaleTitle = function() {
 	if(this.level <= 0 || this.level > global.LVL_IMPL) {
 	    return 'the Man';

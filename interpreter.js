@@ -549,27 +549,60 @@ function do_who(character, command) {
     
     console.log(command);
     
+    var shortList = false;
+    
+    if(command.tokens.indexOf("-s")) {
+        shortList = true;
+    }
+    
     character.emitMessage("Players ---------------------");
     
-    var numberCanSee = 0;
-    
+    var players = [];
+
     for(var i = 0; i < character.world.people.length; i++) {
         var player = character.world.people[i];
         
         if(!player.isNpc()) {
-            character.emitMessage('[' + player.level + " " + player.getClassAbbreviation() + '] ' + player.name + " " + player.title);
-            numberCanSee++;
+            players.push(player);
+        }
+    }
+
+    var message;
+    
+    if(shortList) {
+        for(var i = 0; i < players.length; i++) {
+            var subMessage = players[i].getNameForWho(false);
+            
+            message += subMessage;
+            
+            for(var j = 0; j < 20 - subMessage.length; j++) {
+                message += " ";
+            }
+            
+            if((i + 1) % 4 === 0) {
+                character.emitMessage(message);
+                message = '';
+            }
+        }
+        
+        if(message !== '') {
+           character.emitMessage(message);
+        }
+    }
+    else {
+        for(var i = 0; i < players.length; i++) {
+            character.emitMessage(players[i].getNameForWho(true));
         }
     }
     
-    if(numberCanSee === 0) {
-        character.emitMessage("Nobody at all!");
+    if(players.length === 0) {
+        character.emitMessage("  Nobody at all!");
     }
-    else if(numberCanSee === 1) {
-        character.emitMessage("One lonely character displayed.");
+    else if(players.length === 1) {
+        character.emitMessage("  One lonely character displayed.");
     }
     else {
-        character.emitMessage(numberCanSee + " characters displayed.");
+        character.emitMessage("  " + players.length + " characters displayed.");
     }
 }
 
