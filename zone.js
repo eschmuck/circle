@@ -1,10 +1,10 @@
 var mongoose = require('mongoose');
 var mob = require('./mob').mob;
 var item = require('./item').item;
+var mudlog = require('./mudlog');
+var utility = require('./utility');
 
 var schema = mongoose.Schema;
-
-//ar connection = mongoose.connect('mongodb://localhost/circledb');
 
 var zoneSchema = new schema({
     id: Number,
@@ -69,6 +69,19 @@ function executeZoneResetCommands(commands, instructionNumber, world, lastObject
 
 function afterMobLoaded(document, mob, commands, world, instructionNumber) {
     mob = document[0];
+    
+    var hitpointFormulaTokens =  mob.hitpointFormula.split("+");
+    var hitpointTotal = hitpointFormulaTokens[1];
+    
+    var hitpointDice = hitpointFormulaTokens.split("d");
+    
+    for(var i = 0; i < hitpointDice[0]; i++) {
+        hitpointTotal += utility.randomNumber(1, hitpointDice[1]);
+    }
+    
+    mob.hitpoints = hitpointTotal;
+    mob.hitpoints = mob.maximumHitpoints;
+    
     var command = commands[instructionNumber].split(" ");
     var roomId = parseInt(command[4], 10);
     world.addCharacter(mob);
