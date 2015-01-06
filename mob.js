@@ -12,7 +12,10 @@ var mobSchema = characterSchema.extend({
 	thac0: Number,
 	armorClass: Number,
 	hitpointFormula: String,
-	damRollFormula: String
+	damRollFormula: String,
+	
+	wearing: [],
+	inventory: []
 });
 
 mobSchema.statics.load = function(id, mob, callback, commands, world, instructionNumber) {
