@@ -120,6 +120,10 @@ function afterGivenItemLoaded(document, item, commands, world, mob, instructionN
 
     mudlog.info("Giving " + item.id + " to mob " + mob.id);
 
+    if(mob.inventory === undefined) {
+        mob.inventory = [];
+    }
+    
     //console.log(mob.inventory);
 
     mob.inventory.push(item);
