@@ -39,7 +39,7 @@ var characterSchema = new schema({
 	position: Number,
 	
 	wearing: [],
-	inventory: [],
+	inventory: []
 });
 
 characterSchema.methods.getPersonalPronoun = function() {
