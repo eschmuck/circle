@@ -43,19 +43,14 @@ zoneSchema.methods.reset = function(rooms) {
 
 
 function executeZoneResetCommands(commands, instructionNumber, world, lastThingLoaded) {
-    // console.log(instructionNumber);
     
-    console.log('here [a]');
-    console.log(instructionNumber < commands.length);
+    console.log(commands.length);
     
     if(instructionNumber < commands.length) {
         var command = commands[instructionNumber].split(" ");
         
         // TODO: Determine if load would exceed global quota
-        
-        console.log(commands);
-        console.log(command[0]);
-        
+
         switch(command[0]) {
             case "*":  // ignore
                 break;
