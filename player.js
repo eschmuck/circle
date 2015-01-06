@@ -16,7 +16,12 @@ var playerSchema = characterSchema.extend({
 	title: String,
 	class: Number,
 	
-	isNoAuction: Boolean
+	isNoAuction: Boolean,
+	isNoGossip: Boolean,
+	isNoHoller: Boolean,
+	isNoShout: Boolean,
+	isNoGratz: Boolean,
+	isNoQuest: Boolean
 });
 
 playerSchema.methods.meh = function() {
@@ -203,17 +208,72 @@ playerSchema.methods.start = function() {
 	this.gold = 0;
 	
 	this.isNoAuction = false;
+	this.isNoGossip = false;
+	this.isNoHoller = false;
+	this.isNoShout = false;
+	this.isNoGratz = false;
+	this.isNoQuest = false;	
 	
 	this.advanceLevel();
 };
 
-playerSchema.methods.toggleAuction = function(mode) {
-	console.log('mode: ' + mode);
-	console.log('this.isNoAuction: ' + this.isNoAuction);
+playerSchema.methods.toggle = function(mode, property, trueMessage, falseMessage) {
 	var toggle = false;
 	
 	if(mode === undefined) {
-		if(this.isNoAuction === true) {
+		if(property === true) {
+			toggle = false;
+		}
+		else {
+			toggle = false;
+		}
+	}
+	else {
+		toggle = mode;
+	}
+	
+	property = toggle;
+	
+	if(toggle === true) {
+		this.emitMessage(trueMessage);
+	}
+	else {
+		this.emitMessage(falseMessage);
+	}
+};
+
+playerSchema.methods.toggleAuction = function(mode) {
+	// var toggle = false;
+	
+	// if(mode === undefined) {
+	// 	if(this.isNoAuction === true) {
+	// 		toggle = false;
+	// 	}
+	// 	else {
+	// 		toggle = true;
+	// 	}
+	// }
+	// else {
+	// 	toggle = mode;
+	// }
+
+	// this.isNoAuction = toggle;
+
+	// if(this.isNoAuction === true) {
+	// 	this.emitMessage("You are now deaf to auctions.");
+	// }
+	// else {
+	// 	this.emitMessage("You can now hear auctions.");
+	// }
+	
+	this.toggle(mode, this.isNoAuction, "You are now deaf to auctions.", "You can now hear auctions.");
+};
+
+playerSchema.methods.toggleGossip = function(mode) {
+	var toggle = false;
+	
+	if(mode === undefined) {
+		if(this.isNoGossip === true) {
 			toggle = false;
 		}
 		else {
@@ -224,19 +284,116 @@ playerSchema.methods.toggleAuction = function(mode) {
 		toggle = mode;
 	}
 
-	console.log('toggle: ' + toggle);
+	this.isNoGossip = toggle;
 
-	this.isNoAuction = toggle;
-	
-	console.log('this.isNoAuction: ' + this.isNoAuction);
-	
-	if(this.isNoAuction === true) {
-		this.emitMessage("You are now deaf to auctions");
+	if(this.isNoGossip === true) {
+		this.emitMessage("You are now deaf to gossip.");
 	}
 	else {
-		this.emitMessage("You can now hear auctions.");
+		this.emitMessage("You can now hear gossip.");
 	}
 };
+
+playerSchema.methods.toggleGratz = function(mode) {
+	var toggle = false;
+	
+	if(mode === undefined) {
+		if(this.isNoGratz === true) {
+			toggle = false;
+		}
+		else {
+			toggle = true;
+		}
+	}
+	else {
+		toggle = mode;
+	}
+
+	this.isNoGratz = toggle;
+
+	if(this.isNoGratz === true) {
+		this.emitMessage("You are now deaf to congratulations messages.");
+	}
+	else {
+		this.emitMessage("You can now hear congratulations messages.");
+	}
+};
+
+playerSchema.methods.toggleHoller = function(mode) {
+	var toggle = false;
+	
+	if(mode === undefined) {
+		if(this.isNoHoller === true) {
+			toggle = false;
+		}
+		else {
+			toggle = true;
+		}
+	}
+	else {
+		toggle = mode;
+	}
+
+	this.isNoHoller = toggle;
+
+	if(this.isNoHoller === true) {
+		this.emitMessage("You will no longer hear holler messages.");
+	}
+	else {
+		this.emitMessage("You can now hear people hollering.");
+	}
+};
+
+playerSchema.methods.toggleShout = function(mode) {
+	var toggle = false;
+	
+	if(mode === undefined) {
+		if(this.isNoShout === true) {
+			toggle = false;
+		}
+		else {
+			toggle = true;
+		}
+	}
+	else {
+		toggle = mode;
+	}
+
+	this.isNoShout = toggle;
+
+	if(this.isNoShout === true) {
+		this.emitMessage("You will no longer hear shouts.");
+	}
+	else {
+		this.emitMessage("You can now hear people shouting.");
+	}
+};
+
+playerSchema.methods.toggleQuest = function(mode) {
+	var toggle = false;
+	
+	if(mode === undefined) {
+		if(this.isNoQuest === true) {
+			toggle = false;
+		}
+		else {
+			toggle = true;
+		}
+	}
+	else {
+		toggle = mode;
+	}
+
+	this.isNoQuest = toggle;
+
+	if(this.isNoQuest === true) {
+		this.emitMessage("You will no longer quest messages.");
+	}
+	else {
+		this.emitMessage("You can now hear quest messages");
+	}
+};
+
 
 playerSchema.methods.enterGame = function() {
 	this.emitRoomMessage(this.name + " has entered the game.");

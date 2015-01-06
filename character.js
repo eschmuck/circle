@@ -302,6 +302,26 @@ characterSchema.methods.toggleAuction = function(mode) {
 	// Implementation overriden by child schemas	
 };
 
+characterSchema.methods.toggleGossip = function(mode) {
+	// Implementation overriden by child schemas	
+};
+
+characterSchema.methods.toggleGratz = function(mode) {
+	// Implementation overriden by child schemas	
+};
+
+characterSchema.methods.toggleHoller = function(mode) {
+	// Implementation overriden by child schemas	
+};
+
+characterSchema.methods.toggleShout = function(mode) {
+	// Implementation overriden by child schemas	
+};
+
+characterSchema.methods.toggleQuest = function(mode) {
+	// Implementation overriden by child schemas	
+};
+
 characterSchema.methods.canTellTarget = function(target) {
 	if(this === target) {
 		this.emitMessage("You try to tell yourself something.  Did it work?");

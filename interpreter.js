@@ -223,6 +223,11 @@ var COMMAND_LIST = [
           { command: "nuzzle"   , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_NUZZLE },
           
           { command: "noauction", minimumPosition: Character.POS_DEAD    , functionPointer: do_tog_auction, minimumLevel: 0, subCommand: 0 },
+          { command: "nogossip" , minimumPosition: Character.POS_DEAD    , functionPointer: do_tog_gossip , minimumLevel: 0, subCommand: 0 },
+          { command: "nogratz"  , minimumPosition: Character.POS_DEAD    , functionPointer: do_tog_gratz  , minimumLevel: 0, subCommand: 0 },
+          { command: "noholler" , minimumPosition: Character.POS_DEAD    , functionPointer: do_tog_holler , minimumLevel: 0, subCommand: 0 },
+          { command: "noshout"  , minimumPosition: Character.POS_DEAD    , functionPointer: do_tog_shout  , minimumLevel: 0, subCommand: 0 },
+          { command: "noquest"  , minimumPosition: Character.POS_DEAD    , functionPointer: do_tog_quest  , minimumLevel: 0, subCommand: 0 },
           
 
           { command: "pat"      , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_PAT },
@@ -732,9 +737,6 @@ function do_tell(character, command) {
     }
 }
 
-
-
-
 function do_tog_auction(character, command) {
     if(command.tokens.length > 0) {
         if(command.tokens[0].toLowerCase().trim() === "on") {
@@ -752,10 +754,90 @@ function do_tog_auction(character, command) {
     }
 }
 
+function do_tog_gossip(character, command) {
+    if(command.tokens.length > 0) {
+        if(command.tokens[0].toLowerCase().trim() === "on") {
+            character.toggleGossip(true);
+        }
+        else if(command.tokens[0].toLowerCase().trim() === "off") {
+            character.toggleGossip(false);
+        }
+        else {
+            character.toggleGossip();
+        }
+    }
+    else {
+        character.toggleGossip();
+    }
+}
 
+function do_tog_gratz(character, command) {
+    if(command.tokens.length > 0) {
+        if(command.tokens[0].toLowerCase().trim() === "on") {
+            character.toggleGratz(true);
+        }
+        else if(command.tokens[0].toLowerCase().trim() === "off") {
+            character.toggleGratz(false);
+        }
+        else {
+            character.toggleGratz();
+        }
+    }
+    else {
+        character.toggleGratz();
+    }
+}
 
+function do_tog_holler(character, command) {
+    if(command.tokens.length > 0) {
+        if(command.tokens[0].toLowerCase().trim() === "on") {
+            character.toggleHoller(true);
+        }
+        else if(command.tokens[0].toLowerCase().trim() === "off") {
+            character.toggleHoller(false);
+        }
+        else {
+            character.toggleHoller();
+        }
+    }
+    else {
+        character.toggleHoller();
+    }
+}
 
+function do_tog_shout(character, command) {
+    if(command.tokens.length > 0) {
+        if(command.tokens[0].toLowerCase().trim() === "on") {
+            character.toggleShout(true);
+        }
+        else if(command.tokens[0].toLowerCase().trim() === "off") {
+            character.toggleShout(false);
+        }
+        else {
+            character.toggleShout();
+        }
+    }
+    else {
+        character.toggleShout();
+    }
+}
 
+function do_tog_quest(character, command) {
+    if(command.tokens.length > 0) {
+        if(command.tokens[0].toLowerCase().trim() === "on") {
+            character.toggleQuest(true);
+        }
+        else if(command.tokens[0].toLowerCase().trim() === "off") {
+            character.toggleQuest(false);
+        }
+        else {
+            character.toggleQuest();
+        }
+    }
+    else {
+        character.toggleQuest();
+    }
+}
 
 // Exports
 module.exports = Interpreter;
