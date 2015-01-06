@@ -213,11 +213,11 @@ playerSchema.methods.toggleAuction = function(mode) {
 	var toggle = false;
 	
 	if(mode === undefined) {
-		if(this.isNoAuction) {
-			toggle = true;
+		if(this.isNoAuction === true) {
+			toggle = false;
 		}
 		else {
-			toggle = false;
+			toggle = true;
 		}
 	}
 	else {
