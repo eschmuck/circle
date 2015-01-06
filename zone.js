@@ -44,9 +44,9 @@ zoneSchema.methods.reset = function(rooms) {
 
 function executeZoneResetCommands(commands, instructionNumber, world, lastThingLoaded) {
     // console.log(instructionNumber);
-    // console.log(instructionNumber < commands.length);
     
     console.log('here [a]');
+    console.log(instructionNumber < commands.length);
     
     if(instructionNumber < commands.length) {
         var command = commands[instructionNumber].split(" ");
