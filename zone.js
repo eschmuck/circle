@@ -36,7 +36,7 @@ zoneSchema.methods.reset = function(rooms) {
 
     // console.log(this.world);
     
-    console.log(this.resetCommands.length);
+    //console.log(this.resetCommands.length);
     
     for(var i = 0; i < this.resetCommands.length; i++) {
         executeZoneResetCommands(this.resetCommands[i], 0, this.world, null);
@@ -104,6 +104,9 @@ function afterMobLoaded(document, mob, commands, world, instructionNumber) {
     world.getRoom(roomId).addCharacter(mob);
 
     executeZoneResetCommands(commands, world, (instructionNumber + 1), null, mob);
+    
+    console.log(commands);
+    console.log(instructionNumber + 1);
 }
 
 function afterRoomItemLoaded(document, item, commands, world, mob, instructionNumber) {
