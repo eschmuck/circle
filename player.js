@@ -232,7 +232,7 @@ playerSchema.methods.toggle = function(mode, property, trueMessage, falseMessage
 		toggle = mode;
 	}
 
-	if(property === true) {
+	if(toggle === true) {
 		this.emitMessage(trueMessage);
 	}
 	else {
