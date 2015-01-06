@@ -117,6 +117,15 @@ exports.SCMD_THANK      = 92;
 exports.SCMD_THINK      = 93;
 exports.SCMD_TICKLE     = 94;
 exports.SCMD_TWIDDLE    = 95;
+exports.SCMD_WAVE       = 96;
+exports.SCMD_WHINE      = 97;
+exports.SCMD_WHISTLE    = 98,
+exports.SCMD_WIGGLE     = 99;
+exports.SCMD_WINK       = 100;
+exports.SCMD_WORSHIP    = 101;
+exports.SCMD_YAWN       = 102;
+exports.SCMD_YODEL      = 103;
+
 
 var SCMD_EAT   = 0;
 var SCMD_TASTE = 1;
@@ -631,8 +640,6 @@ function do_move(character, command) {
 
 function do_action(character, command) {
     var action = SOCIALS[command.subCommand];
-    console.log(action);
-    
     character.social(action, command.subInput.trim());
 }
 
