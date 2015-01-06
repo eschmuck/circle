@@ -801,7 +801,7 @@ characterSchema.methods.lookAtCharacter = function(target) {
 		}
 	}
 	
-	this.emitMessage(target.getDiagnosis());
+	this.emitMessage(target.name + " " + target.getDiagnosis());
 	
 	// TODO: Thief can see in inventory
 };
@@ -1284,7 +1284,12 @@ characterSchema.methods.getDiagnosis = function() {
 		percent = (100 * this.hitpoints) / this.maximumHitpoints;
 	}
 
+	console.log(percent);
+
 	for(index = 0; index < diagnosis.length; index++) {
+		
+		console.log(diagnosis[index].percent);
+		
 		if(percent >= diagnosis[index].percent) {
 			break;
 		}
