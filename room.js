@@ -371,6 +371,8 @@ roomSchema.methods.showRoomToCharacter = function(character) {
 	for (var i = 0; i < this.contents.length; i++) {
 		character.emitMessage(this.contents[i].longDescription, 'Green');
 	}
+	
+	character.emitMessage("");
 };
 
 var roomModel = mongoose.model('room', roomSchema);
