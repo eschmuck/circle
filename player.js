@@ -388,7 +388,7 @@ playerSchema.methods.getClassAbbreviation = function() {
 	}
 };
 
-playerSchema.methods.getNameForWho = function(longMode) {
+playerSchema.methods.getNameForWho = function(shortListMode) {
 	var result = "  [";
 	
 	if(this.level <= 9) {
@@ -397,7 +397,7 @@ playerSchema.methods.getNameForWho = function(longMode) {
 	
 	result += this.level + " " + this.getClassAbbreviation() + "] " + this.name;
 	
-	if(longMode === true) {
+	if(longMode === false) {
 		result += " " + this.title;
 	}
 	
