@@ -225,7 +225,7 @@ playerSchema.methods.toggle = function(mode, property, trueMessage, falseMessage
 			toggle = false;
 		}
 		else {
-			toggle = false;
+			toggle = true;
 		}
 	}
 	else {
