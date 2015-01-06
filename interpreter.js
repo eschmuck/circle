@@ -298,7 +298,7 @@ var COMMAND_LIST = [
           { command: "wear"     , minimumPosition: Character.POS_RESTING , functionPointer: do_wear       , minimumLevel: 0, subCommand: 0 },
           { command: "whine"    , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_WHINE },
           { command: "whistle"  , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_WHISTLE },
-          { command: "who"      , minimumPosition: Character.POS_DEAD    , functionPointer: do_who        , minimumLevel: 0, subCommand: exports.0 },
+          { command: "who"      , minimumPosition: Character.POS_DEAD    , functionPointer: do_who        , minimumLevel: 0, subCommand: 0 },
           { command: "wiggle"   , minimumPosition: Character.POS_STANDING, functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_WIGGLE},
           { command: "wink"     , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_WINK},
           { command: "worship"  , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_WORSHIP },
@@ -546,6 +546,9 @@ function do_quit(character, command) {
 }
 
 function do_who(character, command) {
+    
+    console.log(command);
+    
     character.emitMessage("Players ---------------------");
     
     var numberCanSee = 0;
