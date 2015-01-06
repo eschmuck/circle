@@ -570,28 +570,28 @@ function do_who(character, command) {
     var message;
     
     if(shortList) {
-        for(var i = 0; i < players.length; i++) {
-            var subMessage = players[i].getNameForWho(false);
+        // for(var i = 0; i < players.length; i++) {
+        //     var subMessage = players[i].getNameForWho(shortList);
             
-            message += subMessage;
+        //     message += subMessage;
             
-            for(var j = 0; j < 20 - subMessage.length; j++) {
-                message += " ";
-            }
+        //     for(var j = 0; j < 20 - subMessage.length; j++) {
+        //         message += " ";
+        //     }
             
-            if((i + 1) % 4 === 0) {
-                character.emitMessage(message);
-                message = '';
-            }
-        }
+        //     if((i + 1) % 4 === 0) {
+        //         character.emitMessage(message);
+        //         message = '';
+        //     }
+        // }
         
-        if(message !== '') {
-           character.emitMessage(message);
-        }
+        // if(message !== '') {
+        //   character.emitMessage(message);
+        // }
     }
     else {
         for(var i = 0; i < players.length; i++) {
-            character.emitMessage(players[i].getNameForWho(true));
+            character.emitMessage(players[i].getNameForWho(shortList));
         }
     }
     
