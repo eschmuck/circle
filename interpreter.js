@@ -171,6 +171,7 @@ var COMMAND_LIST = [
 
           { command: "eat"      , minimumPosition: Character.POS_RESTING , functionPointer: do_eat        , minimumLevel: 0, subCommand: global.SCMD_EAT },
           { command: "embrace"  , minimumPosition: Character.POS_STANDING, functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_EMBRACE },
+          { command: "emote"    , minimumPosition: Character.POS_RESTING , functionPointer: do_emote      , minimumLevel: 0, subCommand: 0 },
           { command: "equipment", minimumPosition: Character.POS_DEAD    , functionPointer: do_equipment  , minimumLevel: 0, subCommand: 0 },
 
           { command: "fart"     , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_FART },
@@ -556,6 +557,10 @@ function do_move(character, command) {
 function do_action(character, command) {
     var action = SOCIALS[command.subCommand];
     character.social(action, command.subInput.trim());
+}
+
+function do_emote(character, command) {
+    character.emote(command.subInput.trim());
 }
 
 function do_stand(character) {

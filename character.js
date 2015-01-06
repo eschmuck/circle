@@ -328,6 +328,11 @@ characterSchema.methods.social = function(action, parameter) {
 	thisSocial.emitMessages();
 };
 
+characterSchema.methods.emote = function(parameter) {
+	this.emitMessage(this.name + " " + parameter);
+	this.emitRoomMessage(this.name + " " + parameter);
+};
+
 characterSchema.methods.insult = function(parameter) {
 	var target = this.room.getCharacter(parameter);
 	
