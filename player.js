@@ -6,6 +6,8 @@ var character = require("./character");
 var characterSchema = require("./character").schema;
 var utility = require("./utility");
 var constants = require("./constants");
+var mudlog = require('./mudlog');
+
 
 var playerSchema = characterSchema.extend({
 	password: String,
@@ -243,158 +245,34 @@ playerSchema.methods.toggle = function(mode, property, trueMessage, falseMessage
 };
 
 playerSchema.methods.toggleAuction = function(mode) {
-	// var toggle = false;
-	
-	// if(mode === undefined) {
-	// 	if(this.isNoAuction === true) {
-	// 		toggle = false;
-	// 	}
-	// 	else {
-	// 		toggle = true;
-	// 	}
-	// }
-	// else {
-	// 	toggle = mode;
-	// }
-
-	// this.isNoAuction = toggle;
-
-	// if(this.isNoAuction === true) {
-	// 	this.emitMessage("You are now deaf to auctions.");
-	// }
-	// else {
-	// 	this.emitMessage("You can now hear auctions.");
-	// }
-	
 	this.isNoAuction = this.toggle(mode, this.isNoAuction, "You are now deaf to auctions.", "You can now hear auctions.");
-	console.log(this.isNoAuction);
+	mudlog.info(this.name + " turned auction channel to " + this.isNoAuction);
 };
 
 playerSchema.methods.toggleGossip = function(mode) {
-	var toggle = false;
-	
-	if(mode === undefined) {
-		if(this.isNoGossip === true) {
-			toggle = false;
-		}
-		else {
-			toggle = true;
-		}
-	}
-	else {
-		toggle = mode;
-	}
-
-	this.isNoGossip = toggle;
-
-	if(this.isNoGossip === true) {
-		this.emitMessage("You are now deaf to gossip.");
-	}
-	else {
-		this.emitMessage("You can now hear gossip.");
-	}
+	this.isNoGossip = this.toggle(mode, this.isNoGossip, "You are now deaf to gossip.", "You can now hear gossip.");
+	mudlog.info(this.name + " turned gossip channel to " + this.isNoGossip);
 };
 
 playerSchema.methods.toggleGratz = function(mode) {
-	var toggle = false;
-	
-	if(mode === undefined) {
-		if(this.isNoGratz === true) {
-			toggle = false;
-		}
-		else {
-			toggle = true;
-		}
-	}
-	else {
-		toggle = mode;
-	}
-
-	this.isNoGratz = toggle;
-
-	if(this.isNoGratz === true) {
-		this.emitMessage("You are now deaf to congratulations messages.");
-	}
-	else {
-		this.emitMessage("You can now hear congratulations messages.");
-	}
+	this.isNoGratz = this.toggle(mode, this.isNoGratz, "You are now deaf to congratulations messages.", "You can now hear congratulations messages.");
+	mudlog.info(this.name + " turned gratz channel to " + this.isNoGratz);
 };
 
 playerSchema.methods.toggleHoller = function(mode) {
-	var toggle = false;
-	
-	if(mode === undefined) {
-		if(this.isNoHoller === true) {
-			toggle = false;
-		}
-		else {
-			toggle = true;
-		}
-	}
-	else {
-		toggle = mode;
-	}
-
-	this.isNoHoller = toggle;
-
-	if(this.isNoHoller === true) {
-		this.emitMessage("You will no longer hear holler messages.");
-	}
-	else {
-		this.emitMessage("You can now hear people hollering.");
-	}
+	this.isNoHoller = this.toggle(mode, this.isNoHoller, "You are now deaf to holler messages.", "You can now hear holler messages.");
+	mudlog.info(this.name + " turned holler channel to " + this.isNoHoller);
 };
 
 playerSchema.methods.toggleShout = function(mode) {
-	var toggle = false;
-	
-	if(mode === undefined) {
-		if(this.isNoShout === true) {
-			toggle = false;
-		}
-		else {
-			toggle = true;
-		}
-	}
-	else {
-		toggle = mode;
-	}
-
-	this.isNoShout = toggle;
-
-	if(this.isNoShout === true) {
-		this.emitMessage("You will no longer hear shouts.");
-	}
-	else {
-		this.emitMessage("You can now hear people shouting.");
-	}
+	this.isNoShout = this.toggle(mode, this.isNoShout, "You are now deaf to shouting.", "You can now hear shouting.");
+	mudlog.info(this.name + " turned shout channel to " + this.isNoShout);
 };
 
 playerSchema.methods.toggleQuest = function(mode) {
-	var toggle = false;
-	
-	if(mode === undefined) {
-		if(this.isNoQuest === true) {
-			toggle = false;
-		}
-		else {
-			toggle = true;
-		}
-	}
-	else {
-		toggle = mode;
-	}
-
-	this.isNoQuest = toggle;
-
-	if(this.isNoQuest === true) {
-		this.emitMessage("You will no longer quest messages.");
-	}
-	else {
-		this.emitMessage("You can now hear quest messages");
-	}
+	this.isNoQuest = this.toggle(mode, this.isNoQuest, "You are now deaf to quest messages.", "You can now hear quest messages.");
+	mudlog.info(this.name + " turned quest channel to " + this.isNoQuest);
 };
-
 
 playerSchema.methods.enterGame = function() {
 	this.emitRoomMessage(this.name + " has entered the game.");
