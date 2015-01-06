@@ -117,7 +117,7 @@ characterSchema.methods.emitMessage = function(message, color) {
 	if(this.socket !== undefined) {
 		var formattedMessage = message.substring(0, 1).toUpperCase() + message.substring(1);
 		
-		var prompt = this.hitpoints + "H " + this.manapoints + "M " + this.movepoints + "V >";
+		var prompt = this.hitpoints + "H " + this.manapoints + "M " + this.movepoints + "V > ";
 		
 		if(color !== undefined) {
 			this.socket.emit('message', { message: formattedMessage, color: color, prompt: prompt });

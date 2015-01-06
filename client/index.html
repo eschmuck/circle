@@ -28,6 +28,10 @@
           else {
             $('body').terminal(this).set_mask(false);
           }
+
+          if(data['prompt'] !== undefined) {
+            $('body').terminal(this).set_prompt(data['prompt']);
+          }
           
           if(data['color'] !== undefined) {
             $('body').terminal(this).echo(data['message'], { 
@@ -35,10 +39,6 @@
                 div.css('color', data['color']);
               }
             });
-            
-          if(data['prompt'] !== undefined) {
-            $('body').terminal(this).set_prompt(data['prompt']);
-          }
           }
           else {
             $('body').terminal(this).echo(data['message']);
