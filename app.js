@@ -31,7 +31,7 @@ app.use(express.static(path.resolve(__dirname, 'client')));
 var io = require('socket.io').listen(server);
 
 http.createServer(app).listen(app.get('port'), function() {
-  console.log("Express server listening on port 3000");
+  mudlog.info("Express server listening on port 3000");
 });
 
 room.getRooms(function(roomDocs) {
@@ -39,7 +39,7 @@ room.getRooms(function(roomDocs) {
   zone.getZones(function(zoneDocs) {
     gameWorld.zones = zoneDocs;
     for(var i = 0; i < gameWorld.zones.length; i++) {
-      console.log('reseting zone ' + gameWorld.zones[i].id);
+      mudlog.info('reseting zone ' + gameWorld.zones[i].id);
       gameWorld.zones[i].world = gameWorld;
       gameWorld.zones[i].reset(gameWorld.rooms);
     }
@@ -49,13 +49,13 @@ room.getRooms(function(roomDocs) {
 setInterval(hourElapsed, global.SECONDS_PER_MUDHOUR * 1000);
 
 io.sockets.on('connection', function(socket) {
-  console.log('A new user connected!');
-
   socket.player = null;
   socket.connectionState = global.CON_GET_NAME;
   emitMessage(socket, text.IntroMessage);
 
   sockets.push(socket);
+
+  mudlog.info('A new user connected! Socket count:' + sockets.length);
 
   socket.on('disconnect', function() {
     
@@ -65,6 +65,8 @@ io.sockets.on('connection', function(socket) {
     // }
     
     sockets.splice(sockets.indexOf(socket), 1);
+    
+    mudlog.info('Socket disconnected. Socket count: ' + sockets.length);
   });
 
   socket.on('message', function(msg) {
@@ -77,6 +79,7 @@ io.sockets.on('connection', function(socket) {
         break;
       case global.CON_NAME_CNFRM:
         if (msg['input'].substring(0, 1).toUpperCase() == 'Y') {
+          mudlog.info('New player: ' + socket.player.name);
           emitMessage(socket, 'New character.\n\rGive me a password for ' + socket.player.name + ': ', 'Gray', 'true');
           socket.connectionState = global.CON_NEWPASSWD;
         }
