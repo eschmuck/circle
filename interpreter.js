@@ -611,10 +611,14 @@ function do_who(character, command) {
     else {
         character.emitMessage("  " + players.length + " characters displayed.");
     }
+    
+    character.emitMessage("");
 }
 
 function do_whoami(character, command) {
+    character.emitMessage("Feeling forgetful, eh?");
     character.emitMessage('You are ' + character.name + '.');
+    character.emitMessage("");
 }
 
 function do_say(character, command) {
