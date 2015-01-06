@@ -1291,9 +1291,6 @@ characterSchema.methods.getDiagnosis = function() {
 	console.log(percent);
 
 	for(index = 0; index < diagnosis.length; index++) {
-		
-		console.log(diagnosis[index].percent);
-		
 		if(percent >= diagnosis[index].percent) {
 			break;
 		}

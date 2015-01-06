@@ -79,6 +79,8 @@ function afterMobLoaded(document, mob, commands, world, instructionNumber) {
         hitpointTotal += utility.randomNumber(1, hitpointDice[1]);
     }
     
+    mudlog.info("Loading " + mob.name + " with " + hitpointTotal + " hitpoints");
+    
     mob.hitpoints = hitpointTotal;
     mob.hitpoints = mob.maximumHitpoints;
     
