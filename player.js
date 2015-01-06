@@ -231,15 +231,15 @@ playerSchema.methods.toggle = function(mode, property, trueMessage, falseMessage
 	else {
 		toggle = mode;
 	}
-	
-	property = toggle;
-	
+
 	if(property === true) {
 		this.emitMessage(trueMessage);
 	}
 	else {
 		this.emitMessage(falseMessage);
 	}
+	
+	return toggle;
 };
 
 playerSchema.methods.toggleAuction = function(mode) {
@@ -266,8 +266,7 @@ playerSchema.methods.toggleAuction = function(mode) {
 	// 	this.emitMessage("You can now hear auctions.");
 	// }
 	
-	this.toggle(mode, this.isNoAuction, "You are now deaf to auctions.", "You can now hear auctions.");
-	
+	this.isNoAuction = this.toggle(mode, this.isNoAuction, "You are now deaf to auctions.", "You can now hear auctions.");
 	console.log(this.isNoAuction);
 };
 
