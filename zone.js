@@ -46,7 +46,7 @@ zoneSchema.methods.reset = function(rooms) {
 
 function executeZoneResetCommands(commands, instructionNumber, world, lastThingLoaded) {
     
-    console.log(instructionNumber);
+    //console.log(instructionNumber);
     
     if(instructionNumber < commands.length) {
         var command = commands[instructionNumber].split(" ");
@@ -123,7 +123,7 @@ function afterGivenItemLoaded(document, item, commands, world, mob, instructionN
 
     mudlog.info("Giving " + item.id + " to mob " + mob.id);
 
-    console.log(mob.inventory);
+    //console.log(mob.inventory);
 
     if(mob.inventory === undefined) {
         mob.inventory = [];
