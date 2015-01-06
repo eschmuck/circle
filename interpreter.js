@@ -554,11 +554,20 @@ function do_who(character, command) {
         var player = character.world.people[i];
         
         if(!player.isNpc()) {
-            character.emitMessage('[' + player.level + " " + player.getClassAbbreviation(), "Orange");
+            character.emitMessage('[' + player.level + " " + player.getClassAbbreviation() + '] ' + player.name + " " + player.title);
             numberCanSee++;
         }
     }
     
+    if(numberCanSee === 0) {
+        character.emitMessage("Nobody at all!");
+    }
+    else if(numberCanSee === 1) {
+        character.emitMessage("One lonely character displayed.");
+    }
+    else {
+        character.emitMessage(numberCanSee + " characters displayed.");
+    }
 }
 
 function do_say(character, command) {
