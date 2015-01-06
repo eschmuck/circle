@@ -120,10 +120,10 @@ function afterGivenItemLoaded(document, item, commands, world, mob, instructionN
 
     mudlog.info("Giving " + item.id + " to mob " + mob.id);
 
-    console.log(mob.inventory);
+    //console.log(mob.inventory);
 
-    // mob.inventory.push(item);
-    // executeZoneResetCommands(commands, (instructionNumber + 1), world, item);
+    mob.inventory.push(item);
+    executeZoneResetCommands(commands, (instructionNumber + 1), world, item);
 }
 
 function afterEquippedItemLoaded(document, item, commands, world, mob, instructionNumber) {
