@@ -786,10 +786,10 @@ characterSchema.methods.lookAtCharacter = function(target) {
 	target.emitMessage(this.name + " looks at you.");
 	
 	if(target.description !== undefined) {
-		this.emitMessage(target.description);
+		this.emitMessage(target.description.trim());
 	}
 	else if(target.detailedDescription !== undefined) {
-		this.emitMessage(target.detailedDescription);
+		this.emitMessage(target.detailedDescription.trim());
 	}
 	else {
 		this.emitMessage("You see nothing special about " + target.getObjectPronoun() + ".");
