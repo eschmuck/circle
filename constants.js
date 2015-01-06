@@ -12,6 +12,8 @@ global.CON_MENU       = 10;
 
 global.SECONDS_PER_MUDHOUR = 75;
 
+global.PULSE_MOBILE = 10;   // 10 real seconds
+
 global.GENDER_NEUTRAL = 0;
 global.GENDER_MALE    = 1;
 global.GENDER_FEMALE  = 2;

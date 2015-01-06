@@ -19,7 +19,6 @@ var connection = mongoose.connect('mongodb://localhost/circledb');
 
 var app = express();
 var server = app.listen(3000);
-//var gameDb = new database();
 var gameWorld = new world();
 var inputInterpreter = new interpreter();
 
@@ -47,6 +46,7 @@ room.getRooms(function(roomDocs) {
 });
 
 setInterval(hourElapsed, global.SECONDS_PER_MUDHOUR * 1000);
+setInterval(updateMobs, global.PULSE_MOBILE * 1000);
 
 io.sockets.on('connection', function(socket) {
   socket.player = null;
@@ -253,4 +253,8 @@ function emitMessage(socket, text, color, mask) {
 
 function hourElapsed() {
   gameWorld.hourElapsed();
+}
+
+function updateMobs() {
+  gameWorld.updateMobs();
 }

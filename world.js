@@ -134,6 +134,13 @@ World.prototype.hourElapsed = function() {
 	}
 };
 
+World.prototype.updateMobs = function() {
+	for(var i = 0; i < this.people.length; i++)	{
+		if(this.people[i].isNpc()) {
+			this.people[i].performActivity();
+		}
+	}
+};
 
 // Exports
 module.exports = World;
