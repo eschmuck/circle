@@ -50,6 +50,8 @@ function executeZoneResetCommands(commands, instructionNumber, world, lastThingL
     //console.log(instructionNumber);
     
     if(instructionNumber < commands.length) {
+        console.log(commands[instructionNumber]);
+        
         var command = commands[instructionNumber].split(" ");
         
         console.log(command);
