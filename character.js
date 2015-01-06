@@ -808,6 +808,8 @@ characterSchema.methods.lookAtCharacter = function(target) {
 	for(var i = 0; i < target.inventory.length; i++) {
 		this.emitMessage("  " + target.inventory[i].shortDescription);
 	}
+	
+	this.emitMessage("");
 };
 
 characterSchema.methods.lookAtTarget = function(keyword) {

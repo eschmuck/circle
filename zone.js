@@ -74,7 +74,7 @@ function executeZoneResetCommands(commands, instructionNumber, world, lastThingL
             case "E":
                 var equippedItem = new item();
                 var equippedItemId = parseInt(command[2], 10);
-                item.load(equippedItemId, equippedItem, afterGivenItemLoaded, commands, world, lastThingLoaded, instructionNumber);
+                item.load(equippedItemId, equippedItem, afterEquippedItemLoaded, commands, world, lastThingLoaded, instructionNumber);
                 break;
         }
     }
