@@ -37,16 +37,18 @@ zoneSchema.methods.reset = function(rooms) {
     // console.log(this.world);
     
     for(var i = 0; i < this.resetCommands.length; i++) {
-        executeZoneResetCommands(this.resetCommands[i], 0, this.world, null);
+        executeZoneResetCommands(this.resetCommands[i], 0, this.world, null, null);
     }
 };
 
 
-function executeZoneResetCommands(commands, instructionNumber, world, lastObjectLoaded) {
+function executeZoneResetCommands(commands, instructionNumber, world, lastThingLoaded) {
     if(instructionNumber < commands.length) {
         var command = commands[instructionNumber].split(" ");
         
         // TODO: Determine if load would exceed global quota
+        
+        console.log(command[0]);
         
         switch(command[0]) {
             case "*":  // ignore
@@ -64,12 +66,12 @@ function executeZoneResetCommands(commands, instructionNumber, world, lastObject
             case "G":
                 var givenItem = new item();
                 var givenItemId = parseInt(command[2], 10);
-                item.load(givenItemId, givenItem, afterGivenItemLoaded, commands, world, mob, instructionNumber);
+                item.load(givenItemId, givenItem, afterGivenItemLoaded, commands, world, lastThingLoaded, instructionNumber);
                 break;
             case "E":
                 var equippedItem = new item();
                 var equippedItemId = parseInt(command[2], 10);
-                item.load(equippedItemId, equippedItem, afterGivenItemLoaded, commands, world, mob, instructionNumber);
+                item.load(equippedItemId, equippedItem, afterGivenItemLoaded, commands, world, lastThingLoaded, instructionNumber);
                 break;
         }
     }
@@ -87,7 +89,7 @@ function afterMobLoaded(document, mob, commands, world, instructionNumber) {
         hitpointTotal += utility.randomNumber(1, hitpointDice[1]);
     }
     
-    mudlog.info("Loading " + mob.name + " with " + hitpointTotal + " hitpoints");
+    mudlog.info("Loading " + mob.name + "(" + mob.id + ") with " + hitpointTotal + " hitpoints");
     
     mob.hitpoints = hitpointTotal;
     mob.maximumHitpoints = mob.hitpoints;
@@ -96,7 +98,7 @@ function afterMobLoaded(document, mob, commands, world, instructionNumber) {
     var roomId = parseInt(command[4], 10);
     world.addCharacter(mob);
     world.getRoom(roomId).addCharacter(mob);
-    executeZoneResetCommands(commands, world, (instructionNumber + 1), mob);
+    executeZoneResetCommands(commands, world, (instructionNumber + 1), null, mob);
 }
 
 function afterRoomItemLoaded(document, item, commands, world, mob, instructionNumber) {
@@ -104,7 +106,7 @@ function afterRoomItemLoaded(document, item, commands, world, mob, instructionNu
     var command = commands[instructionNumber].split(" ");
     var roomId = parseInt(command[4], 10);
     
-    mudlog.info("Adding " + item.id + " to room " + roomId);
+    mudlog.info("Adding object " + item.shortDescription + "(" + item.id + ") to room " + roomId);
     
     world.addItem(item);
     world.getRoom(roomId).addItem(item);
