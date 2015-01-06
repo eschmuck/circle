@@ -32,6 +32,20 @@ World.prototype.removeCharacter = function(character) {
 	character.world = null;
 };
 
+World.prototype.countCharacter = function(mobId) {
+	var count = 0;
+	
+	for(var i = 0; i < this.people.length; i++) {
+		if(this.people[i].isNpc()) {
+			if(this.people[i].id === mobId) {
+				count++;
+			}
+		}
+	}
+	
+	return count;
+};
+
 World.prototype.addItem = function(item) {
 	this.items.push(item);
 	item.world = this;
@@ -40,6 +54,18 @@ World.prototype.addItem = function(item) {
 World.prototype.removeItem = function(item) {
 	this.items.splice(this.items.indexOf(item), 1);
 	item.world = null;
+};
+
+World.prototype.countItem = function(itemId) {
+	var count = 0;
+	
+	for(var i = 0; i < this.items.length; i++) {
+		if(this.items[i].id === itemId) {
+			count++;
+		}
+	}
+	
+	return count;
 };
 
 World.prototype.getCharacter = function(parameter) {

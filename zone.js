@@ -18,26 +18,6 @@ var zoneSchema = new schema({
 });
 
 zoneSchema.methods.reset = function(rooms) {
-    // for(var i = 0; i < this.resetCommands.length; i++) {
-    //     //console.log(this.resetCommands[i]);
-    //     //console.log(this.resetCommands[i].length);
-        
-    //     for(var j = 0; j < this.resetCommands[i].length; j++) {
-    //         var commands = this.resetCommands[i].split(' ');
-            
-    //         switch(commands[0]) {
-    //             case "*":  // Ignore
-    //                 break;
-    //             case "M":  // Mob
-    //                 break;
-    //         }
-    //     }
-    //}
-
-    // console.log(this.world);
-    
-    //console.log(this.resetCommands.length);
-    
     for(var i = 0; i < this.resetCommands.length; i++) {
         executeZoneResetCommands(this.resetCommands[i], 0, this.world, null);
     }
@@ -45,13 +25,10 @@ zoneSchema.methods.reset = function(rooms) {
 
 
 function executeZoneResetCommands(commands, instructionNumber, world, lastThingLoaded) {
-    
-    //console.log(instructionNumber);
+    var maxExisting;
     
     if(instructionNumber < commands.length) {
         var command = commands[instructionNumber].split(" ");
-
-        // TODO: Determine if load would exceed global quota
 
         switch(command[0]) {
             case "*":  // ignore
@@ -59,22 +36,38 @@ function executeZoneResetCommands(commands, instructionNumber, world, lastThingL
             case "M":  // mobile
                 var thisMob = new mob();
                 var mobId = parseInt(command[2], 10);
-                mob.load(mobId, thisMob, afterMobLoaded, commands, world, instructionNumber);
+                maxExisting = parseInt(command[3], 10);
+                
+                if(world.countCharacter(mobId) < maxExisting) {
+                    mob.load(mobId, thisMob, afterMobLoaded, commands, world, instructionNumber);
+                }
                 break;
             case "O":  // item
                 var roomItem = new item();
                 var roomItemId = parseInt(command[2], 10);
-                item.load(roomItemId, roomItem, afterRoomItemLoaded, commands, world, null, instructionNumber);
+                maxExisting = parseInt(command[3], 10);
+                
+                if(world.countItem(roomItemId) < maxExisting) {
+                    item.load(roomItemId, roomItem, afterRoomItemLoaded, commands, world, null, instructionNumber);
+                }
                 break;
             case "G":
                 var givenItem = new item();
                 var givenItemId = parseInt(command[2], 10);
-                item.load(givenItemId, givenItem, afterGivenItemLoaded, commands, world, lastThingLoaded, instructionNumber);
+                maxExisting = parseInt(command[3], 10);
+                
+                if(world.countItem(givenItemId) < maxExisting) {
+                    item.load(givenItemId, givenItem, afterGivenItemLoaded, commands, world, lastThingLoaded, instructionNumber);
+                }
                 break;
             case "E":
                 var equippedItem = new item();
                 var equippedItemId = parseInt(command[2], 10);
-                item.load(equippedItemId, equippedItem, afterEquippedItemLoaded, commands, world, lastThingLoaded, instructionNumber);
+                maxExisting = parseInt(command[3], 10);
+                
+                if(world.countItem(givenItemId) < maxExisting) {
+                    item.load(equippedItemId, equippedItem, afterEquippedItemLoaded, commands, world, lastThingLoaded, instructionNumber);
+                }
                 break;
         }
     }
