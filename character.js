@@ -233,6 +233,16 @@ characterSchema.methods.generalCommunication = function(subCommand, message) {
 			cannotComm = 'You cannot congratulate!';
 			commColor = 'Green';
 			break;
+		case global.SCMD_QSAY:
+			if(this.isNoQuest) {
+				this.emitMessage("You aren't currently listening to the quest channel!");
+				return;
+			}
+			
+			commType = 'quest-say';
+			cannotComm = 'You cannot currently qsay!';
+			commColor = 'White';
+			break;			
 	}
 
 	if(message.length < 1) {
@@ -273,6 +283,11 @@ characterSchema.methods.generalCommunication = function(subCommand, message) {
 							break;
 						case global.SCMD_GRATZ:
 							if(!this.world.people[i].isNoGratz) {
+								this.world.people[i].emitMessage(outputMessage, commColor);
+							}
+							break;
+						case global.SCMD_QSAY:
+							if(!this.world.people[i].isNoQuest) {
 								this.world.people[i].emitMessage(outputMessage, commColor);
 							}
 							break;

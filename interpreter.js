@@ -19,6 +19,7 @@ global.SCMD_SHOUT   = 1;
 global.SCMD_GOSSIP  = 2;
 global.SCMD_AUCTION = 3;
 global.SCMD_GRATZ   = 4;
+global.SCMD_QSAY    = 5;
 
 exports.SCMD_ACCUSE     = 0;
 exports.SCMD_APPLAUD    = 1;
@@ -232,6 +233,7 @@ var COMMAND_LIST = [
           { command: "punch"    , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_PUNCH },
           { command: "purr"     , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_PURR },
 
+          { command: "qsay"     , minimumPosition: Character.POS_RESTING , functionPointer: do_gen_comm   , minimumLevel: 0, subCommand: global.SCMD_QSAY },
           { command: "quit"     , minimumPosition: Character.POS_STANDING, functionPointer: do_quit       , minimumLevel: 0, subCommand: 0 },
 
           { command: "remove"   , minimumPosition: Character.POS_RESTING , functionPointer: do_remove     , minimumLevel: 0, subCommand: 0 },
