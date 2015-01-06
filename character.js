@@ -804,6 +804,10 @@ characterSchema.methods.lookAtCharacter = function(target) {
 	this.emitMessage(target.name + " " + target.getDiagnosis());
 	
 	// TODO: Thief can see in inventory
+	this.emitMessage("You attempt to peek into " + target.getPossessivePronoun() + " inventory: ");
+	for(var i = 0; i < target.inventory.length; i++) {
+		this.emitMessage(target.inventory[i].shortDescription);
+	}
 };
 
 characterSchema.methods.lookAtTarget = function(keyword) {

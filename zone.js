@@ -87,7 +87,7 @@ function afterMobLoaded(document, mob, commands, world, instructionNumber) {
         hitpointTotal += utility.randomNumber(1, hitpointDice[1]);
     }
     
-    mudlog.log("Loading " + mob.name + " with " + hitpointTotal + " hitpoints");
+    mudlog.info("Loading " + mob.name + " with " + hitpointTotal + " hitpoints");
     
     mob.hitpoints = hitpointTotal;
     mob.maximumHitpoints = mob.hitpoints;
@@ -103,6 +103,9 @@ function afterRoomItemLoaded(document, item, commands, world, mob, instructionNu
     item = document[0];
     var command = commands[instructionNumber].split(" ");
     var roomId = parseInt(command[4], 10);
+    
+    mudlog.info("Adding " + item.id + " to room " + roomId);
+    
     world.addItem(item);
     world.getRoom(roomId).addItem(item);
     executeZoneResetCommands(commands, world, (instructionNumber + 1), item);
@@ -111,6 +114,9 @@ function afterRoomItemLoaded(document, item, commands, world, mob, instructionNu
 function afterGivenItemLoaded(document, item, commands, world, mob, instructionNumber) {
     item = document[0];
     world.addItem(item);
+
+    mudlog.info("Giving " + item.id + " to mob " + mob.id);
+
     mob.inventory.push(item);
     executeZoneResetCommands(commands, world, (instructionNumber + 1), item);
 }
@@ -119,6 +125,9 @@ function afterEquippedItemLoaded(document, item, commands, world, mob, instructi
     item = document[0];
     var command = commands[instructionNumber].split(" ");
     var location = parseInt(command[4], 10);
+
+    mudlog.info("Equipping " + item.id + " onto mob " + mob.id + " at location " + location);
+
     world.addItem(item);
     mob.wearing[location] = item;
     executeZoneResetCommands(commands, world, (instructionNumber + 1), item);
