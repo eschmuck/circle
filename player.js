@@ -208,6 +208,8 @@ playerSchema.methods.start = function() {
 };
 
 playerSchema.methods.toggleAuction = function(mode) {
+	console.log(mode);
+	
 	var toggle = false;
 	
 	if(mode === undefined) {
@@ -222,7 +224,11 @@ playerSchema.methods.toggleAuction = function(mode) {
 		toggle = mode;
 	}
 
+	console.log(toggle);
+
 	this.isNoAuction = toggle;
+	
+	console.log(this.isNoAuction);
 	
 	if(this.isNoAuction === true) {
 		this.emitMessage("You are now deaf to auctions");
