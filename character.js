@@ -1280,6 +1280,7 @@ characterSchema.methods.getDiagnosis = function() {
 	var percent = -1;
 	var index = 0;
 	
+	console.log(this.hitpointFormula);
 	console.log(this.maximumHitpoints);
 	console.log(this.hitpoints);
 
