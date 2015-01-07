@@ -247,8 +247,6 @@ roomSchema.methods.getDoorByKeyword = function(keyword) {
 	var index = 1;
 	var doorKeyword = keyword;
 	
-	console.log(this);
-	
 	if(keyword.indexOf(".") > -1) {
 		var tokens = keyword.split(".");
 		
