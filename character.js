@@ -1652,7 +1652,7 @@ characterSchema.methods.slay = function(targetName) {
 };
 
 characterSchema.methods.toCorpse = function() {
-	var corpse = new item( {
+	var corpse = new item.item( {
 		id: -1,
 		shortDescription: "the corpse of " + this.name
 	});
