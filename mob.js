@@ -32,6 +32,10 @@ mobSchema.methods.hourlyUpdate = function() {
 mobSchema.methods.performActivity = function() {
 	mudlog.info("Performing mob random activity");
 	
+	if(this.specialBehavior !== undefined) {
+		console.log(this.specialBehavior);
+	}
+	
 	// if(this.isScavenger === true) {
 	// 	if(utility.randomNumber(1, 10) <= 10) {
 	// 		if(this.room.contents.length > 0) {

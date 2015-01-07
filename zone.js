@@ -95,6 +95,10 @@ function afterMobLoaded(document, mob, commands, world, instructionNumber) {
     world.addCharacter(mob);
     world.getRoom(roomId).addCharacter(mob);
 
+    if(mob.id === 3061 || mob.id === 3068) {
+        mob.specialBehavior = "JJJJJJJJJJJJ";
+    }
+
     executeZoneResetCommands(commands, (instructionNumber + 1), world, mob);
 }
 
