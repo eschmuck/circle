@@ -72,7 +72,9 @@ var mobModel = mongoose.model('mob', mobSchema);
 
 module.exports = {
 	schema: mobSchema,
-	mob: mobModel
+	mob: mobModel,
+	
+	blahBehavior: "AAA"
 };
 
 
@@ -82,12 +84,13 @@ module.exports = {
 
 
 
-var blahBehavior = "AAA";
+// var blahBehavior = "AAA";
 
-exports.blahBehavior = blahBehavior;
+// exports.blahBehavior = blahBehavior;
 
-function janitorBehavior(character) {
-	console.log('janitor spec proc');
-}
+// function janitorBehavior(character) {
+// 	console.log('janitor spec proc');
+// }
 
-exports.janitorBehavior = janitorBehavior;
+// exports.janitorBehavior = janitorBehavior;
+
