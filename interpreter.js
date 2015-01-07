@@ -848,7 +848,7 @@ function do_give(character, command) {
     }
 }
 
-function do_look(character, command) {
+function do_slay(character, command) {
     if(command.tokens.length === 0) {
         character.emitMessage("And who deserves the full extent of your wrath?");
     }
@@ -857,7 +857,7 @@ function do_look(character, command) {
     }
 }
 
-function do_slay(character, command) {
+function do_look(character, command) {
     if(command.tokens.length === 0) {
         character.room.showRoomToCharacter(character);
     }
