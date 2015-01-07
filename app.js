@@ -41,7 +41,9 @@ time.getTime(function(timeDoc) {
 
 weather.getWeather(function(weatherDoc) {
   gameWorld.weather = weatherDoc[0];
-  weather.world = gameWorld;
+  
+  // TODO: Understand why this doesn't work
+  //weather.world = gameWorld;
 });
 
 room.getRooms(function(roomDocs) {

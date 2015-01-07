@@ -167,8 +167,6 @@ weatherSchema.methods.updateWeather = function(weatherChange) {
 };
 
 weatherSchema.methods.update = function(month) {
-	console.log(this.world);
-	
 	this.calculateChange(month, 2, 4, 4);
 	var weatherChange = this.getWeatherChange(4);
 	this.updateWeather(weatherChange);
