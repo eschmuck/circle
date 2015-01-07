@@ -1654,12 +1654,20 @@ characterSchema.methods.slay = function(targetName) {
 characterSchema.methods.toCorpse = function() {
 	var corpse = new item.item( {
 		id: -1,
-		shortDescription: "the corpse of " + this.name,
+		shortDescription: "the corpse of " + this.name + " lays here in a pool of blood.",
 		longDescription: "the corpse of " + this.name,
 	});
 	
+	// TODO: Remove this
+	while(this.inventory.length > 0) {
+		this.dropObject(this.inventory[0]);
+	}
+	
 	this.world.addItem(corpse);
 	this.room.addItem(corpse);
+	
+	this.room.removeCharacter(this);
+	this.world.removeCharacter(this);
 };
 
 var characterModel = mongoose.model('character', characterSchema);
