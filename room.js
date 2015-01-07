@@ -438,8 +438,11 @@ roomSchema.methods.exitExists = function(direction) {
 	}
 };
 
-roomSchema.methods.openOppositeDoor = function(exit) {
-	var otherRoom = this.world.getRoom(exit.toRoomId);
+roomSchema.methods.openOppositeDoor = function(otherRoom) {
+	if(otherRoom === null) {
+		return;
+	}
+	
 	var oppositeExit = null;
 	
 	if(otherRoom !== null) {

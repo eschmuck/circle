@@ -600,7 +600,7 @@ characterSchema.methods.openDoor = function(keyword, directionInput) {
 	}
 	
 	if(result === true) {
-		this.room.openOppositeDoor(exit);
+		this.room.openOppositeDoor(this.world.getRoom(exit.toRoomId));
 	}
 };
 
