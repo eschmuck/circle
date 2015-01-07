@@ -581,6 +581,20 @@ characterSchema.methods.move = function(direction) {
 	}
 };
 
+characterSchema.methods.goto = function(keyword) {
+	var newRoom = this.world.getRoom(parseInt(keyword), 10);
+	
+	if(newRoom != null) {
+		this.room.emitRoomMessage(this.name + " disappears in a puff of smoke.");
+	 	this.room.removeCharacter(this);
+	 	
+	 	newRoom.addCharacter(this);
+	 	this.emitRoomMessage(this.name + " appears with an ear-splitting bang.");
+		
+	 	newRoom.showRoomToCharacter(this);
+	}
+};
+
 characterSchema.methods.takeObject = function(object) {
 	this.room.removeItem(object);
 	this.inventory.push(object);

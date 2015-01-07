@@ -199,6 +199,7 @@ var COMMAND_LIST = [
           { command: "glare"    , minimumPosition: Character.POS_RESTING,  functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_GLARE },
           { command: "gold"     , minimumPosition: Character.POS_SLEEPING, functionPointer: do_gold       , minimumLevel: 0, subCommand: 0 },
           { command: "gossip"   , minimumPosition: Character.POS_SLEEPING, functionPointer: do_gen_comm   , minimumLevel: 0, subCommand: global.SCMD_GOSSIP },
+          { command: "goto"     , minimumPosition: Character.POS_RESTING , functionPointer: do_goto       , minimumLevel: 0, subCommand: 0 },
           { command: "gratz"    , minimumPosition: Character.POS_SLEEPING, functionPointer: do_gen_comm   , minimumLevel: 0, subCommand: global.SCMD_GRATZ },
           { command: "greet"    , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_GREET },
           { command: "grin"     , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_GRIN },
@@ -642,6 +643,10 @@ function do_insult(character, command) {
 
 function do_move(character, command) {
     character.move(command.subCommand);
+}
+
+function do_goto(character, command) {
+    character.goto(command.subInput.trim());
 }
 
 function do_action(character, command) {
