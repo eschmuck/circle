@@ -322,19 +322,13 @@ roomSchema.methods.getDoorByKeyword = function(keyword) {
 		}
 	}
 
-	console.log(this.downwardExit.doorKeywords);
-
 	if(this.downwardExit !== null) {
 		if(this.downwardExit.doorKeywords !== undefined) {
-			console.log(this.downwardExit.doorKeywords);
-			
 			if(this.downwardExit.doorKeywords.indexOf(doorKeyword) > -1) {
 				counter++;
 			}
 			
 			if(counter === index) {
-				console.log('yes');
-				console.log(this.downwardExit);
 				return this.downwardExit;
 			}
 		}
@@ -367,7 +361,7 @@ roomSchema.methods.getDoorByKeywordAndDirection = function(keyword, direction) {
 			break;
 	}
 
-	if(exit.keywords.indexOf(keyword) > -1) {
+	if(exit.doorKeywords.indexOf(keyword) > -1) {
 		return exit;
 	}
 	
