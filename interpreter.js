@@ -670,7 +670,7 @@ function do_sleep(character) {
 
 function do_time(character) {
     character.emitMessage(character.world.time.getDisplayTime());
-    character.emitMessage(character.world.time.getDisplayTime());
+    character.emitMessage(character.world.time.getDisplayDate());
 }
 
 function do_take(character, command) {
