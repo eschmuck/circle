@@ -34,6 +34,10 @@ mobSchema.methods.performActivity = function() {
 
 	//console.log(this.specialBehavior);
 	
+	if(this.id === 3061) {
+		console.log(this);
+	}
+	
 	if(this.specialBehavior !== undefined) {
 		console.log(this.specialBehavior);
 	}
