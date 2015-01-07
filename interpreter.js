@@ -276,6 +276,7 @@ var COMMAND_LIST = [
           { command: "sip"      , minimumPosition: Character.POS_RESTING , functionPointer: do_drink      , minimumLevel: 0, subCommand: global.SCMD_SIP },
           { command: "sit"      , minimumPosition: Character.POS_RESTING , functionPointer: do_sit        , minimumLevel: 0, subCommand: 0 },
           { command: "slap"     , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_SLAP },
+          { command: "slay"     , minimumPosition: Character.POS_RESTING , functionPointer: do_slay       , minimumLevel: 0, subCommand: 0 },
           { command: "sleep"    , minimumPosition: Character.POS_SLEEPING, functionPointer: do_sleep      , minimumLevel: 0, subCommand: 0 },
           { command: "smile"    , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_SMILE },
           { command: "smirk"    , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_SMIRK },
@@ -848,6 +849,15 @@ function do_give(character, command) {
 }
 
 function do_look(character, command) {
+    if(command.tokens.length === 0) {
+        character.emitMessage("And who deserves the full extent of your wrath?");
+    }
+    else {
+        character.slay(command.tokens[0]);
+    }
+}
+
+function do_slay(character, command) {
     if(command.tokens.length === 0) {
         character.room.showRoomToCharacter(character);
     }

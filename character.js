@@ -1640,6 +1640,27 @@ characterSchema.methods.getDiagnosis = function() {
 	return diagnosis[index].description;
 };
 
+characterSchema.methods.slay = function(targetName) {
+	var target = this.room.getCharacter(targetName);
+	
+	if(target === null) {
+		this.emitMessage("No-one by that name here... Your wrath will have to wait.");
+	}
+	else {
+		target.toCorpse();
+	}
+};
+
+characterSchema.methods.toCorpse = function() {
+	var corpse = new item( {
+		id: -1,
+		shortDescription: "the corpse of " + this.name
+	});
+	
+	this.world.addItem(corpse);
+	this.room.addItem(corpse);
+};
+
 var characterModel = mongoose.model('character', characterSchema);
 
 var POS_DEAD       = 0;
