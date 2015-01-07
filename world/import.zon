@@ -1,0 +1,3 @@
+mongoimport --db circledb --collection zones --file 30.zon.json
+mongoimport --db circledb --collection zones --file 120.zon.json
+

@@ -1,0 +1,3 @@
+mongoimport --db circledb --collection mobs --file 30.mob.json
+mongoimport --db circledb --collection mobs --file 120.mob.json
+
