@@ -322,6 +322,8 @@ roomSchema.methods.getDoorByKeyword = function(keyword) {
 
 	if(this.downwardExit !== undefined) {
 		if(this.downwardExit.keywords !== undefined) {
+			console.log(this.downwardExit.keywords);
+			
 			if(this.downwardExit.keywords.indexOf(doorKeyword) > -1) {
 				counter++;
 			}
