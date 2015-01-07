@@ -584,8 +584,8 @@ characterSchema.methods.move = function(direction) {
 characterSchema.methods.goto = function(keyword) {
 	var newRoom = this.world.getRoom(parseInt(keyword), 10);
 	
-	if(newRoom != null) {
-		this.room.emitRoomMessage(this.name + " disappears in a puff of smoke.");
+	if(newRoom !== null) {
+		this.emitRoomMessage(this.name + " disappears in a puff of smoke.");
 	 	this.room.removeCharacter(this);
 	 	
 	 	newRoom.addCharacter(this);
