@@ -70,11 +70,18 @@ mobSchema.methods.isNpc = function() {
 
 var mobModel = mongoose.model('mob', mobSchema);
 
+
+
+function janitorBehavior(character) {
+	console.log('janitor spec proc');
+}
+
 module.exports = {
 	schema: mobSchema,
 	mob: mobModel,
 	
-	blahBehavior: "AAA"
+	blahBehavior: "AAA",
+	janitorBehavior: janitorBehavior
 };
 
 
@@ -88,9 +95,7 @@ module.exports = {
 
 // exports.blahBehavior = blahBehavior;
 
-// function janitorBehavior(character) {
-// 	console.log('janitor spec proc');
-// }
+
 
 // exports.janitorBehavior = janitorBehavior;
 
