@@ -261,12 +261,14 @@ roomSchema.methods.getDoorByKeyword = function(keyword) {
 	var counter = 0;
 	
 	if(this.northernExit !== undefined) {
-		if(this.northernExit.keywords.indexOf(doorKeyword) > -1) {
-			counter++;
-		}
-		
-		if(counter === index) {
-			return this.northernExit;
+		if(this.northernExit.keywords !== undefined) {
+			if(this.northernExit.keywords.indexOf(doorKeyword) > -1) {
+				counter++;
+			}
+			
+			if(counter === index) {
+				return this.northernExit;
+			}
 		}
 	}
 	
