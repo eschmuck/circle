@@ -97,9 +97,11 @@ function afterMobLoaded(document, mob, commands, world, instructionNumber) {
     world.getRoom(roomId).addCharacter(mob);
 
     if(mob.id === 3061 || mob.id === 3068) {
+        console.log('this is a janitor');
         mob.set('specialBehavior', mobBehaviors.blahBehavior);
         //mob.specialBehavior = mobBehaviors.blahBehavior;
         //mob.specialBehavior = mobBehaviors.janitorBehavior;
+        console.log(mob.specialBehavior);
     }
 
     executeZoneResetCommands(commands, (instructionNumber + 1), world, mob);
