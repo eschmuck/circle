@@ -560,12 +560,12 @@ characterSchema.methods.move = function(direction) {
 		}
 		else {
 		 	var newRoom = this.world.getRoom(exit.toRoomId);
-
-			if(newRoom.mobsAllowed === false && this.isNpc() === true) {
-				return;
-			}
 		 	
 		 	if(newRoom !== null) {
+		 		if(newRoom.mobsAllowed === false && this.isNpc() === true) {
+					return;
+				}
+		 		
 			 	this.emitRoomMessage(this.name + " leaves " + directions[direction] + ".");
 			 	this.room.removeCharacter(this);
 		 		
