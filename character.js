@@ -526,6 +526,78 @@ characterSchema.methods.sleep = function() {
     }
 };
 
+characterSchema.methods.openExit = function(exit) {
+	if(exit.isLocked) {
+		this.emitMessage("It's locked.\n\r");
+		return;
+	}
+	
+	if(!exit.isClosed) {
+		this.emitMessage("But it's already open.\n\r");
+		return;
+	}
+	
+	this.emitMessage("You open the " + exit.doorKeywords[0] + ".\n\r");
+	this.emitRoomMessage(this.name + " opens the " + exit.doorKeywords[0] + ".\n\r");
+	exit.isClosed = false;
+};
+
+characterSchema.methods.openDoor = function(keyword, directionInput) {
+	var exit;
+	
+	if(direction === undefined) {
+		exit = this.room.getDoorByKeyword(keyword);
+		
+		if(exit === null) {
+			this.emitMessage("There doesn't seem to be a " + keyword + " here.\n\r");
+			return;
+		}
+		else {
+			this.openExit(exit);
+		}
+	}
+	else {
+		var direction = -1;
+		
+		switch(directionInput.substring(0, 1).toLowerCase()) {
+			case "n":
+				direction = 0;
+				break;
+			case "e":
+				direction = 1;
+				break;
+			case "s":
+				direction = 2;
+				break;
+			case "w":
+				direction = 3;
+				break;
+			case "u":
+				direction = 4;
+				break;
+			case "d":
+				direction = 5;
+				break;
+		}
+		
+		if(direction === -1) {
+			this.emitMessage("Which way is that?\n\r");
+			return;
+		}
+		else {
+			exit = this.room.getDoorByKeyword(keyword, direction);
+			
+			if(exit === null) {
+				this.emitMessage("There doesn't seem to be a " + keyword + " in that direction.\n\r");
+				return;
+			}
+			else {
+				this.openExit(exit);
+			}
+		}
+	}
+};
+
 characterSchema.methods.move = function(direction) {
 	var exit;
 	var exitExists = this.room.exitExists(direction);

@@ -243,6 +243,106 @@ roomSchema.methods.getPlayer = function(name) {
 	return null;
 };
 
+roomSchema.methods.getDoorByKeyword = function(keyword) {
+	var index = 1;
+	var doorKeyword = keyword;
+	
+	if(keyword.indexOf(".") > -1) {
+		var tokens = keyword.split(".");
+		
+		if(tokens[1].length === 0) {
+			return null;
+		}
+		
+		index = parseInt(tokens[0], 10);
+		doorKeyword = tokens[1];
+	}
+	
+	var counter = 0;
+	
+	if(this.northernExit.keywords.indexOf(doorKeyword) > -1) {
+		counter++;
+	}
+	
+	if(counter === index) {
+		return this.northernExit;
+	}
+	
+	if(this.easternExit.keywords.indexOf(doorKeyword) > -1) {
+		counter++;
+	}
+	
+	if(counter === index) {
+		return this.easternExit;
+	}
+
+	if(this.southernExit.keywords.indexOf(doorKeyword) > -1) {
+		counter++;
+	}
+	
+	if(counter === index) {
+		return this.southernExit;
+	}
+	
+	if(this.westernExit.keywords.indexOf(doorKeyword) > -1) {
+		counter++;
+	}
+	
+	if(counter === index) {
+		return this.westernExit;
+	}	
+	
+	if(this.upwardExit.keywords.indexOf(doorKeyword) > -1) {
+		counter++;
+	}
+	
+	if(counter === index) {
+		return this.upwardExit;
+	}
+
+	if(this.downwardExit.keywords.indexOf(doorKeyword) > -1) {
+		counter++;
+	}
+	
+	if(counter === index) {
+		return this.downwardExit;
+	}
+	
+	return null;
+};
+
+roomSchema.methods.getDoorByKeyword = function(keyword, direction) {
+	var exit = null;
+
+	switch(direction) {
+		case 0:
+			exit = this.northernExit;
+			break;
+		case 1:
+			exit = this.southernExit;
+			break;
+		case 2:
+			exit = this.easternExit;
+			break;
+		case 3:
+			exit = this.westernExit;
+			break;
+		case 4:
+			exit = this.upwardExit;
+			break;
+		case 5:
+			exit = this.downwardExit;
+			break;
+	}
+
+	if(exit.keywords.indexOf(keyword) > -1) {
+		return exit;
+	}
+	
+	return null;
+};
+
+
 roomSchema.methods.exitExists = function(direction) {
 	switch (direction) {
 		case 0:

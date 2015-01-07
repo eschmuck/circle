@@ -239,7 +239,8 @@ var COMMAND_LIST = [
           { command: "noshout"  , minimumPosition: Character.POS_DEAD    , functionPointer: do_tog_shout  , minimumLevel: 0, subCommand: 0 },
           { command: "notell"   , minimumPosition: Character.POS_DEAD    , functionPointer: do_tog_tell   , minimumLevel: 0, subCommand: 0 },
           { command: "noquest"  , minimumPosition: Character.POS_DEAD    , functionPointer: do_tog_quest  , minimumLevel: 0, subCommand: 0 },
-          
+
+          { command: "open"     , minimumPosition: Character.POS_RESTING , functionPointer: do_open_door  , minimumLevel: 0, subCommand: 0 },
 
           { command: "pat"      , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_PAT },
           { command: "peer"     , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_PEER },
@@ -606,22 +607,19 @@ function do_who(character, command) {
     }
     
     if(players.length === 0) {
-        character.emitMessage("  Nobody at all!");
+        character.emitMessage("  Nobody at all!\n\r");
     }
     else if(players.length === 1) {
-        character.emitMessage("  One lonely character displayed.");
+        character.emitMessage("  One lonely character displayed.\n\r");
     }
     else {
-        character.emitMessage("  " + players.length + " characters displayed.");
+        character.emitMessage("  " + players.length + " characters displayed.\n\r");
     }
-    
-    character.emitMessage("");
 }
 
 function do_whoami(character, command) {
     character.emitMessage("Feeling forgetful, eh?");
-    character.emitMessage('You are ' + character.name + '.');
-    character.emitMessage("");
+    character.emitMessage('You are ' + character.name + '.\n\r');
 }
 
 function do_say(character, command) {
@@ -634,7 +632,7 @@ function do_gen_comm(character, command) {
 
 function do_insult(character, command) {
     if(command.tokens.length === 0) {
-        character.emitMessage("I'm sure you don't want to insult *everybody*...");
+        character.emitMessage("I'm sure you don't want to insult *everybody*...\n\r");
     }
     else {
         character.insult(command.tokens[0]);
@@ -643,6 +641,18 @@ function do_insult(character, command) {
 
 function do_move(character, command) {
     character.move(command.subCommand);
+}
+
+function do_open_door(character, command) {
+    if(command.tokens.length === 0) {
+        character.emitMessage("Open what?\n\r");
+    }
+    else if(command.tokens.length === 1) {
+        character.openDoor(command.tokens[0]);
+    }
+    else {
+        character.openDoor(command.tokens[0], command.tokens[1]);
+    }
 }
 
 function do_goto(character, command) {
