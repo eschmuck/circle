@@ -327,6 +327,8 @@ roomSchema.methods.getDoorByKeyword = function(keyword) {
 			}
 			
 			if(counter === index) {
+				console.log('yes');
+				console.log(this.downwardExit);
 				return this.downwardExit;
 			}
 		}
