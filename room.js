@@ -260,52 +260,64 @@ roomSchema.methods.getDoorByKeyword = function(keyword) {
 	
 	var counter = 0;
 	
-	if(this.northernExit.keywords.indexOf(doorKeyword) > -1) {
-		counter++;
+	if(this.northernExit !== undefined) {
+		if(this.northernExit.keywords.indexOf(doorKeyword) > -1) {
+			counter++;
+		}
+		
+		if(counter === index) {
+			return this.northernExit;
+		}
 	}
 	
-	if(counter === index) {
-		return this.northernExit;
-	}
-	
-	if(this.easternExit.keywords.indexOf(doorKeyword) > -1) {
-		counter++;
-	}
-	
-	if(counter === index) {
-		return this.easternExit;
+	if(this.easternExit !== undefined) {
+		if(this.easternExit.keywords.indexOf(doorKeyword) > -1) {
+			counter++;
+		}
+		
+		if(counter === index) {
+			return this.easternExit;
+		}
 	}
 
-	if(this.southernExit.keywords.indexOf(doorKeyword) > -1) {
-		counter++;
+	if(this.southernExit !== undefined) {
+		if(this.southernExit.keywords.indexOf(doorKeyword) > -1) {
+			counter++;
+		}
+		
+		if(counter === index) {
+			return this.southernExit;
+		}
 	}
 	
-	if(counter === index) {
-		return this.southernExit;
+	if(this.westernExit !== undefined) {
+		if(this.westernExit.keywords.indexOf(doorKeyword) > -1) {
+			counter++;
+		}
+		
+		if(counter === index) {
+			return this.westernExit;
+		}	
 	}
 	
-	if(this.westernExit.keywords.indexOf(doorKeyword) > -1) {
-		counter++;
-	}
-	
-	if(counter === index) {
-		return this.westernExit;
-	}	
-	
-	if(this.upwardExit.keywords.indexOf(doorKeyword) > -1) {
-		counter++;
-	}
-	
-	if(counter === index) {
-		return this.upwardExit;
+	if(this.upwardExit !== undefined) {
+		if(this.upwardExit.keywords.indexOf(doorKeyword) > -1) {
+			counter++;
+		}
+		
+		if(counter === index) {
+			return this.upwardExit;
+		}
 	}
 
-	if(this.downwardExit.keywords.indexOf(doorKeyword) > -1) {
-		counter++;
-	}
-	
-	if(counter === index) {
-		return this.downwardExit;
+	if(this.downwardExit !== undefined) {
+		if(this.downwardExit.keywords.indexOf(doorKeyword) > -1) {
+			counter++;
+		}
+		
+		if(counter === index) {
+			return this.downwardExit;
+		}
 	}
 	
 	return null;
