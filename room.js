@@ -273,52 +273,62 @@ roomSchema.methods.getDoorByKeyword = function(keyword) {
 	}
 	
 	if(this.easternExit !== undefined) {
-		if(this.easternExit.keywords.indexOf(doorKeyword) > -1) {
-			counter++;
-		}
-		
-		if(counter === index) {
-			return this.easternExit;
+		if(this.easternExit.keywords !== undefined) {
+			if(this.easternExit.keywords.indexOf(doorKeyword) > -1) {
+				counter++;
+			}
+			
+			if(counter === index) {
+				return this.easternExit;
+			}
 		}
 	}
 
 	if(this.southernExit !== undefined) {
-		if(this.southernExit.keywords.indexOf(doorKeyword) > -1) {
-			counter++;
-		}
-		
-		if(counter === index) {
-			return this.southernExit;
+		if(this.southernExit.keywords !== undefined) {
+			if(this.southernExit.keywords.indexOf(doorKeyword) > -1) {
+				counter++;
+			}
+			
+			if(counter === index) {
+				return this.southernExit;
+			}
 		}
 	}
 	
 	if(this.westernExit !== undefined) {
-		if(this.westernExit.keywords.indexOf(doorKeyword) > -1) {
-			counter++;
+		if(this.westernExit.keywords !== undefined) {
+			if(this.westernExit.keywords.indexOf(doorKeyword) > -1) {
+				counter++;
+			}
+			
+			if(counter === index) {
+				return this.westernExit;
+			}
 		}
-		
-		if(counter === index) {
-			return this.westernExit;
-		}	
 	}
 	
 	if(this.upwardExit !== undefined) {
-		if(this.upwardExit.keywords.indexOf(doorKeyword) > -1) {
-			counter++;
-		}
-		
-		if(counter === index) {
-			return this.upwardExit;
+		if(this.upwardExit.keywords !== undefined) {
+			if(this.upwardExit.keywords.indexOf(doorKeyword) > -1) {
+				counter++;
+			}
+			
+			if(counter === index) {
+				return this.upwardExit;
+			}
 		}
 	}
 
 	if(this.downwardExit !== undefined) {
-		if(this.downwardExit.keywords.indexOf(doorKeyword) > -1) {
-			counter++;
-		}
-		
-		if(counter === index) {
-			return this.downwardExit;
+		if(this.downwardExit.keywords !== undefined) {
+			if(this.downwardExit.keywords.indexOf(doorKeyword) > -1) {
+				counter++;
+			}
+			
+			if(counter === index) {
+				return this.downwardExit;
+			}
 		}
 	}
 	
