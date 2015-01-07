@@ -676,13 +676,11 @@ function do_sleep(character) {
 
 function do_time(character) {
     character.emitMessage(character.world.time.getDisplayTime());
-    character.emitMessage(character.world.time.getDisplayDate());
-    character.emitMessage("");
+    character.emitMessage(character.world.time.getDisplayDate() + "\n\r");
 }
 
 function do_weather(character) {
-    character.emitMessage(character.world.weather.getDescription());
-    character.emitMessage("");
+    character.emitMessage(character.world.weather.getDescription() + "\n\r");
 }
 
 function do_take(character, command) {
