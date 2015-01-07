@@ -69,7 +69,9 @@ var mobModel = mongoose.model('mob', mobSchema);
 function janitorBehavior(character) {
 	var tookItem = false;
 	
-	for(var i = 0; i < character.room.contents.length; i++)	{
+	var items = character.room.contents;
+	
+	for(var i = 0; i < items.length; i++)	{
 		var item = character.room.contents[i];
 		
 		if(item.canBeTaken === true) {
@@ -78,7 +80,10 @@ function janitorBehavior(character) {
 		}
 	}
 
-	character.say("Damn kids... always leaving their junk around... crappy job...");
+	if(tookItem === true) {
+		character.say("Damn kids... always leaving their junk around... crappy job...");
+	}
+	
 	return tookItem;
 }
 
