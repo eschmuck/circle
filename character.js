@@ -556,7 +556,7 @@ characterSchema.methods.move = function(direction) {
 		}
 		
 		if(exit.isClosed === true) {
-		 	this.emitMessage("The " + exit.doorKeywords[0] + " seems to be closed.");
+		 	this.emitMessage("The " + exit.doorKeywords[0] + " seems to be closed.\n\r");
 		}
 		else {
 		 	var newRoom = this.world.getRoom(exit.toRoomId);
@@ -575,7 +575,7 @@ characterSchema.methods.move = function(direction) {
 			 	newRoom.showRoomToCharacter(this);
 		 	}
 		 	else {
-		 		this.emitMessage("Although you should be able to go there, you cannot!");
+		 		this.emitMessage("Although you should be able to go there, you cannot!\n\r");
 		 	}
 		}
 	}

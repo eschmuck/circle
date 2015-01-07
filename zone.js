@@ -107,10 +107,12 @@ function executeZoneResetCommands(commands, instructionNumber, world, lastThingL
                 		            exit.isClosed = false;
                 		            break;
                                 case 1:
+                                    mudlog.info("Closing door in " + direction + " direction in room " + room.id);
                                     exit.isClosed = true;
                                     exit.isLocked = false;
                                     break;
                                 case 2:
+                                    mudlog.info("Locking door in " + direction + " direction in room " + room.id);
                                     exit.isClosed = true;
                                     exit.isLocked = true;
                                     break;
