@@ -58,16 +58,16 @@ weatherSchema.methods.getWeatherChange = function(random) {
 	
 	switch(this.sky) {
 		case SKY_CLOUDLESS:
-			weatherChange = this.CloudlessSkyChange(random);
+			weatherChange = this.cloudlessSkyChange(random);
 			break;
 		case SKY_CLOUDY:
-			weatherChange = this.CloudySkyChange(random);
+			weatherChange = this.cloudySkyChange(random);
 			break;
 		case SKY_RAINING:
-			weatherChange = this.RainingSkyChange(random);
+			weatherChange = this.rainingSkyChange(random);
 			break;
 		case SKY_LIGHTNING:
-			weatherChange = this.LightningSkyChange(random);
+			weatherChange = this.lightningSkyChange(random);
 			break;
 	}
 };
@@ -178,7 +178,7 @@ weatherSchema.methods.getDescription = function() {
 	var description = "The sky is "	+ skyDescriptions[this.sky] + " and ";
 	
 	if(this.change >= 0) {
-		description += "you feel a warm wind from the south";
+		description += "you feel a warm wind from the south.";
 	}
 	else {
 		description += "your lucky foot tells you bad weather is due.";

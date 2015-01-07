@@ -30,8 +30,6 @@ mobSchema.methods.hourlyUpdate = function() {
 };
 
 mobSchema.methods.performActivity = function() {
-	mudlog.info("Performing mob random activity on " + this.id);
-
 	if(this.specialBehavior !== undefined) {
 		var result = this.specialBehavior(this);
 		
