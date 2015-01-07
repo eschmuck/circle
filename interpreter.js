@@ -301,6 +301,7 @@ var COMMAND_LIST = [
           { command: "thank"    , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_THANK },
           { command: "think"    , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_THINK },
           { command: "tickle"   , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_TICKLE },
+          { command: "time"     , minimumPosition: Character.POS_DEAD    , functionPointer: do_time       , minimumLevel: 0, subCommand: 0 },
           { command: "twiddle"  , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_TWIDDLE },
 
           { command: "wave"     , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_WAVE },
@@ -665,6 +666,11 @@ function do_rest(character) {
 
 function do_sleep(character) {
     character.sleep();
+}
+
+function do_time(character) {
+    character.emitMessage(character.world.time.getDisplayTime());
+    character.emitMessage(character.world.time.getDisplayTime());
 }
 
 function do_take(character, command) {
