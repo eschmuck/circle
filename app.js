@@ -10,6 +10,7 @@ var database = require('./database');
 var player = require('./player').player;
 var text = require('./text');
 var room = require('./room');
+var time = require('./time');
 var zone = require('./zone');
 var world = require('./world');
 var interpreter = require('./interpreter');
@@ -31,6 +32,10 @@ var io = require('socket.io').listen(server);
 
 http.createServer(app).listen(app.get('port'), function() {
   mudlog.info("Express server listening on port 3000");
+});
+
+time.getTime(function(timeDoc) {
+  gameWorld.time = timeDoc[0];
 });
 
 room.getRooms(function(roomDocs) {

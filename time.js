@@ -1,11 +1,13 @@
-// Object constructor
-function Time(hour, day, month, year, age) {
-	this.hour = hour;
-	this.day = day;
-	this.month = month;
-	this.year = year;
-	this.age = age;
-}
+var mongoose = require('mongoose');
+var schema = mongoose.Schema;
+
+var timeSchema = schema({
+	hour: Number,
+	day: Number,
+	month: Number,
+	year: Number,
+	age: Number
+}, { collection: 'time' });
 
 // Private members
 var daysOfTheWeek = [
@@ -39,33 +41,7 @@ var monthNames = [
 	"the Great Evil"
 ];
 
-// Getters
-Time.prototype.getHour = function() {
-	return this.hour;
-};
-
-Time.prototype.getDay = function() {
-	return this.day;
-};
-
-Time.prototype.getMonth = function() {
-	return this.month;
-};
-
-Time.prototype.getYear = function() {
-	return this.year;
-};
-
-Time.prototype.getAge = function() {
-	return this.age;
-};
-
-Time.prototype.getType = function() {
-	return "time";
-};
-
-// Functions
-Time.prototype.anotherHour = function() {
+timeSchema.methods.advanceHour = function() {
 	this.hour++;
 
 	if(this.hour > 23) {
@@ -86,10 +62,10 @@ Time.prototype.anotherHour = function() {
 	if(this.year > 5000) {
 		this.year = 1;
 		this.age++;
-	}
+	}	
 };
 
-Time.prototype.getAmPm = function() {
+timeSchema.methods.getAmPm = function() {
 	if(this.hour < 12) {
 		return "AM"; 
 	}
@@ -98,7 +74,7 @@ Time.prototype.getAmPm = function() {
 	}
 };
 
-Time.prototype.getClockTime = function() {
+timeSchema.methods.getClockTime = function() {
 	if(this.hour > 12) {
 		return this.hour % 12;
 	}
@@ -110,16 +86,16 @@ Time.prototype.getClockTime = function() {
 	return this.hour;
 };
 
-Time.prototype.getDayOfWeek = function() {
+timeSchema.methods.getDayOfWeek = function() {
 	var dayOfWeek = ((35 * (this.month - 1)) + this.day) % 7;
 	return daysOfTheWeek[dayOfWeek];
 };
 
-Time.prototype.getMonthName = function() {
+timeSchema.methods.getMonthName = function() {
 	return monthNames[this.month];
 };
 
-Time.prototype.getDigitSuffix = function(value) {
+timeSchema.methods.getDigitSuffix = function(value) {
 	var suffix = "th";
 
 	if(value != 11 && value != 12)	{
@@ -141,14 +117,20 @@ Time.prototype.getDigitSuffix = function(value) {
 	return suffix;
 };
 
-Time.prototype.getDisplayTime = function() {
+timeSchema.methods.getDisplayTime = function() {
 	return "It is " + this.getClockTime() + " o'clock in the " + this.getAmPm() + " on the day of " + this.getDayOfWeek() + ".";
 };
 
-Time.prototype.getDisplayDate = function() {
+timeSchema.methods.getDisplayDate = function() {
 	return "The " + this.day + this.getDigitSuffix(this.day) + " Day of the Month of " + this.getMonthName() + ", Year " + 
 		this.year + " of the " + this.age + this.getDigitSuffix(this.age) + " Age.";
-}
+};
 
-// Exports
-module.exports = Time;
+var timeModel = mongoose.model('time', timeSchema);
+
+exports.getTime = function getTime(callback) {
+	timeModel.find({}, function(err, docs) {
+		callback(docs);
+	});
+};
+

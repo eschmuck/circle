@@ -1,9 +1,12 @@
+var mudlog = require('./mudlog');
+
 // Object constructor
 function World() {
 	this.rooms = [];
 	this.people = [];
 	this.items = [];
 	this.zones = [];
+	this.time = null;
 }
 
 // Public Properties
@@ -11,6 +14,7 @@ World.prototype.rooms;
 World.prototype.people;
 World.prototype.zones;
 World.prototype.items;
+World.prototype.time;
 
 World.prototype.getRoom = function(id) {
 	for(var i = 0; i < this.rooms.length; i++) {
@@ -126,6 +130,11 @@ World.prototype.getPlayer = function(name) {
 };
 
 World.prototype.hourElapsed = function() {
+	this.time.advanceHour();
+	this.time.save(function(err) {
+		mudlog.error(err);
+    });
+	
 	for(var i = 0; i < this.people.length; i++)	{
 		this.people[i].hourlyUpdate();
 		
