@@ -545,7 +545,9 @@ characterSchema.methods.openExit = function(exit) {
 characterSchema.methods.openDoor = function(keyword, directionInput) {
 	var exit = null;
 	
-	if(direction === undefined) {
+	console.log(directionInput);
+	
+	if(directionInput === undefined) {
 		exit = this.room.getDoorByKeyword(keyword);
 		
 		if(exit === null) {

@@ -320,6 +320,8 @@ roomSchema.methods.getDoorByKeyword = function(keyword) {
 		}
 	}
 
+	console.log(this.downwardExit.keywords);
+
 	if(this.downwardExit !== undefined) {
 		if(this.downwardExit.keywords !== undefined) {
 			console.log(this.downwardExit.keywords);
