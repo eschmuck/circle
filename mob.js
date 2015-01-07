@@ -32,7 +32,7 @@ mobSchema.methods.hourlyUpdate = function() {
 mobSchema.methods.performActivity = function() {
 	mudlog.info("Performing mob random activity on " + this.id);
 
-	console.log(this.specialBehavior);
+	//console.log(this.specialBehavior);
 	
 	if(this.specialBehavior !== undefined) {
 		console.log(this.specialBehavior);
@@ -70,6 +70,8 @@ module.exports = {
 	schema: mobSchema,
 	mob: mobModel
 };
+
+exports.blahBehavior = "AAA";
 
 exports.janitorBehavior = function janitorBehavior(character) {
 	console.log('janitor spec proc');
