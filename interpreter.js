@@ -305,6 +305,7 @@ var COMMAND_LIST = [
           { command: "twiddle"  , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_TWIDDLE },
 
           { command: "wave"     , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_WAVE },
+          { command: "weather"  , minimumPosition: Character.POS_RESTING , functionPointer: do_weather    , minimumLevel: 0, subCommand: 0 },
           { command: "wear"     , minimumPosition: Character.POS_RESTING , functionPointer: do_wear       , minimumLevel: 0, subCommand: 0 },
           { command: "whine"    , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_WHINE },
           { command: "whistle"  , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_WHISTLE },
@@ -671,6 +672,12 @@ function do_sleep(character) {
 function do_time(character) {
     character.emitMessage(character.world.time.getDisplayTime());
     character.emitMessage(character.world.time.getDisplayDate());
+    character.emitMessage("");
+}
+
+function do_weather(character) {
+    character.emitMessage(character.world.weather.getDescription());
+    character.emitMessage("");
 }
 
 function do_take(character, command) {

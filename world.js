@@ -7,6 +7,7 @@ function World() {
 	this.items = [];
 	this.zones = [];
 	this.time = null;
+	this.weather = null;
 }
 
 // Public Properties
@@ -15,6 +16,7 @@ World.prototype.people;
 World.prototype.zones;
 World.prototype.items;
 World.prototype.time;
+World.prototype.weather;
 
 World.prototype.getRoom = function(id) {
 	for(var i = 0; i < this.rooms.length; i++) {
@@ -132,7 +134,16 @@ World.prototype.getPlayer = function(name) {
 World.prototype.hourElapsed = function() {
 	this.time.advanceHour();
 	this.time.save(function(err) {
-		mudlog.error(err);
+		if(err !== null) {
+			mudlog.error(err);
+		}
+    });
+    
+    this.weather.update(this.time.month);
+    this.weather.save(function(err) {
+    	if(err !== null) {
+    		mudlog.error(err);
+    	}
     });
 	
 	for(var i = 0; i < this.people.length; i++)	{

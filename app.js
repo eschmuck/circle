@@ -11,6 +11,7 @@ var player = require('./player').player;
 var text = require('./text');
 var room = require('./room');
 var time = require('./time');
+var weather = require('./weather');
 var zone = require('./zone');
 var world = require('./world');
 var interpreter = require('./interpreter');
@@ -36,6 +37,11 @@ http.createServer(app).listen(app.get('port'), function() {
 
 time.getTime(function(timeDoc) {
   gameWorld.time = timeDoc[0];
+});
+
+weather.getWeather(function(weatherDoc) {
+  gameWorld.weather = weatherDoc[0];
+  weather.world = gameWorld;
 });
 
 room.getRooms(function(roomDocs) {

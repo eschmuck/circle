@@ -1,9 +1,11 @@
-// Object constructor
-function Weather(pressure, sky, change) {
-	this.pressure = pressure;
-	this.sky = sky;
-	this.change = change;
-}
+var mongoose = require('mongoose');
+var schema = mongoose.Schema;
+
+var weatherSchema = schema({
+	pressure: Number,
+	sky: Number,
+	change: Number
+}, { collection: 'weather' });
 
 // Constants
 var SKY_CLOUDLESS = 0;
@@ -11,20 +13,27 @@ var SKY_CLOUDY    = 1;
 var SKY_RAINING   = 2;
 var SKY_LIGHTNING = 3;
 
+var skyDescriptions = [
+		"cloudless",
+		"cloudy",
+		"rainy",
+		"lit by flashes of lightning"
+	];
+
 // Getters
-Weather.prototype.getPressure = function() {
+weatherSchema.methods.getPressure = function() {
 	return this.pressure;
 };
 
-Weather.prototype.getSky = function() {
+weatherSchema.methods.getSky = function() {
 	return this.sky;
 };
 
-Weather.prototype.getChange = function() {
+weatherSchema.methods.getChange = function() {
 	return this.change;
 };
 
-Weather.prototype.getDiff = function(month) {
+weatherSchema.methods.getDiff = function(month) {
 	if(month >= 9 && month <= 16) {
 		return (this.pressure > 985 ? -2 : 2);
 	}
@@ -33,7 +42,7 @@ Weather.prototype.getDiff = function(month) {
 	}
 };
 
-Weather.prototype.calculateChange = function(month, random1, random2, random3) {
+weatherSchema.methods.calculateChange = function(month, random1, random2, random3) {
 	var diff = this.getDiff(month);
 	
 	this.change = random1 * diff + random2 - random3;
@@ -44,7 +53,7 @@ Weather.prototype.calculateChange = function(month, random1, random2, random3) {
 	this.pressure += this.change;
 };
 
-Weather.prototype.getWeatherChange = function(random) {
+weatherSchema.methods.getWeatherChange = function(random) {
 	var weatherChange = 0;
 	
 	switch(this.sky) {
@@ -63,7 +72,7 @@ Weather.prototype.getWeatherChange = function(random) {
 	}
 };
 
-Weather.prototype.cloudlessSkyChange = function(random) {
+weatherSchema.methods.cloudlessSkyChange = function(random) {
 	if(this.pressure < 990) {
 		return 1;
 	}
@@ -76,7 +85,7 @@ Weather.prototype.cloudlessSkyChange = function(random) {
 	return 0;
 };
 
-Weather.prototype.cloudySkyChange = function(random) {
+weatherSchema.methods.cloudySkyChange = function(random) {
 	if(this.pressure < 970) {
 		return 2;
 	}
@@ -94,7 +103,7 @@ Weather.prototype.cloudySkyChange = function(random) {
 	return 0;
 };
 
-Weather.prototype.rainingSkyChange = function(random) {
+weatherSchema.methods.rainingSkyChange = function(random) {
 	if(this.pressure < 970) {
 		if(random == 1) {
 			return 4;
@@ -112,7 +121,7 @@ Weather.prototype.rainingSkyChange = function(random) {
 	return 0;
 };
 
-Weather.prototype.lightningSkyChange = function(random) {
+weatherSchema.methods.lightningSkyChange = function(random) {
 	if(this.pressure > 1010) {
 		return 6;
 	}
@@ -125,7 +134,7 @@ Weather.prototype.lightningSkyChange = function(random) {
 	return 0;
 };
 
-Weather.prototype.updateWeather = function(weatherChange) {
+weatherSchema.methods.updateWeather = function(weatherChange) {
 	switch(weatherChange) {
 		case 0:
 			break;
@@ -157,11 +166,32 @@ Weather.prototype.updateWeather = function(weatherChange) {
 	}
 };
 
-Weather.prototype.update = function(month) {
+weatherSchema.methods.update = function(month) {
+	console.log(this.world);
+	
 	this.calculateChange(month, 2, 4, 4);
 	var weatherChange = this.getWeatherChange(4);
 	this.updateWeather(weatherChange);
 };
 
-// Exports
-module.exports = Weather;
+weatherSchema.methods.getDescription = function() {
+	var description = "The sky is "	+ skyDescriptions[this.sky] + " and ";
+	
+	if(this.change >= 0) {
+		description += "you feel a warm wind from the south";
+	}
+	else {
+		description += "your lucky foot tells you bad weather is due.";
+	}
+	
+	return description;
+};
+
+var weatherModel = mongoose.model('weather', weatherSchema);
+
+exports.getWeather = function getWeather(callback) {
+	weatherModel.find({}, function(err, docs) {
+		callback(docs);
+	});
+};
+
