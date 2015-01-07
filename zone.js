@@ -70,6 +70,55 @@ function executeZoneResetCommands(commands, instructionNumber, world, lastThingL
                     item.load(equippedItemId, equippedItem, afterEquippedItemLoaded, commands, world, lastThingLoaded, instructionNumber);
                 }
                 break;
+            case "D":
+                var room = this.world.getRoom(parseInt(command[2], 10));
+                
+                if(room !== null) {
+                    var direction = parseInt(command[3], 10);
+                    var exitExists = room.exitExists(direction);
+                    
+                    if(exitExists === true) {
+                    	var exit;
+                        
+                		switch(direction) {
+                			case 0:
+                				exit = room.northernExit;
+                				break;
+                			case 1:
+                				exit = this.room.easternExit;
+                				break;
+                			case 2:
+                				exit = this.room.southernExit;
+                				break;
+                			case 3:
+                				exit = this.room.westernExit;
+                				break;
+                			case 4:
+                				exit = this.room.upwardExit;
+                				break;
+                			case 5:
+                				exit = this.room.downwardExit;
+                				break;
+                		}
+                		
+                		if(exit !== undefined) {
+                		    switch(parseInt(command[4], 10)) {
+                		        case 0:
+                		            exit.isClosed = false;
+                		            break;
+                                case 1:
+                                    exit.isClosed = true;
+                                    exit.isLocked = false;
+                                    break;
+                                case 2:
+                                    exit.isClosed = true;
+                                    exit.isLocked = true;
+                                    break;
+                		    }
+                		}
+                    }
+                }
+                break;
         }
     }
 }

@@ -11,6 +11,7 @@ var roomSchema = new schema({
 	northernExit: {
 		toRoomId: Number,
 		isPickproof: Boolean,
+		isLocked: Boolean,
 		isLockable: Boolean,
 		isClosed: Boolean,
 		isClosable: Boolean,
@@ -21,6 +22,7 @@ var roomSchema = new schema({
 	easternExit: {
 		toRoomId: Number,
 		isPickproof: Boolean,
+		isLocked: Boolean,
 		isLockable: Boolean,
 		isClosed: Boolean,
 		isClosable: Boolean,
@@ -31,6 +33,7 @@ var roomSchema = new schema({
 	southernExit: {
 		toRoomId: Number,
 		isPickproof: Boolean,
+		isLocked: Boolean,
 		isLockable: Boolean,
 		isClosed: Boolean,
 		isClosable: Boolean,
@@ -41,6 +44,7 @@ var roomSchema = new schema({
 	westernExit: {
 		toRoomId: Number,
 		isPickproof: Boolean,
+		isLocked: Boolean,
 		isLockable: Boolean,
 		isClosed: Boolean,
 		isClosable: Boolean,
@@ -51,6 +55,7 @@ var roomSchema = new schema({
 	upwardExit: {
 		toRoomId: Number,
 		isPickproof: Boolean,
+		isLocked: Boolean,
 		isLockable: Boolean,
 		isClosed: Boolean,
 		isClosable: Boolean,
@@ -61,6 +66,7 @@ var roomSchema = new schema({
 	downwardExit: {
 		toRoomId: Number,
 		isPickproof: Boolean,
+		isLocked: Boolean,
 		isLockable: Boolean,
 		isClosed: Boolean,
 		isClosable: Boolean,
