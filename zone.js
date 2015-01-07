@@ -117,15 +117,6 @@ function afterGivenItemLoaded(document, item, commands, world, mob, instructionN
         world.addItem(item);
     
         mudlog.info("Giving " + item.id + " to mob " + mob.id);
-    
-        //console.log(mob.inventory);
-    
-        // if(mob.inventory === undefined) {
-        //     mob.inventory = [];
-        // }
-        
-        //console.log(mob.inventory);
-    
         mob.inventory.push(item);
         executeZoneResetCommands(commands, (instructionNumber + 1), world, mob);
     }

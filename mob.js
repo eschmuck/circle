@@ -32,16 +32,27 @@ mobSchema.methods.hourlyUpdate = function() {
 mobSchema.methods.performActivity = function() {
 	mudlog.info("Performing mob random activity");
 	
-	if(this.isScavenger === true) {
-		if(utility.randomNumber(1, 10) <= 10) {
-			if(this.room.contents.length > 0) {
-				var itemToScavenge = this.room.contents[utility.randomNumber(1, this.room.contents.length)];
-				this.takeObject(itemToScavenge);
-				mudlog.info(this.id + " scavenged " + itemToScavenge.id + ".");
-			}
+	// if(this.isScavenger === true) {
+	// 	if(utility.randomNumber(1, 10) <= 10) {
+	// 		if(this.room.contents.length > 0) {
+	// 			var itemToScavenge = this.room.contents[utility.randomNumber(1, this.room.contents.length)];
+	// 			this.takeObject(itemToScavenge);
+	// 			mudlog.info(this.id + " scavenged " + itemToScavenge.id + ".");
+	// 		}
+	// 	}
+	// }
+	
+	if(this.isSentinel !== true) {
+		var random = utility.randomNumber(0, 18);
+		
+		if(random <= 10) {
+			this.move(random);
+			return;
 		}
 	}
 };
+
+
 
 mobSchema.methods.isNpc = function() {
 	return true;
