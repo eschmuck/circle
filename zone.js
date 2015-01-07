@@ -3,6 +3,7 @@ var mob = require('./mob').mob;
 var item = require('./item').item;
 var mudlog = require('./mudlog');
 var utility = require('./utility');
+var mobBehaviors = require('./mob');
 
 var schema = mongoose.Schema;
 
@@ -96,7 +97,7 @@ function afterMobLoaded(document, mob, commands, world, instructionNumber) {
     world.getRoom(roomId).addCharacter(mob);
 
     if(mob.id === 3061 || mob.id === 3068) {
-        mob.specialBehavior = "JJJJJJJJJJJJ";
+        mob.specialBehavior = mobBehaviors.janitorBehavior;
     }
 
     executeZoneResetCommands(commands, (instructionNumber + 1), world, mob);
