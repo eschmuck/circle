@@ -4,6 +4,7 @@ var extend = require('mongoose-schema-extend');
 var character = require("./character");
 var characterSchema = require("./character").schema;
 var utility = require("./utility");
+var mudlog = require("./mudlog");
 
 var mobSchema = characterSchema.extend({
     id: Number,
@@ -29,12 +30,14 @@ mobSchema.methods.hourlyUpdate = function() {
 };
 
 mobSchema.methods.performActivity = function() {
+	mudlog.info("Performing mob random activity");
+	
 	if(this.isScavenger === true) {
 		if(utility.randomNumber(1, 10) <= 10) {
 			if(this.room.contents.length > 0) {
 				var itemToScavenge = this.room.contents[utility.randomNumber(1, this.room.contents.length)];
 				this.takeObject(itemToScavenge);
-				this.say("Ooh! I've been looking for one of these!");
+				mudlog.info(this.id + " scavenged " + itemToScavenge.id + ".");
 			}
 		}
 	}
