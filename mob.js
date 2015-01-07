@@ -75,8 +75,19 @@ module.exports = {
 	mob: mobModel
 };
 
-exports.blahBehavior = "AAA";
 
-exports.janitorBehavior = function janitorBehavior(character) {
+
+
+
+
+
+
+var blahBehavior = "AAA";
+
+exports.blahBehavior = blahBehavior;
+
+function janitorBehavior(character) {
 	console.log('janitor spec proc');
-};
+}
+
+exports.janitorBehavior = janitorBehavior;
