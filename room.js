@@ -481,12 +481,8 @@ roomSchema.methods.openOppositeDoor = function(otherRoom) {
 		return;
 	}
 	
-	var oppositeExit = null;
-	
-	if(otherRoom !== null) {
-		oppositeExit = this.getOppositeExit(otherRoom);
-	}
-	
+	var oppositeExit = this.getOppositeExit(otherRoom);
+
 	if(oppositeExit !== null) {
 		oppositeExit.isClosed = false;
 		
@@ -504,12 +500,8 @@ roomSchema.methods.closeOppositeDoor = function(otherRoom) {
 		return;
 	}
 	
-	var oppositeExit = null;
-	
-	if(otherRoom !== null) {
-		oppositeExit = this.getOppositeExit(otherRoom);
-	}
-	
+	var oppositeExit = this.getOppositeExit(otherRoom);
+
 	if(oppositeExit !== null) {
 		oppositeExit.isClosed = true;
 		
@@ -522,6 +514,43 @@ roomSchema.methods.closeOppositeDoor = function(otherRoom) {
 	}
 };
 
+roomSchema.methods.unlockOppositeDoor = function(otherRoom) {
+	if(otherRoom === null) {
+		return;
+	}
+	
+	var oppositeExit = this.getOppositeExit(otherRoom);
+
+	if(oppositeExit !== null) {
+		oppositeExit.isLocked = false;
+		
+		if(oppositeExit.doorKeywords.length > 0) {
+			otherRoom.emitMessage("The " + oppositeExit.doorKeywords[0] + " is unlocked from the other side.\n\r");
+		}
+		else {
+			otherRoom.emitMessage("The door is unlocked from the other side.\n\r");
+		}
+	}
+};
+
+roomSchema.methods.lockOppositeDoor = function(otherRoom) {
+	if(otherRoom === null) {
+		return;
+	}
+	
+	var oppositeExit = this.getOppositeExit(otherRoom);
+
+	if(oppositeExit !== null) {
+		oppositeExit.isLocked = true;
+		
+		if(oppositeExit.doorKeywords.length > 0) {
+			otherRoom.emitMessage("The " + oppositeExit.doorKeywords[0] + " is locked from the other side.\n\r");
+		}
+		else {
+			otherRoom.emitMessage("The door is locked from the other side.\n\r");
+		}
+	}
+};
 
 roomSchema.methods.showRoomToCharacter = function(character) {
 

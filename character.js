@@ -560,8 +560,51 @@ characterSchema.methods.closeExit = function(exit) {
 	return true;
 };
 
+characterSchema.methods.unlockExit = function(exit) {
+	if(!exit.isClosed) {
+		this.emitMessage("But it's already open.\n\r");
+		return false;
+	}
+	
+	if(!exit.isLocked) {
+		this.emitMessage("But it's already unlocked.\n\r");
+		return false;
+	}
+	
+	if(this.inventory.findItemById(exit.doorKeyId) === false) {
+		this.emitMessage("You don't seem to have the right key for that.\n\r");
+		return false;
+	}
+	
+	this.emitMessage("You unlock the " + exit.doorKeywords[0] + "... *CLICK*\n\r");
+	this.emitRoomMessage(this.name + " unlocks the " + exit.doorKeywords[0] + ".\n\r");
+	exit.isLocked = false;
+	return true;
+};
 
-// TODO: Combine openDoor and closeDoor -- too much code duplication.
+characterSchema.methods.lockExit = function(exit) {
+	if(!exit.isClosed) {
+		this.emitMessage("But it's wide open...\n\r");
+		return false;
+	}
+	
+	if(exit.isLocked) {
+		this.emitMessage("But it's already locked.\n\r");
+		return false;
+	}
+	
+	if(this.inventory.findItemById(exit.doorKeyId) === false) {
+		this.emitMessage("You don't seem to have the right key for that.\n\r");
+		return false;
+	}
+	
+	this.emitMessage("You lock the " + exit.doorKeywords[0] + "... *CLICK*\n\r");
+	this.emitRoomMessage(this.name + " locks the " + exit.doorKeywords[0] + ".\n\r");
+	exit.isLocked = true;
+	return true;
+};
+
+// TODO: Combine openDoor, closeDoor, lockDoor, unlockDoor -- too much code duplication.
 characterSchema.methods.openDoor = function(keyword, directionInput) {
 	var exit = null;
 	var result = false;
@@ -684,6 +727,127 @@ characterSchema.methods.closeDoor = function(keyword, directionInput) {
 	}
 };
 
+characterSchema.methods.unlockDoor = function(keyword, directionInput) {
+	var exit = null;
+	var result = false;
+	
+	if(directionInput === undefined) {
+		exit = this.room.getDoorByKeyword(keyword);
+		
+		if(exit === null) {
+			this.emitMessage("There doesn't seem to be a " + keyword + " here.\n\r");
+			return;
+		}
+		else {
+			result = this.unlockExit(exit);
+		}
+	}
+	else {
+		var direction = -1;
+		
+		switch(directionInput.substring(0, 1).toLowerCase()) {
+			case "n":
+				direction = 0;
+				break;
+			case "e":
+				direction = 1;
+				break;
+			case "s":
+				direction = 2;
+				break;
+			case "w":
+				direction = 3;
+				break;
+			case "u":
+				direction = 4;
+				break;
+			case "d":
+				direction = 5;
+				break;
+		}
+		
+		if(direction === -1) {
+			this.emitMessage("Which way is that?\n\r");
+			return;
+		}
+		else {
+			exit = this.room.getDoorByKeywordAndDirection(keyword, direction);
+			
+			if(exit === null) {
+				this.emitMessage("There doesn't seem to be a " + keyword + " in that direction.\n\r");
+				return;
+			}
+			else {
+				result = this.unlockExit(exit);
+			}
+		}
+	}
+	
+	if(result === true) {
+		this.room.unlockOppositeDoor(this.world.getRoom(exit.toRoomId));
+	}
+};
+
+characterSchema.methods.lockDoor = function(keyword, directionInput) {
+	var exit = null;
+	var result = false;
+	
+	if(directionInput === undefined) {
+		exit = this.room.getDoorByKeyword(keyword);
+		
+		if(exit === null) {
+			this.emitMessage("There doesn't seem to be a " + keyword + " here.\n\r");
+			return;
+		}
+		else {
+			result = this.lockExit(exit);
+		}
+	}
+	else {
+		var direction = -1;
+		
+		switch(directionInput.substring(0, 1).toLowerCase()) {
+			case "n":
+				direction = 0;
+				break;
+			case "e":
+				direction = 1;
+				break;
+			case "s":
+				direction = 2;
+				break;
+			case "w":
+				direction = 3;
+				break;
+			case "u":
+				direction = 4;
+				break;
+			case "d":
+				direction = 5;
+				break;
+		}
+		
+		if(direction === -1) {
+			this.emitMessage("Which way is that?\n\r");
+			return;
+		}
+		else {
+			exit = this.room.getDoorByKeywordAndDirection(keyword, direction);
+			
+			if(exit === null) {
+				this.emitMessage("There doesn't seem to be a " + keyword + " in that direction.\n\r");
+				return;
+			}
+			else {
+				result = this.lockExit(exit);
+			}
+		}
+	}
+	
+	if(result === true) {
+		this.room.lockOppositeDoor(this.world.getRoom(exit.toRoomId));
+	}
+};
 
 characterSchema.methods.move = function(direction) {
 	var exit;

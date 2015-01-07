@@ -223,6 +223,7 @@ var COMMAND_LIST = [
           { command: "look"     , minimumPosition: Character.POS_RESTING , functionPointer: do_look       , minimumLevel: 0, subCommand: 0},
           { command: "laugh"    , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_LAUGH },
           { command: "lick"     , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_LICK },
+          { command: "lock"     , minimumPosition: Character.POS_RESTING , functionPointer: do_lock_door  , minimumLevel: 0, subCommand: 0 },
           { command: "love"     , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_LOVE },
 
           { command: "massage"  , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_MASSAGE },
@@ -306,6 +307,8 @@ var COMMAND_LIST = [
           { command: "tickle"   , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_TICKLE },
           { command: "time"     , minimumPosition: Character.POS_DEAD    , functionPointer: do_time       , minimumLevel: 0, subCommand: 0 },
           { command: "twiddle"  , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_TWIDDLE },
+
+          { command: "unlock"   , minimumPosition: Character.POS_RESTING , functionPointer: do_unlock_door, minimumLevel: 0, subCommand: 0 },
 
           { command: "wave"     , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_WAVE },
           { command: "weather"  , minimumPosition: Character.POS_RESTING , functionPointer: do_weather    , minimumLevel: 0, subCommand: 0 },
@@ -665,6 +668,30 @@ function do_close_door(character, command) {
     }
     else {
         character.closeDoor(command.tokens[0], command.tokens[1]);
+    }
+}
+
+function do_unlock_door(character, command) {
+    if(command.tokens.length === 0) {
+        character.emitMessage("Unlock what?\n\r");
+    }
+    else if(command.tokens.length === 1) {
+        character.unlockDoor(command.tokens[0]);
+    }
+    else {
+        character.unlockDoor(command.tokens[0], command.tokens[1]);
+    }
+}
+
+function do_lock_door(character, command) {
+    if(command.tokens.length === 0) {
+        character.emitMessage("Lock what?\n\r");
+    }
+    else if(command.tokens.length === 1) {
+        character.lockDoor(command.tokens[0]);
+    }
+    else {
+        character.lockDoor(command.tokens[0], command.tokens[1]);
     }
 }
 

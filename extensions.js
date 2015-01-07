@@ -1,5 +1,4 @@
 Array.prototype.findItem = function(index, keyword) {
-	
 	if(isNaN(index)) {
 		return null;
 	}
@@ -51,6 +50,18 @@ Array.prototype.findItems = function(keyword) {
 
 	return items;
 };
+
+Array.prototype.findItemById = function(id) {
+	for(var i = 0; i < this.length; i++) {
+		if(this[i] !== null && this[i] !== undefined) {
+			if(this[i].id === id) {
+				return true;
+			}
+		}
+	}
+	
+	return false;
+}
 
 String.prototype.indefiniteArticle = function() {
 	if(this.length < 1) {
