@@ -262,9 +262,9 @@ roomSchema.methods.getDoorByKeyword = function(keyword) {
 	
 	var counter = 0;
 	
-	if(this.northernExit !== undefined) {
-		if(this.northernExit.keywords !== undefined) {
-			if(this.northernExit.keywords.indexOf(doorKeyword) > -1) {
+	if(this.northernExit !== null) {
+		if(this.northernExit.doorKeywords !== undefined) {
+			if(this.northernExit.doorKeywords.indexOf(doorKeyword) > -1) {
 				counter++;
 			}
 			
@@ -274,9 +274,9 @@ roomSchema.methods.getDoorByKeyword = function(keyword) {
 		}
 	}
 	
-	if(this.easternExit !== undefined) {
-		if(this.easternExit.keywords !== undefined) {
-			if(this.easternExit.keywords.indexOf(doorKeyword) > -1) {
+	if(this.easternExit !== null) {
+		if(this.easternExit.doorKeywords !== undefined) {
+			if(this.easternExit.doorKeywords.indexOf(doorKeyword) > -1) {
 				counter++;
 			}
 			
@@ -286,9 +286,9 @@ roomSchema.methods.getDoorByKeyword = function(keyword) {
 		}
 	}
 
-	if(this.southernExit !== undefined) {
-		if(this.southernExit.keywords !== undefined) {
-			if(this.southernExit.keywords.indexOf(doorKeyword) > -1) {
+	if(this.southernExit !== null) {
+		if(this.southernExit.doorKeywords !== undefined) {
+			if(this.southernExit.doorKeywords.indexOf(doorKeyword) > -1) {
 				counter++;
 			}
 			
@@ -298,9 +298,9 @@ roomSchema.methods.getDoorByKeyword = function(keyword) {
 		}
 	}
 	
-	if(this.westernExit !== undefined) {
-		if(this.westernExit.keywords !== undefined) {
-			if(this.westernExit.keywords.indexOf(doorKeyword) > -1) {
+	if(this.westernExit !== null) {
+		if(this.westernExit.doorKeywords !== undefined) {
+			if(this.westernExit.doorKeywords.indexOf(doorKeyword) > -1) {
 				counter++;
 			}
 			
@@ -310,9 +310,9 @@ roomSchema.methods.getDoorByKeyword = function(keyword) {
 		}
 	}
 	
-	if(this.upwardExit !== undefined) {
-		if(this.upwardExit.keywords !== undefined) {
-			if(this.upwardExit.keywords.indexOf(doorKeyword) > -1) {
+	if(this.upwardExit !== null) {
+		if(this.upwardExit.doorKeywords !== undefined) {
+			if(this.upwardExit.doorKeywords.indexOf(doorKeyword) > -1) {
 				counter++;
 			}
 			
@@ -322,13 +322,13 @@ roomSchema.methods.getDoorByKeyword = function(keyword) {
 		}
 	}
 
-	console.log(this.downwardExit.keywords);
+	console.log(this.downwardExit.doorKeywords);
 
-	if(this.downwardExit !== undefined) {
-		if(this.downwardExit.keywords !== undefined) {
-			console.log(this.downwardExit.keywords);
+	if(this.downwardExit !== null) {
+		if(this.downwardExit.doorKeywords !== undefined) {
+			console.log(this.downwardExit.doorKeywords);
 			
-			if(this.downwardExit.keywords.indexOf(doorKeyword) > -1) {
+			if(this.downwardExit.doorKeywords.indexOf(doorKeyword) > -1) {
 				counter++;
 			}
 			
