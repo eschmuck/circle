@@ -40,6 +40,8 @@ mobSchema.methods.performActivity = function() {
 	
 	if(this.specialBehavior !== undefined) {
 		console.log(this.specialBehavior);
+		
+		this.specialBehavior(this);
 	}
 	
 	// if(this.isScavenger === true) {
