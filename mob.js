@@ -32,16 +32,12 @@ mobSchema.methods.hourlyUpdate = function() {
 mobSchema.methods.performActivity = function() {
 	mudlog.info("Performing mob random activity on " + this.id);
 
-	//console.log(this.specialBehavior);
-	
-	if(this.id === 3061) {
-		console.log(this);
-	}
-	
 	if(this.specialBehavior !== undefined) {
-		console.log(this.specialBehavior);
+		var result = this.specialBehavior(this);
 		
-		this.specialBehavior(this);
+		if(result === true) {
+			return;
+		}
 	}
 	
 	// if(this.isScavenger === true) {
@@ -64,18 +60,26 @@ mobSchema.methods.performActivity = function() {
 	}
 };
 
-
-
 mobSchema.methods.isNpc = function() {
 	return true;
 };
 
 var mobModel = mongoose.model('mob', mobSchema);
 
-
-
 function janitorBehavior(character) {
-	console.log('janitor spec proc');
+	var tookItem = false;
+	
+	for(var i = 0; i < character.room.contents.length; i++)	{
+		var item = character.room.contents[i];
+		
+		if(item.canBeTaken === true) {
+			character.takeObject(item);
+			tookItem = true;
+		}
+	}
+
+	character.say("Damn kids... always leaving their junk around... crappy job...");
+	return tookItem;
 }
 
 module.exports = {

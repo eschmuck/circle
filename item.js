@@ -11,6 +11,7 @@ var itemSchema = new schema({
     canBeDonated: Boolean,
     canBeTaken: Boolean,
     type: String,
+    cost: Number,
     wearSlots: [ Number ],
     
     capacity: Number,
