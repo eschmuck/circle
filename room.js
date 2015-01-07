@@ -368,6 +368,22 @@ roomSchema.methods.getDoorByKeywordAndDirection = function(keyword, direction) {
 	return null;
 };
 
+roomSchema.methods.getExit = function(direction) {
+	switch (direction) {
+		case 0:
+			return this.northernExit;
+		case 1:
+			return this.easternExit;
+		case 2:
+			return this.southernExit;
+		case 3:
+			return this.westernExit;
+		case 4:
+			return this.upwardExit;
+		case 5:
+			return this.downwardExit;
+	}		
+};
 
 roomSchema.methods.exitExists = function(direction) {
 	switch (direction) {
@@ -419,6 +435,60 @@ roomSchema.methods.exitExists = function(direction) {
 				return true;
 			}
 			break;
+	}
+};
+
+roomSchema.methods.openOppositeDoor = function(exit) {
+	var otherRoom = this.world.getRoom(exit.toRoomId);
+	var oppositeExit = null;
+	
+	if(otherRoom !== null) {
+		if(otherRoom.northernExit !== null) {
+			if(otherRoom.northernExit.toRoomId === this.id) {
+				oppositeExit = otherRoom.northernExit;
+			}
+		}
+		
+		if(otherRoom.easternExit !== null) {
+			if(otherRoom.easternExit.toRoomId === this.id) {
+				oppositeExit = otherRoom.easternExit;
+			}
+		}
+
+		if(otherRoom.southernExit !== null) {
+			if(otherRoom.southernExit.toRoomId === this.id) {
+				oppositeExit = otherRoom.southernExit;
+			}
+		}
+
+		if(otherRoom.westernExit !== null) {
+			if(otherRoom.westernExit.toRoomId === this.id) {
+				oppositeExit = otherRoom.westernExit;
+			}
+		}
+
+		if(otherRoom.upwardExit !== null) {
+			if(otherRoom.upwardExit.toRoomId === this.id) {
+				oppositeExit = otherRoom.upwardExit;
+			}
+		}
+		
+		if(otherRoom.downwardExit !== null) {
+			if(otherRoom.downwardExit.toRoomId === this.id) {
+				oppositeExit = otherRoom.downwardExit;
+			}
+		}
+	}
+	
+	if(oppositeExit !== null) {
+		oppositeExit.isClosed = false;
+		
+		if(oppositeExit.doorKeywords.length > 0) {
+			otherRoom.emitMessage("The " + oppositeExit.doorKeywords[0] + " is opened from the other side.\n\r");
+		}
+		else {
+			otherRoom.emitMessage("The door is opened from the other side.\n\r");
+		}
 	}
 };
 

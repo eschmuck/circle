@@ -529,23 +529,23 @@ characterSchema.methods.sleep = function() {
 characterSchema.methods.openExit = function(exit) {
 	if(exit.isLocked) {
 		this.emitMessage("It's locked.\n\r");
-		return;
+		return false;
 	}
 	
 	if(!exit.isClosed) {
 		this.emitMessage("But it's already open.\n\r");
-		return;
+		return false;
 	}
-	
+
 	this.emitMessage("You open the " + exit.doorKeywords[0] + ".\n\r");
 	this.emitRoomMessage(this.name + " opens the " + exit.doorKeywords[0] + ".\n\r");
 	exit.isClosed = false;
+	return true;
 };
 
 characterSchema.methods.openDoor = function(keyword, directionInput) {
 	var exit = null;
-	
-	console.log(directionInput);
+	var result = false;
 	
 	if(directionInput === undefined) {
 		exit = this.room.getDoorByKeyword(keyword);
@@ -555,7 +555,7 @@ characterSchema.methods.openDoor = function(keyword, directionInput) {
 			return;
 		}
 		else {
-			this.openExit(exit);
+			result = this.openExit(exit);
 		}
 	}
 	else {
@@ -594,9 +594,13 @@ characterSchema.methods.openDoor = function(keyword, directionInput) {
 				return;
 			}
 			else {
-				this.openExit(exit);
+				result = this.openExit(exit);
 			}
 		}
+	}
+	
+	if(result === true) {
+		this.room.openOppositeDoor(exit);
 	}
 };
 
