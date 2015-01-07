@@ -543,7 +543,7 @@ characterSchema.methods.openExit = function(exit) {
 };
 
 characterSchema.methods.openDoor = function(keyword, directionInput) {
-	var exit;
+	var exit = null;
 	
 	if(direction === undefined) {
 		exit = this.room.getDoorByKeyword(keyword);
@@ -585,7 +585,7 @@ characterSchema.methods.openDoor = function(keyword, directionInput) {
 			return;
 		}
 		else {
-			exit = this.room.getDoorByKeyword(keyword, direction);
+			exit = this.room.getDoorByKeywordAndDirection(keyword, direction);
 			
 			if(exit === null) {
 				this.emitMessage("There doesn't seem to be a " + keyword + " in that direction.\n\r");

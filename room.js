@@ -311,7 +311,7 @@ roomSchema.methods.getDoorByKeyword = function(keyword) {
 	return null;
 };
 
-roomSchema.methods.getDoorByKeyword = function(keyword, direction) {
+roomSchema.methods.getDoorByKeywordAndDirection = function(keyword, direction) {
 	var exit = null;
 
 	switch(direction) {
