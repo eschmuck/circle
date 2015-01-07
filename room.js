@@ -438,6 +438,44 @@ roomSchema.methods.exitExists = function(direction) {
 	}
 };
 
+roomSchema.methods.getOppositeExit = function(otherRoom) {
+	if(otherRoom.northernExit !== null) {
+		if(otherRoom.northernExit.toRoomId === this.id) {
+			return otherRoom.northernExit;
+		}
+	}
+	
+	if(otherRoom.easternExit !== null) {
+		if(otherRoom.easternExit.toRoomId === this.id) {
+			return otherRoom.easternExit;
+		}
+	}
+
+	if(otherRoom.southernExit !== null) {
+		if(otherRoom.southernExit.toRoomId === this.id) {
+			return otherRoom.southernExit;
+		}
+	}
+
+	if(otherRoom.westernExit !== null) {
+		if(otherRoom.westernExit.toRoomId === this.id) {
+			return otherRoom.westernExit;
+		}
+	}
+
+	if(otherRoom.upwardExit !== null) {
+		if(otherRoom.upwardExit.toRoomId === this.id) {
+			return otherRoom.upwardExit;
+		}
+	}
+	
+	if(otherRoom.downwardExit !== null) {
+		if(otherRoom.downwardExit.toRoomId === this.id) {
+			return otherRoom.downwardExit;
+		}
+	}	
+};
+
 roomSchema.methods.openOppositeDoor = function(otherRoom) {
 	if(otherRoom === null) {
 		return;
@@ -446,41 +484,7 @@ roomSchema.methods.openOppositeDoor = function(otherRoom) {
 	var oppositeExit = null;
 	
 	if(otherRoom !== null) {
-		if(otherRoom.northernExit !== null) {
-			if(otherRoom.northernExit.toRoomId === this.id) {
-				oppositeExit = otherRoom.northernExit;
-			}
-		}
-		
-		if(otherRoom.easternExit !== null) {
-			if(otherRoom.easternExit.toRoomId === this.id) {
-				oppositeExit = otherRoom.easternExit;
-			}
-		}
-
-		if(otherRoom.southernExit !== null) {
-			if(otherRoom.southernExit.toRoomId === this.id) {
-				oppositeExit = otherRoom.southernExit;
-			}
-		}
-
-		if(otherRoom.westernExit !== null) {
-			if(otherRoom.westernExit.toRoomId === this.id) {
-				oppositeExit = otherRoom.westernExit;
-			}
-		}
-
-		if(otherRoom.upwardExit !== null) {
-			if(otherRoom.upwardExit.toRoomId === this.id) {
-				oppositeExit = otherRoom.upwardExit;
-			}
-		}
-		
-		if(otherRoom.downwardExit !== null) {
-			if(otherRoom.downwardExit.toRoomId === this.id) {
-				oppositeExit = otherRoom.downwardExit;
-			}
-		}
+		oppositeExit = this.getOppositeExit(otherRoom);
 	}
 	
 	if(oppositeExit !== null) {
@@ -494,6 +498,30 @@ roomSchema.methods.openOppositeDoor = function(otherRoom) {
 		}
 	}
 };
+
+roomSchema.methods.closeOppositeDoor = function(otherRoom) {
+	if(otherRoom === null) {
+		return;
+	}
+	
+	var oppositeExit = null;
+	
+	if(otherRoom !== null) {
+		oppositeExit = this.getOppositeExit(otherRoom);
+	}
+	
+	if(oppositeExit !== null) {
+		oppositeExit.isClosed = true;
+		
+		if(oppositeExit.doorKeywords.length > 0) {
+			otherRoom.emitMessage("The " + oppositeExit.doorKeywords[0] + " is closed from the other side.\n\r");
+		}
+		else {
+			otherRoom.emitMessage("The door is closed from the other side.\n\r");
+		}
+	}
+};
+
 
 roomSchema.methods.showRoomToCharacter = function(character) {
 

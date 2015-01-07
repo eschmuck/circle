@@ -163,6 +163,7 @@ var COMMAND_LIST = [
           { command: "cackle"   , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_CACKLE },
           { command: "chuckle"  , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_CHUCKLE },
           { command: "clap"     , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_CLAP },
+          { command: "close"    , minimumPosition: Character.POS_RESTING , functionPointer: do_close_door , minomumLevel: 0, subCommand: 0 },
           { command: "comb"     , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_COMB },
           { command: "comfort"  , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_COMFORT },
           { command: "cough"    , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_COUGH },
@@ -652,6 +653,18 @@ function do_open_door(character, command) {
     }
     else {
         character.openDoor(command.tokens[0], command.tokens[1]);
+    }
+}
+
+function do_close_door(character, command) {
+    if(command.tokens.length === 0) {
+        character.emitMessage("Close what?\n\r");
+    }
+    else if(command.tokens.length === 1) {
+        character.closeDoor(command.tokens[0]);
+    }
+    else {
+        character.closeDoor(command.tokens[0], command.tokens[1]);
     }
 }
 

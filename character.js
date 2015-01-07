@@ -543,6 +543,25 @@ characterSchema.methods.openExit = function(exit) {
 	return true;
 };
 
+characterSchema.methods.closeExit = function(exit) {
+	if(exit.isClosed) {
+		this.emitMessage("But it's already closed.\n\r");
+		return false;
+	}
+	
+	if(!exit.isClosable) {
+		this.emitMessage("That can't be closed.\n\r");
+		return false;
+	}
+
+	this.emitMessage("You close the " + exit.doorKeywords[0] + ".\n\r");
+	this.emitRoomMessage(this.name + " closes the " + exit.doorKeywords[0] + ".\n\r");
+	exit.isClosed = true;
+	return true;
+};
+
+
+// TODO: Combine openDoor and closeDoor -- too much code duplication.
 characterSchema.methods.openDoor = function(keyword, directionInput) {
 	var exit = null;
 	var result = false;
@@ -603,6 +622,68 @@ characterSchema.methods.openDoor = function(keyword, directionInput) {
 		this.room.openOppositeDoor(this.world.getRoom(exit.toRoomId));
 	}
 };
+
+characterSchema.methods.closeDoor = function(keyword, directionInput) {
+	var exit = null;
+	var result = false;
+	
+	if(directionInput === undefined) {
+		exit = this.room.getDoorByKeyword(keyword);
+		
+		if(exit === null) {
+			this.emitMessage("There doesn't seem to be a " + keyword + " here.\n\r");
+			return;
+		}
+		else {
+			result = this.closeExit(exit);
+		}
+	}
+	else {
+		var direction = -1;
+		
+		switch(directionInput.substring(0, 1).toLowerCase()) {
+			case "n":
+				direction = 0;
+				break;
+			case "e":
+				direction = 1;
+				break;
+			case "s":
+				direction = 2;
+				break;
+			case "w":
+				direction = 3;
+				break;
+			case "u":
+				direction = 4;
+				break;
+			case "d":
+				direction = 5;
+				break;
+		}
+		
+		if(direction === -1) {
+			this.emitMessage("Which way is that?\n\r");
+			return;
+		}
+		else {
+			exit = this.room.getDoorByKeywordAndDirection(keyword, direction);
+			
+			if(exit === null) {
+				this.emitMessage("There doesn't seem to be a " + keyword + " in that direction.\n\r");
+				return;
+			}
+			else {
+				result = this.closeExit(exit);
+			}
+		}
+	}
+	
+	if(result === true) {
+		this.room.closeOppositeDoor(this.world.getRoom(exit.toRoomId));
+	}
+};
+
 
 characterSchema.methods.move = function(direction) {
 	var exit;
