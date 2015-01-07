@@ -87,12 +87,24 @@ function janitorBehavior(character) {
 	return tookItem;
 }
 
+function fidoBehavior(character) {
+	for(var i = 0; i < character.room.contents; i++) {
+		if(character.room.contents[i].isCorpse()) {
+			character.world.removeItem(character.room.contents[i]);
+			character.emitRoomMessage(character.name + " savagely devours a corpse.");
+			return true;
+		}
+	}
+	
+	return false;
+}
+
 module.exports = {
 	schema: mobSchema,
 	mob: mobModel,
 	
-	blahBehavior: "AAA",
-	janitorBehavior: janitorBehavior
+	janitorBehavior: janitorBehavior,
+	fidoBehavior: fidoBehavior
 };
 
 

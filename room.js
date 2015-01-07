@@ -6,6 +6,7 @@ var roomSchema = new schema({
 	id: Number,
 	title: String,
 	description: String,
+	mobsAllowed: Boolean,
 	northernExit: {
 		toRoomId: Number,
 		isPickproof: Boolean,

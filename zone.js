@@ -96,9 +96,17 @@ function afterMobLoaded(document, mob, commands, world, instructionNumber) {
     world.addCharacter(mob);
     world.getRoom(roomId).addCharacter(mob);
 
-    if(mob.id === 3061 || mob.id === 3068) {
-        mudlog.info("Assigning janitorBehavior to mob " + mob.id);
-        mob.specialBehavior = mobBehaviors.janitorBehavior;
+    switch(mob.id) {
+        case 3062:
+        case 3066:
+            mudlog.info("Assigning fidoBehavior to mob " + mob.id);
+            mob.specialBehavior = mobBehaviors.fidoBehavior;
+            break;
+        case 3061:
+        case 3068:
+            mudlog.info("Assigning janitorBehavior to mob " + mob.id);
+            mob.specialBehavior = mobBehaviors.janitorBehavior;
+            break;
     }
 
     executeZoneResetCommands(commands, (instructionNumber + 1), world, mob);

@@ -554,12 +554,16 @@ characterSchema.methods.move = function(direction) {
 				exit = this.room.downwardExit;
 				break;
 		}
-	
+		
 		if(exit.isClosed === true) {
 		 	this.emitMessage("The " + exit.doorKeywords[0] + " seems to be closed.");
 		}
 		else {
 		 	var newRoom = this.world.getRoom(exit.toRoomId);
+
+			if(newRoom.mobsAllowed === false && this.isNpc() === true) {
+				return;
+			}
 		 	
 		 	if(newRoom !== null) {
 			 	this.emitRoomMessage(this.name + " leaves " + directions[direction] + ".");

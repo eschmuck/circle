@@ -134,6 +134,10 @@ itemSchema.statics.load = function(id, item, callback, commands, world, previous
  	});
 };
 
+itemSchema.methods.isCorpse = function() {
+  return false;
+};
+
 var itemModel = mongoose.model('item', itemSchema);
 
 module.exports = {
