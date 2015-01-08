@@ -137,6 +137,10 @@ characterSchema.methods.emitMessage = function(message, color) {
 	}
 };
 
+characterSchema.methods.setPrompt = function(prompt) {
+	this.socket.emit('message', { message: "", prompt: prompt });
+};
+
 characterSchema.methods.emitRoomMessage = function(message, color) {
 	var formattedMessage = message.substring(0, 1).toUpperCase() + message.substring(1);
 
@@ -1658,6 +1662,7 @@ characterSchema.methods.die = function() {
 	if(this.isNpc() === false) {
 		if(this.socket !== undefined) {
 			this.socket.connectionState = global.CON_MENU;
+			this.setPrompt("> ");
 			this.emitMessage(text.Menu);
 		}
 	}
