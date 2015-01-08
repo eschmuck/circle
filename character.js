@@ -1691,11 +1691,18 @@ characterSchema.methods.toCorpse = function() {
 	
 	while(this.inventory.length > 0) {
 	 	var inventoryItem = this.inventory.pop();
-	// 	corpse.contents.push(item);
+	 	
+	 	if(inventoryItem !== null) {
+	 		corpse.contents.push(inventoryItem);
+	 	}
 	}
 	
 	while(this.wearing.length > 0) {
 		var wornItem = this.wearing.pop();
+		
+		if(wornItem !== null) {
+			corpse.contents.push(wornItem);
+		}
 	}
 	
 	this.world.addItem(corpse);
