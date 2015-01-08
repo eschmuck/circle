@@ -108,6 +108,10 @@ characterSchema.methods.hourlyUpdate = function() {
 	// Implementation overriden by child schemas	
 };
 
+characterSchema.methods.consider = function(targetName) {
+	// Implementation overriden by child schemas	
+};
+
 characterSchema.methods.isNpc = function() {
 	// Implementation overriden by child schemas	
 	return false;

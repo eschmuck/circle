@@ -373,6 +373,61 @@ playerSchema.methods.hourlyUpdate = function() {
 	}
 };
 
+playerSchema.methods.consider = function(targetName) {
+	var target = this.room.getCharacter(targetName);
+	
+	if(target === null) {
+		this.emitMessage("Consider killing who?\n\r");
+		return;
+	}
+	
+	if(target === this) {
+		this.emitMessage("Easy! Very easy indeed!\n\r");
+		return;
+	}
+	
+	if(target.isNpc() === false) {
+		this.emitMessage("Would you like to borrow a cross and a shovel?\n\r");
+		return;
+	}
+	
+   var diff = target.level - this.level;
+   
+    if(diff <= -10) {
+        this.emitMessage('Now where did that chicken go?\n\r');
+    }
+    else if(diff <= -5) {
+        this.emitMessage('You could do it with a needle!\n\r');
+    }
+    else if(diff <= -2) {
+        this.emitMessage('Easy.\n\r');
+    }
+    else if(diff < -1) {
+        this.emitMessage('Fairly easy.\n\r');
+    }
+    else if(diff == 0) {
+        this.emitMessage('The perfect match!\n\r');
+    }
+    else if(diff <= 1) {
+        this.emitMessage('You would need some luck!\n\r');
+    }
+    else if(diff <= 2) {
+        this.emitMessage('You would need a lot of luck!\n\r');
+    }
+    else if(diff <= 3) {
+        this.emitMessage('You would need a lot of luck and great equipment!\n\r');
+    }
+    else if(diff <= 5) {
+        this.emitMessage('Do you feel lucky, punk?\n\r');
+    }
+    else if(diff <= 10) {
+        this.emitMessage('Are you mad!?\n\r');
+    }
+    else if(diff <= 100) {
+        this.emitMessage('You ARE mad!\n\r');
+    }
+};
+
 playerSchema.methods.getClassAbbreviation = function() {
 	switch(this.class) {
 		case global.CLASS_MAGIC_USER:

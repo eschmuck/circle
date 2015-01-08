@@ -166,6 +166,7 @@ var COMMAND_LIST = [
           { command: "close"    , minimumPosition: Character.POS_RESTING , functionPointer: do_close_door , minomumLevel: 0, subCommand: 0 },
           { command: "comb"     , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_COMB },
           { command: "comfort"  , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_COMFORT },
+          { command: "consider" , minimumPosition: Character.POS_RESTING , functionPointer: do_consider   , minimumLevel: 0, subCommand: 0 },
           { command: "cough"    , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_COUGH },
           { command: "cringe"   , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_CRINGE },
           { command: "cry"      , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_CRY },
@@ -846,6 +847,15 @@ function do_give(character, command) {
         else {
             character.giveItem(command.tokens[0], command.tokens[2]);
         }
+    }
+}
+
+function do_consider(character, command) {
+    if(command.tokens.length === 0) {
+        character.emitMessage("Consider killing who?");
+    }
+    else {
+        character.consider(command.tokens[0]);
     }
 }
 
