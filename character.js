@@ -1669,7 +1669,7 @@ characterSchema.methods.performDeathCry = function() {
 	var adjacentRooms = this.room.getAdjacentRooms();
 	
 	for(var i = 0; i < adjacentRooms.length; i++) {
-		adjacentRooms[i].emitRoomMessage("Your blood freezes as you hear someone's death cry.\n\r");
+		adjacentRooms[i].emitMessage("Your blood freezes as you hear someone's death cry.\n\r");
 	}
 };
 
