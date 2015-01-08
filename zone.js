@@ -168,7 +168,7 @@ function afterMobLoaded(document, mob, commands, world, instructionNumber) {
         executeZoneResetCommands(commands, (instructionNumber + 1), world, mob);
     }
     else {
-        mudlog.error("Unable to load mob into non-exist room - " + roomId);
+        mudlog.error("Unable to load mob into non-existant room - " + roomId);
     }
 }
 
@@ -180,8 +180,16 @@ function afterRoomItemLoaded(document, item, commands, world, mob, instructionNu
     mudlog.info("Adding object " + item.shortDescription + "(" + item.id + ") to room " + roomId);
     
     world.addItem(item);
-    world.getRoom(roomId).addItem(item);
-    executeZoneResetCommands(commands, (instructionNumber + 1), world, item);
+    
+    var targetRoom = world.getRoom(roomId);
+    
+    if(targetRoom !== null) {
+        targetRoom.addItem(item);
+        executeZoneResetCommands(commands, (instructionNumber + 1), world, item);
+    }
+    else {
+        mudlog.error("Unable to load object into non-existant room - " + roomId);
+    }
 }
 
 function afterGivenItemLoaded(document, item, commands, world, mob, instructionNumber) {
