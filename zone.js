@@ -146,22 +146,30 @@ function afterMobLoaded(document, mob, commands, world, instructionNumber) {
     mudlog.info("Loading " + mob.name + "(" + mob.id + ") with " + hitpointTotal + " hitpoints in room " + roomId);
     
     world.addCharacter(mob);
-    world.getRoom(roomId).addCharacter(mob);
+    
+    var targetRoom = world.getRoom(roomId);
+    
+    if(targetRoom !== null) {
+        targetRoom.addCharacter(mob);
 
-    switch(mob.id) {
-        case 3062:
-        case 3066:
-            mudlog.info("Assigning fidoBehavior to mob " + mob.id);
-            mob.specialBehavior = mobBehaviors.fidoBehavior;
-            break;
-        case 3061:
-        case 3068:
-            mudlog.info("Assigning janitorBehavior to mob " + mob.id);
-            mob.specialBehavior = mobBehaviors.janitorBehavior;
-            break;
+        switch(mob.id) {
+            case 3062:
+            case 3066:
+                mudlog.info("Assigning fidoBehavior to mob " + mob.id);
+                mob.specialBehavior = mobBehaviors.fidoBehavior;
+                break;
+            case 3061:
+            case 3068:
+                mudlog.info("Assigning janitorBehavior to mob " + mob.id);
+                mob.specialBehavior = mobBehaviors.janitorBehavior;
+                break;
+        }
+    
+        executeZoneResetCommands(commands, (instructionNumber + 1), world, mob);
     }
-
-    executeZoneResetCommands(commands, (instructionNumber + 1), world, mob);
+    else {
+        mudlog.error("Unable to load mob into non-exist room - " + roomId);
+    }
 }
 
 function afterRoomItemLoaded(document, item, commands, world, mob, instructionNumber) {
