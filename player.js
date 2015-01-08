@@ -428,7 +428,7 @@ playerSchema.methods.consider = function(targetName) {
     }
 };
 
-characterSchema.methods.slay = function(targetName) {
+playerSchema.methods.slay = function(targetName) {
 	var target = this.room.getCharacter(targetName);
 	
 	if(target === null) {
