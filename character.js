@@ -1686,8 +1686,8 @@ characterSchema.methods.toCorpse = function() {
 		type: global.ITEM_CORPSE
 	});
 	
-	corpse.keyword.push("corpse");
-	corpse.keyword.push(this.name);
+	corpse.keywords.push("corpse");
+	corpse.keywords.push(this.name);
 	
 	// while(this.inventory.length > 0) {
 	// 	var item = this.inventory.pop();
