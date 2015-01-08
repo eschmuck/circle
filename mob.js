@@ -79,7 +79,7 @@ function janitorBehavior(character) {
 	}
 
 	if(tookItem === true) {
-		character.say("Damn kids... always leaving their junk around... crappy job...");
+		character.say("Damn kids... always leaving their junk around... crappy job...\n\r");
 	}
 	
 	return tookItem;
