@@ -1658,13 +1658,13 @@ characterSchema.methods.die = function() {
 	if(this.isNpc() === false) {
 		if(this.socket !== undefined) {
 			this.socket.connectionState = global.CON_MENU;
-			this.emitMessage(text.menu);
+			this.emitMessage(text.Menu);
 		}
 	}
 };
 
 characterSchema.methods.performDeathCry = function() {
-	this.emitRoomMessage("Your blood freezes as you hear " + this.name + "'s death cry.\n\re");
+	this.emitRoomMessage("Your blood freezes as you hear " + this.name + "'s death cry.\n\r");
 	
 	var adjacentRooms = this.room.getAdjacentRooms();
 	

@@ -442,9 +442,9 @@ playerSchema.methods.slay = function(targetName) {
 	}
 	
 	else {
-		this.emitMessage("You chop " + target.name + " to pieces! Oh the humanity!!!\n\r");
-		target.emitMessage(this.name + " chops you to pieces!\n\r");
-		this.emitObservedMessage(target, this.name + " brutally slays " + target.name + "\n\r");
+		this.emitMessage("You chop " + target.name + " to pieces! Oh the humanity!!!");
+		target.emitMessage(this.name + " chops you to pieces!");
+		this.emitObservedMessage(target, this.name + " brutally slays " + target.name);
 		target.die();
 	}
 };
