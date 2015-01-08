@@ -1690,8 +1690,12 @@ characterSchema.methods.toCorpse = function() {
 	corpse.keywords.push(this.name);
 	
 	while(this.inventory.length > 0) {
-		var item = this.inventory.pop();
-		corpse.contents.push(item);
+	 	var inventoryItem = this.inventory.pop();
+	// 	corpse.contents.push(item);
+	}
+	
+	while(this.wearing.length > 0) {
+		var wornItem = this.wearing.pop();
 	}
 	
 	this.world.addItem(corpse);
