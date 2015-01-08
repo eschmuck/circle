@@ -1,3 +1,2 @@
-mongoimport --db circledb --collection rooms --file 30.wld.json
-mongoimport --db circledb --collection rooms --file 120.wld.json
+mongoimport --db circledb --collection rooms --file world.json
 
