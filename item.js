@@ -14,7 +14,7 @@ var itemSchema = new schema({
     cost: Number,
     wearSlots: [ Number ],
 
-  	//contents: [],
+  	contents: [ Object ],
 
     capacity: Number,
     containsLiquid: Number,
