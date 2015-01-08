@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var schema = mongoose.Schema;
 var extend = require('mongoose-schema-extend');
+var mudlog = require('./mudlog');
 
 var itemSchema = new schema({
     id: Number,
@@ -36,7 +37,12 @@ itemSchema.methods.showItemToCharacter = function(character) {
     }
     else {
       for(var i = 0; i < this.contents.length; i++) {
-        character.emitMessage(this.contents[i].shortDescription);
+        if(this.contents[i] !== undefined) {
+          character.emitMessage(this.contents[i].shortDescription);
+        }
+        else {
+          mudlog.error("this.contents[" + i + "] is undefined");
+        }
       }
     }
   }

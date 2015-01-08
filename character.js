@@ -1693,7 +1693,9 @@ characterSchema.methods.toCorpse = function() {
 	 	var inventoryItem = this.inventory.pop();
 	 	
 	 	if(inventoryItem !== null) {
-	 		corpse.contents.push(inventoryItem);
+	 		if(inventoryItem !== undefined) {
+	 			corpse.contents.push(inventoryItem);
+	 		}
 	 	}
 	}
 	
@@ -1701,7 +1703,9 @@ characterSchema.methods.toCorpse = function() {
 		var wornItem = this.wearing.pop();
 		
 		if(wornItem !== null) {
-			corpse.contents.push(wornItem);
+			if(wornItem !== undefined) {
+				corpse.contents.push(wornItem);
+			}
 		}
 	}
 	

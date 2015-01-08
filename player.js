@@ -440,13 +440,12 @@ playerSchema.methods.slay = function(targetName) {
 		this.emitMessage("Your mother would be so sad... :(\n\r");
 		return;
 	}
-	
-	else {
-		this.emitMessage("You chop " + target.name + " to pieces! Oh the humanity!!!");
-		target.emitMessage(this.name + " chops you to pieces!");
-		this.emitObservedMessage(target, this.name + " brutally slays " + target.name);
-		target.die();
-	}
+
+	mudlog.info(this.name + " slayed " + target.name);
+	this.emitMessage("You chop " + target.name + " to pieces! Oh the humanity!!!");
+	target.emitMessage(this.name + " chops you to pieces!");
+	this.emitObservedMessage(target, this.name + " brutally slays " + target.name);
+	target.die();
 };
 
 playerSchema.methods.getClassAbbreviation = function() {
