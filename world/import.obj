@@ -1,3 +1,2 @@
-mongoimport --db circledb --collection items --file 30.obj.json
-mongoimport --db circledb --collection items --file 120.obj.json
+mongoimport --db circledb --collection items --file items.json
 
