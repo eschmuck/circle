@@ -14,7 +14,7 @@ var itemSchema = new schema({
     cost: Number,
     wearSlots: [ Number ],
 
-  	contents: [],
+  	//contents: [],
 
     capacity: Number,
     containsLiquid: Number,
@@ -28,18 +28,18 @@ itemSchema.methods.showItemToCharacter = function(character) {
 
   character.emitMessage(this.longDescription);
   
-  if(this.type === global.ITEM_CORPSE) {
-    character.emitMessage("Contents:");
+  // if(this.type === global.ITEM_CORPSE) {
+  //   character.emitMessage("Contents:");
     
-    if(this.contents.length === 0) {
-      character.emitMessage("Nothing!\n\r");
-    }
-    else {
-      for(var i = 0; i < this.contents.length; i++) {
-        character.emitMessage(this.contents[i].shortDescription);
-      }
-    }
-  }
+  //   if(this.contents.length === 0) {
+  //     character.emitMessage("Nothing!\n\r");
+  //   }
+  //   else {
+  //     for(var i = 0; i < this.contents.length; i++) {
+  //       character.emitMessage(this.contents[i].shortDescription);
+  //     }
+  //   }
+  // }
 };
 
 

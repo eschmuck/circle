@@ -1679,17 +1679,17 @@ characterSchema.methods.performDeathCry = function() {
 };
 
 characterSchema.methods.toCorpse = function() {
-	var corpse = new item.item( {
+	var corpse = new item.item({
 		id: -1,
 		shortDescription: "the corpse of " + this.name,
 		longDescription: "The corpse of " + this.name + " lays here in a pool of blood.",
-		//type: global.ITEM_CORPSE
+		type: global.ITEM_CORPSE
 	});
 	
-	while(this.inventory.length > 0) {
-		var item = this.inventory.pop();
-		corpse.contents.push(item);
-	}
+	// while(this.inventory.length > 0) {
+	// 	var item = this.inventory.pop();
+	// 	corpse.contents.push(item);
+	// }
 	
 	this.world.addItem(corpse);
 	this.room.addItem(corpse);
