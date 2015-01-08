@@ -13,7 +13,9 @@ var itemSchema = new schema({
     type: String,
     cost: Number,
     wearSlots: [ Number ],
-    
+
+  	contents: [],
+
     capacity: Number,
     containsLiquid: Number,
     isPoisoned: Boolean
@@ -25,6 +27,19 @@ itemSchema.methods.showItemToCharacter = function(character) {
   character.emitRoomMessage(character.name + " looks at " + this.shortDescription + ".");
 
   character.emitMessage(this.longDescription);
+  
+  if(this.type === global.ITEM_CORPSE) {
+    character.emitMessage("Contents:");
+    
+    if(this.contents.length === 0) {
+      character.emitMessage("Nothing!\n\r");
+    }
+    else {
+      for(var i = 0; i < this.contents.length; i++) {
+        character.emitMessage(this.contents[i].shortDescription);
+      }
+    }
+  }
 };
 
 
@@ -47,6 +62,7 @@ global.ITEM_MONEY = "Money";
 global.ITEM_PEN = "Pen";
 global.ITEM_BOAT = "Boat";
 global.ITEM_FOUNTAIN = "Fountain";
+global.ITEM_CORPSE = "Corpse";
 
 global.MAX_WEARS = 17;
 
@@ -135,6 +151,10 @@ itemSchema.statics.load = function(id, item, callback, commands, world, previous
 };
 
 itemSchema.methods.isCorpse = function() {
+  if(this.type === global.TYPE_CORPSE) {
+    return true;
+  }
+  
   return false;
 };
 

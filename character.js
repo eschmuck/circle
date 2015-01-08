@@ -1681,13 +1681,14 @@ characterSchema.methods.performDeathCry = function() {
 characterSchema.methods.toCorpse = function() {
 	var corpse = new item.item( {
 		id: -1,
-		shortDescription: "the corpse of " + this.name + " lays here in a pool of blood.",
-		longDescription: "the corpse of " + this.name,
+		shortDescription: "the corpse of " + this.name,
+		longDescription: "the corpse of " + this.name + " lays here in a pool of blood.",
+		type: global.ITEM_CORPSE
 	});
 	
-	// TODO: Remove this -- make a corpse into a container full of stuff
 	while(this.inventory.length > 0) {
-		this.dropObject(this.inventory[0]);
+		var item = this.inventory.pop();
+		corpse.contents.push(item);
 	}
 	
 	this.world.addItem(corpse);

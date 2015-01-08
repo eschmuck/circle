@@ -89,7 +89,7 @@ function fidoBehavior(character) {
 	for(var i = 0; i < character.room.contents; i++) {
 		if(character.room.contents[i].isCorpse()) {
 			character.world.removeItem(character.room.contents[i]);
-			character.emitRoomMessage(character.name + " savagely devours a corpse.");
+			character.emitRoomMessage(character.name + " savagely devours a corpse.\n\r");
 			return true;
 		}
 	}
