@@ -1686,10 +1686,10 @@ characterSchema.methods.toCorpse = function() {
 		type: global.ITEM_CORPSE
 	});
 	
-	while(this.inventory.length > 0) {
-		var item = this.inventory.pop();
-		corpse.contents.push(item);
-	}
+	// while(this.inventory.length > 0) {
+	// 	var item = this.inventory.pop();
+	// 	corpse.contents.push(item);
+	// }
 	
 	this.world.addItem(corpse);
 	this.room.addItem(corpse);
