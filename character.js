@@ -909,6 +909,10 @@ characterSchema.methods.move = function(direction) {
 			 	this.emitRoomMessage(this.name + " has arrived.\n\r");
 				
 			 	newRoom.showRoomToCharacter(this);
+			 	
+			 	if(newRoom.isDeathTrap === true) {
+			 		this.die();
+			 	}
 		 	}
 		 	else {
 		 		this.emitMessage("Although you should be able to go there, you cannot!\n\r");
@@ -1658,6 +1662,9 @@ characterSchema.methods.die = function() {
 	this.toCorpse();
 	this.room.removeCharacter(this);
 	this.world.removeCharacter(this);
+	
+	this.emitMessage("Everything fades to black....");
+	this.emitMessage(".... You have died.  RIP!\n\r");
 	
 	if(this.isNpc() === false) {
 		if(this.socket !== undefined) {
