@@ -1689,10 +1689,10 @@ characterSchema.methods.toCorpse = function() {
 	corpse.keywords.push("corpse");
 	corpse.keywords.push(this.name);
 	
-	// while(this.inventory.length > 0) {
-	// 	var item = this.inventory.pop();
-	// 	corpse.contents.push(item);
-	// }
+	while(this.inventory.length > 0) {
+		var item = this.inventory.pop();
+		corpse.contents.push(item);
+	}
 	
 	this.world.addItem(corpse);
 	this.room.addItem(corpse);
