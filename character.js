@@ -8,6 +8,7 @@ var extensions = require('./extensions');
 var item = require("./item");
 var utility = require("./utility");
 var constants = require("./constants");
+var text = require('./text');
 
 var directions = [ 'north', 'east', 'south', 'west', 'up', 'down' ];
 
@@ -109,6 +110,10 @@ characterSchema.methods.hourlyUpdate = function() {
 };
 
 characterSchema.methods.consider = function(targetName) {
+	// Implementation overriden by child schemas	
+};
+
+characterSchema.methods.slay = function(targetName) {
 	// Implementation overriden by child schemas	
 };
 
@@ -1644,14 +1649,27 @@ characterSchema.methods.getDiagnosis = function() {
 	return diagnosis[index].description;
 };
 
-characterSchema.methods.slay = function(targetName) {
-	var target = this.room.getCharacter(targetName);
+characterSchema.methods.die = function() {
+	this.performDeathCry();
+	this.toCorpse();
+	this.room.removeCharacter(this);
+	this.world.removeCharacter(this);
 	
-	if(target === null) {
-		this.emitMessage("No-one by that name here... Your wrath will have to wait.");
+	if(this.isNpc() === false) {
+		if(this.socket !== undefined) {
+			this.socket.connectionState = global.CON_MENU;
+			this.emitMessage(text.menu);
+		}
 	}
-	else {
-		target.toCorpse();
+};
+
+characterSchema.methods.performDeathCry = function() {
+	this.emitRoomMessage("Your blood freezes as you hear " + this.name + "'s death cry.\n\re");
+	
+	var adjacentRooms = this.room.getAdjacentRooms();
+	
+	for(var i = 0; i < adjacentRooms.length; i++) {
+		adjacentRooms[i].emitRoomMessage("Your blood freezes as you hear someone's death cry.\n\r");
 	}
 };
 
@@ -1662,7 +1680,7 @@ characterSchema.methods.toCorpse = function() {
 		longDescription: "the corpse of " + this.name,
 	});
 	
-	// TODO: Remove this
+	// TODO: Remove this -- make a corpse into a container full of stuff
 	while(this.inventory.length > 0) {
 		this.dropObject(this.inventory[0]);
 	}

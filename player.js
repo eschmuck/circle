@@ -405,7 +405,7 @@ playerSchema.methods.consider = function(targetName) {
     else if(diff < -1) {
         this.emitMessage('Fairly easy.\n\r');
     }
-    else if(diff == 0) {
+    else if(diff === 0) {
         this.emitMessage('The perfect match!\n\r');
     }
     else if(diff <= 1) {
@@ -426,6 +426,27 @@ playerSchema.methods.consider = function(targetName) {
     else if(diff <= 100) {
         this.emitMessage('You ARE mad!\n\r');
     }
+};
+
+characterSchema.methods.slay = function(targetName) {
+	var target = this.room.getCharacter(targetName);
+	
+	if(target === null) {
+		this.emitMessage("No-one by that name here... Your wrath will have to wait.\n\r");
+		return;
+	}
+	
+	if(target === this) {
+		this.emitMessage("Your mother would be so sad... :(\n\r");
+		return;
+	}
+	
+	else {
+		this.emitMessage("You chop " + target.name + " to pieces! Oh the humanity!!!\n\r");
+		target.emitMessage(this.name + " chops you to pieces!\n\r");
+		this.emitObservedMessage(target, this.name + " brutally slays " + target.name + "\n\r");
+		target.die();
+	}
 };
 
 playerSchema.methods.getClassAbbreviation = function() {

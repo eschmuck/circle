@@ -576,6 +576,56 @@ roomSchema.methods.listExits = function(character) {
 	character.emitMessage("");
 };
 
+roomSchema.methods.getAdjacentRoom = function(exit) {
+	if(exit !== null) {
+		if(exit.isClosed !== null) {
+			var adjacentRoom = this.world.getRoom(exit.toRoomId);
+			
+			if(adjacentRoom !== null) {
+				return adjacentRoom;
+			}
+		}
+	}
+	
+	return null;
+}
+
+roomSchema.methods.getAdjacentRooms = function() {
+	var rooms = [];
+	
+	var northernRoom = this.getAdjacentRoom(this.northernExit);
+	if(northernRoom !== null) {
+		rooms.push(northernRoom);
+	}
+	
+	var easternRoom = this.getAdjacentRoom(this.easternExit);
+	if(easternRoom !== null) {
+		rooms.push(easternRoom);
+	}
+
+	var southernRoom = this.getAdjacentRoom(this.southernExit);
+	if(southernRoom !== null) {
+		rooms.push(southernRoom);
+	}
+
+	var westernRoom = this.getAdjacentRoom(this.westernExit);
+	if(westernRoom !== null) {
+		rooms.push(westernRoom);
+	}
+
+	var upwardRoom = this.getAdjacentRoom(this.upwardExit);
+	if(upwardRoom !== null) {
+		rooms.push(upwardRoom);
+	}
+
+	var downwardRoom = this.getAdjacentRoom(this.downwardExit);
+	if(downwardRoom !== null) {
+		rooms.push(downwardRoom);
+	}
+	
+	return rooms;
+};
+
 roomSchema.methods.showRoomToCharacter = function(character) {
 
 	// TODO: Dark room, blind character
