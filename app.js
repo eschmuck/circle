@@ -48,6 +48,11 @@ weather.getWeather(function(weatherDoc) {
 
 room.getRooms(function(roomDocs) {
   gameWorld.rooms = roomDocs;
+  
+  for(var i = 0; i < gameWorld.rooms.length; i++) {
+    gameWorld.rooms[i].world = gameWorld;
+  }
+  
   zone.getZones(function(zoneDocs) {
     gameWorld.zones = zoneDocs;
     for(var i = 0; i < gameWorld.zones.length; i++) {

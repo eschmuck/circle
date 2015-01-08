@@ -184,6 +184,7 @@ var COMMAND_LIST = [
           { command: "embrace"  , minimumPosition: Character.POS_STANDING, functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_EMBRACE },
           { command: "emote"    , minimumPosition: Character.POS_RESTING , functionPointer: do_emote      , minimumLevel: 0, subCommand: 0 },
           { command: "equipment", minimumPosition: Character.POS_DEAD    , functionPointer: do_equipment  , minimumLevel: 0, subCommand: 0 },
+          { command: "exits"    , minimumPosition: Character.POS_RESTING , functionPointer: do_exits      , minimumLevel: 0, subCommand: 0 },
 
           { command: "fart"     , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_FART },
           { command: "flip"     , minimumPosition: Character.POS_STANDING, functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_FLIP },
@@ -864,6 +865,10 @@ function do_look(character, command) {
     else {
         character.lookAtTarget(command.tokens[0]);
     }
+}
+
+function do_exits(character, command) {
+    character.room.listExits(character);
 }
 
 function do_score(character) {

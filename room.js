@@ -76,9 +76,10 @@ var roomSchema = new schema({
 	},
 	people: [],
 	contents: [],
-	extras: [
-		{ description: String, keywords: [] }
-	]
+	extras: [{
+		description: String,
+		keywords: []
+	}]
 });
 
 roomSchema.methods.contains = function(item) {
@@ -99,20 +100,20 @@ roomSchema.methods.findContentsItems = function(keyword) {
 	return this.contents.findItems(keyword);
 };
 
-roomSchema.methods.findRoomContentsFromKeywords = function (keyword) {
-	var result = { };
+roomSchema.methods.findRoomContentsFromKeywords = function(keyword) {
+	var result = {};
 	result.items = [];
 
 	var item;
-	
-	if(keyword.indexOf(".") > -1) {
+
+	if (keyword.indexOf(".") > -1) {
 		var tokens = keyword.split(".");
-		
-		if(tokens[1].length === 0) {
+
+		if (tokens[1].length === 0) {
 			return null;
 		}
-		
-		if(tokens[0].toLowerCase() === "all") {
+
+		if (tokens[0].toLowerCase() === "all") {
 			result.mode = 'all.item';
 			result.token = tokens[1];
 			result.items = this.findContentsItems(tokens[1]);
@@ -120,16 +121,16 @@ roomSchema.methods.findRoomContentsFromKeywords = function (keyword) {
 		else {
 			result.mode = 'n.item';
 			result.token = tokens[1];
-			
+
 			item = this.findContentsItem(parseInt(tokens[0], 10), tokens[1]);
 
-			if(item !== null) {
+			if (item !== null) {
 				result.items.push(item);
 			}
 		}
 	}
 	else {
-		if(keyword.toLowerCase().trim() === 'all') {
+		if (keyword.toLowerCase().trim() === 'all') {
 			result.mode = 'all';
 			result.token = '';
 			result.items = this.findContentsItems('all');
@@ -137,15 +138,15 @@ roomSchema.methods.findRoomContentsFromKeywords = function (keyword) {
 		else {
 			result.mode = '1.item';
 			result.token = keyword;
-			
+
 			item = this.findContentsItem(1, keyword);
-			
-			if(item !== null) {
+
+			if (item !== null) {
 				result.items.push(item);
 			}
 		}
 	}
-	
+
 	return result;
 };
 
@@ -179,8 +180,8 @@ roomSchema.methods.findItems = function(keyword) {
 };
 
 roomSchema.methods.emitMessage = function(message, color) {
-	for(var i = 0; i < this.people.length; i++) {
-		if(!this.people[i].isNpc()) {
+	for (var i = 0; i < this.people.length; i++) {
+		if (!this.people[i].isNpc()) {
 			this.people[i].emitMessage(message, color);
 		}
 	}
@@ -246,99 +247,99 @@ roomSchema.methods.getPlayer = function(name) {
 roomSchema.methods.getDoorByKeyword = function(keyword) {
 	var index = 1;
 	var doorKeyword = keyword;
-	
-	if(keyword.indexOf(".") > -1) {
+
+	if (keyword.indexOf(".") > -1) {
 		var tokens = keyword.split(".");
-		
-		if(tokens[1].length === 0) {
+
+		if (tokens[1].length === 0) {
 			return null;
 		}
-		
+
 		index = parseInt(tokens[0], 10);
 		doorKeyword = tokens[1];
 	}
-	
+
 	var counter = 0;
-	
-	if(this.northernExit !== null) {
-		if(this.northernExit.doorKeywords !== undefined) {
-			if(this.northernExit.doorKeywords.indexOf(doorKeyword) > -1) {
+
+	if (this.northernExit !== null) {
+		if (this.northernExit.doorKeywords !== undefined) {
+			if (this.northernExit.doorKeywords.indexOf(doorKeyword) > -1) {
 				counter++;
 			}
-			
-			if(counter === index) {
+
+			if (counter === index) {
 				return this.northernExit;
 			}
 		}
 	}
-	
-	if(this.easternExit !== null) {
-		if(this.easternExit.doorKeywords !== undefined) {
-			if(this.easternExit.doorKeywords.indexOf(doorKeyword) > -1) {
+
+	if (this.easternExit !== null) {
+		if (this.easternExit.doorKeywords !== undefined) {
+			if (this.easternExit.doorKeywords.indexOf(doorKeyword) > -1) {
 				counter++;
 			}
-			
-			if(counter === index) {
+
+			if (counter === index) {
 				return this.easternExit;
 			}
 		}
 	}
 
-	if(this.southernExit !== null) {
-		if(this.southernExit.doorKeywords !== undefined) {
-			if(this.southernExit.doorKeywords.indexOf(doorKeyword) > -1) {
+	if (this.southernExit !== null) {
+		if (this.southernExit.doorKeywords !== undefined) {
+			if (this.southernExit.doorKeywords.indexOf(doorKeyword) > -1) {
 				counter++;
 			}
-			
-			if(counter === index) {
+
+			if (counter === index) {
 				return this.southernExit;
 			}
 		}
 	}
-	
-	if(this.westernExit !== null) {
-		if(this.westernExit.doorKeywords !== undefined) {
-			if(this.westernExit.doorKeywords.indexOf(doorKeyword) > -1) {
+
+	if (this.westernExit !== null) {
+		if (this.westernExit.doorKeywords !== undefined) {
+			if (this.westernExit.doorKeywords.indexOf(doorKeyword) > -1) {
 				counter++;
 			}
-			
-			if(counter === index) {
+
+			if (counter === index) {
 				return this.westernExit;
 			}
 		}
 	}
-	
-	if(this.upwardExit !== null) {
-		if(this.upwardExit.doorKeywords !== undefined) {
-			if(this.upwardExit.doorKeywords.indexOf(doorKeyword) > -1) {
+
+	if (this.upwardExit !== null) {
+		if (this.upwardExit.doorKeywords !== undefined) {
+			if (this.upwardExit.doorKeywords.indexOf(doorKeyword) > -1) {
 				counter++;
 			}
-			
-			if(counter === index) {
+
+			if (counter === index) {
 				return this.upwardExit;
 			}
 		}
 	}
 
-	if(this.downwardExit !== null) {
-		if(this.downwardExit.doorKeywords !== undefined) {
-			if(this.downwardExit.doorKeywords.indexOf(doorKeyword) > -1) {
+	if (this.downwardExit !== null) {
+		if (this.downwardExit.doorKeywords !== undefined) {
+			if (this.downwardExit.doorKeywords.indexOf(doorKeyword) > -1) {
 				counter++;
 			}
-			
-			if(counter === index) {
+
+			if (counter === index) {
 				return this.downwardExit;
 			}
 		}
 	}
-	
+
 	return null;
 };
 
 roomSchema.methods.getDoorByKeywordAndDirection = function(keyword, direction) {
 	var exit = null;
 
-	switch(direction) {
+	switch (direction) {
 		case 0:
 			exit = this.northernExit;
 			break;
@@ -359,10 +360,10 @@ roomSchema.methods.getDoorByKeywordAndDirection = function(keyword, direction) {
 			break;
 	}
 
-	if(exit.doorKeywords.indexOf(keyword) > -1) {
+	if (exit.doorKeywords.indexOf(keyword) > -1) {
 		return exit;
 	}
-	
+
 	return null;
 };
 
@@ -380,7 +381,7 @@ roomSchema.methods.getExit = function(direction) {
 			return this.upwardExit;
 		case 5:
 			return this.downwardExit;
-	}		
+	}
 };
 
 roomSchema.methods.exitExists = function(direction) {
@@ -437,54 +438,54 @@ roomSchema.methods.exitExists = function(direction) {
 };
 
 roomSchema.methods.getOppositeExit = function(otherRoom) {
-	if(otherRoom.northernExit !== null) {
-		if(otherRoom.northernExit.toRoomId === this.id) {
+	if (otherRoom.northernExit !== null) {
+		if (otherRoom.northernExit.toRoomId === this.id) {
 			return otherRoom.northernExit;
 		}
 	}
-	
-	if(otherRoom.easternExit !== null) {
-		if(otherRoom.easternExit.toRoomId === this.id) {
+
+	if (otherRoom.easternExit !== null) {
+		if (otherRoom.easternExit.toRoomId === this.id) {
 			return otherRoom.easternExit;
 		}
 	}
 
-	if(otherRoom.southernExit !== null) {
-		if(otherRoom.southernExit.toRoomId === this.id) {
+	if (otherRoom.southernExit !== null) {
+		if (otherRoom.southernExit.toRoomId === this.id) {
 			return otherRoom.southernExit;
 		}
 	}
 
-	if(otherRoom.westernExit !== null) {
-		if(otherRoom.westernExit.toRoomId === this.id) {
+	if (otherRoom.westernExit !== null) {
+		if (otherRoom.westernExit.toRoomId === this.id) {
 			return otherRoom.westernExit;
 		}
 	}
 
-	if(otherRoom.upwardExit !== null) {
-		if(otherRoom.upwardExit.toRoomId === this.id) {
+	if (otherRoom.upwardExit !== null) {
+		if (otherRoom.upwardExit.toRoomId === this.id) {
 			return otherRoom.upwardExit;
 		}
 	}
-	
-	if(otherRoom.downwardExit !== null) {
-		if(otherRoom.downwardExit.toRoomId === this.id) {
+
+	if (otherRoom.downwardExit !== null) {
+		if (otherRoom.downwardExit.toRoomId === this.id) {
 			return otherRoom.downwardExit;
 		}
-	}	
+	}
 };
 
 roomSchema.methods.openOppositeDoor = function(otherRoom) {
-	if(otherRoom === null) {
+	if (otherRoom === null) {
 		return;
 	}
-	
+
 	var oppositeExit = this.getOppositeExit(otherRoom);
 
-	if(oppositeExit !== null) {
+	if (oppositeExit !== null) {
 		oppositeExit.isClosed = false;
-		
-		if(oppositeExit.doorKeywords.length > 0) {
+
+		if (oppositeExit.doorKeywords.length > 0) {
 			otherRoom.emitMessage("The " + oppositeExit.doorKeywords[0] + " is opened from the other side.\n\r");
 		}
 		else {
@@ -494,16 +495,16 @@ roomSchema.methods.openOppositeDoor = function(otherRoom) {
 };
 
 roomSchema.methods.closeOppositeDoor = function(otherRoom) {
-	if(otherRoom === null) {
+	if (otherRoom === null) {
 		return;
 	}
-	
+
 	var oppositeExit = this.getOppositeExit(otherRoom);
 
-	if(oppositeExit !== null) {
+	if (oppositeExit !== null) {
 		oppositeExit.isClosed = true;
-		
-		if(oppositeExit.doorKeywords.length > 0) {
+
+		if (oppositeExit.doorKeywords.length > 0) {
 			otherRoom.emitMessage("The " + oppositeExit.doorKeywords[0] + " is closed from the other side.\n\r");
 		}
 		else {
@@ -513,16 +514,16 @@ roomSchema.methods.closeOppositeDoor = function(otherRoom) {
 };
 
 roomSchema.methods.unlockOppositeDoor = function(otherRoom) {
-	if(otherRoom === null) {
+	if (otherRoom === null) {
 		return;
 	}
-	
+
 	var oppositeExit = this.getOppositeExit(otherRoom);
 
-	if(oppositeExit !== null) {
+	if (oppositeExit !== null) {
 		oppositeExit.isLocked = false;
-		
-		if(oppositeExit.doorKeywords.length > 0) {
+
+		if (oppositeExit.doorKeywords.length > 0) {
 			otherRoom.emitMessage("The " + oppositeExit.doorKeywords[0] + " is unlocked from the other side.\n\r");
 		}
 		else {
@@ -532,22 +533,46 @@ roomSchema.methods.unlockOppositeDoor = function(otherRoom) {
 };
 
 roomSchema.methods.lockOppositeDoor = function(otherRoom) {
-	if(otherRoom === null) {
+	if (otherRoom === null) {
 		return;
 	}
-	
+
 	var oppositeExit = this.getOppositeExit(otherRoom);
 
-	if(oppositeExit !== null) {
+	if (oppositeExit !== null) {
 		oppositeExit.isLocked = true;
-		
-		if(oppositeExit.doorKeywords.length > 0) {
+
+		if (oppositeExit.doorKeywords.length > 0) {
 			otherRoom.emitMessage("The " + oppositeExit.doorKeywords[0] + " is locked from the other side.\n\r");
 		}
 		else {
 			otherRoom.emitMessage("The door is locked from the other side.\n\r");
 		}
 	}
+};
+
+roomSchema.methods.listExit = function(character, direction, exit) {
+	if (exit !== null) {
+		if (exit.isClosed === false) {
+			var connectedRoom = this.world.getRoom(exit.toRoomId);
+
+			if (connectedRoom !== null) {
+				character.emitMessage(direction + " - " + connectedRoom.title);
+			}
+		}
+	}
+}
+
+roomSchema.methods.listExits = function(character) {
+	// TODO: Blind, Dark
+
+	character.emitMessage("Obvious Exits:");
+	this.listExit(character, "N", this.northernExit);
+	this.listExit(character, "E", this.easternExit);
+	this.listExit(character, "S", this.southernExit);
+	this.listExit(character, "W", this.westernExit);
+	this.listExit(character, "U", this.upwardExit);
+	this.listExit(character, "D", this.downwardExit);
 };
 
 roomSchema.methods.showRoomToCharacter = function(character) {
@@ -633,7 +658,7 @@ roomSchema.methods.showRoomToCharacter = function(character) {
 	for (var i = 0; i < this.contents.length; i++) {
 		character.emitMessage(this.contents[i].longDescription, 'Green');
 	}
-	
+
 	character.emitMessage("");
 };
 
