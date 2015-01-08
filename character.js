@@ -1687,9 +1687,6 @@ characterSchema.methods.toCorpse = function() {
 	
 	this.world.addItem(corpse);
 	this.room.addItem(corpse);
-	
-	this.room.removeCharacter(this);
-	this.world.removeCharacter(this);
 };
 
 var characterModel = mongoose.model('character', characterSchema);
