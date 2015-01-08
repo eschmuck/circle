@@ -557,7 +557,7 @@ roomSchema.methods.listExit = function(character, direction, exit) {
 			var connectedRoom = this.world.getRoom(exit.toRoomId);
 
 			if (connectedRoom !== null) {
-				character.emitMessage(direction + " - " + connectedRoom.title);
+				character.emitMessage("  " + direction + " - " + connectedRoom.title);
 			}
 		}
 	}
@@ -573,6 +573,7 @@ roomSchema.methods.listExits = function(character) {
 	this.listExit(character, "W", this.westernExit);
 	this.listExit(character, "U", this.upwardExit);
 	this.listExit(character, "D", this.downwardExit);
+	character.emitMessage("");
 };
 
 roomSchema.methods.showRoomToCharacter = function(character) {

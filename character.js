@@ -889,11 +889,11 @@ characterSchema.methods.move = function(direction) {
 					return;
 				}
 		 		
-			 	this.emitRoomMessage(this.name + " leaves " + directions[direction] + ".");
+			 	this.emitRoomMessage(this.name + " leaves " + directions[direction] + ".\n\r");
 			 	this.room.removeCharacter(this);
 		 		
 			 	newRoom.addCharacter(this);
-			 	this.emitRoomMessage(this.name + " has arrived.");
+			 	this.emitRoomMessage(this.name + " has arrived.\n\r");
 				
 			 	newRoom.showRoomToCharacter(this);
 		 	}
@@ -908,11 +908,11 @@ characterSchema.methods.goto = function(keyword) {
 	var newRoom = this.world.getRoom(parseInt(keyword), 10);
 	
 	if(newRoom !== null) {
-		this.emitRoomMessage(this.name + " disappears in a puff of smoke.");
+		this.emitRoomMessage(this.name + " disappears in a puff of smoke.\n\r");
 	 	this.room.removeCharacter(this);
 	 	
 	 	newRoom.addCharacter(this);
-	 	this.emitRoomMessage(this.name + " appears with an ear-splitting bang.");
+	 	this.emitRoomMessage(this.name + " appears with an ear-splitting bang.\n\r");
 		
 	 	newRoom.showRoomToCharacter(this);
 	}
