@@ -1682,8 +1682,8 @@ characterSchema.methods.toCorpse = function() {
 	var corpse = new item.item( {
 		id: -1,
 		shortDescription: "the corpse of " + this.name,
-		longDescription: "the corpse of " + this.name + " lays here in a pool of blood.",
-		type: global.ITEM_CORPSE
+		longDescription: "The corpse of " + this.name + " lays here in a pool of blood.",
+		//type: global.ITEM_CORPSE
 	});
 	
 	while(this.inventory.length > 0) {
