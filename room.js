@@ -8,6 +8,7 @@ var roomSchema = new schema({
 	description: String,
 	isIndoors: Boolean,
 	isDeathTrap: Boolean,
+	isPeaceful: Boolean,
 	mobsAllowed: Boolean,
 	northernExit: {
 		toRoomId: Number,

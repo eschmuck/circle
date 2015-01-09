@@ -122,6 +122,14 @@ characterSchema.methods.isNpc = function() {
 	return false;
 };
 
+characterSchema.methods.isAwake = function() {
+	if(this.position >= global.POS_RESTING) {
+		return true;
+	}
+	
+	return false;
+};
+
 characterSchema.methods.emitMessage = function(message, color) {
 	if(this.socket !== undefined) {
 		var formattedMessage = message.substring(0, 1).toUpperCase() + message.substring(1);
@@ -166,7 +174,7 @@ characterSchema.methods.emitWorldMessage = function(message, color) {
 };
 
 characterSchema.methods.emitObservedMessage = function(target, message, color) {
-		var formattedMessage = message.substring(0, 1).toUpperCase() + message.substring(1);
+	var formattedMessage = message.substring(0, 1).toUpperCase() + message.substring(1);
 
 	for(var i = 0; i < this.room.people.length; i++) {
 		if(this.room.people[i] !== this && this.room.people[i] !== target) {
@@ -1657,6 +1665,79 @@ characterSchema.methods.getDiagnosis = function() {
 	return diagnosis[index].description;
 };
 
+characterSchema.methods.stopFighting = function() {
+	this.fighting = null;
+	this.position = global.POS_STANDING;
+};
+
+characterSchema.methods.performViolence = function() {
+	if(this.fighting === null || this.fighting === undefined) {
+		this.stopFighting();
+		return;
+	}
+	
+	if(this.room !== this.fighting.room) {
+		this.stopFighting();
+		return;
+	}
+	
+	// TODO: Find weapon type
+	
+	var diceRoll = utility.randomNumber(1, 20);
+	
+	// Decide whether this is a hit or a miss. 
+	// Victim asleep = hit, otherwise:
+	//   1   = Automatic miss.
+	// 2..19 = Checked vs. AC.
+	//  20   = Automatic hit.
+
+	var result = false;
+
+	if(diceRoll === 20 || this.victim.isAwake() === false) {
+		result = true;
+	}
+	// else if(calculatedThac0 - diceroll <= this.fighting.armorClass) {
+	// 	damage = true;
+	// }
+	else if(diceRoll > 5) {
+		result = true;
+	}
+	
+	if(result === false) {
+		this.emitMessage("you missed.");
+	}
+	else {
+		this.emitMessage("you hit!");
+	}
+};
+
+characterSchema.methods.attack = function(target) {
+	this.fighting = target;
+};
+
+characterSchema.methods.hit = function(targetName) {
+	var target = this.room.getCharacter(targetName);
+
+	if(target === null) {
+		this.emitMessage("The target of your violence outburst seems to have left.");
+		return;
+	}
+
+	if(target === this) {
+		this.emitMessage("You hit yourself.  OUCH!");
+		return;
+	}
+	
+	if(this.room.isPeaceful === true) {
+		this.emitMessage("Your urge to commit violence subsides and is replaced by a peaceful feeling.");
+		return;
+	}
+	
+	// TODO: A few other checks
+	
+	characterSchema.attack(target);
+};
+
 characterSchema.methods.die = function() {
 	this.performDeathCry();
 	this.toCorpse();
@@ -1664,7 +1745,13 @@ characterSchema.methods.die = function() {
 	this.world.removeCharacter(this);
 	
 	this.emitMessage("Everything fades to black....");
-	this.emitMessage(".... You have died.  RIP!\n\r");
+	this.emitMessage(".... You have died. RIP!\n\r");
+	
+	for(var i = 0; i < this.world.people; i++) {
+		if(this.world.people[i].fighting === this) {
+			this.world.people[i].fighting = null;
+		}
+	}
 	
 	if(this.isNpc() === false) {
 		if(this.socket !== undefined) {

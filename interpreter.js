@@ -150,6 +150,7 @@ var COMMAND_LIST = [
 
           { command: "accuse"   , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_ACCUSE },
           { command: "applaud"  , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_APPLAUD },
+          { command: "attack"   , minimumPosition: Character.POS_RESTING , functionPointer: do_hit        , minimumLevel: 0, subCommand: 0 },
           { command: "auction"  , minimumPosition: Character.POS_SLEEPING, functionPointer: do_gen_comm   , minimumLevel: 0, subCommand: global.SCMD_AUCTION },
 
           { command: "beg"      , minimumPosition: Character.POS_RESTING,  functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_BEG },
@@ -212,6 +213,7 @@ var COMMAND_LIST = [
           { command: "growl"    , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_GROWL },
 
           { command: "hiccup"   , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_HICCUP },
+          { command: "hit"      , minimumPosition: Character.POS_RESTING , functionPointer: do_hit        , minimumLevel: 0, subCommand: 0 },
           { command: "holler"   , minimumPosition: Character.POS_RESTING,  functionPointer: do_gen_comm   , minimumLevel: 0, subCommand: global.SCMD_HOLLER },
           { command: "hug"      , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_HUG },
 
@@ -220,6 +222,7 @@ var COMMAND_LIST = [
 
           { command: "junk"     , minimumPosition: Character.POS_RESTING , functionPointer: do_junk       , minimumLevel: 0, subCommand: 0 },
 
+          { command: "kill"     , minimumPosition: Character.POS_RESTING , functionPointer: do_hit        , minimumLevel: 0, subCommand: 0 },
           { command: "kiss"     , minimumPosition: Character.POS_RESTING , functionPointer: do_action     , minimumLevel: 0, subCommand: exports.SCMD_KISS },
 
           { command: "look"     , minimumPosition: Character.POS_RESTING , functionPointer: do_look       , minimumLevel: 0, subCommand: 0},
@@ -856,6 +859,15 @@ function do_consider(character, command) {
     }
     else {
         character.consider(command.tokens[0]);
+    }
+}
+
+function do_hit(character, command) {
+    if(command.tokens.length === 0) {
+        character.emitMessage("I'm sure you're not wanting to start a fight with everyone, right?\n\r");
+    }
+    else {
+        character.hit(command.tokens[0]);
     }
 }
 
