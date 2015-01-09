@@ -30,6 +30,17 @@ global.CLASS_CLERIC      = 1;
 global.CLASS_THIEF       = 2;
 global.CLASS_WARRIOR     = 3;
 
+
+global.POS_DEAD       = 0;
+global.POS_MORTALLYW  = 1;
+global.POS_INCAP      = 2;
+global.POS_STUNNED    = 3;
+global.POS_SLEEPING   = 4;
+global.POS_RESTING    = 5;
+global.POS_SITTING    = 6;
+global.POS_FIGHTING   = 7;
+global.POS_STANDING   = 8;
+
 global.constitutionApplyType_Hitpoints = 0;
 global.constitutionApplyType_Shock = 1;
 

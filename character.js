@@ -440,23 +440,23 @@ characterSchema.methods.insult = function(parameter) {
 
 characterSchema.methods.stand = function() {
 	switch(this.position) {
-		case POS_STANDING:
+		case global.POS_STANDING:
 			this.emitMessage("You are already standing.");
 			break;
-		case POS_SITTING:
+		case global.POS_SITTING:
 			this.emitMessage("You stand up.");
 			this.emitRoomMessage(this.name + " clambers to " + this.getPossessivePronoun() + " feet.");
 			this.position = POS_STANDING;
 			break;
-        case POS_RESTING:
+        case global.POS_RESTING:
             this.emitMessage("You stop resting, and stand up.");
 			this.emitRoomMessage(this.name + ' stops resting, and clambers on ' + this.getPossessivePronoun() + ' feet.');
             this.position = POS_STANDING;
             break;
-        case POS_SLEEPING:
+        case global.POS_SLEEPING:
             this.emitMessage("You have to wake up first!");
             break;
-        case POS_FIGHTING:
+        case global.POS_FIGHTING:
             this.emitMessage("Do you not consider fighting as standing?");
             break;
         default:
@@ -469,23 +469,23 @@ characterSchema.methods.stand = function() {
 
 characterSchema.methods.sit = function() {
 	switch(this.position) {
-		case POS_STANDING:
+		case global.POS_STANDING:
 			this.emitMessage("You sit down.");
 			this.emitRoomMessage(this.name + " sits down.");
 			this.position = POS_SITTING;
 			break;
-		case POS_SITTING:
+		case global.POS_SITTING:
 			this.emitMessage("You're sitting already.");
 			break;
-        case POS_RESTING:
+        case global.POS_RESTING:
             this.emitMessage("You stop resting, and sit up.");
             this.emitRoomMessage(this.name + ' stops resting.');
             this.position = POS_SITTING;
             break;
-        case POS_SLEEPING:
+        case global.POS_SLEEPING:
             this.emitMessage("You have to wake up first.");
             break;
-        case POS_FIGHTING:
+        case global.POS_FIGHTING:
             this.emitMessage('Sit down while fighting? Are you MAD?');
             break;
         default:
@@ -498,23 +498,23 @@ characterSchema.methods.sit = function() {
 
 characterSchema.methods.sleep = function() {
 	switch(this.position) {
-        case POS_STANDING:
+        case global.POS_STANDING:
             this.emitMessage('You sit down and rest your tired bones.');
             this.emitRoomMessage(this.name + ' sits down and rests.');
             this.position = POS_RESTING;
             break;
-        case POS_SITTING:
+        case global.POS_SITTING:
             this.emitMessage('You rest your tired bones.');
             this.emitRoomMessage(this.name + ' rests.');
             this.position = POS_RESTING;
             break;
-        case POS_RESTING:
+        case global.POS_RESTING:
 		    this.emitMessage('You are already resting.');
 		    break;
-        case POS_SLEEPING:
+        case global.POS_SLEEPING:
             this.emitMessage('You have to wake up first.');
             break;
-        case POS_FIGHTING:
+        case global.POS_FIGHTING:
             this.emitMessage('Rest down while fighting? Are you MAD?');
             break;
         default:
@@ -527,17 +527,17 @@ characterSchema.methods.sleep = function() {
 
 characterSchema.methods.sleep = function() {
     switch(this.postion) {
-	    case POS_STANDING:
-	    case POS_SITTING:
-	    case POS_RESTING:
+	    case global.POS_STANDING:
+	    case global.POS_SITTING:
+	    case global.POS_RESTING:
 	        this.emitMessage('You go to sleep.');
 	        this.emitRoomMessage(this.name + ' lies down and falls asleep.');
 	        this.position = POS_SLEEPING;
 	        break;
-        case POS_SLEEPING:
+        case global.POS_SLEEPING:
             this.emitMessage('You are already sound asleep.');
             break;
-        case POS_FIGHTING:
+        case global.POS_FIGHTING:
             this.emitMessage('Sleep while fighting? Are you MAD?');
             break;
         default:
@@ -1870,29 +1870,9 @@ characterSchema.methods.damageMessage = function(target, actualDamage, attackTyp
 
 var characterModel = mongoose.model('character', characterSchema);
 
-var POS_DEAD       = 0;
-var POS_MORTALLYW  = 1;
-var POS_INCAP      = 2;
-var POS_STUNNED    = 3;
-var POS_SLEEPING   = 4;
-var POS_RESTING    = 5;
-var POS_SITTING    = 6;
-var POS_FIGHTING   = 7;
-var POS_STANDING   = 8;
-
 module.exports = {
 	schema: characterSchema,
 	character: characterModel,
-
-	POS_DEAD:      POS_DEAD,
-	POS_MORTALLYW: POS_MORTALLYW,
-	POS_INCAP:     POS_INCAP,
-	POS_STUNNED:   POS_STUNNED,
-	POS_SLEEPING:  POS_SLEEPING,
-	POS_RESTING:   POS_RESTING,
-	POS_SITTING:   POS_SITTING,
-	POS_FIGHTING:  POS_FIGHTING,
-	POS_STANDING:  POS_STANDING
 };
 
 

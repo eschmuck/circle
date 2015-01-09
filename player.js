@@ -301,7 +301,7 @@ playerSchema.methods.getDescription = function() {
 	
 	var description = this.name + " " + this.title;
 	
-	if(this.position !== character.POS_FIGHTING) {
+	if(this.position !== global.POS_FIGHTING) {
 		description = description + positions[this.position];
 	}
 	
