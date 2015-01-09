@@ -1769,7 +1769,7 @@ characterSchema.methods.performViolence = function() {
 		}
 		
 		// At least 1 damage
-		damageAmount = Math.max(1, damageAmount);
+		damageAmount = Math.max(1, Math.round(damageAmount));
 		
 		// TODO: Backstab
 		this.damage(this.fighting, damageAmount, 0);
@@ -1922,7 +1922,7 @@ characterSchema.methods.die = function() {
 	
 	for(var i = 0; i < this.world.people; i++) {
 		if(this.world.people[i].fighting === this) {
-			this.world.people[i].fighting = null;
+			this.world.people[i].stopFighting();
 		}
 	}
 
