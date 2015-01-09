@@ -332,7 +332,7 @@ playerSchema.methods.listScore = function() {
 	
 	this.emitMessage("You have " + this.gold + " gold coins.");
 	
-	this.emitMessage("You have " + this.experience + " and need " + this.getExperienceForNextLevel() + " to reach your next level.");
+	this.emitMessage("You have " + this.experience + " and need " + this.experienceForNextLevel() + " to reach your next level.");
 
 	if(this.hunger === 0) {
 		this.emitMessage("You are hungry.");
@@ -498,7 +498,7 @@ playerSchema.methods.gainExperience = function(amount) {
 		var isAltered = false;
 		var numberOfLevels = 0;
 		
-		while(this.experience >= this.getExperienceForNextLevel()) {
+		while(this.experience >= this.experienceForNextLevel()) {
 			this.level = this.level + 1;
 			this.advanceLevel();
 			numberOfLevels++;

@@ -85,6 +85,33 @@ characterSchema.methods.gainExperience = function() {
 	// Implementation overriden by child schemas	
 };
 
+characterSchema.methods.updateAlignment = function(victim) {
+	// TODO: Change alignment based on kills	
+};
+
+characterSchema.methods.soloKillExperienceGain = function(victim) {
+	var experience = Math.min(global.MAX_EXP_GAIN, (victim.experience / 3));
+	
+	if(this.isNpc()) {
+		experience = experience + Math.max(0, (experience * Math.min(4, victim.level - this.level)) / 8);
+	}
+	else {
+		experience = experience + Math.max(0, (experience * Math.min(8, victim.level - this.level)) / 8);		
+	}
+	
+	experience = Math.max(Math.round(experience), 1);
+	
+	if(experience === 1) {
+		this.emitMessage("You receive one lousy experience point.\n\r");
+	}
+	else {
+		this.emitMessage("You receive " + experience + " experience points.\n\r");
+	}
+	
+	this.gainExperience(experience);
+	this.updateAlignment(victim);
+};
+
 characterSchema.methods.listInventory = function() {
 	// Implementation overriden by child schemas	
 };
@@ -1960,7 +1987,9 @@ characterSchema.methods.damage = function(target, damageAmount, attackType) {
 	// TODO: Linkless?
 	
 	if(target.position === global.POS_DEAD) {
-		// TODO: gain exp
+		// TODO: group exp
+		
+		this.soloKillExperienceGain(target);
 		
 		if(target.isNpc() === false) {
 			mudlog.info(target.name + " killed by " + this.name + " at " + this.room.title);
