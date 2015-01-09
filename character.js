@@ -1714,7 +1714,9 @@ characterSchema.methods.performViolence = function() {
 };
 
 characterSchema.methods.attack = function(target) {
+	mudlog.info(this.name + " has attacked " + target.name);
 	this.fighting = target;
+	this.performViolence();
 };
 
 characterSchema.methods.hit = function(targetName) {
