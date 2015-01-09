@@ -1676,7 +1676,7 @@ characterSchema.methods.getDiagnosis = function() {
 
 characterSchema.methods.stopFighting = function() {
 	this.fighting = null;
-	this.position = global.POS_STANDING;
+	this.updatePosition();
 };
 
 characterSchema.methods.updatePosition = function() {
@@ -1698,8 +1698,6 @@ characterSchema.methods.updatePosition = function() {
 	else {
 		this.position = global.POS_STUNNED;
 	}
-	
-	mudlog.info("updatePosition: " + this.name + " - position is now " + this.position);
 };
 
 characterSchema.methods.getArmorClass = function() {
