@@ -27,16 +27,13 @@ var playerSchema = characterSchema.extend({
 	isNoTell: Boolean
 });
 
-playerSchema.methods.meh = function() {
-	return 'meh';
-};
-
-playerSchema.methods.blah = function() {
-	return 'override blah';
-};
-
 playerSchema.methods.isNpc = function() {
 	return false;
+};
+
+playerSchema.methods.getAge = function() {
+	// TODO: Implement player age
+	return 25;
 };
 
 playerSchema.methods.listInventory = function() {
@@ -186,7 +183,6 @@ playerSchema.methods.setTitle = function(title) {
 		}
 	}
 };
-
 
 playerSchema.methods.start = function() {
 	this.level = 1;
@@ -349,7 +345,114 @@ playerSchema.methods.listScore = function() {
 	}
 };
 
-playerSchema.methods.hourlyUpdate = function() {
+// When age < 15 return the value p0 
+// When age in 15..29 calculate the line between p1 & p2 
+// When age in 30..44 calculate the line between p2 & p3 
+// When age in 45..59 calculate the line between p3 & p4 
+// When age in 60..79 calculate the line between p4 & p5 
+// When age >= 80 return the value p6 
+playerSchema.methods.graf = function(grafAge, p0, p1, p2, p3, p4, p5, p6) {
+	if(grafAge < 15) {
+		return p0;
+	}
+	else if (grafAge <= 29) {
+		return (p1 + (((grafAge - 15) * (p2 - p1)) / 15));
+	}
+	else if (grafAge <= 44) {
+		return (p2 + (((grafAge - 30) * (p3 - p2)) / 15)); 
+	}
+	else if (grafAge <= 59) {
+		return (p3 + (((grafAge - 45) * (p4 - p3)) / 15));
+	}
+	else if (grafAge <= 79) {
+		return (p4 + (((grafAge - 60) * (p5 - p4)) / 20));
+	}
+	else {
+		return (p6)
+	}
+};
+
+playerSchema.methods.getHourlyHitpointGain = function() {
+	var gain = this.graf(this.getAge(), 8, 12, 20, 32, 16, 10, 4);
+	
+	switch(this.position) {
+		case global.POS_SLEEPING:
+			gain = gain  + (gain / 2);
+			break;
+		case global.POS_RESTING:
+			gain = gain + (gain / 4);
+			break;
+		case global.POS_SITTING:
+			gain = gain + (gain / 8);
+			break;
+	}
+	
+	if(this.class === global.CLASS_CLERIC || this.class === global.CLASS_MAGIC_USER) {
+		gain = gain / 2;
+	}
+	
+	if(this.hunger === 0 || this.thirst === 0) {
+		gain = gain / 4;
+	}
+	
+	// TODO: Poison
+	
+	return Math.round(gain);
+};
+
+playerSchema.methods.getHourlyManapointGain = function() {
+	var gain = this.graf(this.getAge(), 4, 8, 12, 16, 12, 10, 8);
+	
+	switch(this.position) {
+		case global.POS_SLEEPING:
+			gain = gain  * 2;
+			break;
+		case global.POS_RESTING:
+			gain = gain + (gain / 2);
+			break;
+		case global.POS_SITTING:
+			gain = gain + (gain / 4);
+			break;
+	}
+	
+	if(this.class === global.CLASS_CLERIC || this.class === global.CLASS_MAGIC_USER) {
+		gain = gain * 2;
+	}
+	
+	if(this.hunger === 0 || this.thirst === 0) {
+		gain = gain / 4;
+	}
+	
+	// TODO: Poison
+	
+	return Math.round(gain);
+};
+
+playerSchema.methods.getHourlyMovepointGain = function() {
+	var gain = this.graf(this.getAge(), 16, 20, 24, 20, 16, 12, 10);
+	
+	switch(this.position) {
+		case global.POS_SLEEPING:
+			gain = gain  + (gain / 2);
+			break;
+		case global.POS_RESTING:
+			gain = gain + (gain / 4);
+			break;
+		case global.POS_SITTING:
+			gain = gain + (gain / 8);
+			break;
+	}
+	
+	if(this.hunger === 0 || this.thirst === 0) {
+		gain = gain / 4;
+	}
+	
+	// TODO: Poison
+	
+	return Math.round(gain);
+};
+
+playerSchema.methods.hourlyUpdateExtras = function() {
 	if(this.hunger > -1) {
 		this.hunger = Math.max((this.hunger - 1), 0);
 	}

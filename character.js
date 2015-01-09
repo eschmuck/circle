@@ -78,10 +78,6 @@ characterSchema.methods.getPossessivePronoun = function() {
 };
 
 
-characterSchema.methods.blah = function() {
-	return 'blah';
-};
-
 characterSchema.methods.getDescription = function() {
 	// Implementation overriden by child schemas	
 };
@@ -107,7 +103,21 @@ characterSchema.methods.listEquipment = function() {
 };
 
 characterSchema.methods.hourlyUpdate = function() {
-	// Implementation overriden by child schemas	
+	if(this.position >= global.POS_STUNNED) {
+		this.hitpoints = Math.min(this.hitpoints + this.getHourlyHitpointGain(), this.maximumHitpoints);
+		this.manapoints = Math.min(this.manapoints + this.getHourlyManapointGain(), this.maximumManapoints);
+		this.movepoints = Math.min(this.movepoints + this.getHourlyMovepointGain(), this.maximumMovepoints);
+	}
+	else if(this.position === global.POS_INCAP) {
+		// TODO: Suffer
+	}
+	else if(this.position === global.POS_MORTALLYW) {
+		// TODO: Suffer
+	}
+	
+	if(this.isNpc() === false) {
+		this.hourlyUpdateExtras();
+	}
 };
 
 characterSchema.methods.consider = function(targetName) {
@@ -130,6 +140,19 @@ characterSchema.getThac0 = function() {
 characterSchema.getBareHandDamage = function() {
 	// Implementation overriden by child schemas
 };
+
+characterSchema.methods.getHourlyHitpointGain = function() {
+	// Implementation overriden by child schemas
+};
+
+characterSchema.methods.getHourlyManapointGain = function() {
+	// Implementation overriden by child schemas
+};
+
+characterSchema.methods.getHourlyMovepointGain = function() {
+	// Implementation overriden by child schemas	
+};
+
 
 characterSchema.methods.isAwake = function() {
 	if(this.position >= global.POS_RESTING) {

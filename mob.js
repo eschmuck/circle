@@ -25,10 +25,6 @@ mobSchema.statics.load = function(id, mob, callback, commands, world, instructio
  	});
 };
 
-mobSchema.methods.hourlyUpdate = function() {
-	
-};
-
 mobSchema.methods.performActivity = function() {
 	if(this.specialBehavior !== undefined) {
 		var result = this.specialBehavior(this);
@@ -74,6 +70,18 @@ mobSchema.methods.getThac0 = function() {
 	calcThac0 = calcThac0 - Math.round((this.wisdom - 13) / 1.5);
 	
 	return calcThac0;
+};
+
+mobSchema.methods.getHourlyHitpointGain = function() {
+	return this.level();
+};
+
+mobSchema.methods.getHourlyManapointGain = function() {
+	return this.level();
+};
+
+mobSchema.methods.getHourlyMovepointGain = function() {
+	return this.level();
 };
 
 mobSchema.methods.getBareHandDamage = function() {
