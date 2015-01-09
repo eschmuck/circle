@@ -448,6 +448,179 @@ playerSchema.methods.slay = function(targetName) {
 	target.die();
 };
 
+playerSchema.methods.getThac0 = function() {
+	switch(this.class) {
+		case global.CLASS_MAGIC_USER:
+			switch(this.level) {
+				case  0: return 100;
+				case  1: return  20;
+				case  2: return  20;
+				case  3: return  20;
+				case  4: return  19;
+				case  5: return  19;
+				case  6: return  19;
+				case  7: return  18;
+				case  8: return  18;
+				case  9: return  18;
+				case 10: return  17;
+				case 11: return  17;
+				case 12: return  17;
+				case 13: return  16;
+				case 14: return  16;
+				case 15: return  16;
+				case 16: return  15;
+				case 17: return  15;
+				case 18: return  15;
+				case 19: return  14;
+				case 20: return  14;
+				case 21: return  14;
+				case 22: return  13;
+				case 23: return  13;
+				case 24: return  13;
+				case 25: return  12;
+				case 26: return  12;
+				case 27: return  12;
+				case 28: return  11;
+				case 29: return  11;
+				case 30: return  11;
+				case 31: return  10;
+				case 32: return  10;
+				case 33: return  10;
+				case 34: return   9;
+			    default:
+      				mudlog.error("SYSERR: Missing level for mage thac0.");				
+			}
+			break;
+		case global.CLASS_CLERIC:
+			switch(this.level) {
+				case  0: return 100;
+				case  1: return  20;
+				case  2: return  20;
+				case  3: return  20;
+				case  4: return  18;
+				case  5: return  18;
+				case  6: return  18;
+				case  7: return  16;
+				case  8: return  16;
+				case  9: return  16;
+				case 10: return  14;
+				case 11: return  14;
+				case 12: return  14;
+				case 13: return  12;
+				case 14: return  12;
+				case 15: return  12;
+				case 16: return  10;
+				case 17: return  10;
+				case 18: return  10;
+				case 19: return   8;
+				case 20: return   8;
+				case 21: return   8;
+				case 22: return   6;
+				case 23: return   6;
+				case 24: return   6;
+				case 25: return   4;
+				case 26: return   4;
+				case 27: return   4;
+				case 28: return   2;
+				case 29: return   2;
+				case 30: return   2;
+				case 31: return   1;
+				case 32: return   1;
+				case 33: return   1;
+				case 34: return   1;
+				default:
+					mudlog.error("Missing level for cleric thac0.");
+			}
+			break;
+		case global.CLASS_THIEF:
+			switch(this.level) {
+				case  0: return 100;
+				case  1: return  20;
+				case  2: return  20;
+				case  3: return  19;
+				case  4: return  19;
+				case  5: return  18;
+				case  6: return  18;
+				case  7: return  17;
+				case  8: return  17;
+				case  9: return  16;
+				case 10: return  16;
+				case 11: return  15;
+				case 12: return  15;
+				case 13: return  14;
+				case 14: return  14;
+				case 15: return  13;
+				case 16: return  13;
+				case 17: return  12;
+				case 18: return  12;
+				case 19: return  11;
+				case 20: return  11;
+				case 21: return  10;
+				case 22: return  10;
+				case 23: return   9;
+				case 24: return   9;
+				case 25: return   8;
+				case 26: return   8;
+				case 27: return   7;
+				case 28: return   7;
+				case 29: return   6;
+				case 30: return   6;
+				case 31: return   5;
+				case 32: return   5;
+				case 33: return   4;
+				case 34: return   4;
+				default:
+					mudlog.error("Missing level for thief thac0.");
+			}
+			break;
+		case global.CLASS_WARRIOR:
+			switch(this.level) {
+				case  0: return 100;
+				case  1: return  20;
+				case  2: return  19;
+				case  3: return  18;
+				case  4: return  17;
+				case  5: return  16;
+				case  6: return  15;
+				case  7: return  14;
+				case  8: return  14;
+				case  9: return  13;
+				case 10: return  12;
+				case 11: return  11;
+				case 12: return  10;
+				case 13: return   9;
+				case 14: return   8;
+				case 15: return   7;
+				case 16: return   6;
+				case 17: return   5;
+				case 18: return   4;
+				case 19: return   3;
+				case 20: return   2;
+				case 21: return   1;
+				case 22: return   1;
+				case 23: return   1;
+				case 24: return   1;
+				case 25: return   1;
+				case 26: return   1;
+				case 27: return   1;
+				case 28: return   1;
+				case 29: return   1;
+				case 30: return   1;
+				case 31: return   1;
+				case 32: return   1;
+				case 33: return   1;
+				case 34: return   1;
+				default:
+					mudlog.error("Missing level for warrior thac0.");
+			}
+			break;
+		default:
+			mudlog.error("Unknown class in thac0 chart.");
+	}
+	
+	return 100;
+};
+
 playerSchema.methods.getClassAbbreviation = function() {
 	switch(this.class) {
 		case global.CLASS_MAGIC_USER:
@@ -461,6 +634,10 @@ playerSchema.methods.getClassAbbreviation = function() {
 		default:
 			return "??";
 	}
+};
+
+playerSchema.methods.getBareHandDamage = function() {
+	return utility.randomNumber(0, 2);
 };
 
 playerSchema.methods.getNameForWho = function(shortListMode) {

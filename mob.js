@@ -26,7 +26,7 @@ mobSchema.statics.load = function(id, mob, callback, commands, world, instructio
 };
 
 mobSchema.methods.hourlyUpdate = function() {
-
+	
 };
 
 mobSchema.methods.performActivity = function() {
@@ -62,6 +62,33 @@ mobSchema.methods.performActivity = function() {
 
 mobSchema.methods.isNpc = function() {
 	return true;
+};
+
+mobSchema.methods.getThac0 = function() {
+	var calcThac0 = 20;
+		
+	// TODO: str apply
+	// TODO: hitroll apply
+	
+	calcThac0 = calcThac0 - Math.round((this.intelligence - 13) / 1.5);
+	calcThac0 = calcThac0 - Math.round((this.wisdom - 13) / 1.5);
+	
+	return calcThac0;
+};
+
+mobSchema.methods.getBareHandDamage = function() {
+	var damageDice = this.damRollFormula.split("d");
+	var damageBonus = this.damRollFormula[1].split("+")[1];
+	
+	var damage = 0;
+	
+	for(var i = 0; i < damageDice[0]; i++) {
+		damage = damage + utility.randomNumber(1, damageDice[1]);
+	}
+	
+	damage = damage + damageBonus;
+	
+	return damage;	
 };
 
 var mobModel = mongoose.model('mob', mobSchema);

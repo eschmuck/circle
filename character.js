@@ -123,6 +123,14 @@ characterSchema.methods.isNpc = function() {
 	return false;
 };
 
+characterSchema.getThac0 = function() {
+	// Implementation overriden by child schemas
+};
+
+characterSchema.getBareHandDamage = function() {
+	// Implementation overriden by child schemas
+};
+
 characterSchema.methods.isAwake = function() {
 	if(this.position >= global.POS_RESTING) {
 		return true;
@@ -446,12 +454,12 @@ characterSchema.methods.stand = function() {
 		case global.POS_SITTING:
 			this.emitMessage("You stand up.");
 			this.emitRoomMessage(this.name + " clambers to " + this.getPossessivePronoun() + " feet.");
-			this.position = POS_STANDING;
+			this.position = global.POS_STANDING;
 			break;
         case global.POS_RESTING:
             this.emitMessage("You stop resting, and stand up.");
 			this.emitRoomMessage(this.name + ' stops resting, and clambers on ' + this.getPossessivePronoun() + ' feet.');
-            this.position = POS_STANDING;
+            this.position = global.POS_STANDING;
             break;
         case global.POS_SLEEPING:
             this.emitMessage("You have to wake up first!");
@@ -462,7 +470,7 @@ characterSchema.methods.stand = function() {
         default:
             this.emitMessage("You stop floating around, and put your feet on the ground.");
             this.emitRoomMessage(this.name + " stops floating around and puts " + this.getPossessivePronoun() + ' feet on the ground.');
-            this.position = POS_STANDING;
+            this.position = global.POS_STANDING;
             break;
 	}
 };
@@ -472,7 +480,7 @@ characterSchema.methods.sit = function() {
 		case global.POS_STANDING:
 			this.emitMessage("You sit down.");
 			this.emitRoomMessage(this.name + " sits down.");
-			this.position = POS_SITTING;
+			this.position = global.POS_SITTING;
 			break;
 		case global.POS_SITTING:
 			this.emitMessage("You're sitting already.");
@@ -480,7 +488,7 @@ characterSchema.methods.sit = function() {
         case global.POS_RESTING:
             this.emitMessage("You stop resting, and sit up.");
             this.emitRoomMessage(this.name + ' stops resting.');
-            this.position = POS_SITTING;
+            this.position = global.POS_SITTING;
             break;
         case global.POS_SLEEPING:
             this.emitMessage("You have to wake up first.");
@@ -491,7 +499,7 @@ characterSchema.methods.sit = function() {
         default:
             this.emitMessage('You stop floating around, and sit down.');
             this.emitRoomMessage(this.name + ' stops floating around, and sit down.');
-            this.position = POS_SITTING;
+            this.position = global.POS_SITTING;
             break;
 	}
 };
@@ -501,12 +509,12 @@ characterSchema.methods.sleep = function() {
         case global.POS_STANDING:
             this.emitMessage('You sit down and rest your tired bones.');
             this.emitRoomMessage(this.name + ' sits down and rests.');
-            this.position = POS_RESTING;
+            this.position = global.POS_RESTING;
             break;
         case global.POS_SITTING:
             this.emitMessage('You rest your tired bones.');
             this.emitRoomMessage(this.name + ' rests.');
-            this.position = POS_RESTING;
+            this.position = global.POS_RESTING;
             break;
         case global.POS_RESTING:
 		    this.emitMessage('You are already resting.');
@@ -1671,6 +1679,37 @@ characterSchema.methods.stopFighting = function() {
 	this.position = global.POS_STANDING;
 };
 
+characterSchema.methods.updatePosition = function() {
+	if(this.hitpoints > 0 && this.position > global.POS_STUNNED) {
+		return;
+	}
+	else if(this.hitpoints > 0) {
+		this.position = global.POS_STANDING;
+	}
+	else if(this.hitpoints < -11) {
+		this.position = global.POS_DEAD;
+	}
+	else if(this.hitpoints < -6) {
+		this.position = global.POS_MORTALLYW;
+	}
+	else if(this.hitpoints < -3) {
+		this.position = global.POS_INCAP;
+	}
+	else {
+		this.position = global.POS_STUNNED;
+	}
+};
+
+characterSchema.methods.getArmorClass = function() {
+	// TODO: AC_APPLY stuff
+	// TODO: Dex Apply
+	
+	var armorClass = 100;
+	
+	// -100 is the best
+	return Math.max(-100, armorClass);
+};
+
 characterSchema.methods.performViolence = function() {
 	if(this.fighting === null || this.fighting === undefined) {
 		this.stopFighting();
@@ -1698,31 +1737,49 @@ characterSchema.methods.performViolence = function() {
 	if(diceRoll === 20 || this.fighting.isAwake() === false) {
 		result = true;
 	}
-	// else if(calculatedThac0 - diceroll <= this.fighting.armorClass) {
-	// 	damage = true;
-	// }
-	else if(diceRoll > 5) {
-		result = true;
-	}
-	
-	var damage = 10;
-	
-	if(result === false) {
-		this.emitMessage("you missed.");
+	else if(diceRoll === 1) {
+		result = false;
 	}
 	else {
-		this.emitMessage("you hit!");
-		this.damage(this.fighting, damage, 0);
+		if(this.calcThac0() - diceRoll <= this.fighting.getArmorClass()) {
+			result = true;
+		}
+	}
+	
+	if(result === false) {
+		this.damageMessage(this.fighting, 0, 0);
+	}
+	else {
+		// TODO: strength apply, damroll apply
+		// TODO: add weapon damage
+		
+		// For now, assume barehand damage
+		var damageAmount = this.getBareHandDamage();
+		
+
+		// Include a damage multiplier if victim isn't ready to fight:
+		// Position sitting  1.33 x normal
+		// Position resting  1.66 x normal
+		// Position sleeping 2.00 x normal
+		// Position stunned  2.33 x normal
+		// Position incap    2.66 x normal
+		// Position mortally 3.00 x normal
+		if(this.fighting.position < global.POS_FIGHTING) {
+			damageAmount = damageAmount * 1 + ((global.POS_FIGHTING - this.fighting.position) / 3);
+		}
+		
+		// At least 1 damage
+		damageAmount = Math.max(1, damageAmount);
+		
+		// TODO: Backstab
+		this.damage(this.fighting, damageAmount, 0);
 	}
 };
 
 characterSchema.methods.attack = function(target) {
 	mudlog.info(this.name + " has attacked " + target.name);
 	this.fighting = target;
-	
 	this.position = global.POS_FIGHTING;
-	target.position = global.POS_FIGHTING;
-	
 	this.performViolence();
 };
 
@@ -1771,12 +1828,11 @@ characterSchema.methods.damage = function(target, damageAmount, attackType) {
 	// Set the maximum damage per round and subtract the hit points
 	var actualDamage = Math.max(Math.min(damageAmount, 100), 0);
 	target.hitpoints = target.hitpoints - actualDamage;
-	
+
 	// Gain exp for the hit
 	this.experience = this.experience + (target.level * actualDamage);
 	
-	// TODO: Update the target's position
-	
+	target.updatePosition();
 	
 	this.damageMessage(target, actualDamage, attackType);
 
@@ -1869,9 +1925,83 @@ characterSchema.methods.toCorpse = function() {
 };
 
 characterSchema.methods.damageMessage = function(target, actualDamage, attackType) {
-	this.emitMessage("You hit " + target.name + ".", "Orange");
-	target.emitMessage(this.name + " hits you.", "Red");
-	this.emitObservedMessage(target, this.name + " hits " + target.Name + ".");
+	var messageIndex = 0;
+	
+	if(actualDamage === 0) {
+		messageIndex = 0;
+	}
+	else if(actualDamage <= 2) {
+		messageIndex = 1;
+	}
+	else if(actualDamage <= 4) {
+		messageIndex = 2;
+	}
+	else if(actualDamage <= 6) {
+		messageIndex = 3;
+	}
+	else if(actualDamage <= 10) {
+		messageIndex = 4;
+	}
+	else if(actualDamage <= 14) {
+		messageIndex = 5;
+	}
+	else if(actualDamage <= 19) {
+		messageIndex = 6;
+	}
+	else if(actualDamage <= 23) {
+		messageIndex = 7;
+	}
+	else {
+		messageIndex = 8;
+	}
+	
+	switch(messageIndex) {
+		case 0:
+			this.emitMessage("You try to hit " + target.name + ", but miss.", "Orange");
+			target.emitMessage(this.name + " tries to hit you, but misses.", "Red");
+			this.emitObservedMessage(target, this.name + " tries to hit " + target.Name + ", but misses.");
+			break;
+		case 1:
+			this.emitMessage("You tickle " + target.name + " as you hit " + target.getObjectPronoun() + ".", "Orange");
+			target.emitMessage(this.name + " tickles you as " + this.getSubjectPronoun() + " hits you.", "Red");
+			this.emitObservedMessage(target, this.name + " tickles " + target.Name + " as " + this.getSubjectPronoun() + " hits " + target.getObjectPronoun() + ".");
+			break;
+		case 2:
+			this.emitMessage("You barely hit " + target.name + ".", "Orange");
+			target.emitMessage(this.name + " barely hits you.", "Red");
+			this.emitObservedMessage(target, this.name + " barely hits " + target.Name + ".");
+			break;
+		case 3:
+			this.emitMessage("You hit " + target.name + ".", "Orange");
+			target.emitMessage(this.name + " hits you.", "Red");
+			this.emitObservedMessage(target, this.name + " hits " + target.Name + ".");
+			break;
+		case 4:
+			this.emitMessage("You hit " + target.name + " hard.", "Orange");
+			target.emitMessage(this.name + " hits you hard.", "Red");
+			this.emitObservedMessage(target, this.name + " hits " + target.Name + " hard.");
+			break;
+		case 5:
+			this.emitMessage("You hit " + target.name + " very hard.", "Orange");
+			target.emitMessage(this.name + " hits you very hard.", "Red");
+			this.emitObservedMessage(target, this.name + " hits " + target.Name + " very hard.");
+			break;
+		case 6:
+			this.emitMessage("You hit " + target.name + " extremely hard.", "Orange");
+			target.emitMessage(this.name + " hits you extremely hard.", "Red");
+			this.emitObservedMessage(target, this.name + " hits " + target.Name + " extremely hard.");
+			break;
+		case 7:
+			this.emitMessage("You massacre " + target.name + " into small fragments with your hit.", "Orange");
+			target.emitMessage(this.name + " massacres you into small fragments with " + this.getPossessivePronoun() + " hit.", "Red");
+			this.emitObservedMessage(target, this.name + " massacres " + target.Name + " into small fragments with " + this.getPossessivePronoun() + " hit.");
+			break;
+		case 8:
+			this.emitMessage("You OBLITERATE " + target.name + " with your deadly hit!!", "Orange");
+			target.emitMessage(this.name + " OBLITERATES you with " + this.getPossessivePronoun() + " deadly hit!!", "Red");
+			this.emitObservedMessage(target, this.name + " OBLITERATES " + target.Name + " with " + this.getPossessivePronoun() + " deadly hit!!");
+			break;
+	}
 };
 
 
