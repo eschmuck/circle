@@ -9,6 +9,7 @@ var item = require("./item");
 var utility = require("./utility");
 var constants = require("./constants");
 var text = require('./text');
+var mudlog = require('./mudlog');
 
 var directions = [ 'north', 'east', 'south', 'west', 'up', 'down' ];
 
@@ -1684,6 +1685,7 @@ characterSchema.methods.performViolence = function() {
 	// TODO: Find weapon type
 	
 	var diceRoll = utility.randomNumber(1, 20);
+	mudlog.info(this.name + " is fighting " + this.fighting.name + " / diceRoll=" + diceRoll);
 	
 	// Decide whether this is a hit or a miss. 
 	// Victim asleep = hit, otherwise:
@@ -1789,11 +1791,6 @@ characterSchema.methods.damage = function(target, damageAmount, attackType) {
 };
 
 characterSchema.methods.die = function() {
-	this.performDeathCry();
-	this.toCorpse();
-	this.room.removeCharacter(this);
-	this.world.removeCharacter(this);
-	
 	this.emitMessage("Everything fades to black....");
 	this.emitMessage(".... You have died. RIP!\n\r");
 	
@@ -1802,6 +1799,11 @@ characterSchema.methods.die = function() {
 			this.world.people[i].fighting = null;
 		}
 	}
+
+	this.performDeathCry();
+	this.toCorpse();
+	this.room.removeCharacter(this);
+	this.world.removeCharacter(this);
 	
 	if(this.isNpc() === false) {
 		if(this.socket !== undefined) {
