@@ -77,13 +77,19 @@ mobSchema.methods.getThac0 = function() {
 };
 
 mobSchema.methods.getBareHandDamage = function() {
-	var damageDice = this.damRollFormula.split("d");
-	var damageBonus = this.damRollFormula[1].split("+")[1];
+	// Format = XdY+Z
+	
+	var firstPiece = this.damRollFormula.split("d");
+	var secondPiece = this.firstPiece[1].split("+");
+	
+	var numberOfDice = firstPiece[0];
+	var sizeOfDice = secondPiece[0];
+	var damageBonus = secondPiece[1];
 	
 	var damage = 0;
 	
-	for(var i = 0; i < damageDice[0]; i++) {
-		damage = damage + utility.randomNumber(1, damageDice[1]);
+	for(var i = 0; i < numberOfDice; i++) {
+		damage = damage + utility.randomNumber(1, sizeOfDice);
 	}
 	
 	damage = damage + damageBonus;
