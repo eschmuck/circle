@@ -282,6 +282,10 @@ playerSchema.methods.toggleTell = function(mode) {
 };
 
 playerSchema.methods.enterGame = function() {
+	if(this.hitpoints < 1) {
+		this.hitpoints = 1;
+	}
+	
 	this.emitRoomMessage(this.name + " has entered the game.");
 	this.position = character.POS_STANDING;
 };
