@@ -1963,8 +1963,8 @@ characterSchema.methods.damageMessage = function(target, actualDamage, attackTyp
 			break;
 		case 1:
 			this.emitMessage("You tickle " + target.name + " as you hit " + target.getObjectPronoun() + ".", "Orange");
-			target.emitMessage(this.name + " tickles you as " + this.getSubjectPronoun() + " hits you.", "Red");
-			this.emitObservedMessage(target, this.name + " tickles " + target.Name + " as " + this.getSubjectPronoun() + " hits " + target.getObjectPronoun() + ".");
+			target.emitMessage(this.name + " tickles you as " + this.getPersonalPronoun() + " hits you.", "Red");
+			this.emitObservedMessage(target, this.name + " tickles " + target.Name + " as " + this.getPersonalPronoun() + " hits " + target.getObjectPronoun() + ".");
 			break;
 		case 2:
 			this.emitMessage("You barely hit " + target.name + ".", "Orange");
