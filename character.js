@@ -1741,7 +1741,7 @@ characterSchema.methods.performViolence = function() {
 		result = false;
 	}
 	else {
-		if(this.calcThac0() - diceRoll <= this.fighting.getArmorClass()) {
+		if(this.getThac0() - diceRoll <= this.fighting.getArmorClass()) {
 			result = true;
 		}
 	}
