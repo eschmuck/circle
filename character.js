@@ -1705,11 +1705,14 @@ characterSchema.methods.performViolence = function() {
 		result = true;
 	}
 	
+	var damage = 10;
+	
 	if(result === false) {
 		this.emitMessage("you missed.");
 	}
 	else {
 		this.emitMessage("you hit!");
+		this.damage(this.fighting, damage, 0);
 	}
 };
 

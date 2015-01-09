@@ -49,11 +49,13 @@ mobSchema.methods.performActivity = function() {
 	// }
 	
 	if(this.isSentinel !== true) {
-		var random = utility.randomNumber(0, 18);
-		
-		if(random <= 10) {
-			this.move(random);
-			return;
+		if(this.position === global.POS_STANDING) {
+			var random = utility.randomNumber(0, 18);
+			
+			if(random <= 10) {
+				this.move(random);
+				return;
+			}
 		}
 	}
 };
