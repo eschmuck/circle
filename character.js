@@ -504,6 +504,35 @@ characterSchema.methods.sit = function() {
 	}
 };
 
+characterSchema.methods.rest = function() {
+	switch(this.position) {
+		case global.POS_STANDING:
+			this.emitMessage("You sit down and rest your tired bones.");
+			this.emitRoomMessage(this.name + " sits down and rests.");
+			this.position = global.POS_RESTING;
+			break;
+		case global.POS_SITTING:
+			this.emitMessage("You rest your tired bones.");
+			this.emitMessage(this.name + " rests.");
+			this.position = global.POS_RESTING;
+			break;
+        case global.POS_RESTING:
+            this.emitMessage("You are resting already.");
+            break;
+        case global.POS_SLEEPING:
+            this.emitMessage("You have to wake up first.");
+            break;
+        case global.POS_FIGHTING:
+            this.emitMessage('Rest while fighting? Are you MAD?');
+            break;
+        default:
+            this.emitMessage('You stop floating around, and stop to rest your tired bones.');
+            this.emitRoomMessage(this.name + ' stops floating around, and rests.');
+            this.position = global.POS_RESTING;
+            break;
+	}
+};
+
 characterSchema.methods.sleep = function() {
 	switch(this.position) {
         case global.POS_STANDING:
@@ -528,7 +557,7 @@ characterSchema.methods.sleep = function() {
         default:
             this.emitMessage('You stop floating around, and stop to rest your tired bones.');
             this.emitRoomMessage(this.name + ' stops floating around, and rests.');
-            this.position = POS_SITTING;
+            this.position = global.POS_SITTING;
             break;
 	}
 };
@@ -540,7 +569,7 @@ characterSchema.methods.sleep = function() {
 	    case global.POS_RESTING:
 	        this.emitMessage('You go to sleep.');
 	        this.emitRoomMessage(this.name + ' lies down and falls asleep.');
-	        this.position = POS_SLEEPING;
+	        this.position = global.POS_SLEEPING;
 	        break;
         case global.POS_SLEEPING:
             this.emitMessage('You are already sound asleep.');
@@ -551,10 +580,12 @@ characterSchema.methods.sleep = function() {
         default:
             this.emitMessage('You stop floating around, and lie down to sleep.');
             this.emitRoomMessage(this.name + ' stops floating around, and lie down to sleep.');
-            this.position = POS_SLEEPING;
+            this.position = global.POS_SLEEPING;
             break;
     }
 };
+
+// TODO: Wake
 
 characterSchema.methods.openExit = function(exit) {
 	if(exit.isLocked) {
