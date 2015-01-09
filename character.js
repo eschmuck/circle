@@ -1695,7 +1695,7 @@ characterSchema.methods.performViolence = function() {
 
 	var result = false;
 
-	if(diceRoll === 20 || this.victim.isAwake() === false) {
+	if(diceRoll === 20 || this.fighting.isAwake() === false) {
 		result = true;
 	}
 	// else if(calculatedThac0 - diceroll <= this.fighting.armorClass) {
