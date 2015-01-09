@@ -1747,7 +1747,7 @@ characterSchema.methods.performViolence = function() {
 	}
 	
 	if(result === false) {
-		this.damageMessage(this.fighting, 0, 0);
+		this.damage(this.fighting, 0, 0);
 	}
 	else {
 		// TODO: strength apply, damroll apply
@@ -1778,8 +1778,6 @@ characterSchema.methods.performViolence = function() {
 
 characterSchema.methods.attack = function(target) {
 	mudlog.info(this.name + " has attacked " + target.name);
-	this.fighting = target;
-	this.position = global.POS_FIGHTING;
 	this.performViolence();
 };
 
@@ -1806,6 +1804,12 @@ characterSchema.methods.hit = function(targetName) {
 	this.attack(target);
 };
 
+characterSchema.methods.setFighting = function(target) {
+	// TODO: remove sleep spell if applicable
+	this.fighting = target;
+	this.position = global.POS_FIGHTING;
+};
+
 // < 0	Victim died
 // = 0	No damage
 // > 0	How much damage done
@@ -1821,9 +1825,25 @@ characterSchema.methods.damage = function(target, damageAmount, attackType) {
 	
 	// TODO: Shopkeeper protection
 	
-	// TODO: Immortal damage protection
+	if(target.isNpc() === false && target.level >= global.LVL_IMMORT) {
+		damageAmount = 0;
+	}
 	
-	// TODO: More stuff
+	if(this !== target) {
+		// Start the attacker fighting the victim
+		if(this.position > global.POS_FIGHTING && (this.fighting === null || this.fighting === undefined)) {
+			this.setFighting(target);
+		}
+		
+		// Start the victim fighting the attacker
+		if(target.position > global.POS_FIGHTING && (target.fighting === null || target.fighting === undefined)) {
+			target.setFighting(this);
+		}
+		
+		// TODO: Mob memory
+	}
+	
+	// TODO: More stuff -- remove invis, remove hide, sanctuary affects
 	
 	// Set the maximum damage per round and subtract the hit points
 	var actualDamage = Math.max(Math.min(damageAmount, 100), 0);
@@ -1851,6 +1871,10 @@ characterSchema.methods.damage = function(target, damageAmount, attackType) {
 			// TODO: Lots
 	}
 	
+	// stop someone from fighting if they're stunned or worse
+	if(target.position <= global.POS_STUNNED) {
+		target.stopFighting();
+	}
 	
 	if(target.position === global.POS_DEAD) {
 		// TODO: gain exp
