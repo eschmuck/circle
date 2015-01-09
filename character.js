@@ -1687,9 +1687,9 @@ characterSchema.methods.performViolence = function() {
 	
 	// Decide whether this is a hit or a miss. 
 	// Victim asleep = hit, otherwise:
-	//   1   = Automatic miss.
-	// 2..19 = Checked vs. AC.
-	//  20   = Automatic hit.
+	//   1   = Automatic miss
+	// 2..19 = Checked vs. AC
+	//  20   = Automatic hit
 
 	var result = false;
 
@@ -1735,7 +1735,57 @@ characterSchema.methods.hit = function(targetName) {
 	
 	// TODO: A few other checks
 	
-	characterSchema.attack(target);
+	this.attack(target);
+};
+
+// < 0	Victim died
+// = 0	No damage
+// > 0	How much damage done
+characterSchema.methods.damage = function(target, damageAmount, attackType) {
+	if(target.position <= global.POS_DEAD) {
+		return -1;
+	}
+
+	if(this.room.isPeaceful) {
+		this.emitMessage("This room just has such a peaceful, easy feeling...\r\n");
+		return 0;
+	}
+	
+	// TODO: Shopkeeper protection
+	
+	// TODO: Immortal damage protection
+	
+	// TODO: More stuff
+	
+	// Set the maximum damage per round and subtract the hit points
+	var actualDamage = Math.Max(Math.Min(damageAmount, 100), 0);
+	target.hitpoints = target.hitpoints - actualDamage;
+	
+	// Gain exp for the hit
+	this.experience = this.experience + (target.level * actualDamage);
+	
+	// TODO: Update the target's position
+	
+	
+	this.damageMessage(target, actualDamage, attackType);
+
+	switch(target.position) {
+		case global.POS_MORTALLYW:
+			this.emitMessage(target.name + " is mortally wounded and will die soon if not aided.");
+			this.emitObservedMessage(target, target.name + " is mortally wounded and will die soon if not aided.");
+			target.emitMessage("You are mortally wounded and will die soon if not aided.");
+			break;
+		case global.POS_DEAD:
+			this.emitMessage(target.name + " is dead!  R.I.P.");
+			this.emitObservedMessage(target, target.name + " is dead!  R.I.P.");
+			target.emitMessage("You are dead!  Sorry....");
+			break;
+		default:
+			// TODO: Lots
+	}
+	
+	
+	return damageAmount;
 };
 
 characterSchema.methods.die = function() {
@@ -1806,6 +1856,13 @@ characterSchema.methods.toCorpse = function() {
 	this.world.addItem(corpse);
 	this.room.addItem(corpse);
 };
+
+characterSchema.methods.damageMessage = function(target, actualDamage, attackType) {
+	this.emitMessage("You hit " + target.name + ".", "Orange");
+	target.emitMessage(this.name + " hits you.", "Red");
+	this.emitObservedMessage(target, this.name + " hits " + target.Name + ".");
+};
+
 
 var characterModel = mongoose.model('character', characterSchema);
 
