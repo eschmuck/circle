@@ -1698,6 +1698,8 @@ characterSchema.methods.updatePosition = function() {
 	else {
 		this.position = global.POS_STUNNED;
 	}
+	
+	mudlog.info("updatePosition: " + this.name + " - position is now " + this.position);
 };
 
 characterSchema.methods.getArmorClass = function() {
@@ -1866,19 +1868,41 @@ characterSchema.methods.damage = function(target, damageAmount, attackType) {
 			this.emitObservedMessage(target, target.name + " is mortally wounded and will die soon if not aided.");
 			target.emitMessage("You are mortally wounded and will die soon if not aided.");
 			break;
+		case global.POS_INCAP:
+			this.emitMessage(target.name + " is incapacitated and will slowly die, if not aided.");
+			this.emitObservedMessage(target, target.name + " is incapacitated and will slowly die, if not aided.");
+			target.emitMessage("You are incapacitated an will slowly die, if not aided.");
+			break;
+		case global.POS_STUNNED:
+			this.emitMessage(target.name + " is stunned, but will probably regain consciousness again.");
+			this.emitObservedMessage(target, target.name + " is stunned, but will probably regain consciousness again.");
+			target.emitMessage("You're stunned, but will probably regain consciousness again.");
+			break;
 		case global.POS_DEAD:
 			this.emitMessage(target.name + " is dead!  R.I.P.");
 			this.emitObservedMessage(target, target.name + " is dead!  R.I.P.");
 			target.emitMessage("You are dead!  Sorry....");
 			break;
 		default:
-			// TODO: Lots
+			if(actualDamage > (target.maximumHitpoints / 4)) {
+				target.emitMessage("Ouch! That really did HURT!");
+			}
+			
+			if(target.hitpoints < (target.maximumHitpoints / 4)) {
+				target.emitMessage("You wish your wounds would stop BLEEDING so much!", "Red");
+			}
+			
+			// TODO: Wimpy -> flee
+			
+			break;
 	}
 	
 	// stop someone from fighting if they're stunned or worse
 	if(target.position <= global.POS_STUNNED) {
 		target.stopFighting();
 	}
+	
+	// TODO: Linkless?
 	
 	if(target.position === global.POS_DEAD) {
 		// TODO: gain exp
