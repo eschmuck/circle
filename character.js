@@ -1852,6 +1852,17 @@ characterSchema.methods.damage = function(target, damageAmount, attackType) {
 	}
 	
 	
+	if(target.position === global.POS_DEAD) {
+		// TODO: gain exp
+		
+		if(target.isNpc() === false) {
+			mudlog.info(target.name + " killed by " + this.name + " at " + this.room.title);
+		}
+		
+		target.die();
+	}
+	
+	// This doesn't seem to be used in the original code.....
 	return damageAmount;
 };
 
