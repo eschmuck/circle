@@ -1849,6 +1849,8 @@ characterSchema.methods.damage = function(target, damageAmount, attackType) {
 	
 	// Set the maximum damage per round and subtract the hit points
 	var actualDamage = Math.max(Math.min(damageAmount, 100), 0);
+	
+	mudlog.info(this.name + " inflicted " + actualDamage + " damage on " + this.fighting);
 	target.hitpoints = target.hitpoints - actualDamage;
 
 	// Gain exp for the hit
