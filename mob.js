@@ -60,6 +60,10 @@ mobSchema.methods.isNpc = function() {
 	return true;
 };
 
+mobSchema.methods.gainExperience = function(amount) {
+	this.experience = this.experience + amount;
+};
+
 mobSchema.methods.getThac0 = function() {
 	var calcThac0 = 20;
 		

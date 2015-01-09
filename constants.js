@@ -9,8 +9,11 @@ global.CON_QCLASS     = 8; // Class?
 global.CON_RMOTD      = 9;
 global.CON_MENU       = 10;
 
-
 global.SECONDS_PER_MUDHOUR = 75;
+
+global.MAX_EXP_GAIN = 100000;	 // max experience gainable per kill
+global.MAX_EXP_LOSS = 500000;  // max losable per death
+global.MAX_EXPERIENCE = 10000000;
 
 global.PULSE_MOBILE = 10;   // 10 real seconds
 global.PULSE_VIOLENCE = 2;  // 2 

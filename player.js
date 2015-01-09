@@ -480,6 +480,48 @@ playerSchema.methods.hourlyUpdateExtras = function() {
 	}
 };
 
+playerSchema.methods.gainExperience = function(amount) {
+	if(this.level < 0 || this.level >= global.LVL_IMMORT) {
+		return;
+	}
+	
+	if(amount > 0) {
+		amount = Math.min(global.MAX_EXP_GAIN, amount);
+		this.experience = this.experience + amount;
+
+		var isAltered = false;
+		var numberOfLevels = 0;
+		
+		while(this.experience >= this.getExperienceForNextLevel()) {
+			this.level = this.level + 1;
+			this.advanceLevel();
+			numberOfLevels++;
+			isAltered = true;
+		}
+		
+		if(isAltered === true) {
+			mudlog.info(this.name + " advanced " + numberOfLevels + " level(s) to reach level " + this.level);
+			
+			if(numberOfLevels === 1) {
+				this.emitMessage("You rise a level!");
+			}
+			else {
+				this.emitMessage("You rise " + numberOfLevels + " levels!");
+			}
+			
+			this.setTitle();
+		}
+	}
+	else if(amount < 0) {
+		amount = Math.max(-1 * global.MAX_EXP_LOSS, amount);
+		this.experience = this.experience + amount;
+		
+		if(this.experience < 0) {
+			this.experience = 0;
+		}
+	}
+};
+
 playerSchema.methods.consider = function(targetName) {
 	var target = this.room.getCharacter(targetName);
 	
@@ -1045,9 +1087,167 @@ playerSchema.methods.setFemaleTitle = function() {
 	}
 };
 
+playerSchema.methods.experienceForNextLevel = function() {
+	if(this.level > global.LVL_IMMORT) {
+		return global.MAX_EXPERIENCE - ((global.LVL_IMMORT - this.level) * 1000);
+	}
+	
+	switch(this.class) {
+		case global.CLASS_MAGIC_USER:
+			switch(this.level) {
+				case  0: return 0;
+				case  1: return 1;
+				case  2: return 2500;
+				case  3: return 5000;
+				case  4: return 10000;
+				case  5: return 20000;
+				case  6: return 40000;
+				case  7: return 60000;
+				case  8: return 90000;
+				case  9: return 135000;
+				case 10: return 250000;
+				case 11: return 375000;
+				case 12: return 750000;
+				case 13: return 1125000;
+				case 14: return 1500000;
+				case 15: return 1875000;
+				case 16: return 2250000;
+				case 17: return 2625000;
+				case 18: return 3000000;
+				case 19: return 3375000;
+				case 20: return 3750000;
+				case 21: return 4000000;
+				case 22: return 4300000;
+				case 23: return 4600000;
+				case 24: return 4900000;
+				case 25: return 5200000;
+				case 26: return 5500000;
+				case 27: return 5950000;
+				case 28: return 6400000;
+				case 29: return 6850000;
+				case 30: return 7400000;
+				// add new levels here 
+				case global.LVL_IMMORT: return 8000000;
+      		}
+			break;
+		case global.CLASS_CLERIC:
+			switch(this.level) {
+				case  0: return 0;
+				case  1: return 1;
+				case  2: return 1500;
+				case  3: return 3000;
+				case  4: return 6000;
+				case  5: return 13000;
+				case  6: return 27500;
+				case  7: return 55000;
+				case  8: return 110000;
+				case  9: return 225000;
+				case 10: return 450000;
+				case 11: return 675000;
+				case 12: return 900000;
+				case 13: return 1125000;
+				case 14: return 1350000;
+				case 15: return 1575000;
+				case 16: return 1800000;
+				case 17: return 2100000;
+				case 18: return 2400000;
+				case 19: return 2700000;
+				case 20: return 3000000;
+				case 21: return 3250000;
+				case 22: return 3500000;
+				case 23: return 3800000;
+				case 24: return 4100000;
+				case 25: return 4400000;
+				case 26: return 4800000;
+				case 27: return 5200000;
+				case 28: return 5600000;
+				case 29: return 6000000;
+				case 30: return 6400000;
+				// add new levels here
+				case global.LVL_IMMORT: return 7000000;
+			}
+			break;
+		case global.CLASS_THIEF:
+			switch(this.level) {
+				case  0: return 0;
+				case  1: return 1;
+				case  2: return 1500;
+				case  3: return 3000;
+				case  4: return 6000;
+				case  5: return 13000;
+				case  6: return 27500;
+				case  7: return 55000;
+				case  8: return 110000;
+				case  9: return 225000;
+				case 10: return 450000;
+				case 11: return 675000;
+				case 12: return 900000;
+				case 13: return 1125000;
+				case 14: return 1350000;
+				case 15: return 1575000;
+				case 16: return 1800000;
+				case 17: return 2100000;
+				case 18: return 2400000;
+				case 19: return 2700000;
+				case 20: return 3000000;
+				case 21: return 3250000;
+				case 22: return 3500000;
+				case 23: return 3800000;
+				case 24: return 4100000;
+				case 25: return 4400000;
+				case 26: return 4800000;
+				case 27: return 5200000;
+				case 28: return 5600000;
+				case 29: return 6000000;
+				case 30: return 6400000;
+				// add new levels here
+				case global.LVL_IMMORT: return 7000000;				
+			}
+			break;
+		case global.CLASS_WARRIOR:
+			switch(this.level) {
+				case  0: return 0;
+				case  1: return 1;
+				case  2: return 2000;
+				case  3: return 4000;
+				case  4: return 8000;
+				case  5: return 16000;
+				case  6: return 32000;
+				case  7: return 64000;
+				case  8: return 125000;
+				case  9: return 250000;
+				case 10: return 500000;
+				case 11: return 750000;
+				case 12: return 1000000;
+				case 13: return 1250000;
+				case 14: return 1500000;
+				case 15: return 1850000;
+				case 16: return 2200000;
+				case 17: return 2550000;
+				case 18: return 2900000;
+				case 19: return 3250000;
+				case 20: return 3600000;
+				case 21: return 3900000;
+				case 22: return 4200000;
+				case 23: return 4500000;
+				case 24: return 4800000;
+				case 25: return 5150000;
+				case 26: return 5500000;
+				case 27: return 5950000;
+				case 28: return 6400000;
+				case 29: return 6850000;
+				case 30: return 7400000;
+				// add new levels here
+				case this.LVL_IMMORT: return 8000000;				
+			}
+			break;
+	}
+	
+	mudlog.error("XP tables not correctly set up!");
+	return 123465;
+};
+
 var playerModel = mongoose.model('player', playerSchema);
-
-
 
 module.exports = {
 	schema: playerSchema,

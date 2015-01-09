@@ -77,8 +77,11 @@ characterSchema.methods.getPossessivePronoun = function() {
 	}
 };
 
-
 characterSchema.methods.getDescription = function() {
+	// Implementation overriden by child schemas	
+};
+
+characterSchema.methods.gainExperience = function() {
 	// Implementation overriden by child schemas	
 };
 
@@ -1908,7 +1911,7 @@ characterSchema.methods.damage = function(target, damageAmount, attackType) {
 	target.hitpoints = target.hitpoints - actualDamage;
 
 	// Gain exp for the hit
-	this.experience = this.experience + (target.level * actualDamage);
+	this.gainExperience(target.level * actualDamage);
 	
 	target.updatePosition();
 	
