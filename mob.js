@@ -80,7 +80,7 @@ mobSchema.methods.getBareHandDamage = function() {
 	// Format = XdY+Z
 	
 	var firstPiece = this.damRollFormula.split("d");
-	var secondPiece = this.firstPiece[1].split("+");
+	var secondPiece = firstPiece[1].split("+");
 	
 	var numberOfDice = firstPiece[0];
 	var sizeOfDice = secondPiece[0];
