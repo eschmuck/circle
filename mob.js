@@ -77,15 +77,15 @@ mobSchema.methods.getThac0 = function() {
 };
 
 mobSchema.methods.getHourlyHitpointGain = function() {
-	return this.level();
+	return this.level;
 };
 
 mobSchema.methods.getHourlyManapointGain = function() {
-	return this.level();
+	return this.level;
 };
 
 mobSchema.methods.getHourlyMovepointGain = function() {
-	return this.level();
+	return this.level;
 };
 
 mobSchema.methods.getBareHandDamage = function() {

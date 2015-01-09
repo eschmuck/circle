@@ -475,27 +475,27 @@ characterSchema.methods.insult = function(parameter) {
 characterSchema.methods.stand = function() {
 	switch(this.position) {
 		case global.POS_STANDING:
-			this.emitMessage("You are already standing.");
+			this.emitMessage("You are already standing.\n\r");
 			break;
 		case global.POS_SITTING:
-			this.emitMessage("You stand up.");
-			this.emitRoomMessage(this.name + " clambers to " + this.getPossessivePronoun() + " feet.");
+			this.emitMessage("You stand up.\n\r");
+			this.emitRoomMessage(this.name + " clambers to " + this.getPossessivePronoun() + " feet.\n\r");
 			this.position = global.POS_STANDING;
 			break;
         case global.POS_RESTING:
-            this.emitMessage("You stop resting, and stand up.");
-			this.emitRoomMessage(this.name + ' stops resting, and clambers on ' + this.getPossessivePronoun() + ' feet.');
+            this.emitMessage("You stop resting, and stand up.\n\r");
+			this.emitRoomMessage(this.name + ' stops resting, and clambers on ' + this.getPossessivePronoun() + ' feet.\n\r');
             this.position = global.POS_STANDING;
             break;
         case global.POS_SLEEPING:
-            this.emitMessage("You have to wake up first!");
+            this.emitMessage("You have to wake up first!\n\r");
             break;
         case global.POS_FIGHTING:
-            this.emitMessage("Do you not consider fighting as standing?");
+            this.emitMessage("Do you not consider fighting as standing?\n\r");
             break;
         default:
-            this.emitMessage("You stop floating around, and put your feet on the ground.");
-            this.emitRoomMessage(this.name + " stops floating around and puts " + this.getPossessivePronoun() + ' feet on the ground.');
+            this.emitMessage("You stop floating around, and put your feet on the ground.\n\r");
+            this.emitRoomMessage(this.name + " stops floating around and puts " + this.getPossessivePronoun() + ' feet on the ground.\n\r');
             this.position = global.POS_STANDING;
             break;
 	}
@@ -504,27 +504,27 @@ characterSchema.methods.stand = function() {
 characterSchema.methods.sit = function() {
 	switch(this.position) {
 		case global.POS_STANDING:
-			this.emitMessage("You sit down.");
-			this.emitRoomMessage(this.name + " sits down.");
+			this.emitMessage("You sit down.\n\r");
+			this.emitRoomMessage(this.name + " sits down.\n\r");
 			this.position = global.POS_SITTING;
 			break;
 		case global.POS_SITTING:
-			this.emitMessage("You're sitting already.");
+			this.emitMessage("You're sitting already.\n\r");
 			break;
         case global.POS_RESTING:
-            this.emitMessage("You stop resting, and sit up.");
-            this.emitRoomMessage(this.name + ' stops resting.');
+            this.emitMessage("You stop resting, and sit up.\n\r");
+            this.emitRoomMessage(this.name + ' stops resting.\n\r');
             this.position = global.POS_SITTING;
             break;
         case global.POS_SLEEPING:
-            this.emitMessage("You have to wake up first.");
+            this.emitMessage("You have to wake up first.\n\r");
             break;
         case global.POS_FIGHTING:
-            this.emitMessage('Sit down while fighting? Are you MAD?');
+            this.emitMessage('Sit down while fighting? Are you MAD?\n\r');
             break;
         default:
-            this.emitMessage('You stop floating around, and sit down.');
-            this.emitRoomMessage(this.name + ' stops floating around, and sit down.');
+            this.emitMessage('You stop floating around, and sit down.\n\r');
+            this.emitRoomMessage(this.name + ' stops floating around, and sit down.\n\r');
             this.position = global.POS_SITTING;
             break;
 	}
@@ -533,27 +533,27 @@ characterSchema.methods.sit = function() {
 characterSchema.methods.rest = function() {
 	switch(this.position) {
 		case global.POS_STANDING:
-			this.emitMessage("You sit down and rest your tired bones.");
-			this.emitRoomMessage(this.name + " sits down and rests.");
+			this.emitMessage("You sit down and rest your tired bones.\n\r");
+			this.emitRoomMessage(this.name + " sits down and rests.\n\r");
 			this.position = global.POS_RESTING;
 			break;
 		case global.POS_SITTING:
-			this.emitMessage("You rest your tired bones.");
-			this.emitMessage(this.name + " rests.");
+			this.emitMessage("You rest your tired bones.\n\r");
+			this.emitMessage(this.name + " rests.\n\r");
 			this.position = global.POS_RESTING;
 			break;
         case global.POS_RESTING:
-            this.emitMessage("You are resting already.");
+            this.emitMessage("You are resting already.\n\r");
             break;
         case global.POS_SLEEPING:
-            this.emitMessage("You have to wake up first.");
+            this.emitMessage("You have to wake up first.\n\r");
             break;
         case global.POS_FIGHTING:
-            this.emitMessage('Rest while fighting? Are you MAD?');
+            this.emitMessage('Rest while fighting? Are you MAD?\n\r');
             break;
         default:
-            this.emitMessage('You stop floating around, and stop to rest your tired bones.');
-            this.emitRoomMessage(this.name + ' stops floating around, and rests.');
+            this.emitMessage('You stop floating around, and stop to rest your tired bones.\n\r');
+            this.emitRoomMessage(this.name + ' stops floating around, and rests.\n\r');
             this.position = global.POS_RESTING;
             break;
 	}
@@ -562,12 +562,12 @@ characterSchema.methods.rest = function() {
 characterSchema.methods.sleep = function() {
 	switch(this.position) {
         case global.POS_STANDING:
-            this.emitMessage('You sit down and rest your tired bones.');
-            this.emitRoomMessage(this.name + ' sits down and rests.');
+            this.emitMessage('You sit down and rest your tired bones.\n\r');
+            this.emitRoomMessage(this.name + ' sits down and rests.\n\r');
             this.position = global.POS_RESTING;
             break;
         case global.POS_SITTING:
-            this.emitMessage('You rest your tired bones.');
+            this.emitMessage('You rest your tired bones.\n\r');
             this.emitRoomMessage(this.name + ' rests.');
             this.position = global.POS_RESTING;
             break;

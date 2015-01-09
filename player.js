@@ -283,7 +283,7 @@ playerSchema.methods.enterGame = function() {
 	}
 	
 	this.emitRoomMessage(this.name + " has entered the game.");
-	this.position = character.POS_STANDING;
+	this.position = global.POS_STANDING;
 };
 
 playerSchema.methods.getDescription = function() {

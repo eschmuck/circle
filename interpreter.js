@@ -511,12 +511,14 @@ Interpreter.prototype.getCommand = function(input) {
 };
 
 Interpreter.prototype.handleInput = function(character, input) {
+    if(input.length === 0) {
+        character.emitMessage("");
+    }
+    
     var command = this.getCommand(input);
 
     if(command === null) {
-        if(character.socket !== undefined) {
-            character.socket.emit('message', { message: "Huh?!?"});
-        }
+        character.emitMessage("Huh?!?\n\r");
     }
     else {
         if(character.position < command.minimumPosition) {
