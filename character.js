@@ -1769,7 +1769,7 @@ characterSchema.methods.damage = function(target, damageAmount, attackType) {
 	// TODO: More stuff
 	
 	// Set the maximum damage per round and subtract the hit points
-	var actualDamage = Math.Max(Math.Min(damageAmount, 100), 0);
+	var actualDamage = Math.max(Math.min(damageAmount, 100), 0);
 	target.hitpoints = target.hitpoints - actualDamage;
 	
 	// Gain exp for the hit
