@@ -65,6 +65,7 @@ room.getRooms(function(roomDocs) {
 
 setInterval(hourElapsed, global.SECONDS_PER_MUDHOUR * 1000);
 setInterval(updateMobs, global.PULSE_MOBILE * 1000);
+setInterval(performViolence, global.PULSE_VIOLENCE * 1000);
 
 io.sockets.on('connection', function(socket) {
   socket.player = null;
@@ -275,4 +276,8 @@ function hourElapsed() {
 
 function updateMobs() {
   gameWorld.updateMobs();
+}
+
+function performViolence() {
+  gameWorld.performViolence();
 }
