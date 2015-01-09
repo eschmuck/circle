@@ -1967,7 +1967,6 @@ characterSchema.methods.damage = function(target, damageAmount, attackType) {
 		}
 		
 		target.die();
-		this.stopFighting();
 	}
 	
 	// This doesn't seem to be used in the original code.....
