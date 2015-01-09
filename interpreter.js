@@ -619,13 +619,13 @@ function do_who(character, command) {
     }
     
     if(players.length === 0) {
-        character.emitMessage("  Nobody at all!\n\r");
+        character.emitMessage("Nobody at all!\n\r");
     }
     else if(players.length === 1) {
-        character.emitMessage("  One lonely character displayed.\n\r");
+        character.emitMessage("One lonely character displayed.\n\r");
     }
     else {
-        character.emitMessage("  " + players.length + " characters displayed.\n\r");
+        character.emitMessage(players.length + " characters displayed.\n\r");
     }
 }
 

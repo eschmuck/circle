@@ -568,21 +568,21 @@ characterSchema.methods.sleep = function() {
             break;
         case global.POS_SITTING:
             this.emitMessage('You rest your tired bones.\n\r');
-            this.emitRoomMessage(this.name + ' rests.');
+            this.emitRoomMessage(this.name + ' rests.\n\r');
             this.position = global.POS_RESTING;
             break;
         case global.POS_RESTING:
-		    this.emitMessage('You are already resting.');
+		    this.emitMessage('You are already resting.\n\r');
 		    break;
         case global.POS_SLEEPING:
-            this.emitMessage('You have to wake up first.');
+            this.emitMessage('You have to wake up first.\n\r');
             break;
         case global.POS_FIGHTING:
-            this.emitMessage('Rest down while fighting? Are you MAD?');
+            this.emitMessage('Rest down while fighting? Are you MAD?\n\r');
             break;
         default:
-            this.emitMessage('You stop floating around, and stop to rest your tired bones.');
-            this.emitRoomMessage(this.name + ' stops floating around, and rests.');
+            this.emitMessage('You stop floating around, and stop to rest your tired bones.\n\r');
+            this.emitRoomMessage(this.name + ' stops floating around, and rests.\n\r');
             this.position = global.POS_SITTING;
             break;
 	}
@@ -1031,12 +1031,12 @@ characterSchema.methods.takeItem = function(keyword) {
 	}
 	
 	if(result.mode === 'all' && result.items.length === 0) {
-		this.emitMessage("You can't find " + result.token.indefiniteArticle() + " " + result.token + " here.");
+		this.emitMessage("You can't find " + result.token.indefiniteArticle() + " " + result.token + " here.\n\r");
 		return;
 	}
 	
 	if(result.items.length === 0) {
-		this.emitMessage("You can't seem to find " + result.token.indefiniteArticle() + " " + result.token + ".");
+		this.emitMessage("You can't seem to find " + result.token.indefiniteArticle() + " " + result.token + ".\n\r");
 		return;
 	}
 
@@ -1045,7 +1045,7 @@ characterSchema.methods.takeItem = function(keyword) {
 			this.takeObject(result.items[i]);
 		}
 		else {
-			this.emitMessage(result.items[i].shortDescription + ": You can't take THAT!");
+			this.emitMessage(result.items[i].shortDescription + ": You can't take THAT!\n\r");
 		}
 	}
 };
@@ -1053,8 +1053,8 @@ characterSchema.methods.takeItem = function(keyword) {
 characterSchema.methods.dropObject = function(object) {
 	this.inventory.splice(this.inventory.indexOf(object), 1);
 	this.room.addItem(object);
-	this.emitMessage("You drop " + object.shortDescription + ".");
-	this.emitRoomMessage(this.name + " drops " + object.shortDescription + ".");
+	this.emitMessage("You drop " + object.shortDescription + ".\n\r");
+	this.emitRoomMessage(this.name + " drops " + object.shortDescription + ".\n\r");
 };
 
 

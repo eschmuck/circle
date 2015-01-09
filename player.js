@@ -312,13 +312,13 @@ playerSchema.methods.getDescription = function() {
 
 playerSchema.methods.listGold = function() {
 	if(this.gold === 0) {
-		this.emitMessage("You're dead broke!");
+		this.emitMessage("You're dead broke!\n\r");
 	}
 	else if(this.gold === 1) {
-		this.emitMessage("You have one miserable little gold coin.");
+		this.emitMessage("You have one miserable little gold coin.\n\r");
 	}
 	else {
-		this.emitMessage("You have " + this.gold + " gold coins.");
+		this.emitMessage("You have " + this.gold + " gold coins.\n\r");
 	}
 };
 
@@ -329,6 +329,10 @@ playerSchema.methods.listScore = function() {
 	this.emitMessage("Wisdom: [" + this.wisdom + "] Constitution: [" + this.constitution + "] Charisma: [" + this.charisma + "]");
 
 	this.emitMessage("You have " + this.practiceSessions + " practice sessions.");
+	
+	this.emitMessage("You have " + this.gold + " gold coins.");
+	
+	this.emitMessage("You have " + this.experience + " and need " + this.getExperienceForNextLevel() + " to reach your next level.");
 
 	if(this.hunger === 0) {
 		this.emitMessage("You are hungry.");
@@ -343,6 +347,8 @@ playerSchema.methods.listScore = function() {
 	else if(this.thirst < 5) {
 		this.emitMessage("You will be thirsty pretty soon!");
 	}
+	
+	this.emitMessage("");
 };
 
 // When age < 15 return the value p0 
