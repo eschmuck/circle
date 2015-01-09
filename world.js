@@ -155,8 +155,10 @@ World.prototype.hourElapsed = function() {
 };
 
 World.prototype.performViolence = function() {
+	mudlog.info("In performViolence loop");
 	for(var i = 0; i < this.people.length; i++)	{
 		if(this.people[i].position === global.POS_FIGHTING) {
+			mudlog.info("Found character for violence");
 			this.people[i].performViolence();
 		}
 	}
