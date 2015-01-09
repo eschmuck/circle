@@ -1716,6 +1716,10 @@ characterSchema.methods.performViolence = function() {
 characterSchema.methods.attack = function(target) {
 	mudlog.info(this.name + " has attacked " + target.name);
 	this.fighting = target;
+	
+	this.position = global.POS_FIGHTING;
+	target.position = global.POS_FIGHTING;
+	
 	this.performViolence();
 };
 
