@@ -1760,6 +1760,7 @@ characterSchema.methods.getDiagnosis = function() {
 
 characterSchema.methods.stopFighting = function() {
 	this.fighting = null;
+	this.position = global.POS_STANDING;
 	this.updatePosition();
 };
 
@@ -2003,6 +2004,8 @@ characterSchema.methods.damage = function(target, damageAmount, attackType) {
 };
 
 characterSchema.methods.die = function() {
+	this.gainExperience(Math.round(-1 * this.experience / 2));
+	
 	this.emitMessage("Everything fades to black....");
 	this.emitMessage(".... You have died. RIP!\n\r");
 	
