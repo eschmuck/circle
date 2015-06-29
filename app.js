@@ -91,7 +91,9 @@ io.sockets.on('connection', function(socket) {
   socket.on('message', function(msg) {
     switch (socket.connectionState) {
       case global.CON_PLAYING:
+        /*
         inputInterpreter.handleInput(socket.player, msg['input']);
+        */
         break;
       case global.CON_GET_NAME:
         getName(msg);
